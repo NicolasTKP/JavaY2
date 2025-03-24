@@ -1,0 +1,2 @@
+order_id|request_id|item_id|user_id|quantity|stock_price|amount|supplier_id|order|date|status|payment_status
+001|001|001|001|10|3.5|30.5|001|01052025|pending|pending

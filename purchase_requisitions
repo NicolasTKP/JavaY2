@@ -1,0 +1,2 @@
+request_id|item_id(foreign key)|user_id|quantity|request_date|required_date|supplier_id|status
+001|001|001|30|01042025|02052025|001|pending

@@ -1,0 +1,2 @@
+supplier_id|supplier_name|location|contact|supply_items(item_id)
+001|Hello supplier|Kuala Lumpur|011-111-1111|001,003,005,006
