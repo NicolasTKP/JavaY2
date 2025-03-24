@@ -1,2 +1,2 @@
-sales_id|date|amount|sales_items(item_id,quantity,retail_price)
-001|01052025|300|001,20,50.0;003,40,70.0;005,60.20.0
+sales_id|date|amount
+SA00001|01052025|500.0

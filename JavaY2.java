@@ -11,7 +11,10 @@ package com.mycompany.JavaY2;
 public class JavaY2 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-        System.out.println("hi");
+        Sale sale = new Sale("orange", "001", 30, 300);
+        Sale sale2 = new Sale();
+        System.out.println();
     }
+
+
 }

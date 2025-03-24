@@ -1,2 +1,2 @@
-order_id|request_id|item_id|user_id|quantity|stock_price|amount|supplier_id|order|date|status|payment_status
-001|001|001|001|10|3.5|30.5|001|01052025|pending|pending
+order_id|request_id|item_id|user_id|quantity|unit_price|amount|supplier_id|order_date|order_status (pending,approved,rejected)|payment_status (-,unpaid,paid)
+O001|R001|I001|U001|10|3.50|30.50|SU001|01052025|pending|-
