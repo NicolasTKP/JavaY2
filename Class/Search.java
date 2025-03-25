@@ -16,7 +16,7 @@ public class Search {
 
     public static String getUsername(String userID){
         try {
-            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/users"));
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/users"));
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
@@ -36,7 +36,7 @@ public class Search {
 
     public static String getItemName(String itemID){
         try {
-            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/inventory"));
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
@@ -56,7 +56,7 @@ public class Search {
 
     public static String getSupplierName(String supplierID){
         try {
-            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/suppliers"));
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"));
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {

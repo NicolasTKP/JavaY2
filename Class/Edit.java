@@ -10,8 +10,8 @@ import java.util.List;
 public class Edit {
     public static void purchaseOrders(String orderID, int column,String value){
         try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/purchase_orders"));
-            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/purchase_orders", false));
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders", false));
             String[] items;
             String line;
             for (int i = 0; i < linesList.size(); i++) {
