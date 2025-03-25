@@ -132,7 +132,7 @@ public class login extends javax.swing.JFrame {
         String username = jTextField1.getText();
         String password = jTextField2.getText();
         try {
-            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/users"));
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/users"));
             String line;
             String user;
             String pass;

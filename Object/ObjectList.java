@@ -16,7 +16,7 @@ public class ObjectList {
     public List<PurchaseOrder> getPurchaseOrders(){
         List<PurchaseOrder> ls = new ArrayList<>();
         try {
-            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/purchase_orders"));
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders"));
             String line;
             String[] lines;
             br.readLine();
