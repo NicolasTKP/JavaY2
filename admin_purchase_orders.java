@@ -297,34 +297,40 @@ public class admin_purchase_orders extends javax.swing.JFrame {
         purcahse_order[0] = Query.getLatestOrderID();
 
         //Request ID
-        while (true){
-            String[] options = Query.getPendingPR();
-            if (options.length>0){
-                String choice = (String) JOptionPane.showInputDialog(
-                        null,
-                        "Select an option:",
-                        "Dropdown Selection",
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        options,
-                        options[0]);
-                if (choice!=null){
-                    purcahse_order[1] = choice;
-                    break;
-                }else {
-                    JOptionPane.showMessageDialog(null, "Please select a PR", "Warning", JOptionPane.WARNING_MESSAGE);
-                }
+        String[] options = Query.getPendingPR();
+        if (options.length>0){
+            String choice = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Select an option:",
+                    "Dropdown Selection",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+            if (choice!=null){
+                purcahse_order[1] = choice;
             }else {
-                JOptionPane.showMessageDialog(null, "No pending PR", "Warning", JOptionPane.WARNING_MESSAGE);
-                admin_purchase_orders page = new admin_purchase_orders();
-                page.setVisible(true);
-                this.dispose();
-                break;
+                JOptionPane.showMessageDialog(null, "Canceled", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
             }
+        }else {
+            JOptionPane.showMessageDialog(null, "No pending PR", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-            //Item ID
-            while (true){
-
+        //Item ID
+        while (true){
+            String itemID = JOptionPane.showInputDialog("Enter Item ID:");
+            if (itemID != null && !itemID.trim().isEmpty()) {
+                if (Query.ifItemExist(itemID)){
+                    purcahse_order[2] = itemID;
+                    break;
+                }else{
+                    JOptionPane.showMessageDialog(null, "Invalid Item ID please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Canceled", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
             }
         }
     }//GEN-LAST:event_jButton5ActionPerformed

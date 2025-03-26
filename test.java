@@ -10,14 +10,14 @@ import java.util.List;
 
 public class test {
     public static void main(String[] args) {
-//        String inputValue = JOptionPane.showInputDialog("Enter a value:");
-//
-//        // Check if the user entered something
-//        if (inputValue != null && !inputValue.trim().isEmpty()) {
-//            JOptionPane.showMessageDialog(null, "You entered: " + inputValue);
-//        } else {
-//            JOptionPane.showMessageDialog(null, "No value entered!", "Warning", JOptionPane.WARNING_MESSAGE);
-//        }
+        String inputValue = JOptionPane.showInputDialog("Enter a value:");
+
+        // Check if the user entered something
+        if (inputValue != null && !inputValue.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "You entered: " + inputValue);
+        } else {
+            JOptionPane.showMessageDialog(null, "No value entered!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
 //
 //        System.out.println(Query.getLatestOrderID());
         String[] options = Query.getPendingPR();

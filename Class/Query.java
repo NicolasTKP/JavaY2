@@ -62,4 +62,21 @@ public class Query {
             return null;
         }
     }
+
+    public static boolean ifItemExist(String itemID){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            for (String line:linesList){
+                String[] column = line.split("\\|");
+                if (column[0].equalsIgnoreCase(itemID)){
+                    return true;
+                }
+            }
+            return false;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
