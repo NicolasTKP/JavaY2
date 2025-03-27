@@ -169,7 +169,7 @@ public class admin_mainpage extends javax.swing.JFrame {
                             .addComponent(jButton8))
                         .addGap(135, 135, 135)
                         .addComponent(jButton9)))
-                .addContainerGap(667, Short.MAX_VALUE))
+                .addContainerGap(726, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton10)
@@ -204,7 +204,7 @@ public class admin_mainpage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

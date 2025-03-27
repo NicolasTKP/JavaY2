@@ -4,13 +4,14 @@
  */
 package com.mycompany.JavaY2;
 
-import com.mycompany.JavaY2.Class.Edit;
-import com.mycompany.JavaY2.Class.Matrix;
-import com.mycompany.JavaY2.Class.Query;
+import com.mycompany.JavaY2.Class.*;
 import com.mycompany.JavaY2.Object.ObjectList;
+import com.mycompany.JavaY2.Object.SessionManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -291,10 +292,10 @@ public class admin_purchase_orders extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        String[] purcahse_order = new String[11];
+        String[] purchase_order = new String[11];
 
         //Order ID
-        purcahse_order[0] = Query.getLatestOrderID();
+        purchase_order[0] = Query.getLatestOrderID();
 
         //Request ID
         String[] options = Query.getPendingPR();
@@ -308,7 +309,7 @@ public class admin_purchase_orders extends javax.swing.JFrame {
                     options,
                     options[0]);
             if (choice!=null){
-                purcahse_order[1] = choice;
+                purchase_order[1] = choice;
             }else {
                 JOptionPane.showMessageDialog(null, "Canceled", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -319,20 +320,74 @@ public class admin_purchase_orders extends javax.swing.JFrame {
         }
 
         //Item ID
-        while (true){
-            String itemID = JOptionPane.showInputDialog("Enter Item ID:");
-            if (itemID != null && !itemID.trim().isEmpty()) {
-                if (Query.ifItemExist(itemID)){
-                    purcahse_order[2] = itemID;
-                    break;
-                }else{
-                    JOptionPane.showMessageDialog(null, "Invalid Item ID please try again", "Warning", JOptionPane.WARNING_MESSAGE);
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Canceled", "Warning", JOptionPane.WARNING_MESSAGE);
-                return;
+        purchase_order[2] = Search.getFromPR(purchase_order[1],1);
+
+        //User ID
+        purchase_order[3] = SessionManager.getInstance().userID;
+
+        //Quantity
+        purchase_order[4] = Search.getFromPR(purchase_order[1], 3);
+
+        //unit price
+        purchase_order[5] = Search.getFromInventory(purchase_order[2], 3);
+
+        //Amount
+        assert purchase_order[4] != null;
+        assert purchase_order[5] != null;
+        purchase_order[6] = Double.toString(Double.parseDouble(purchase_order[4]) * Double.parseDouble(purchase_order[5]));
+
+        //Supplier ID
+        purchase_order[7] = Search.getFromPR(purchase_order[1], 6);
+
+        //Order Date
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+        purchase_order[8] = today.format(formatter);;
+
+        //Order Status
+        purchase_order[9] = "Pending";
+
+        //Payment Status
+        purchase_order[10] = "-";
+
+        int result = JOptionPane.showConfirmDialog(null, "Do you want to raise a purchase order based of PR: "+ purchase_order[1], "Confirmation", JOptionPane.YES_NO_OPTION);
+
+        if(result == JOptionPane.YES_OPTION){
+            TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders", String.join("|",purchase_order));
+            Edit.purchaseRequisitions(purchase_order[1], 7,"Approved");
+            JOptionPane.showMessageDialog(null, "Purchase Order Place Successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+            ObjectList objectList = new ObjectList();
+            List<ObjectList.PurchaseOrder> orders = objectList.getPurchaseOrders();
+            String[][] matrix = new String[orders.size()][10];
+            ObjectList.PurchaseOrder order;
+            for (int i = 0;i<orders.size();i++){
+                order = orders.get(i);
+                matrix[i][0] = order.order_id;
+                matrix[i][1] = order.request_id;
+                matrix[i][2] = order.item_name;
+                matrix[i][3] = order.username;
+                matrix[i][4] = Integer.toString(order.quantity);
+                matrix[i][5] = Double.toString(order.unit_price);
+                matrix[i][6] = Double.toString(order.amount);
+                matrix[i][7] = order.supplier_name;
+                matrix[i][8] = order.order_date.toString();
+                matrix[i][9] = order.order_status;
             }
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                                     matrix,
+                                     new String [] {
+                                             "Order_ID", "Request_ID", "Item_Name", "Username","Quantity","Unit_Price","Amount","Supplier","Order_Date","Order_Status"
+                                     }
+                             ){
+                                 @Override
+                                 public boolean isCellEditable(int row, int column) {
+                                     return false; // This makes all cells non-editable
+                                 }
+                             }
+            );
         }
+
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed

@@ -4,11 +4,12 @@
  */
 package com.mycompany.JavaY2;
 
+import com.mycompany.JavaY2.Object.SessionManager;
+
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 
 /**
  *
@@ -145,6 +146,10 @@ public class login extends javax.swing.JFrame {
                 if (username.equals(user) && password.equals(pass)){
                     JOptionPane.showMessageDialog(null, "Login Successfully, you will be redirect to the main page", "Successfully", JOptionPane.INFORMATION_MESSAGE);
                     if (role.equals("admin")){
+                        SessionManager.getInstance().userID = line.split("\\|")[0];
+                        SessionManager.getInstance().username = user;
+                        SessionManager.getInstance().password = pass;
+                        SessionManager.getInstance().role = role;
                         admin_mainpage frame = new admin_mainpage();
                         frame.setVisible(true);
                         this.dispose();
