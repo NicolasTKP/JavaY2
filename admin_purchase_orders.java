@@ -381,7 +381,7 @@ public class admin_purchase_orders extends javax.swing.JFrame {
                              ){
                                  @Override
                                  public boolean isCellEditable(int row, int column) {
-                                     return false; // This makes all cells non-editable
+                                     return false;
                                  }
                              }
             );
