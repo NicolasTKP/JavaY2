@@ -1,2 +1,3 @@
 supplier_id|supplier_name|address|contact|supply_items(item_id)
-SU001|Hello supplier|Kuala Lumpur|011-111-1111|001,003,005,006
+SU001|Hello supplier|Kuala Lumpur|011-111-1111|I001,I003,I005,I006
+SU002|aPPLE supplier|Kuala Lumpur|011-111-1112|I002

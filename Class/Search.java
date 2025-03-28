@@ -20,7 +20,7 @@ public class Search {
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
-                if (line.split("\\|")[0].equals(userID)){
+                if (line.split("\\|")[0].equals(userID.toUpperCase())){
                     return line.split("\\|")[1];
                 }
 
@@ -40,7 +40,7 @@ public class Search {
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
-                if (line.split("\\|")[0].equals(itemID)){
+                if (line.split("\\|")[0].equals(itemID.toUpperCase())){
                     return line.split("\\|")[1];
                 }
 
@@ -60,8 +60,28 @@ public class Search {
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
-                if (line.split("\\|")[0].equals(supplierID)){
+                if (line.split("\\|")[0].equals(supplierID.toUpperCase())){
                     return line.split("\\|")[1];
+                }
+
+            }
+            br.close();
+            return null;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getUserID(String username){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/users"));
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                if (line.split("\\|")[1].equals(username)){
+                    return line.split("\\|")[0];
                 }
 
             }
@@ -80,7 +100,7 @@ public class Search {
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
-                if (line.split("\\|")[0].equals(requestID)){
+                if (line.split("\\|")[0].equals(requestID.toUpperCase())){
                     return line.split("\\|")[column];
                 }
 
@@ -100,7 +120,7 @@ public class Search {
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
-                if (line.split("\\|")[0].equals(itemID)){
+                if (line.split("\\|")[0].equals(itemID.toUpperCase())){
                     return line.split("\\|")[column];
                 }
 

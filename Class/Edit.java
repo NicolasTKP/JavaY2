@@ -25,6 +25,7 @@ public class Edit {
                     bw.newLine();
                 }
             }
+            bw.flush();
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();

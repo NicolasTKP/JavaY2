@@ -43,9 +43,9 @@ public class admin_mainpage extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jButton1.setText("Purchase Orders");
-        jButton1.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50
-        jButton1.setMinimumSize(new Dimension(400, 70));
-        jButton1.setMaximumSize(new Dimension(400, 70));
+        jButton1.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50
+        jButton1.setMinimumSize(new Dimension(300, 70));
+        jButton1.setMaximumSize(new Dimension(300, 70));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -54,9 +54,9 @@ public class admin_mainpage extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jButton2.setText("Order Tracking");
-        jButton2.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50
-        jButton2.setMinimumSize(new Dimension(400, 70));
-        jButton2.setMaximumSize(new Dimension(400, 70));
+        jButton2.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50
+        jButton2.setMinimumSize(new Dimension(300, 70));
+        jButton2.setMaximumSize(new Dimension(300, 70));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -65,9 +65,9 @@ public class admin_mainpage extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jButton3.setText("User Management");
-        jButton3.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50
-        jButton3.setMinimumSize(new Dimension(400, 70));
-        jButton3.setMaximumSize(new Dimension(400, 70));
+        jButton3.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50
+        jButton3.setMinimumSize(new Dimension(300, 70));
+        jButton3.setMaximumSize(new Dimension(300, 70));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -76,9 +76,9 @@ public class admin_mainpage extends javax.swing.JFrame {
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jButton4.setText("User Management");
-        jButton4.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50
-        jButton4.setMinimumSize(new Dimension(400, 70));
-        jButton4.setMaximumSize(new Dimension(400, 70));
+        jButton4.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50
+        jButton4.setMinimumSize(new Dimension(300, 70));
+        jButton4.setMaximumSize(new Dimension(300, 70));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -87,9 +87,9 @@ public class admin_mainpage extends javax.swing.JFrame {
 
         jButton5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jButton5.setText("Inventory Management");
-        jButton5.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50
-        jButton5.setMinimumSize(new Dimension(400, 70));
-        jButton5.setMaximumSize(new Dimension(400, 70));
+        jButton5.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50
+        jButton5.setMinimumSize(new Dimension(300, 70));
+        jButton5.setMaximumSize(new Dimension(300, 70));
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -98,9 +98,9 @@ public class admin_mainpage extends javax.swing.JFrame {
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jButton6.setText("Supplier Management");
-        jButton6.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50
-        jButton6.setMinimumSize(new Dimension(400, 70));
-        jButton6.setMaximumSize(new Dimension(400, 70));
+        jButton6.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50
+        jButton6.setMinimumSize(new Dimension(300, 70));
+        jButton6.setMaximumSize(new Dimension(300, 70));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -109,9 +109,9 @@ public class admin_mainpage extends javax.swing.JFrame {
 
         jButton7.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jButton7.setText("Purchase Requisitions");
-        jButton7.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50
-        jButton7.setMinimumSize(new Dimension(400, 70));
-        jButton7.setMaximumSize(new Dimension(400, 70));
+        jButton7.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50
+        jButton7.setMinimumSize(new Dimension(300, 70));
+        jButton7.setMaximumSize(new Dimension(300, 70));
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
@@ -120,9 +120,9 @@ public class admin_mainpage extends javax.swing.JFrame {
 
         jButton8.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jButton8.setText("Sales Entry");
-        jButton8.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50
-        jButton8.setMinimumSize(new Dimension(400, 70));
-        jButton8.setMaximumSize(new Dimension(400, 70));
+        jButton8.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50
+        jButton8.setMinimumSize(new Dimension(300, 70));
+        jButton8.setMaximumSize(new Dimension(300, 70));
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
@@ -131,9 +131,9 @@ public class admin_mainpage extends javax.swing.JFrame {
 
         jButton9.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jButton9.setText("Finance Management");
-        jButton9.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50
-        jButton9.setMinimumSize(new Dimension(400, 70));
-        jButton9.setMaximumSize(new Dimension(400, 70));
+        jButton9.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50
+        jButton9.setMinimumSize(new Dimension(300, 70));
+        jButton9.setMaximumSize(new Dimension(300, 70));
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton9ActionPerformed(evt);
@@ -169,11 +169,11 @@ public class admin_mainpage extends javax.swing.JFrame {
                             .addComponent(jButton8))
                         .addGap(135, 135, 135)
                         .addComponent(jButton9)))
-                .addContainerGap(726, Short.MAX_VALUE))
+                .addContainerGap(667, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton10)
-                .addGap(62, 62, 62))
+                .addGap(32, 32, 32))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,7 +204,9 @@ public class admin_mainpage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        admin_purchase_orders page = new admin_purchase_orders();
+        page.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

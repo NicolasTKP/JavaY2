@@ -79,4 +79,21 @@ public class Query {
             return false;
         }
     }
+
+    public static boolean ifUserExist(String username){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/users"));
+            for (String line:linesList){
+                String[] column = line.split("\\|");
+                if (column[1].equalsIgnoreCase(username)){
+                    return true;
+                }
+            }
+            return false;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
