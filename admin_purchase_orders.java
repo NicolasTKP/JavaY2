@@ -4,20 +4,27 @@
  */
 package com.mycompany.JavaY2;
 
-import com.mycompany.JavaY2.Class.Edit;
-import com.mycompany.JavaY2.Class.Matrix;
-import com.mycompany.JavaY2.Class.Query;
+import com.mycompany.JavaY2.Class.*;
 import com.mycompany.JavaY2.Object.ObjectList;
+import com.mycompany.JavaY2.Object.SessionManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author acer
  */
-public class admin_purchase_orders extends javax.swing.JFrame {
+public class admin_purchase_orders extends JFrame {
 
     /**
      * Creates new form admin_purchase_orders
@@ -35,15 +42,18 @@ public class admin_purchase_orders extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        jScrollPane1 = new JScrollPane();
+        jTable1 = new JTable();
+        jButton1 = new JButton();
+        jButton2 = new JButton();
+        jTextField1 = new JTextField();
+        jLabel1 = new JLabel();
+        jButton3 = new JButton();
+        jButton4 = new JButton();
+        jButton5 = new JButton();
+        jButton6 = new JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         ObjectList objectList = new ObjectList();
         List<ObjectList.PurchaseOrder> orders = objectList.getPurchaseOrders();
@@ -62,8 +72,8 @@ public class admin_purchase_orders extends javax.swing.JFrame {
             matrix[i][8] = order.order_date.toString();
             matrix[i][9] = order.order_status;
         }
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+        jTable1.setModel(new DefaultTableModel(
             matrix,
             new String [] {
                 "Order_ID", "Request_ID", "Item_Name", "Username","Quantity","Unit_Price","Amount","Supplier","Order_Date","Order_Status"
@@ -78,81 +88,118 @@ public class admin_purchase_orders extends javax.swing.JFrame {
     jTable1.setRowHeight(25);
     jScrollPane1.setViewportView(jTable1);
 
-    jButton1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+    jButton1.setFont(new Font("Segoe UI", 0, 24)); // NOI18N
     jButton1.setText("Approve");
-    jButton1.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jButton1.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
             jButton1ActionPerformed(evt);
         }
     });
 
-    jButton2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+    jButton2.setFont(new Font("Segoe UI", 0, 24)); // NOI18N
     jButton2.setText("Reject");
-    jButton2.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jButton2.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
             jButton2ActionPerformed(evt);
         }
     });
 
-    jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+    jTextField1.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
     jTextField1.setText("");
 
-    jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-    jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    jLabel1.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
+    jLabel1.setHorizontalAlignment(SwingConstants.RIGHT);
     jLabel1.setText("Search:");
 
-    jButton3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+    jButton3.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
     jButton3.setText("Search");
-    jButton3.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jButton3.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
             jButton3ActionPerformed(evt);
         }
     });
 
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    jButton4.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
+    jButton4.setText("Delete");
+    jButton4.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            jButton4ActionPerformed(evt);
+        }
+    });
+
+    jButton5.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
+    jButton5.setText("Add");
+    jButton5.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            jButton5ActionPerformed(evt);
+        }
+    });
+
+    jButton6.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
+    jButton6.setText("Modify");
+    jButton6.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            jButton6ActionPerformed(evt);
+        }
+    });
+
+    GroupLayout layout = new GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        layout.createParallelGroup(GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGap(64, 64, 64)
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton2, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 1372, GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                    .addGap(64, 64, 64)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1372, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jButton5, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(jButton6, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jButton3, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)))
             .addContainerGap(64, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        layout.createParallelGroup(GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-            .addGap(17, 17, 17)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGap(18, 18, 18)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(6, 6, 6)
+                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jTextField1, GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                        .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(21, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton5, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGap(18, 18, 18)))
+            .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 609, GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addComponent(jButton1, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addComponent(jButton2, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
             .addContainerGap())
     );
 
     pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -165,7 +212,7 @@ public class admin_purchase_orders extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton2ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to reject", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -178,38 +225,10 @@ public class admin_purchase_orders extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButton3ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         String keyword = jTextField1.getText().toLowerCase();
         if (keyword.isEmpty()) {
-            ObjectList objectList = new ObjectList();
-            List<ObjectList.PurchaseOrder> orders = objectList.getPurchaseOrders();
-            String[][] matrix = new String[orders.size()][10];
-            ObjectList.PurchaseOrder order;
-            for (int i = 0; i < orders.size(); i++) {
-                order = orders.get(i);
-                matrix[i][0] = order.order_id;
-                matrix[i][1] = order.request_id;
-                matrix[i][2] = order.item_name;
-                matrix[i][3] = order.username;
-                matrix[i][4] = Integer.toString(order.quantity);
-                matrix[i][5] = Double.toString(order.unit_price);
-                matrix[i][6] = Double.toString(order.amount);
-                matrix[i][7] = order.supplier_name;
-                matrix[i][8] = order.order_date.toString();
-                matrix[i][9] = order.order_status;
-            }
-            jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                 matrix,
-                 new String [] {
-                         "Order_ID", "Request_ID", "Item_Name", "Username","Quantity","Unit_Price","Amount","Supplier","Order_Date","Order_Status"
-                 }
-             ){
-                 @Override
-                 public boolean isCellEditable(int row, int column) {
-                     return false; // This makes all cells non-editable
-                 }
-             }
-            );
+            UpdateTable.forPO(jTable1);
         }else{
             ObjectList objectList = new ObjectList();
             List<ObjectList.PurchaseOrder> orders = objectList.getPurchaseOrders();
@@ -231,7 +250,7 @@ public class admin_purchase_orders extends javax.swing.JFrame {
                 }
             }
             matrix = Matrix.removeEmptyRows(matrix);
-            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            jTable1.setModel(new DefaultTableModel(
                                      matrix,
                                      new String [] {
                                              "Order_ID", "Request_ID", "Item_Name", "Username","Quantity","Unit_Price","Amount","Supplier","Order_Date","Order_Status"
@@ -246,6 +265,232 @@ public class admin_purchase_orders extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton4ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int selected_row = jTable1.getSelectedRow();
+        if (selected_row == -1){
+            JOptionPane.showMessageDialog(null, "Please select a row to delete", "Warning", JOptionPane.WARNING_MESSAGE);
+        }else{
+            Object orderID = jTable1.getValueAt(selected_row, 0);
+            String order_ID = orderID.toString();
+            int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to delete PO: "+orderID, "Confirmation",JOptionPane.YES_NO_OPTION);
+            if(result == JOptionPane.YES_OPTION){
+                TextFile.deleteLine("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders",order_ID,0);
+                TextFile.deleteLine("src/main/java/com/mycompany/JavaY2/TextFile/receives",order_ID,0);
+                JOptionPane.showMessageDialog(null, "Successfully delete the selected PO", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                UpdateTable.forPO(jTable1);
+            }
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        String[] purchase_order = new String[11];
+
+        //Order ID
+        purchase_order[0] = Query.getLatestOrderID();
+
+        //Request ID
+        String[] options = Query.getPendingPR();
+        if (options.length>0){
+            String choice = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Select an option:",
+                    "Dropdown Selection",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+            if (choice!=null){
+                purchase_order[1] = choice;
+            }else {
+                JOptionPane.showMessageDialog(null, "Canceled", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }else {
+            JOptionPane.showMessageDialog(null, "No pending PR", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        //Item ID
+        purchase_order[2] = Search.getFromPR(purchase_order[1],1);
+
+        //User ID
+        purchase_order[3] = SessionManager.getInstance().userID;
+
+        //Quantity
+        purchase_order[4] = Search.getFromPR(purchase_order[1], 3);
+
+        //unit price
+        purchase_order[5] = Search.getFromInventory(purchase_order[2], 3);
+
+        //Amount
+        assert purchase_order[4] != null;
+        assert purchase_order[5] != null;
+        purchase_order[6] = Double.toString(Double.parseDouble(purchase_order[4]) * Double.parseDouble(purchase_order[5]));
+
+        //Supplier ID
+        purchase_order[7] = Search.getFromPR(purchase_order[1], 6);
+
+        //Order Date
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+        purchase_order[8] = today.format(formatter);;
+
+        //Order Status
+        purchase_order[9] = "Pending";
+
+        //Payment Status
+        purchase_order[10] = "-";
+
+        int result = JOptionPane.showConfirmDialog(null, "Do you want to raise a purchase order based of PR: "+ purchase_order[1], "Confirmation", JOptionPane.YES_NO_OPTION);
+
+        if(result == JOptionPane.YES_OPTION){
+            TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders", String.join("|",purchase_order));
+            Edit.purchaseRequisitions(purchase_order[1], 7,"Approved");
+            JOptionPane.showMessageDialog(null, "Purchase Order Place Successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+            UpdateTable.forPO(jTable1);
+        }
+
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        int selected_row = jTable1.getSelectedRow();
+        if (selected_row == -1){
+            JOptionPane.showMessageDialog(null, "Please select a row to edit", "Warning", JOptionPane.WARNING_MESSAGE);
+        }else{
+            Object orderID = jTable1.getValueAt(selected_row,0);
+            String order_ID = orderID.toString();
+            String[] options = {"Item","Username","Quantity", "Unit Price", "Order Date"};
+            String choice = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Which to edit:",
+                    "Dropdown Selection",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+            switch (choice){
+                case "Item":
+                    while (true){
+                        String itemID = JOptionPane.showInputDialog("Enter Item ID:");
+                        if(itemID==null || itemID.isEmpty()){
+                           return;
+                        }
+                        else if (Query.ifItemExist(itemID)){
+                            int result = JOptionPane.showConfirmDialog(null, "Do you want change item to: "+ Search.getItemName(itemID), "Confirmation", JOptionPane.YES_NO_OPTION);
+
+                            if(result == JOptionPane.YES_OPTION){
+                                String unitPrice = Search.getFromInventory(itemID, 3);
+                                assert unitPrice != null;
+                                String amount = Double.toString(Double.parseDouble(unitPrice) * Double.parseDouble(jTable1.getValueAt(selected_row,4).toString()));
+                                String supplier = Search.getFromInventory(itemID, 6);
+                                Edit.purchaseOrders(order_ID,2, itemID);
+                                Edit.purchaseOrders(order_ID,5, unitPrice);
+                                Edit.purchaseOrders(order_ID,6,amount);
+                                Edit.purchaseOrders(order_ID,7,supplier);
+                                JOptionPane.showMessageDialog(null, "Successfully update the item", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                                UpdateTable.forPO(jTable1);
+                            }
+                            break;
+                        }else {
+                            JOptionPane.showMessageDialog(null, "Item doesn't exist please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
+
+                case "Username":
+                    while (true){
+                        String username = JOptionPane.showInputDialog("Enter Username:");
+                        if(username == null || username.isEmpty()){
+                            return;
+                        }
+                        else if(Query.ifUserExist(username)){
+                            int result = JOptionPane.showConfirmDialog(null, "Do you want change username to: " + username, "Confirmation", JOptionPane.YES_NO_OPTION);
+
+                            if(result == JOptionPane.YES_OPTION) {
+                                String userID = Search.getUserID(username);
+                                Edit.purchaseOrders(order_ID, 3, userID);
+                                JOptionPane.showMessageDialog(null, "Successfully update the username", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                                UpdateTable.forPO(jTable1);
+                            }
+
+                            break;
+                        }else{
+                            JOptionPane.showMessageDialog(null, "User doesn't exist please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+
+                        }
+                    }
+
+                case "Quantity":
+                    while(true){
+                        String quantity = JOptionPane.showInputDialog("Enter Quantity:");
+                        if(quantity == null || quantity.isEmpty()){
+                            return;
+                        }
+                        else if (ValidateFormat.quantityUnit(quantity)){
+                            int result = JOptionPane.showConfirmDialog(null, "Do you want change quantity to: " + quantity, "Confirmation", JOptionPane.YES_NO_OPTION);
+
+                            if(result == JOptionPane.YES_OPTION) {
+                                String amount = Double.toString(Double.parseDouble(quantity) * Double.parseDouble(jTable1.getValueAt(selected_row,5).toString()));
+                                Edit.purchaseOrders(order_ID,4, quantity);
+                                Edit.purchaseOrders(order_ID,6,amount);
+                                UpdateTable.forPO(jTable1);
+                            }
+                            break;
+                        }else {
+                            JOptionPane.showMessageDialog(null, "Invalid quantity format please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
+
+                case "Unit Price":
+                    while (true){
+                        String unitPrice = JOptionPane.showInputDialog("Enter Unit Price:");
+                        if(unitPrice == null || unitPrice.isEmpty()){
+                            return;
+                        }
+                        else if(ValidateFormat.unitPrice(unitPrice)){
+                            unitPrice = String.format("%.1f",Double.parseDouble(unitPrice));
+                            int result = JOptionPane.showConfirmDialog(null, "Do you want change unit price to: " + unitPrice, "Confirmation", JOptionPane.YES_NO_OPTION);
+
+                            if(result == JOptionPane.YES_OPTION) {
+                                String amount = Double.toString(Double.parseDouble(unitPrice) * Double.parseDouble(jTable1.getValueAt(selected_row,4).toString()));
+                                Edit.purchaseOrders(order_ID,5, unitPrice);
+                                Edit.purchaseOrders(order_ID,6,amount);
+                                UpdateTable.forPO(jTable1);
+                            }
+                            break;
+                        }else {
+                            JOptionPane.showMessageDialog(null, "Invalid unit price format please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
+
+                case "Order Date":
+                    while (true){
+                        String date = JOptionPane.showInputDialog("Enter Date in format of DDMMYY (eg: 01052025):");
+                        if(date == null || date.isEmpty()){
+                            return;
+                        }
+                        else if(ValidateFormat.date(date)){
+                            int result = JOptionPane.showConfirmDialog(null, "Do you want change date to: " + date, "Confirmation", JOptionPane.YES_NO_OPTION);
+
+                            if(result == JOptionPane.YES_OPTION) {
+                                Edit.purchaseOrders(order_ID,8,date);
+                                UpdateTable.forPO(jTable1);
+                            }
+                            break;
+                        }else {
+                            JOptionPane.showMessageDialog(null, "Invalid date format please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                        }
+
+                    }
+
+                case null:
+
+                default:
+
+            }
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -256,25 +501,25 @@ public class admin_purchase_orders extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(admin_purchase_orders.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Logger.getLogger(admin_purchase_orders.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(admin_purchase_orders.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Logger.getLogger(admin_purchase_orders.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(admin_purchase_orders.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(admin_purchase_orders.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Logger.getLogger(admin_purchase_orders.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(admin_purchase_orders.class.getName()).log(Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new admin_purchase_orders().setVisible(true);
             }
@@ -282,12 +527,15 @@ public class admin_purchase_orders extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private JButton jButton1;
+    private JButton jButton2;
+    private JButton jButton3;
+    private JButton jButton4;
+    private JButton jButton5;
+    private JButton jButton6;
+    private JLabel jLabel1;
+    private JScrollPane jScrollPane1;
+    private JTable jTable1;
+    private JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

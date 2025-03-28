@@ -49,7 +49,7 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
               <Component id="jButton10" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -98,7 +98,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton1.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50&#xa;jButton1.setMinimumSize(new Dimension(400, 70));&#xa;jButton1.setMaximumSize(new Dimension(400, 70));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton1.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50&#xa;jButton1.setMinimumSize(new Dimension(300, 70));&#xa;jButton1.setMaximumSize(new Dimension(300, 70));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
@@ -114,7 +114,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton2.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50&#xd;&#xa;jButton2.setMinimumSize(new Dimension(400, 70));&#xd;&#xa;jButton2.setMaximumSize(new Dimension(400, 70));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton2.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50&#xa;jButton2.setMinimumSize(new Dimension(300, 70));&#xa;jButton2.setMaximumSize(new Dimension(300, 70));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jButton3">
@@ -130,7 +130,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton3.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50&#xd;&#xa;jButton3.setMinimumSize(new Dimension(400, 70));&#xd;&#xa;jButton3.setMaximumSize(new Dimension(400, 70));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton3.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50&#xa;jButton3.setMinimumSize(new Dimension(300, 70));&#xa;jButton3.setMaximumSize(new Dimension(300, 70));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jButton4">
@@ -146,7 +146,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton4.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50&#xd;&#xa;jButton4.setMinimumSize(new Dimension(400, 70));&#xd;&#xa;jButton4.setMaximumSize(new Dimension(400, 70));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton4.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50&#xa;jButton4.setMinimumSize(new Dimension(300, 70));&#xa;jButton4.setMaximumSize(new Dimension(300, 70));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jButton5">
@@ -162,7 +162,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton5.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50&#xd;&#xa;jButton5.setMinimumSize(new Dimension(400, 70));&#xd;&#xa;jButton5.setMaximumSize(new Dimension(400, 70));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton5.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50&#xa;jButton5.setMinimumSize(new Dimension(300, 70));&#xa;jButton5.setMaximumSize(new Dimension(300, 70));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jButton6">
@@ -178,7 +178,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton6.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50&#xd;&#xa;jButton6.setMinimumSize(new Dimension(400, 70));&#xd;&#xa;jButton6.setMaximumSize(new Dimension(400, 70));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton6.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50&#xa;jButton6.setMinimumSize(new Dimension(300, 70));&#xa;jButton6.setMaximumSize(new Dimension(300, 70));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jButton7">
@@ -194,7 +194,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton7.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50&#xd;&#xa;jButton7.setMinimumSize(new Dimension(400, 70));&#xd;&#xa;jButton7.setMaximumSize(new Dimension(400, 70));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton7.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50&#xa;jButton7.setMinimumSize(new Dimension(300, 70));&#xa;jButton7.setMaximumSize(new Dimension(300, 70));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jButton8">
@@ -210,7 +210,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton8.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50&#xd;&#xa;jButton8.setMinimumSize(new Dimension(400, 70));&#xd;&#xa;jButton8.setMaximumSize(new Dimension(400, 70));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton8.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50&#xa;jButton8.setMinimumSize(new Dimension(300, 70));&#xa;jButton8.setMaximumSize(new Dimension(300, 70));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jButton9">
@@ -226,7 +226,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton9ActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton9.setPreferredSize(new Dimension(400, 70)); // Width: 100, Height: 50&#xd;&#xa;jButton9.setMinimumSize(new Dimension(400, 70));&#xd;&#xa;jButton9.setMaximumSize(new Dimension(400, 70));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton9.setPreferredSize(new Dimension(300, 70)); // Width: 100, Height: 50&#xa;jButton9.setMinimumSize(new Dimension(300, 70));&#xa;jButton9.setMaximumSize(new Dimension(300, 70));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jButton10">

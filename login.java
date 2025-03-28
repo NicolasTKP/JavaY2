@@ -4,11 +4,14 @@
  */
 package com.mycompany.JavaY2;
 
+import com.mycompany.JavaY2.Object.SessionManager;
+
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 
 /**
  *
@@ -16,6 +19,7 @@ import java.util.Scanner;
  */
 public class login extends javax.swing.JFrame {
     int tries = 3;
+    private StringBuilder hiddenText = new StringBuilder();
     /**
      * Creates new form login
      */
@@ -57,6 +61,20 @@ public class login extends javax.swing.JFrame {
 
         jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTextField2.setText("");
+        jTextField2.addKeyListener(new KeyAdapter() {
+
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                e.consume(); // Prevent actual character from appearing
+                if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE && hiddenText.length() > 0) {
+                    hiddenText.deleteCharAt(hiddenText.length() - 1);
+                } else if (Character.isLetterOrDigit(e.getKeyChar())) {
+                    hiddenText.append(e.getKeyChar());
+                }
+                jTextField2.setText("*".repeat(hiddenText.length()));
+            }
+        });
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -130,7 +148,7 @@ public class login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String username = jTextField1.getText();
-        String password = jTextField2.getText();
+        String password = hiddenText.toString();
         try {
             BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/users"));
             String line;
@@ -145,6 +163,10 @@ public class login extends javax.swing.JFrame {
                 if (username.equals(user) && password.equals(pass)){
                     JOptionPane.showMessageDialog(null, "Login Successfully, you will be redirect to the main page", "Successfully", JOptionPane.INFORMATION_MESSAGE);
                     if (role.equals("admin")){
+                        SessionManager.getInstance().userID = line.split("\\|")[0];
+                        SessionManager.getInstance().username = user;
+                        SessionManager.getInstance().password = pass;
+                        SessionManager.getInstance().role = role;
                         admin_mainpage frame = new admin_mainpage();
                         frame.setVisible(true);
                         this.dispose();
