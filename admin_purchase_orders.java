@@ -6,6 +6,7 @@ package com.mycompany.JavaY2;
 
 import com.mycompany.JavaY2.Class.*;
 import com.mycompany.JavaY2.Object.ObjectList;
+import com.mycompany.JavaY2.Object.PurchaseOrder;
 import com.mycompany.JavaY2.Object.SessionManager;
 
 import javax.swing.*;
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,23 +44,24 @@ public class admin_purchase_orders extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new JScrollPane();
-        jTable1 = new JTable();
-        jButton1 = new JButton();
-        jButton2 = new JButton();
-        jTextField1 = new JTextField();
-        jLabel1 = new JLabel();
-        jButton3 = new JButton();
-        jButton4 = new JButton();
-        jButton5 = new JButton();
-        jButton6 = new JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         ObjectList objectList = new ObjectList();
-        List<ObjectList.PurchaseOrder> orders = objectList.getPurchaseOrders();
+        List<PurchaseOrder> orders = objectList.getPurchaseOrders();
         String[][] matrix = new String[orders.size()][10];
-        ObjectList.PurchaseOrder order;
+        PurchaseOrder order;
         for (int i = 0;i<orders.size();i++){
             order = orders.get(i);
             matrix[i][0] = order.order_id;
@@ -72,8 +75,8 @@ public class admin_purchase_orders extends JFrame {
             matrix[i][8] = order.order_date.toString();
             matrix[i][9] = order.order_status;
         }
-        jTable1.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
-        jTable1.setModel(new DefaultTableModel(
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             matrix,
             new String [] {
                 "Order_ID", "Request_ID", "Item_Name", "Username","Quantity","Unit_Price","Amount","Supplier","Order_Date","Order_Status"
@@ -88,111 +91,123 @@ public class admin_purchase_orders extends JFrame {
     jTable1.setRowHeight(25);
     jScrollPane1.setViewportView(jTable1);
 
-    jButton1.setFont(new Font("Segoe UI", 0, 24)); // NOI18N
+    jButton1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
     jButton1.setText("Approve");
-    jButton1.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent evt) {
+    jButton1.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
             jButton1ActionPerformed(evt);
         }
     });
 
-    jButton2.setFont(new Font("Segoe UI", 0, 24)); // NOI18N
+    jButton2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
     jButton2.setText("Reject");
-    jButton2.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent evt) {
+    jButton2.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
             jButton2ActionPerformed(evt);
         }
     });
 
-    jTextField1.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
+    jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
     jTextField1.setText("");
 
-    jLabel1.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
-    jLabel1.setHorizontalAlignment(SwingConstants.RIGHT);
+    jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+    jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     jLabel1.setText("Search:");
 
-    jButton3.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
+    jButton3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
     jButton3.setText("Search");
-    jButton3.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent evt) {
+    jButton3.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
             jButton3ActionPerformed(evt);
         }
     });
 
-    jButton4.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
+    jButton4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
     jButton4.setText("Delete");
-    jButton4.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent evt) {
+    jButton4.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
             jButton4ActionPerformed(evt);
         }
     });
 
-    jButton5.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
+    jButton5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
     jButton5.setText("Add");
-    jButton5.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent evt) {
+    jButton5.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
             jButton5ActionPerformed(evt);
         }
     });
 
-    jButton6.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
+    jButton6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
     jButton6.setText("Modify");
-    jButton6.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent evt) {
+    jButton6.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
             jButton6ActionPerformed(evt);
         }
     });
 
-    GroupLayout layout = new GroupLayout(getContentPane());
+    jButton7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+    jButton7.setText("<");
+    jButton7.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton7ActionPerformed(evt);
+        }
+    });
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
-        layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-            .addGap(64, 64, 64)
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+            .addContainerGap()
+            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 1372, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1372, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(jButton5, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
-                    .addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
-                    .addComponent(jButton6, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jButton3, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addContainerGap(64, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
-        layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(21, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createSequentialGroup()
                     .addGap(6, 6, 6)
-                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextField1, GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                        .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(21, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton5, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGap(18, 18, 18)))
-            .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 609, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(jButton1, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                .addComponent(jButton2, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                            .addComponent(jLabel1)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGap(18, 18, 18)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
             .addContainerGap())
     );
 
@@ -204,10 +219,19 @@ public class admin_purchase_orders extends JFrame {
         if (selectedRow == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
         }else{
+            String[] ls = new String[7];
             Object order_id = jTable1.getValueAt(selectedRow,0);
             Edit.purchaseOrders(order_id.toString(),9,"Approved");
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setValueAt("Approved",selectedRow,9);
+            ls[0] = order_id.toString();
+            ls[1] = Objects.requireNonNull(Search.getFromPO(ls[0], 2)).toUpperCase();
+            ls[2] = Search.getItemName(ls[1]);
+            ls[3] = Search.getFromPO(ls[0],4);
+            ls[4] = Search.getFromPO(ls[0],6);
+            ls[5] = "Not Received";
+            ls[6] = "-";
+            TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/receives",String.join("|",ls));
             JOptionPane.showMessageDialog(null, "Successfully Approved The Purchase Order", "Successful", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -231,9 +255,9 @@ public class admin_purchase_orders extends JFrame {
             UpdateTable.forPO(jTable1);
         }else{
             ObjectList objectList = new ObjectList();
-            List<ObjectList.PurchaseOrder> orders = objectList.getPurchaseOrders();
+            List<PurchaseOrder> orders = objectList.getPurchaseOrders();
             String[][] matrix = new String[orders.size()][10];
-            ObjectList.PurchaseOrder order;
+            PurchaseOrder order;
             for (int i = 0; i < orders.size(); i++) {
                 order = orders.get(i);
                 if (Query.anyMatchOrder(order,keyword)) {
@@ -491,6 +515,12 @@ public class admin_purchase_orders extends JFrame {
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        admin_mainpage page = new admin_mainpage();
+        page.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -527,15 +557,16 @@ public class admin_purchase_orders extends JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private JButton jButton1;
-    private JButton jButton2;
-    private JButton jButton3;
-    private JButton jButton4;
-    private JButton jButton5;
-    private JButton jButton6;
-    private JLabel jLabel1;
-    private JScrollPane jScrollPane1;
-    private JTable jTable1;
-    private JTextField jTextField1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

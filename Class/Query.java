@@ -1,6 +1,8 @@
 package com.mycompany.JavaY2.Class;
 
 import com.mycompany.JavaY2.Object.ObjectList;
+import com.mycompany.JavaY2.Object.PurchaseOrder;
+import com.mycompany.JavaY2.Object.Receives;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,7 +12,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Query {
-    public static boolean anyMatchOrder(ObjectList.PurchaseOrder order, String keyword){
+    public static boolean anyMatchOrder(PurchaseOrder order, String keyword){
         Set<String> valuesToCheck = new HashSet<>(Arrays.asList(
                 order.order_id.toLowerCase(),
                 order.request_id.toLowerCase(),
@@ -25,6 +27,26 @@ public class Query {
                 order.order_status.toLowerCase(),
                 order.item_name.toLowerCase(),
                 order.supplier_name.toLowerCase()
+        ));
+        return valuesToCheck.contains(keyword);
+    }
+
+    public static boolean anyMatchReceive(Receives receive, String keyword){
+        Set<String> valuesToCheck = new HashSet<>(Arrays.asList(
+                receive.order_id.toLowerCase(),
+                receive.request_id.toLowerCase(),
+                receive.item_id.toLowerCase(),
+                receive.user_id.toLowerCase(),
+                receive.username.toLowerCase(),
+                Integer.toString(receive.quantity),
+                Double.toString(receive.unit_price),
+                Double.toString(receive.amount),
+                receive.supplier_id.toLowerCase(),
+                receive.order_date.toString().toLowerCase(),
+                receive.order_status.toLowerCase(),
+                receive.item_name.toLowerCase(),
+                receive.supplier_name.toLowerCase(),
+                receive.delivery_status.toLowerCase()
         ));
         return valuesToCheck.contains(keyword);
     }
