@@ -1,6 +1,8 @@
 package com.mycompany.JavaY2.Class;
 
 import com.mycompany.JavaY2.Object.ObjectList;
+import com.mycompany.JavaY2.Object.PurchaseOrder;
+import com.mycompany.JavaY2.Object.Receives;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,9 +12,9 @@ public class UpdateTable {
 
     public static void forPO(JTable jTable){
         ObjectList objectList = new ObjectList();
-        List<ObjectList.PurchaseOrder> orders = objectList.getPurchaseOrders();
+        List<PurchaseOrder> orders = objectList.getPurchaseOrders();
         String[][] matrix = new String[orders.size()][10];
-        ObjectList.PurchaseOrder order;
+        PurchaseOrder order;
         for (int i = 0;i<orders.size();i++){
             order = orders.get(i);
             matrix[i][0] = order.order_id;
@@ -37,6 +39,33 @@ public class UpdateTable {
                                  return false;
                              }
                          }
+        );
+    }
+
+    public static void forReceive(JTable jTable){
+        ObjectList objectList = new ObjectList();
+        List<Receives> receives = objectList.getReceives();
+        String[][] matrix = new String[receives.size()][6];
+        Receives receive;
+        for (int i = 0;i<receives.size();i++){
+            receive = receives.get(i);
+            matrix[i][0] = receive.order_id;
+            matrix[i][1] = receive.item_id;
+            matrix[i][2] = receive.item_name;
+            matrix[i][3] = Integer.toString(receive.quantity);
+            matrix[i][4] = Double.toString(receive.amount);
+            matrix[i][5] = receive.delivery_status;
+        }
+        jTable.setModel(new DefaultTableModel(
+                                matrix,
+                                new String [] {
+                                        "Order_ID", "Item_ID", "Item_Name","Quantity","Amount","Delivery_Status"                                }
+                        ){
+                            @Override
+                            public boolean isCellEditable(int row, int column) {
+                                return false;
+                            }
+                        }
         );
     }
 }
