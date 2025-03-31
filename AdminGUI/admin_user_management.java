@@ -2,11 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.JavaY2;
-
+package com.mycompany.JavaY2.AdminGUI;
+import com.mycompany.JavaY2.Object.User;
 import com.mycompany.JavaY2.Class.*;
 import com.mycompany.JavaY2.Object.ObjectList;
-import com.mycompany.JavaY2.Object.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -46,6 +45,7 @@ public class admin_user_management extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         ObjectList objectList = new ObjectList();
         List<User> users = objectList.getUsers();
         String[][] matrix = new String[users.size()][4];
@@ -89,6 +89,11 @@ public class admin_user_management extends javax.swing.JFrame {
 
     jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
     jButton2.setText("Delete");
+    jButton2.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton2ActionPerformed(evt);
+        }
+    });
 
     jButton3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
     jButton3.setText("Add");
@@ -100,6 +105,11 @@ public class admin_user_management extends javax.swing.JFrame {
 
     jButton4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
     jButton4.setText("Modify");
+    jButton4.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton4ActionPerformed(evt);
+        }
+    });
 
     jButton5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
     jButton5.setText("<");
@@ -143,10 +153,10 @@ public class admin_user_management extends javax.swing.JFrame {
                 .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                 .addComponent(jTextField1)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel1)
                 .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(35, Short.MAX_VALUE))
@@ -250,6 +260,105 @@ public class admin_user_management extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1){
+            JOptionPane.showMessageDialog(null, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
+        }else{
+            String username = jTable1.getValueAt(selectedRow, 1).toString();
+            int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to delete user: "+username, "Confirmation",JOptionPane.YES_NO_OPTION);
+            if(result == JOptionPane.YES_OPTION){
+                TextFile.deleteLine("src/main/java/com/mycompany/JavaY2/TextFile/users", username, 1);
+                JOptionPane.showMessageDialog(null, "The user had successfully being deleted", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                UpdateTable.forUser(jTable1);
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1){
+            JOptionPane.showMessageDialog(null, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
+        }else{
+            String user_id = jTable1.getValueAt(selectedRow,0).toString();
+            String[] options = {"Username", "Password", "Role"};
+            String choice = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Choose a column to edit:",
+                    "Dropdown Selection",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+
+            switch (choice){
+                case null:
+                    return;
+                case "Username":
+                    String username;
+                    while(true){
+                        username = JOptionPane.showInputDialog("Enter Username:");
+                        if(username == null || username.isEmpty()){
+                            return;
+                        }
+                        else if(ValidateFormat.username(username)){
+                            break;
+                        }else {
+                            JOptionPane.showMessageDialog(null, "Invalid username format, length of username must be at least 4 characters, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
+                    int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want change username to: "+username, "Confirmation",JOptionPane.YES_NO_OPTION);
+                    if(result == JOptionPane.YES_OPTION){
+                        Edit.users(user_id, 1, username);
+                        JOptionPane.showMessageDialog(null, "The username had successfully being updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                        UpdateTable.forUser(jTable1);
+                    }
+
+                case "Password":
+                    String password;
+                    while(true){
+                        password = JOptionPane.showInputDialog("Enter Password:");
+                        if(password == null || password.isEmpty()){
+                            return;
+                        }
+                        else if(ValidateFormat.password(password)){
+                            break;
+                        }else {
+                            JOptionPane.showMessageDialog(null, "Invalid password format, length of password must be at least 7 characters, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
+                    int result2 = JOptionPane.showConfirmDialog(null, "Do you want sure you want change password to: "+password, "Confirmation",JOptionPane.YES_NO_OPTION);
+                    if(result2 == JOptionPane.YES_OPTION){
+                        Edit.users(user_id, 2, password);
+                        JOptionPane.showMessageDialog(null, "The password had successfully being updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                        UpdateTable.forUser(jTable1);
+                    }
+
+                case "Role":
+                    String[] roles = {"Admin","Sales Manager","Purchase Manager", "Finance Manager", "Inventory Manager"};
+                    String role = (String) JOptionPane.showInputDialog(
+                            null,
+                            "Choose a role:",
+                            "Dropdown Selection",
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            roles,
+                            roles[0]);
+                    if (role == null){
+                        return;
+                    }
+                    int result3 = JOptionPane.showConfirmDialog(null, "Do you want sure you want change role to: "+role, "Confirmation",JOptionPane.YES_NO_OPTION);
+                    if(result3 == JOptionPane.YES_OPTION){
+                        Edit.users(user_id, 3, role.toLowerCase());
+                        JOptionPane.showMessageDialog(null, "The role had successfully being updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                        UpdateTable.forUser(jTable1);
+                    }
+
+                default:
+            }
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

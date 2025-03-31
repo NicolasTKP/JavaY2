@@ -2,13 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.JavaY2;
+package com.mycompany.JavaY2.AdminGUI;
 
 import com.mycompany.JavaY2.Class.Matrix;
-import com.mycompany.JavaY2.Class.Query;
 import com.mycompany.JavaY2.Class.UpdateTable;
 import com.mycompany.JavaY2.Object.ObjectList;
-import com.mycompany.JavaY2.Object.PurchaseOrder;
 import com.mycompany.JavaY2.Object.Receives;
 
 import javax.swing.table.DefaultTableModel;
@@ -45,6 +43,7 @@ public class admin_order_tracking extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         ObjectList objectList = new ObjectList();
         List<Receives> receives = objectList.getReceives();
         String[][] matrix = new String[receives.size()][6];

@@ -95,4 +95,21 @@ public class Query {
             return false;
         }
     }
+
+    public static String[] getAllSupplier(){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"));
+            String[] ls = new String[linesList.size()-1];
+            for (int i=1;i<linesList.size();i++){
+                String line = linesList.get(i);
+                String[] column = line.split("\\|");
+                ls[i-1] = column[1];
+            }
+            return ls;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

@@ -58,10 +58,10 @@
                   <Component id="jButton1" pref="52" max="32767" attributes="0"/>
                   <Component id="jTextField1" max="32767" attributes="0"/>
                   <Component id="jButton5" alignment="0" min="-2" pref="44" max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton3" alignment="0" max="32767" attributes="0"/>
                   <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
                   <Component id="jButton4" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="651" max="-2" attributes="0"/>
@@ -89,7 +89,7 @@
             <Property name="rowHeight" type="int" value="25"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ObjectList objectList = new ObjectList();&#xa;List&lt;User&gt; users = objectList.getUsers();&#xa;String[][] matrix = new String[users.size()][4];&#xa;User user;&#xa;for (int i = 0;i&lt;users.size();i++){&#xa;    user = users.get(i);&#xa;    matrix[i][0] = user.user_id;&#xa;    matrix[i][1] = user.username;&#xa;    matrix[i][2] = user.password;&#xa;    matrix[i][3] = user.role;&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);&#xa;ObjectList objectList = new ObjectList();&#xa;List&lt;User&gt; users = objectList.getUsers();&#xa;String[][] matrix = new String[users.size()][4];&#xa;User user;&#xa;for (int i = 0;i&lt;users.size();i++){&#xa;    user = users.get(i);&#xa;    matrix[i][0] = user.user_id;&#xa;    matrix[i][1] = user.username;&#xa;    matrix[i][2] = user.password;&#xa;    matrix[i][3] = user.role;&#xa;}"/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -137,6 +137,9 @@
           <Connection code="&quot;Delete&quot;" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
@@ -160,6 +163,9 @@
           <Connection code="&quot;Modify&quot;" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton5">
       <Properties>
