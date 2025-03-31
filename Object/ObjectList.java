@@ -75,10 +75,37 @@ public class ObjectList {
                     receive.item_name = Search.getItemName(lines[2]);
                     receive.supplier_name = Search.getSupplierName(lines[7]);
                     receive.delivery_status = Search.getDeliveryStatus(receive.order_id);
+                    receive.payment_status = Search.getPaymentStatus(receive.order_id);
                     ls.add(receive);
                 }
             }
             ls.sort(Comparator.comparing(receive -> !receive.delivery_status.equals("Not Received")));
+            br.close();
+            return ls;
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+    public List<User> getUsers(){
+        List<User> ls = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/users"));
+            String line;
+            String[] lines;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                User user = new User();
+                lines = line.split("\\|");
+                user.user_id = lines[0];
+                user.username = lines[1];
+                user.password = lines[2];
+                user.role = lines[3];
+                ls.add(user);
+            }
             br.close();
             return ls;
         }catch (IOException e) {

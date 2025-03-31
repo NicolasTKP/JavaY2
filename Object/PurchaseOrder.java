@@ -1,6 +1,9 @@
 package com.mycompany.JavaY2.Object;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PurchaseOrder {
     public String order_id;
@@ -33,5 +36,24 @@ public class PurchaseOrder {
         this.order_status = order_status;
         this.item_name = item_name;
         this.supplier_name = supplier_name;
+    }
+
+    public boolean anyMatch(String keyword){
+        Set<String> valuesToCheck = new HashSet<>(Arrays.asList(
+                this.order_id.toLowerCase(),
+                this.request_id.toLowerCase(),
+                this.item_id.toLowerCase(),
+                this.user_id.toLowerCase(),
+                this.username.toLowerCase(),
+                Integer.toString(this.quantity),
+                Double.toString(this.unit_price),
+                Double.toString(this.amount),
+                this.supplier_id.toLowerCase(),
+                this.order_date.toString().toLowerCase(),
+                this.order_status.toLowerCase(),
+                this.item_name.toLowerCase(),
+                this.supplier_name.toLowerCase()
+        ));
+        return valuesToCheck.contains(keyword);
     }
 }

@@ -12,44 +12,6 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Query {
-    public static boolean anyMatchOrder(PurchaseOrder order, String keyword){
-        Set<String> valuesToCheck = new HashSet<>(Arrays.asList(
-                order.order_id.toLowerCase(),
-                order.request_id.toLowerCase(),
-                order.item_id.toLowerCase(),
-                order.user_id.toLowerCase(),
-                order.username.toLowerCase(),
-                Integer.toString(order.quantity),
-                Double.toString(order.unit_price),
-                Double.toString(order.amount),
-                order.supplier_id.toLowerCase(),
-                order.order_date.toString().toLowerCase(),
-                order.order_status.toLowerCase(),
-                order.item_name.toLowerCase(),
-                order.supplier_name.toLowerCase()
-        ));
-        return valuesToCheck.contains(keyword);
-    }
-
-    public static boolean anyMatchReceive(Receives receive, String keyword){
-        Set<String> valuesToCheck = new HashSet<>(Arrays.asList(
-                receive.order_id.toLowerCase(),
-                receive.request_id.toLowerCase(),
-                receive.item_id.toLowerCase(),
-                receive.user_id.toLowerCase(),
-                receive.username.toLowerCase(),
-                Integer.toString(receive.quantity),
-                Double.toString(receive.unit_price),
-                Double.toString(receive.amount),
-                receive.supplier_id.toLowerCase(),
-                receive.order_date.toString().toLowerCase(),
-                receive.order_status.toLowerCase(),
-                receive.item_name.toLowerCase(),
-                receive.supplier_name.toLowerCase(),
-                receive.delivery_status.toLowerCase()
-        ));
-        return valuesToCheck.contains(keyword);
-    }
 
     public static String getLatestOrderID(){
         try {
@@ -59,6 +21,21 @@ public class Query {
             int number = Integer.parseInt(latest.substring(1));
             number++;
             return String.format("%s%03d", "O", number);
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getLatestUserID(){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/users"));
+            String line = linesList.getLast();
+            String latest = line.split("\\|")[0];
+            int number = Integer.parseInt(latest.substring(1));
+            number++;
+            return String.format("%s%03d", "U", number);
 
         }catch (IOException e) {
             e.printStackTrace();
@@ -116,6 +93,23 @@ public class Query {
         }catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public static String[] getAllSupplier(){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"));
+            String[] ls = new String[linesList.size()-1];
+            for (int i=1;i<linesList.size();i++){
+                String line = linesList.get(i);
+                String[] column = line.split("\\|");
+                ls[i-1] = column[1];
+            }
+            return ls;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

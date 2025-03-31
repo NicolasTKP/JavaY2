@@ -4,6 +4,7 @@
  */
 package com.mycompany.JavaY2;
 
+import com.mycompany.JavaY2.AdminGUI.admin_mainpage;
 import com.mycompany.JavaY2.Object.SessionManager;
 
 import javax.swing.*;

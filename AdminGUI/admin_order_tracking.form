@@ -80,7 +80,7 @@
             <Property name="rowHeight" type="int" value="25"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ObjectList objectList = new ObjectList();&#xa;List&lt;Receives&gt; receives = objectList.getReceives();&#xa;String[][] matrix = new String[receives.size()][6];&#xa;Receives receive;&#xa;for (int i = 0;i&lt;receives.size();i++){&#xa;    receive = receives.get(i);&#xa;    matrix[i][0] = receive.order_id;&#xa;    matrix[i][1] = receive.item_id;&#xa;    matrix[i][2] = receive.item_name;&#xa;    matrix[i][3] = Integer.toString(receive.quantity);&#xa;    matrix[i][4] = Double.toString(receive.amount);&#xa;    matrix[i][5] = receive.delivery_status;&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);&#xa;ObjectList objectList = new ObjectList();&#xa;List&lt;Receives&gt; receives = objectList.getReceives();&#xa;String[][] matrix = new String[receives.size()][6];&#xa;Receives receive;&#xa;for (int i = 0;i&lt;receives.size();i++){&#xa;    receive = receives.get(i);&#xa;    matrix[i][0] = receive.order_id;&#xa;    matrix[i][1] = receive.item_id;&#xa;    matrix[i][2] = receive.item_name;&#xa;    matrix[i][3] = Integer.toString(receive.quantity);&#xa;    matrix[i][4] = Double.toString(receive.amount);&#xa;    matrix[i][5] = receive.delivery_status;&#xa;}"/>
           </AuxValues>
         </Component>
       </SubComponents>

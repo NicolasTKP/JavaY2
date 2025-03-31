@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.JavaY2;
+package com.mycompany.JavaY2.AdminGUI;
 
 import com.mycompany.JavaY2.Class.*;
 import com.mycompany.JavaY2.Object.ObjectList;
@@ -13,11 +13,9 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,6 +56,7 @@ public class admin_purchase_orders extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         ObjectList objectList = new ObjectList();
         List<PurchaseOrder> orders = objectList.getPurchaseOrders();
         String[][] matrix = new String[orders.size()][10];
@@ -260,7 +259,7 @@ public class admin_purchase_orders extends JFrame {
             PurchaseOrder order;
             for (int i = 0; i < orders.size(); i++) {
                 order = orders.get(i);
-                if (Query.anyMatchOrder(order,keyword)) {
+                if (order.anyMatch(keyword)) {
                     matrix[i][0] = order.order_id;
                     matrix[i][1] = order.request_id;
                     matrix[i][2] = order.item_name;

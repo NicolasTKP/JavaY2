@@ -3,6 +3,7 @@ package com.mycompany.JavaY2.Class;
 import com.mycompany.JavaY2.Object.ObjectList;
 import com.mycompany.JavaY2.Object.PurchaseOrder;
 import com.mycompany.JavaY2.Object.Receives;
+import com.mycompany.JavaY2.Object.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -60,6 +61,31 @@ public class UpdateTable {
                                 matrix,
                                 new String [] {
                                         "Order_ID", "Item_ID", "Item_Name","Quantity","Amount","Delivery_Status"                                }
+                        ){
+                            @Override
+                            public boolean isCellEditable(int row, int column) {
+                                return false;
+                            }
+                        }
+        );
+    }
+
+    public static void forUser(JTable jTable){
+        ObjectList objectList = new ObjectList();
+        List<User> users = objectList.getUsers();
+        String[][] matrix = new String[users.size()][4];
+        User user;
+        for (int i = 0;i<users.size();i++){
+            user = users.get(i);
+            matrix[i][0] = user.user_id;
+            matrix[i][1] = user.username;
+            matrix[i][2] = user.password;
+            matrix[i][3] = user.role;
+        }
+        jTable.setModel(new DefaultTableModel(
+                                matrix,
+                                new String [] {
+                                        "User_ID", "Username", "Password","Role"}
                         ){
                             @Override
                             public boolean isCellEditable(int row, int column) {
