@@ -260,7 +260,7 @@ public class admin_purchase_orders extends JFrame {
             PurchaseOrder order;
             for (int i = 0; i < orders.size(); i++) {
                 order = orders.get(i);
-                if (Query.anyMatchOrder(order,keyword)) {
+                if (order.anyMatch(keyword)) {
                     matrix[i][0] = order.order_id;
                     matrix[i][1] = order.request_id;
                     matrix[i][2] = order.item_name;

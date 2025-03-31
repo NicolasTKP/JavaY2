@@ -25,4 +25,12 @@ public class ValidateFormat {
     public static boolean date(String date) {
         return date.matches("\\d{2}\\d{2}\\d{4}");
     }
+
+    public static boolean username(String username){
+        return username.length() >= 4;
+    }
+
+    public static boolean password(String password){
+        return password.length() >= 7;
+    }
 }

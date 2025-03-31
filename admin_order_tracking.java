@@ -145,7 +145,7 @@ public class admin_order_tracking extends javax.swing.JFrame {
             Receives receive;
             for (int i = 0; i < receives.size(); i++) {
                 receive = receives.get(i);
-                if (Query.anyMatchReceive(receive,keyword)) {
+                if (receive.anyMatch(keyword)) {
                     receive = receives.get(i);
                     matrix[i][0] = receive.order_id;
                     matrix[i][1] = receive.item_id;
