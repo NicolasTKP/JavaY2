@@ -1,2 +1,8 @@
 supplier_id|supplier_name|address|contact|supply_items(item_id)
-SU001|Hello supplier|Kuala Lumpur|011-111-1111|001,003,005,006
+SU001|A supplier|Kuala Lumpur|011-111-1111|Apple
+SU002|B supplier|Kuala Lumpur|011-111-1111|Apple
+SU003|C supplier|Kuala Lumpur|011-111-1111|Banana
+SU004|D supplier|Kuala Lumpur|011-111-1111|Banana
+SU005|APU|TPM|0123456789|
+SU006||||
+SU007|AAA|aaa|1234567890|A
