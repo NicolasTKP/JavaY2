@@ -7,6 +7,11 @@ package com.mycompany.JavaY2.Class;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -34,14 +39,74 @@ public class Search {
         }
     }
 
-    public static String getItemName(String itemID){
+    public static String getItemNamebyItemID(String itemID){
         try {
-            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/items"));
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
                 if (line.split("\\|")[0].equals(itemID.toUpperCase())){
                     return line.split("\\|")[1];
+                }
+
+            }
+            br.close();
+            return null;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getItemNamebyGroupID(String groupID){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                if (line.split("\\|")[0].equals(groupID.toUpperCase())){
+                    return line.split("\\|")[1];
+                }
+
+            }
+            br.close();
+            return null;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getItemID(String supplierID, String groupID){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/items"));
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                if (line.split("\\|")[6].equals(supplierID.toUpperCase()) && line.split("\\|")[7].equals(groupID.toUpperCase())){
+                    return line.split("\\|")[0];
+                }
+
+            }
+            br.close();
+            return null;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getGroupIDbyItemName(String item_name){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                if (line.split("\\|")[1].equals(item_name.toUpperCase())){
+                    return line.split("\\|")[0];
                 }
 
             }
@@ -62,6 +127,26 @@ public class Search {
             while ((line = br.readLine()) != null) {
                 if (line.split("\\|")[0].equals(supplierID.toUpperCase())){
                     return line.split("\\|")[1];
+                }
+
+            }
+            br.close();
+            return null;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getSupplierID(String supplier_name){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"));
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                if (line.split("\\|")[1].equals(supplier_name)){
+                    return line.split("\\|")[0];
                 }
 
             }
@@ -154,9 +239,29 @@ public class Search {
         }
     }
 
-    public static String getFromInventory(String itemID, int column){
+    public static String getFromInventory(String groupID, int column){
         try {
             BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                if (line.split("\\|")[0].equals(groupID.toUpperCase())){
+                    return line.split("\\|")[column];
+                }
+
+            }
+            br.close();
+            return null;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getFromItems(String itemID, int column){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/items"));
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
@@ -188,6 +293,24 @@ public class Search {
             br.close();
             return null;
 
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String[] getSuppliersByGroupID(String groupID){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
+            List<String> ls = new ArrayList<>();
+            for (int i=1;i<linesList.size();i++){
+                String line = linesList.get(i);
+                String[] column = line.split("\\|");
+                if (column[7].equals(groupID)){
+                    ls.add(Search.getSupplierName(column[6]));
+                }
+            }
+            return Arrays.copyOf(ls.toArray(), ls.toArray().length, String[].class);
         }catch (IOException e) {
             e.printStackTrace();
             return null;

@@ -64,10 +64,10 @@ public class Query {
 
     public static boolean ifItemExist(String itemID){
         try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
             for (String line:linesList){
                 String[] column = line.split("\\|");
-                if (column[0].equalsIgnoreCase(itemID)){
+                if (column[0].equalsIgnoreCase(itemID)&&!line.equals(linesList.getFirst())){
                     return true;
                 }
             }
@@ -84,7 +84,7 @@ public class Query {
             List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/users"));
             for (String line:linesList){
                 String[] column = line.split("\\|");
-                if (column[1].equalsIgnoreCase(username)){
+                if (column[1].equalsIgnoreCase(username)&&!line.equals(linesList.getFirst())){
                     return true;
                 }
             }

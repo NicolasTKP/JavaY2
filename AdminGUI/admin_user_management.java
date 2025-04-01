@@ -314,6 +314,7 @@ public class admin_user_management extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "The username had successfully being updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
                         UpdateTable.forUser(jTable1);
                     }
+                    break;
 
                 case "Password":
                     String password;
@@ -334,6 +335,7 @@ public class admin_user_management extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "The password had successfully being updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
                         UpdateTable.forUser(jTable1);
                     }
+                    break;
 
                 case "Role":
                     String[] roles = {"Admin","Sales Manager","Purchase Manager", "Finance Manager", "Inventory Manager"};
@@ -354,6 +356,7 @@ public class admin_user_management extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "The role had successfully being updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
                         UpdateTable.forUser(jTable1);
                     }
+                    break;
 
                 default:
             }

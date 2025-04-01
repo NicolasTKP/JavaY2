@@ -36,7 +36,7 @@ public class ObjectList {
                 order.supplier_id = lines[7];
                 order.order_date = LocalDate.parse(lines[8], formatter);
                 order.order_status = lines[9];
-                order.item_name = Search.getItemName(lines[2]);
+                order.item_name = Search.getItemNamebyItemID(lines[2]);
                 order.supplier_name = Search.getSupplierName(lines[7]);
                 ls.add(order);
             }
@@ -72,7 +72,7 @@ public class ObjectList {
                     receive.supplier_id = lines[7];
                     receive.order_date = LocalDate.parse(lines[8], formatter);
                     receive.order_status = lines[9];
-                    receive.item_name = Search.getItemName(lines[2]);
+                    receive.item_name = Search.getItemNamebyItemID(lines[2]);
                     receive.supplier_name = Search.getSupplierName(lines[7]);
                     receive.delivery_status = Search.getDeliveryStatus(receive.order_id);
                     receive.payment_status = Search.getPaymentStatus(receive.order_id);
@@ -126,11 +126,12 @@ public class ObjectList {
                 lines = line.split("\\|");
                 item.item_id = lines[0];
                 item.item_name = lines[1];
-                item.quantity = Integer.parseInt(lines[2]);
-                item.stock_price = Double.parseDouble(lines[3]);
-                item.retail_price = Double.parseDouble(lines[4]);
-                item.low_stock_benchmark = Integer.parseInt(lines[5]);
+                item.stock_price = Double.parseDouble(lines[2]);
+                item.sales_per_day = Integer.parseInt(lines[3]);
+                item.ordering_lead_time = Integer.parseInt(lines[4]);
+                item.safety_level = Integer.parseInt(lines[5]);
                 item.supplier_id = lines[6];
+                item.group_id = lines[7];
                 ls.add(item);
             }
             br.close();

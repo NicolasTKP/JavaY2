@@ -78,7 +78,7 @@ public class Edit {
         }
     }
 
-    public static void inventory(String orderID, int column,String value){
+    public static void inventory(String groupID, int column,String value){
         try {
             List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
             BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/inventory", false));
@@ -87,7 +87,30 @@ public class Edit {
             for (int i = 0; i < linesList.size(); i++) {
                 line = linesList.get(i);
                 items = line.split("\\|");
-                if (items.length>column && items[0].equals(orderID)){
+                if (items.length>column && items[0].equals(groupID)){
+                    items[column] = value;
+                }
+                bw.write(String.join("|",items));
+                if (i < linesList.size() - 1) {
+                    bw.newLine();
+                }
+            }
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void item(String itemID, int column,String value){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/items", false));
+            String[] items;
+            String line;
+            for (int i = 0; i < linesList.size(); i++) {
+                line = linesList.get(i);
+                items = line.split("\\|");
+                if (items.length>column && items[0].equals(itemID.toUpperCase())){
                     items[column] = value;
                 }
                 bw.write(String.join("|",items));

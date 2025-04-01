@@ -74,12 +74,12 @@
               <Font name="Segoe UI" size="18" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    matrix,&#xa;    new String [] {&#xa;        &quot;Item_ID&quot;, &quot;Item Name&quot;, &quot;Quantity&quot;,&quot;Stock Price&quot;,&quot;Retail Price&quot;,&quot;Low Stock Benchmark&quot;, &quot;Supplier ID&quot;}&#xa;){&#xa;    @Override&#xa;    public boolean isCellEditable(int row, int column) {&#xa;        return false;&#xa;    }&#xa;}&#xa;" type="code"/>
+              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    matrix,&#xa;    new String [] {&#xa;        &quot;Item_ID&quot;, &quot;Item Name&quot;,&quot;Stock Price&quot;,&quot;Sales Per Day&quot;,&quot;Ordering Lead Time&quot;, &quot;Safety Level&quot;, &quot;Supplier&quot;, &quot;Group ID&quot;}&#xa;){&#xa;    @Override&#xa;    public boolean isCellEditable(int row, int column) {&#xa;        return false;&#xa;    }&#xa;}&#xa;" type="code"/>
             </Property>
             <Property name="rowHeight" type="int" value="25"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ObjectList objectList = new ObjectList();&#xd;&#xa;List&lt;Item&gt; items = objectList.getItems();&#xd;&#xa;String[][] matrix = new String[items.size()][7];&#xd;&#xa;Item item;&#xd;&#xa;for (int i = 0;i&lt;items.size();i++){&#xd;&#xa;    item = items.get(i);&#xd;&#xa;    matrix[i][0] = item.item_id;&#xd;&#xa;    matrix[i][1] = item.item_name;&#xd;&#xa;    matrix[i][2] = Integer.toString(item.quantity);&#xd;&#xa;    matrix[i][3] = Double.toString(item.stock_price);&#xd;&#xa;    matrix[i][4] = Double.toString(item.retail_price);&#xd;&#xa;    matrix[i][5] = Integer.toString(item.low_stock_benchmark);&#xd;&#xa;    matrix[i][6] = item.supplier_id;&#xd;&#xa;&#xd;&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ObjectList objectList = new ObjectList();&#xa;List&lt;Item&gt; items = objectList.getItems();&#xa;String[][] matrix = new String[items.size()][8];&#xa;Item item;&#xa;for (int i = 0;i&lt;items.size();i++){&#xa;    item = items.get(i);&#xa;    matrix[i][0] = item.item_id;&#xa;    matrix[i][1] = item.item_name;&#xa;    matrix[i][2] = Double.toString(item.stock_price);&#xa;    matrix[i][3] = Integer.toString(item.sales_per_day);&#xa;    matrix[i][4] = Integer.toString(item.ordering_lead_time);&#xa;    matrix[i][5] = Integer.toString(item.safety_level);&#xa;    matrix[i][6] = Search.getSupplierName(item.supplier_id);&#xa;    matrix[i][7] = item.group_id;&#xa;&#xa;}"/>
           </AuxValues>
         </Component>
       </SubComponents>

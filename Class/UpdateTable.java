@@ -92,26 +92,27 @@ public class UpdateTable {
         );
     }
 
-    public static void forInventory(JTable jTable){
+    public static void forItems(JTable jTable){
         ObjectList objectList = new ObjectList();
         List<Item> items = objectList.getItems();
-        String[][] matrix = new String[items.size()][7];
+        String[][] matrix = new String[items.size()][8];
         Item item;
         for (int i = 0;i<items.size();i++){
             item = items.get(i);
             matrix[i][0] = item.item_id;
             matrix[i][1] = item.item_name;
-            matrix[i][2] = Integer.toString(item.quantity);
-            matrix[i][3] = Double.toString(item.stock_price);
-            matrix[i][4] = Double.toString(item.retail_price);
-            matrix[i][5] = Integer.toString(item.low_stock_benchmark);
-            matrix[i][6] = item.supplier_id;
+            matrix[i][2] = Double.toString(item.stock_price);
+            matrix[i][3] = Integer.toString(item.sales_per_day);
+            matrix[i][4] = Integer.toString(item.ordering_lead_time);
+            matrix[i][5] = Integer.toString(item.safety_level);
+            matrix[i][6] = Search.getSupplierName(item.supplier_id);
+            matrix[i][7] = item.group_id;
 
         }
         jTable.setModel(new DefaultTableModel(
                                 matrix,
                                 new String [] {
-                                        "Item_ID", "Item Name", "Quantity","Stock Price","Retail Price","Low Stock Benchmark", "Supplier ID"}
+                                        "Item_ID", "Item Name","Stock Price","Sales Per Day","Ordering Lead Time", "Safety Level", "Supplier", "Group ID"}
                         ){
                             @Override
                             public boolean isCellEditable(int row, int column) {
