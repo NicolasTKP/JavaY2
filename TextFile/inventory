@@ -1,2 +1,5 @@
-item_id|item_name|quantity|stock_price|retail_price|low_stock_benchmark|supplier_id
-I001|apple|100|1.2|2|10|SU001
+group_id|item_name|quantity|retail_price
+G001|orange|50|5.5
+G002|apple|50|4.5
+G003|banana|2|1.2
+G004|abc|2|0.6

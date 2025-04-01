@@ -19,7 +19,8 @@ public class Supplier {
     public String address;
     public String contact_number;
     public String supply_items;
-    
+
+    String payment_term;
 
     public Supplier(){
         
@@ -31,6 +32,7 @@ public class Supplier {
         this.address = address;
         this.contact_number = contact_number;
         this.supply_items = supply_items;
+        this.payment_term = payment_term;
     }
     
 
@@ -73,7 +75,7 @@ public class Supplier {
         String file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\suppliers";
         try (BufferedReader br = new BufferedReader(new FileReader(file_path))) {
             String line;
-            br.readLine(); // Skip header
+            br.readLine();
 
             while ((line = br.readLine()) != null) {
                 String[] columns = line.split("\\|"); // Split by '|'
@@ -88,6 +90,10 @@ public class Supplier {
     public String setSupplierID(){
         this.supplier_id = getNextSupplierID();
         return this.supplier_id;
+    }
+    
+    public void editSupplierID(String supplier_id){
+        this.supplier_id = supplier_id;
     }
     
     public String getSupplierName(){
@@ -115,14 +121,22 @@ public class Supplier {
     public String getContact(){
         return contact_number;
     }
-    
-    public void setContact(String contact_number){
-        String contactRegex = "^[0-9]{10,11}$";
-        if (contact_number.isEmpty()){
+
+    public void setContact(String contact_number) {
+        contact_number = contact_number.replaceAll("[^0-9]", ""); // Remove non-numeric characters
+
+        if (contact_number.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please enter supplier's contact number.");
-        }else if(!contact_number.matches(contactRegex)){
-            JOptionPane.showMessageDialog(null, "Invalid contact number entry");
+            return; // Stop execution
+        } else if (contact_number.length() == 10) {
+            contact_number = contact_number.replaceAll("(\\d{3})(\\d{3})(\\d{4})", "$1-$2-$3");
+        } else if (contact_number.length() == 11) {
+            contact_number = contact_number.replaceAll("(\\d{3})(\\d{3})(\\d{5})", "$1-$2-$3");
+        } else {
+            JOptionPane.showMessageDialog(null, "Invalid contact number length. Must be 10 or 11 digits.");
+            return; // Stop execution if invalid
         }
+
         this.contact_number = contact_number;
     }
     
@@ -146,4 +160,17 @@ public class Supplier {
     public void setSupplyItems(String supply_items){
         this.supply_items = supply_items.toLowerCase().trim();           
     }
+
+    public String getPaymentTerm(){
+        return payment_term;
+    }
+
+    public void setPaymentTerm(String payment_term){
+        if (payment_term.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Please enter supplier's payment term.");
+        }
+        this.payment_term = payment_term;
+    }
 }
+
+

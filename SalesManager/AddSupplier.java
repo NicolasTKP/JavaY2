@@ -16,12 +16,12 @@ import javax.swing.JOptionPane;
  *
  * @author User
  */
-public class add_supplier extends javax.swing.JFrame {
+public class AddSupplier extends javax.swing.JFrame {
 
     /**
      * Creates new form add_supplier
      */
-    public add_supplier() {
+    public AddSupplier() {
         initComponents();
     }
 
@@ -42,8 +42,10 @@ public class add_supplier extends javax.swing.JFrame {
         jLabel_contact = new javax.swing.JLabel();
         jTextField_contact_number = new javax.swing.JTextField();
         jLabel_supply_item = new javax.swing.JLabel();
-        jTextField_supply_item = new javax.swing.JTextField();
+        jTextField_payment_term = new javax.swing.JTextField();
         jButton_add_supplier = new javax.swing.JButton();
+        jTextField_supply_item = new javax.swing.JTextField();
+        jLabel_payment_term = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,7 +75,12 @@ public class add_supplier extends javax.swing.JFrame {
         jLabel_supply_item.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel_supply_item.setText("Supply Item(s):");
 
-        jTextField_supply_item.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jTextField_payment_term.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jTextField_payment_term.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_payment_termActionPerformed(evt);
+            }
+        });
 
         jButton_add_supplier.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jButton_add_supplier.setText("Add");
@@ -82,6 +89,11 @@ public class add_supplier extends javax.swing.JFrame {
                 jButton_add_supplierActionPerformed(evt);
             }
         });
+
+        jTextField_supply_item.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+
+        jLabel_payment_term.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel_payment_term.setText("Payment Term:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,15 +108,17 @@ public class add_supplier extends javax.swing.JFrame {
                             .addComponent(jLabel_contact)
                             .addComponent(jLabel_supply_item)
                             .addComponent(jLabel_supplier_name)
-                            .addComponent(jLabel_add_new_supplier))
+                            .addComponent(jLabel_add_new_supplier)
+                            .addComponent(jLabel_payment_term))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField_payment_term)
                             .addComponent(jTextField_supplier_name, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
                             .addComponent(jTextField_address)
                             .addComponent(jTextField_contact_number)
                             .addComponent(jTextField_supply_item)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(308, 308, 308)
+                        .addGap(302, 302, 302)
                         .addComponent(jButton_add_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(85, Short.MAX_VALUE))
         );
@@ -114,25 +128,28 @@ public class add_supplier extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jLabel_add_new_supplier)
                 .addGap(53, 53, 53)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel_supplier_name)
-                            .addComponent(jTextField_supplier_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel_address)
-                            .addComponent(jTextField_address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField_contact_number, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel_contact))
-                        .addGap(54, 54, 54)
-                        .addComponent(jLabel_supply_item))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_supplier_name)
+                    .addComponent(jTextField_supplier_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_address)
+                    .addComponent(jTextField_address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField_contact_number, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_contact))
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_supply_item)
                     .addComponent(jTextField_supply_item, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField_payment_term, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_payment_term))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jButton_add_supplier)
-                .addGap(26, 26, 26))
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -161,13 +178,16 @@ public class add_supplier extends javax.swing.JFrame {
             String supply_items = jTextField_supply_item.getText();
             supplier.setSupplyItems(supply_items);
             
+            String payment_term = jTextField_payment_term.getText();
+            supplier.setPaymentTerm(payment_term);
+            
             try (BufferedReader br = new BufferedReader(new FileReader(file_path))) {
             String line;
 
             while ((line = br.readLine()) != null) {
                 String[] columns = line.split("\\|"); 
                 
-                if (columns.length < 5){
+                if (columns.length < 6){
                     continue;
                 } 
                 
@@ -181,7 +201,7 @@ public class add_supplier extends javax.swing.JFrame {
             }                  
             
             
-            String supplier_details = supplier_id + "|" + supplier_name + "|" + address + "|" + contact_number + "|" + supply_items;
+            String supplier_details = supplier_id + "|" + supplier_name + "|" + address + "|" + contact_number + "|" + supply_items + "|" + payment_term;
             
 
              try (BufferedWriter bw = new BufferedWriter(new FileWriter(file_path, true))){
@@ -195,6 +215,10 @@ public class add_supplier extends javax.swing.JFrame {
             }         
         }
     }//GEN-LAST:event_jButton_add_supplierActionPerformed
+
+    private void jTextField_payment_termActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_payment_termActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_payment_termActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,20 +237,21 @@ public class add_supplier extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(add_supplier.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddSupplier.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(add_supplier.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddSupplier.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(add_supplier.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddSupplier.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(add_supplier.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddSupplier.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new add_supplier().setVisible(true);
+                new AddSupplier().setVisible(true);
             }
         });
     }
@@ -236,10 +261,12 @@ public class add_supplier extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_add_new_supplier;
     private javax.swing.JLabel jLabel_address;
     private javax.swing.JLabel jLabel_contact;
+    private javax.swing.JLabel jLabel_payment_term;
     private javax.swing.JLabel jLabel_supplier_name;
     private javax.swing.JLabel jLabel_supply_item;
     private javax.swing.JTextField jTextField_address;
     private javax.swing.JTextField jTextField_contact_number;
+    private javax.swing.JTextField jTextField_payment_term;
     private javax.swing.JTextField jTextField_supplier_name;
     private javax.swing.JTextField jTextField_supply_item;
     // End of variables declaration//GEN-END:variables

@@ -109,7 +109,7 @@ public class sales_manager_homepage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JButton_item_entryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButton_item_entryActionPerformed
-        new item_entry().setVisible(true);
+        new ItemEntry().setVisible(true);
         dispose();
           
     }//GEN-LAST:event_JButton_item_entryActionPerformed
@@ -119,7 +119,7 @@ public class sales_manager_homepage extends javax.swing.JFrame {
     }//GEN-LAST:event_JButton_daily_sales_item_entryActionPerformed
 
     private void JButton_supplier_entryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButton_supplier_entryActionPerformed
-        new supplier_entry().setVisible(true);
+        new SupplierEntry().setVisible(true);
         dispose();
     }//GEN-LAST:event_JButton_supplier_entryActionPerformed
 
