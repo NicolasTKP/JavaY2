@@ -43,6 +43,51 @@ public class Query {
         }
     }
 
+    public static String getLatestGroupID(){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            String line = linesList.getLast();
+            String latest = line.split("\\|")[0];
+            int number = Integer.parseInt(latest.substring(1));
+            number++;
+            return String.format("%s%03d", "G", number);
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getLatestItemID(){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
+            String line = linesList.getLast();
+            String latest = line.split("\\|")[0];
+            int number = Integer.parseInt(latest.substring(1));
+            number++;
+            return String.format("%s%03d", "I", number);
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getLatestSupplierID(){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"));
+            String line = linesList.getLast();
+            String latest = line.split("\\|")[0];
+            int number = Integer.parseInt(latest.substring(2));
+            number++;
+            return String.format("%s%03d", "SU", number);
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String[] getPendingPR(){
         try {
             List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/purchase_requisitions"));
@@ -104,6 +149,40 @@ public class Query {
                 String line = linesList.get(i);
                 String[] column = line.split("\\|");
                 ls[i-1] = column[1];
+            }
+            return ls;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String[] getAllItemGroup(){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            String[] ls = new String[linesList.size()-1];
+            for (int i=1;i<linesList.size();i++){
+                String line = linesList.get(i);
+                String[] column = line.split("\\|");
+                ls[i-1] = column[1];
+            }
+            return ls;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String[] getAllContact(){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"));
+            String[] ls = new String[linesList.size()-1];
+            for (int i=1;i<linesList.size();i++){
+                String line = linesList.get(i);
+                String[] column = line.split("\\|");
+                ls[i-1] = column[3];
             }
             return ls;
 

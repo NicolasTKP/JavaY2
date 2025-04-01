@@ -117,7 +117,7 @@ public class ObjectList {
     public List<Item> getItems(){
         List<Item> ls = new ArrayList<>();
         try {
-            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/items"));
             String line;
             String[] lines;
             br.readLine();
@@ -143,6 +143,29 @@ public class ObjectList {
     }
 
 
+    public List<Inventory> getInventory(){
+        List<Inventory> ls = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            String line;
+            String[] lines;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                Inventory inventory = new Inventory();
+                lines = line.split("\\|");
+                inventory.group_id = lines[0];
+                inventory.item_name = lines[1];
+                inventory.quantity = Integer.parseInt(lines[2]);
+                inventory.retail_price = Double.parseDouble(lines[3]);
+                ls.add(inventory);
+            }
+            br.close();
+            return ls;
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
 }

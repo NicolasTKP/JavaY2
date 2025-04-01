@@ -121,4 +121,29 @@ public class UpdateTable {
                         }
         );
     }
+
+    public static void forInventory(JTable jTable){
+        ObjectList objectList = new ObjectList();
+        List<Inventory> inventories = objectList.getInventory();
+        String[][] matrix = new String[inventories.size()][4];
+        Inventory inventory;
+        for (int i = 0;i<inventories.size();i++){
+            inventory = inventories.get(i);
+            matrix[i][0] = inventory.group_id;
+            matrix[i][1] = inventory.item_name;
+            matrix[i][2] = Integer.toString(inventory.quantity);
+            matrix[i][3] = Double.toString(inventory.retail_price);
+        }
+        jTable.setModel(new DefaultTableModel(
+                                matrix,
+                                new String [] {
+                                        "Group_ID", "Item Name","Quantity","Retail Price"}
+                        ){
+                            @Override
+                            public boolean isCellEditable(int row, int column) {
+                                return false;
+                            }
+                        }
+        );
+    }
 }
