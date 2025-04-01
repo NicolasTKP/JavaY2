@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class fm_purchase_requisitions extends javax.swing.JFrame {
     private DefaultTableModel model = new DefaultTableModel();
-    private String colName[] = {"Requisition ID", "Item ID", "User ID", "Quantity", "Request Date", "Required Date", "Supplier ID", "Status"}; 
+    private String colName[] = {"Requisition ID", "Group ID", "User ID", "Quantity", "Request Date", "Required Date", "Status"}; 
     
     public fm_purchase_requisitions() {
         initComponents();
@@ -223,11 +223,12 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btn_order_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_order_listActionPerformed
-        this.setVisible(true);
+        new fm_purchase_order().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_order_listActionPerformed
 
     private void btn_req_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_req_listActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(true);
     }//GEN-LAST:event_btn_req_listActionPerformed
 
     private void btn_inventory_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inventory_listActionPerformed
@@ -247,7 +248,8 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileActionPerformed
-        // TODO add your handling code here:
+        new fm_profile().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnProfileActionPerformed
 
     private void current_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_current_userActionPerformed

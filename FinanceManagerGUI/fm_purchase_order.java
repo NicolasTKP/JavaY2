@@ -71,6 +71,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
         approveBtn = new javax.swing.JButton();
         rejectBtn = new javax.swing.JButton();
         orderFilter = new javax.swing.JComboBox<>();
+        btnEditPO = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -157,6 +158,11 @@ public class fm_purchase_order extends javax.swing.JFrame {
         });
 
         orderTable.setModel(model);
+        orderTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                orderTableMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(orderTable);
 
         approveBtn.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
@@ -182,6 +188,15 @@ public class fm_purchase_order extends javax.swing.JFrame {
         orderFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 orderFilterActionPerformed(evt);
+            }
+        });
+
+        btnEditPO.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
+        btnEditPO.setText("Edit Purchase Order");
+        btnEditPO.setPreferredSize(new java.awt.Dimension(250, 50));
+        btnEditPO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditPOActionPerformed(evt);
             }
         });
 
@@ -211,18 +226,20 @@ public class fm_purchase_order extends javax.swing.JFrame {
                             .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_receipt_invoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jScrollPane1))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addComponent(rejectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(50, 50, 50)
-                                        .addComponent(rejectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(orderFilter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnEditPO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(orderFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane1))))))
                 .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
@@ -254,7 +271,9 @@ public class fm_purchase_order extends javax.swing.JFrame {
                             .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel1))
                 .addGap(0, 10, Short.MAX_VALUE)
-                .addComponent(orderFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(orderFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditPO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -271,7 +290,8 @@ public class fm_purchase_order extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_order_listActionPerformed
 
     private void btn_req_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_req_listActionPerformed
-        // TODO add your handling code here:
+        new fm_purchase_requisitions().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_req_listActionPerformed
 
     private void btn_inventory_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inventory_listActionPerformed
@@ -291,7 +311,8 @@ public class fm_purchase_order extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileActionPerformed
-        // TODO add your handling code here:
+        new fm_profile().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnProfileActionPerformed
 
     private void current_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_current_userActionPerformed
@@ -353,6 +374,39 @@ public class fm_purchase_order extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_orderFilterActionPerformed
 
+    private void btnEditPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPOActionPerformed
+        int selectedRow = orderTable.getSelectedRow();
+        
+        if(selectedRow != -1){
+            String orderID = String.valueOf(model.getValueAt(selectedRow, 0));
+            String itemID = String.valueOf(model.getValueAt(selectedRow, 2));
+            String itemName = FinanceManagerFunction.getItemName(itemID); //items.txt
+            int quantity = Integer.parseInt(String.valueOf(model.getValueAt(selectedRow, 4))); //int 
+            double unit_price = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 5))); //Double
+            String supplierID = String.valueOf(model.getValueAt(selectedRow, 7));
+            String supplierName = FinanceManagerFunction.getSupplierNames(itemID);//suppliers.txt
+            
+            new fm_edit_PO(orderID, itemID, itemName, quantity, unit_price, supplierID, String.valueOf(supplierName)).setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Please select the purchase order before you modify the quantity", "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+//        this.dispose();
+    }//GEN-LAST:event_btnEditPOActionPerformed
+
+    private void orderTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTableMouseReleased
+//        int selectedRow = orderTable.getSelectedRow();
+//        
+//        String orderID = String.valueOf(model.getValueAt(selectedRow, 0));
+//        String itemID = String.valueOf(model.getValueAt(selectedRow, 2));
+//        String itemName = FinanceManager.getItemName(itemID);
+//        String quantity = String.valueOf(model.getValueAt(selectedRow, 4)); //int 
+//        String unit_price = String.valueOf(model.getValueAt(selectedRow, 5)); //Double
+//        String supplierID = String.valueOf(model.getValueAt(selectedRow, 7));
+//        String supplierName = FinanceManager.getSupplierName(itemID);
+        
+    }//GEN-LAST:event_orderTableMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -391,6 +445,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton approveBtn;
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnEditPO;
     private javax.swing.JButton btnPayment;
     private javax.swing.JButton btnProfile;
     private javax.swing.JButton btnReport;
