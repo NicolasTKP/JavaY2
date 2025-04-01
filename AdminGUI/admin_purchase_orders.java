@@ -344,10 +344,22 @@ public class admin_purchase_orders extends JFrame {
 
         //unit price
         purchase_order[5] = Search.getFromInventory(purchase_order[2], 3);
+        String unit_price;
+        while (true){
+            unit_price = JOptionPane.showInputDialog("Enter Unit Pirce:",purchase_order[5]);
+            if (unit_price == null){
+                return;
+            }else if (ValidateFormat.unitPrice(unit_price)){
+                purchase_order[5] = unit_price;
+                break;
+            }else{
+                JOptionPane.showMessageDialog(null, "Invalid unit price format", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
 
         //Amount
         assert purchase_order[4] != null;
-        assert purchase_order[5] != null;
         purchase_order[6] = Double.toString(Double.parseDouble(purchase_order[4]) * Double.parseDouble(purchase_order[5]));
 
         //Supplier ID
@@ -368,6 +380,7 @@ public class admin_purchase_orders extends JFrame {
 
         if(result == JOptionPane.YES_OPTION){
             TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders", String.join("|",purchase_order));
+            Edit.inventory(purchase_order[2], 3, unit_price);
             Edit.purchaseRequisitions(purchase_order[1], 7,"Approved");
             JOptionPane.showMessageDialog(null, "Purchase Order Place Successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forPO(jTable1);

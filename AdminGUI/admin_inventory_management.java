@@ -5,8 +5,11 @@
 package com.mycompany.JavaY2.AdminGUI;
 
 import com.mycompany.JavaY2.Class.Query;
+import com.mycompany.JavaY2.Object.Item;
+import com.mycompany.JavaY2.Object.ObjectList;
 
 import javax.swing.*;
+import java.util.List;
 
 /**
  *
@@ -31,34 +34,73 @@ public class admin_inventory_management extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(156, 156, 156)
-                .addComponent(jButton1)
-                .addContainerGap(167, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(jButton1)
-                .addContainerGap(176, Short.MAX_VALUE))
-        );
+        ObjectList objectList = new ObjectList();
+        List<Item> items = objectList.getItems();
+        String[][] matrix = new String[items.size()][7];
+        Item item;
+        for (int i = 0;i<items.size();i++){
+            item = items.get(i);
+            matrix[i][0] = item.item_id;
+            matrix[i][1] = item.item_name;
+            matrix[i][2] = Integer.toString(item.quantity);
+            matrix[i][3] = Double.toString(item.stock_price);
+            matrix[i][4] = Double.toString(item.retail_price);
+            matrix[i][5] = Integer.toString(item.low_stock_benchmark);
+            matrix[i][6] = item.supplier_id;
 
-        pack();
+        }
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            matrix,
+            new String [] {
+                "Item_ID", "Item Name", "Quantity","Stock Price","Retail Price","Low Stock Benchmark", "Supplier ID"}
+        ){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        }
+    );
+    jTable1.setRowHeight(25);
+    jScrollPane1.setViewportView(jTable1);
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(79, 79, 79)
+                    .addComponent(jButton1))
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(49, 49, 49)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1406, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addContainerGap(45, Short.MAX_VALUE))
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addGap(27, 27, 27)
+            .addComponent(jButton1)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 656, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(31, Short.MAX_VALUE))
+    );
+
+    pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -142,5 +184,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

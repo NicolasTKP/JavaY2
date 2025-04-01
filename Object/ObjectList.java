@@ -114,6 +114,33 @@ public class ObjectList {
         }
     }
 
+    public List<Item> getItems(){
+        List<Item> ls = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            String line;
+            String[] lines;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                Item item = new Item();
+                lines = line.split("\\|");
+                item.item_id = lines[0];
+                item.item_name = lines[1];
+                item.quantity = Integer.parseInt(lines[2]);
+                item.stock_price = Double.parseDouble(lines[3]);
+                item.retail_price = Double.parseDouble(lines[4]);
+                item.low_stock_benchmark = Integer.parseInt(lines[5]);
+                item.supplier_id = lines[6];
+                ls.add(item);
+            }
+            br.close();
+            return ls;
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 
 

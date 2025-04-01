@@ -1,9 +1,6 @@
 package com.mycompany.JavaY2.Class;
 
-import com.mycompany.JavaY2.Object.ObjectList;
-import com.mycompany.JavaY2.Object.PurchaseOrder;
-import com.mycompany.JavaY2.Object.Receives;
-import com.mycompany.JavaY2.Object.User;
+import com.mycompany.JavaY2.Object.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -86,6 +83,35 @@ public class UpdateTable {
                                 matrix,
                                 new String [] {
                                         "User_ID", "Username", "Password","Role"}
+                        ){
+                            @Override
+                            public boolean isCellEditable(int row, int column) {
+                                return false;
+                            }
+                        }
+        );
+    }
+
+    public static void forInventory(JTable jTable){
+        ObjectList objectList = new ObjectList();
+        List<Item> items = objectList.getItems();
+        String[][] matrix = new String[items.size()][7];
+        Item item;
+        for (int i = 0;i<items.size();i++){
+            item = items.get(i);
+            matrix[i][0] = item.item_id;
+            matrix[i][1] = item.item_name;
+            matrix[i][2] = Integer.toString(item.quantity);
+            matrix[i][3] = Double.toString(item.stock_price);
+            matrix[i][4] = Double.toString(item.retail_price);
+            matrix[i][5] = Integer.toString(item.low_stock_benchmark);
+            matrix[i][6] = item.supplier_id;
+
+        }
+        jTable.setModel(new DefaultTableModel(
+                                matrix,
+                                new String [] {
+                                        "Item_ID", "Item Name", "Quantity","Stock Price","Retail Price","Low Stock Benchmark", "Supplier ID"}
                         ){
                             @Override
                             public boolean isCellEditable(int row, int column) {
