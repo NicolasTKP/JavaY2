@@ -123,4 +123,27 @@ public class Edit {
             e.printStackTrace();
         }
     }
+
+    public static void supplier(String supplierID, int column,String value){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/suppliers", false));
+            String[] suppliers;
+            String line;
+            for (int i = 0; i < linesList.size(); i++) {
+                line = linesList.get(i);
+                suppliers = line.split("\\|");
+                if (suppliers.length>column && suppliers[0].equals(supplierID.toUpperCase())){
+                    suppliers[column] = value;
+                }
+                bw.write(String.join("|",suppliers));
+                if (i < linesList.size() - 1) {
+                    bw.newLine();
+                }
+            }
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

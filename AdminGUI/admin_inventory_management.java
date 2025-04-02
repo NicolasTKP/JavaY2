@@ -235,6 +235,14 @@ public class admin_inventory_management extends javax.swing.JFrame {
         String item_name;
         String retail_price;
         String supplier_id;
+        String item_id;
+        String stock_price;
+        String sales_per_day;
+        String ordering_lead_time;
+        String safety_level;
+
+        //Item ID
+        item_id = Query.getLatestItemID();
 
         //Item Group
         String[] items = Query.getAllItemGroup();
@@ -295,6 +303,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
         }
 
         else{
+            System.out.println(item_name);
             group_id = Search.getGroupIDbyItemName(item_name);
         }
 
@@ -317,7 +326,12 @@ public class admin_inventory_management extends javax.swing.JFrame {
         else if (choice.equals("Choose from existing supplier")){
             //Supplier ID
             String[] suppliers = Query.getAllSupplier();
+            suppliers = Query.notUsedSuppliers(suppliers, group_id);
             assert suppliers != null;
+            if (suppliers.length == 0){
+                JOptionPane.showMessageDialog(null, "All supplier in record are supplying this product already", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             supplier_id = (String) JOptionPane.showInputDialog(
                     null,
                     "Choose a supplier:",
@@ -329,6 +343,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
             if (supplier_id == null){
                 return;
             }
+            supplier_id = Search.getSupplierID(supplier_id);
         }else{
             //Supplier id
             supplier_id = Query.getLatestSupplierID();
@@ -393,9 +408,69 @@ public class admin_inventory_management extends javax.swing.JFrame {
             }else {
                 return;
             }
-
-
         }
+
+        //Stock Price
+        while(true){
+            stock_price = JOptionPane.showInputDialog("Insert Stock Price:");
+            if (stock_price == null){
+                return;
+            }else if(ValidateFormat.unitPrice(stock_price)){
+                break;
+            }else {
+                JOptionPane.showMessageDialog(null, "Invalid format for stock price, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
+        //Sales Per Day
+        while(true){
+            sales_per_day = JOptionPane.showInputDialog("Insert Sales Per Day:", 0);
+            if (sales_per_day == null){
+                return;
+            }else if(ValidateFormat.quantityUnit(sales_per_day)){
+                break;
+            }else {
+                JOptionPane.showMessageDialog(null, "Invalid format for sales per day, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
+        //Ordering lead time
+        while(true){
+            ordering_lead_time = JOptionPane.showInputDialog("Insert Ordering lead time:", 0);
+            if (ordering_lead_time == null){
+                return;
+            }else if(ValidateFormat.quantityUnit(ordering_lead_time)){
+                break;
+            }else {
+                JOptionPane.showMessageDialog(null, "Invalid format for ordering lead time, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
+        //Safety Level
+        safety_level = Integer.toString(Integer.parseInt(sales_per_day) * Integer.parseInt(ordering_lead_time));
+
+
+
+        int result = JOptionPane.showConfirmDialog(null, "Are you confirm to add a new item: "+item_name+ "\nwith supplier: "+Search.getSupplierName(supplier_id), "Confirmation",JOptionPane.YES_NO_OPTION);
+        if(result == JOptionPane.YES_OPTION){
+            String line = item_id + "|" + item_name + "|" + stock_price + "|" + sales_per_day + "|" + ordering_lead_time + "|" + safety_level + "|" + supplier_id + "|" + group_id;
+            TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/items", line);
+            line = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/suppliers", 0, supplier_id, 4);
+            assert line != null;
+            if(line.isEmpty() || line.isBlank()){
+                line = item_id;
+            }else {
+                line = line +","+item_id;
+            }
+            Edit.supplier(supplier_id,4,line);
+            JOptionPane.showMessageDialog(null, "New item successfully added", "Successful", JOptionPane.INFORMATION_MESSAGE);
+            UpdateTable.forItems(jTable1);
+        }else {
+            return;
+        }
+
+
+
 
 
     }//GEN-LAST:event_jButton1ActionPerformed

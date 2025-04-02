@@ -105,7 +105,7 @@ public class Search {
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
-                if (line.split("\\|")[1].equals(item_name.toUpperCase())){
+                if (line.split("\\|")[1].equals(item_name)){
                     return line.split("\\|")[0];
                 }
 

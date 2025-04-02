@@ -191,4 +191,21 @@ public class Query {
             return null;
         }
     }
+
+    public static String[] notUsedSuppliers(String[] suppliers, String group_id){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
+            List<String> ls = new ArrayList<>(Arrays.asList(suppliers));
+            for (String line:linesList){
+                if(line.split("\\|")[7].equals(group_id)){
+                    ls.remove(Search.getSupplierName(line.split("\\|")[6]));
+                }
+            }
+            return ls.toArray(new String[0]);
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
