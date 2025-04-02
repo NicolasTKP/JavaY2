@@ -9,33 +9,42 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author User
  */
-public class fm_purchase_requisitions extends javax.swing.JFrame {
+public class fm_payment extends javax.swing.JFrame {
     private DefaultTableModel model = new DefaultTableModel();
-    private String colName[] = {"Requisition ID", "Group ID", "User ID", "Quantity", "Request Date", "Required Date", "Status"}; 
-    
-    public fm_purchase_requisitions() {
+    private String column_name[] = {"Order ID", "Group ID", "Item Name", "Quantity", "Total Amount", "Date Received", "Delivery Status", "Payment Date", "Payment Status"}; 
+
+    /**
+     * Creates new form fm_payment
+     */
+    public fm_payment() {
         initComponents();
         current_user.setText(SessionManager.getInstance().username.toUpperCase());
         current_user.setEditable(false);
-        model.setColumnIdentifiers(colName);
+        model.setColumnIdentifiers(column_name);
         
-        
-        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/purchase_requisitions"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/receives"))) {
             String line;
             reader.readLine(); //skip the header line
             while ((line = reader.readLine()) != null) {
-                String[] requisitionDetails = line.split("\\|");
-                model.addRow(requisitionDetails);
+                String[] order_received_details = line.split("\\|");
+                if(order_received_details[5].equals("Received")){
+                    order_received_details[6] = "Unpaid";
+                }else if(order_received_details[5].equals("Not Received") || order_received_details[5].equals("Cancelled")){
+                    order_received_details[6] = " - ";
+                }
+                model.addRow(order_received_details);
             }
             reader.close();
         }catch (IOException e) {
-            JOptionPane.showMessageDialog(null,"Purchase Requisitions is currently unavailable"); // Handle file reading exception
+            JOptionPane.showMessageDialog(null,"Inventory is currently unavailable"); // Handle file reading exception
         }
     }
 
@@ -48,29 +57,21 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnBack = new javax.swing.JButton();
         btn_order_list = new javax.swing.JButton();
         btn_req_list = new javax.swing.JButton();
         btn_inventory_list = new javax.swing.JButton();
         btnPayment = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnProfile = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         current_user = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        prTable = new javax.swing.JTable();
+        order_receivedTable = new javax.swing.JTable();
+        order_paymentFilter = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        btnBack.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
-        btnBack.setText("<");
-        btnBack.setPreferredSize(new java.awt.Dimension(100, 74));
-        btnBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackActionPerformed(evt);
-            }
-        });
 
         btn_order_list.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btn_order_list.setText("<html><div style='text-align:center;'>Purchase Order List</div></html>");
@@ -117,8 +118,17 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
             }
         });
 
+        btnBack.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
+        btnBack.setText("<");
+        btnBack.setPreferredSize(new java.awt.Dimension(100, 74));
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("sansserif", 0, 48)); // NOI18N
-        jLabel1.setText("Purchase Requisition List");
+        jLabel1.setText("Payment");
 
         btnProfile.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         btnProfile.setText("Profile");
@@ -128,53 +138,59 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Current User:");
-
         current_user.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 current_userActionPerformed(evt);
             }
         });
 
-        prTable.setModel(model);
-        jScrollPane1.setViewportView(prTable);
+        jLabel2.setText("Current User:");
+
+        order_receivedTable.setModel(model);
+        jScrollPane1.setViewportView(order_receivedTable);
+
+        order_paymentFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Paid", "Unpaid" }));
+        order_paymentFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                order_paymentFilterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(424, 424, 424)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_order_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_req_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_inventory_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1)))
-                .addGap(6, 6, 6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(order_paymentFilter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(435, 435, 435)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(9, 9, 9)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -185,9 +201,9 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btn_order_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
                         .addComponent(btn_req_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,20 +211,17 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
                         .addComponent(btn_inventory_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
                         .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                        .addGap(115, 115, 115)
                         .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(order_paymentFilter)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        this.dispose();
-        new fm_main().setVisible(true);
-    }//GEN-LAST:event_btnBackActionPerformed
 
     private void btn_order_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_order_listActionPerformed
         new fm_purchase_order().setVisible(true);
@@ -216,7 +229,8 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_order_listActionPerformed
 
     private void btn_req_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_req_listActionPerformed
-        this.setVisible(true);
+        new fm_purchase_requisitions().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_req_listActionPerformed
 
     private void btn_inventory_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inventory_listActionPerformed
@@ -225,13 +239,17 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_inventory_listActionPerformed
 
     private void btnPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaymentActionPerformed
-        new fm_payment().setVisible(true);
-        this.dispose();
+        this.setVisible(true);
     }//GEN-LAST:event_btnPaymentActionPerformed
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReportActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+        new fm_main().setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileActionPerformed
         new fm_profile().setVisible(true);
@@ -241,6 +259,18 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
     private void current_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_current_userActionPerformed
 
     }//GEN-LAST:event_current_userActionPerformed
+
+    private void order_paymentFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_order_paymentFilterActionPerformed
+        TableRowSorter<DefaultTableModel> paymentStatus = new TableRowSorter<>(model);
+        order_receivedTable.setRowSorter(paymentStatus);
+        String selected_payment_status = order_paymentFilter.getSelectedItem().toString();
+        switch(selected_payment_status){
+            case "Paid" -> paymentStatus.setRowFilter(RowFilter.regexFilter("(?i)^" + selected_payment_status + "$", 6));
+            case "Unpaid" -> paymentStatus.setRowFilter(RowFilter.regexFilter("(?i)^" + selected_payment_status + "$", 6));
+            case "All" -> paymentStatus.setRowFilter(null);
+            default -> {}
+        }
+    }//GEN-LAST:event_order_paymentFilterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,20 +289,20 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(fm_purchase_requisitions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fm_payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(fm_purchase_requisitions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fm_payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(fm_purchase_requisitions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fm_payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(fm_purchase_requisitions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fm_payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new fm_purchase_requisitions().setVisible(true);
+                new fm_payment().setVisible(true);
             }
         });
     }
@@ -289,6 +319,7 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable prTable;
+    private javax.swing.JComboBox<String> order_paymentFilter;
+    private javax.swing.JTable order_receivedTable;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,6 +11,7 @@ import com.mycompany.JavaY2.Object.SessionManager;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 import javax.swing.*;
 //import javax.swing.JOptionPane;
@@ -26,7 +27,8 @@ public class fm_purchase_order extends javax.swing.JFrame {
     public fm_purchase_order() {
         initComponents();
         model.setColumnIdentifiers(colName);
-        current_user.setText(SessionManager.getInstance().username);
+        current_user.setText(SessionManager.getInstance().username.toUpperCase());
+        current_user.setEditable(false);
 
         try (BufferedReader reader = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders"))) {
             String line;
@@ -60,7 +62,6 @@ public class fm_purchase_order extends javax.swing.JFrame {
         btn_req_list = new javax.swing.JButton();
         btn_inventory_list = new javax.swing.JButton();
         btnPayment = new javax.swing.JButton();
-        btn_receipt_invoice = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnProfile = new javax.swing.JButton();
@@ -117,15 +118,6 @@ public class fm_purchase_order extends javax.swing.JFrame {
         btnPayment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPaymentActionPerformed(evt);
-            }
-        });
-
-        btn_receipt_invoice.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btn_receipt_invoice.setText("<html><div style='text-align:center;'>Receipt and <br> Invoice</div></html>");
-        btn_receipt_invoice.setPreferredSize(new java.awt.Dimension(200, 105));
-        btn_receipt_invoice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_receipt_invoiceActionPerformed(evt);
             }
         });
 
@@ -224,7 +216,6 @@ public class fm_purchase_order extends javax.swing.JFrame {
                             .addComponent(btn_req_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_inventory_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_receipt_invoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -255,9 +246,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
                 .addComponent(btn_inventory_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(btn_receipt_invoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
+                .addGap(115, 115, 115)
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 1, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -295,16 +284,14 @@ public class fm_purchase_order extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_req_listActionPerformed
 
     private void btn_inventory_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inventory_listActionPerformed
-        // TODO add your handling code here:
+        new fm_inventory().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_inventory_listActionPerformed
 
     private void btnPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaymentActionPerformed
-        // TODO add your handling code here:
+         new fm_payment().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnPaymentActionPerformed
-
-    private void btn_receipt_invoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_receipt_invoiceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_receipt_invoiceActionPerformed
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         // TODO add your handling code here:
@@ -362,49 +349,45 @@ public class fm_purchase_order extends javax.swing.JFrame {
     }//GEN-LAST:event_rejectBtnActionPerformed
 
     private void orderFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderFilterActionPerformed
-        TableRowSorter<DefaultTableModel> sort = new TableRowSorter<>(model);
-        orderTable.setRowSorter(sort);
+        TableRowSorter<DefaultTableModel> orderStatus = new TableRowSorter<>(model);
+        orderTable.setRowSorter(orderStatus);
         String selected_status = orderFilter.getSelectedItem().toString();
         switch (selected_status){
-            case "Pending" -> sort.setRowFilter(RowFilter.regexFilter("(?i)^" + selected_status + "$", 9));
-            case "Approved" -> sort.setRowFilter(RowFilter.regexFilter("(?i)^" + selected_status + "$", 9));
-            case "Rejected" -> sort.setRowFilter(RowFilter.regexFilter("(?i)^" + selected_status + "$", 9));
-            case "All" -> sort.setRowFilter(null);
+            case "Pending" -> orderStatus.setRowFilter(RowFilter.regexFilter("(?i)^" + selected_status + "$", 9));
+            case "Approved" -> orderStatus.setRowFilter(RowFilter.regexFilter("(?i)^" + selected_status + "$", 9));
+            case "Rejected" -> orderStatus.setRowFilter(RowFilter.regexFilter("(?i)^" + selected_status + "$", 9));
+            case "All" -> orderStatus.setRowFilter(null);
             default -> {}
         }
     }//GEN-LAST:event_orderFilterActionPerformed
 
     private void btnEditPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPOActionPerformed
         int selectedRow = orderTable.getSelectedRow();
+        String orderStatus = String.valueOf(model.getValueAt(selectedRow, 9));
         
         if(selectedRow != -1){
-            String orderID = String.valueOf(model.getValueAt(selectedRow, 0));
-            String itemID = String.valueOf(model.getValueAt(selectedRow, 2));
-            String itemName = FinanceManagerFunction.getItemName(itemID); //items.txt
-            int quantity = Integer.parseInt(String.valueOf(model.getValueAt(selectedRow, 4))); //int 
-            double unit_price = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 5))); //Double
-            String supplierID = String.valueOf(model.getValueAt(selectedRow, 7));
-            String supplierName = FinanceManagerFunction.getSupplierNames(itemID);//suppliers.txt
+            if(orderStatus.equals("Pending")){
+                String orderID = String.valueOf(model.getValueAt(selectedRow, 0));
+                String itemID = String.valueOf(model.getValueAt(selectedRow, 2));
+                String itemName = FinanceManagerFunction.getItemName(itemID); //items.txt
+                int quantity = Integer.parseInt(String.valueOf(model.getValueAt(selectedRow, 4))); //int 
+                double unit_price = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 5))); //Double
+                String supplierID = String.valueOf(model.getValueAt(selectedRow, 7));
+//              List<String> supplierName = FinanceManagerFunction.getSupplierNames(itemName);//suppliers.txt
             
-            new fm_edit_PO(orderID, itemID, itemName, quantity, unit_price, supplierID, String.valueOf(supplierName)).setVisible(true);
+                new fm_edit_PO(orderID, itemID, itemName, quantity, unit_price, supplierID).setVisible(true);
+//              System.out.println(String.valueOf(supplierName));
+            }else {
+                JOptionPane.showMessageDialog(this, "You can only modified the Quantity and Supplier Name when the order status in Purchase Order is not yet been Approved or Rejected", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
         }else{
             JOptionPane.showMessageDialog(this, "Please select the purchase order before you modify the quantity", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
-
 //        this.dispose();
     }//GEN-LAST:event_btnEditPOActionPerformed
 
     private void orderTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTableMouseReleased
-//        int selectedRow = orderTable.getSelectedRow();
-//        
-//        String orderID = String.valueOf(model.getValueAt(selectedRow, 0));
-//        String itemID = String.valueOf(model.getValueAt(selectedRow, 2));
-//        String itemName = FinanceManager.getItemName(itemID);
-//        String quantity = String.valueOf(model.getValueAt(selectedRow, 4)); //int 
-//        String unit_price = String.valueOf(model.getValueAt(selectedRow, 5)); //Double
-//        String supplierID = String.valueOf(model.getValueAt(selectedRow, 7));
-//        String supplierName = FinanceManager.getSupplierName(itemID);
-        
+
     }//GEN-LAST:event_orderTableMouseReleased
 
     /**
@@ -451,7 +434,6 @@ public class fm_purchase_order extends javax.swing.JFrame {
     private javax.swing.JButton btnReport;
     private javax.swing.JButton btn_inventory_list;
     private javax.swing.JButton btn_order_list;
-    private javax.swing.JButton btn_receipt_invoice;
     private javax.swing.JButton btn_req_list;
     private javax.swing.JTextField current_user;
     private javax.swing.JLabel jLabel1;

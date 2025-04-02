@@ -64,7 +64,6 @@ public class fm_profile extends javax.swing.JFrame {
         btn_req_list = new javax.swing.JButton();
         btn_inventory_list = new javax.swing.JButton();
         btnPayment = new javax.swing.JButton();
-        btn_receipt_invoice = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
         btnProfile = new javax.swing.JButton();
 
@@ -141,15 +140,6 @@ public class fm_profile extends javax.swing.JFrame {
             }
         });
 
-        btn_receipt_invoice.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btn_receipt_invoice.setText("<html><div style='text-align:center;'>Receipt and <br> Invoice</div></html>");
-        btn_receipt_invoice.setPreferredSize(new java.awt.Dimension(200, 105));
-        btn_receipt_invoice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_receipt_invoiceActionPerformed(evt);
-            }
-        });
-
         btnReport.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnReport.setText("<html><div style='text-align:center;'>Financial <br> Report</div></html>");
         btnReport.setPreferredSize(new java.awt.Dimension(200, 105));
@@ -177,7 +167,6 @@ public class fm_profile extends javax.swing.JFrame {
                     .addComponent(btn_req_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_inventory_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_receipt_invoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -238,9 +227,7 @@ public class fm_profile extends javax.swing.JFrame {
                 .addComponent(btn_inventory_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(btn_receipt_invoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
+                .addGap(115, 115, 115)
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -275,10 +262,6 @@ public class fm_profile extends javax.swing.JFrame {
     private void btnPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaymentActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPaymentActionPerformed
-
-    private void btn_receipt_invoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_receipt_invoiceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_receipt_invoiceActionPerformed
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         // TODO add your handling code here:
@@ -330,7 +313,6 @@ public class fm_profile extends javax.swing.JFrame {
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btn_inventory_list;
     private javax.swing.JButton btn_order_list;
-    private javax.swing.JButton btn_receipt_invoice;
     private javax.swing.JButton btn_req_list;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

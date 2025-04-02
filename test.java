@@ -11,33 +11,58 @@ import java.io.IOException;
 
 import javax.swing.*;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class test {
     public static void main(String[] args) {
 //        SessionManager.getInstance().username = "hello";
 //        System.out.println(SessionManager.getInstance().username);
-          String selectedItemID = "I001";
-          
-          String supplier_id = getSupplierID(selectedItemID, "src/main/java/com/mycompany/JavaY2/TextFile/suppliers");
-          System.out.println("Supplier ID: "+ supplier_id);
+        String itemName = "apple"; // Example item name to search for
+        List<String> suppliers = getSuppliersForItem(itemName);
+        
+        System.out.println("Suppliers for " + itemName + ": " + suppliers);
     }
-    
-     public static String getSupplierID(String itemID, String supplierFilePath){
-        try(BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"))){
-            String line; 
-            while((line = br.readLine()) != null){
+    public static List<String> getSuppliersForItem(String itemName) {
+        Map<String, String> itemToSupplierMap = new HashMap<>(); // itemID -> supplierID
+        Map<String, String> supplierNameMap = new HashMap<>(); // supplierID -> supplierName
+        
+        // Read items file to get itemID -> supplierID mapping
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/items"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
                 String[] columns = line.split("\\|");
-                String[] itemIDs = columns[4].split(",");
-                for (String id : itemIDs){
-                    if (id.equals(itemID)){
-                         return columns[0];
-                    }
+                if (columns[1].equalsIgnoreCase(itemName)) { // Match item name
+                    itemToSupplierMap.put(columns[0], columns[6]); // itemID -> supplierID
                 }
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return "Supplier ID not found";
+        
+        // Read suppliers file to get supplierID -> supplierName mapping
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] columns = line.split("\\|");
+                supplierNameMap.put(columns[0], columns[1]); // supplierID -> supplierName
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        // Get unique supplier names for the given item
+        Set<String> supplierNames = new HashSet<>();
+        for (String supplierID : itemToSupplierMap.values()) {
+            if (supplierNameMap.containsKey(supplierID)) {
+                supplierNames.add(supplierNameMap.get(supplierID));
+            }
+        }
+        
+        return new ArrayList<>(supplierNames);
     }
 }

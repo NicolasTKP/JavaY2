@@ -19,9 +19,8 @@ public class fm_main extends javax.swing.JFrame {
      */
     public fm_main() {
         initComponents();
-//        fm.setUsername(username);
-        user.setText(SessionManager.getInstance().username);
-        user.setEditable(false);
+        current_user.setText(SessionManager.getInstance().username.toUpperCase());
+        current_user.setEditable(false);
     }
 
     /**
@@ -37,14 +36,12 @@ public class fm_main extends javax.swing.JFrame {
         btn_req_list = new javax.swing.JButton();
         btn_inventory_list = new javax.swing.JButton();
         btnPayment = new javax.swing.JButton();
-        btn_receipt_invoice = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btnProfile = new javax.swing.JButton();
-        user = new javax.swing.JTextField();
+        current_user = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1500, 750));
         setMinimumSize(new java.awt.Dimension(1500, 750));
         setSize(new java.awt.Dimension(1500, 750));
 
@@ -84,15 +81,6 @@ public class fm_main extends javax.swing.JFrame {
             }
         });
 
-        btn_receipt_invoice.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btn_receipt_invoice.setText("<html><div style='text-align:center;'>Receipt and <br> Invoice</div></html>");
-        btn_receipt_invoice.setPreferredSize(new java.awt.Dimension(250, 125));
-        btn_receipt_invoice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_receipt_invoiceActionPerformed(evt);
-            }
-        });
-
         btnReport.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnReport.setText("Financial Report ");
         btnReport.setPreferredSize(new java.awt.Dimension(250, 125));
@@ -112,9 +100,9 @@ public class fm_main extends javax.swing.JFrame {
             }
         });
 
-        user.addActionListener(new java.awt.event.ActionListener() {
+        current_user.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userActionPerformed(evt);
+                current_userActionPerformed(evt);
             }
         });
 
@@ -128,7 +116,7 @@ public class fm_main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnProfile, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                    .addComponent(user))
+                    .addComponent(current_user))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(191, 191, 191)
@@ -136,9 +124,7 @@ public class fm_main extends javax.swing.JFrame {
                     .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_order_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(195, 195, 195)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_req_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_receipt_invoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btn_req_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(185, 196, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btn_inventory_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,7 +139,7 @@ public class fm_main extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(72, 72, 72)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_inventory_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -162,8 +148,7 @@ public class fm_main extends javax.swing.JFrame {
                 .addGap(162, 162, 162)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_receipt_invoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(194, Short.MAX_VALUE))
         );
 
@@ -181,16 +166,14 @@ public class fm_main extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_req_listActionPerformed
 
     private void btn_inventory_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inventory_listActionPerformed
-        // TODO add your handling code here:
+        new fm_inventory().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_inventory_listActionPerformed
 
     private void btnPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaymentActionPerformed
-        // TODO add your handling code here:
+        new fm_payment().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnPaymentActionPerformed
-
-    private void btn_receipt_invoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_receipt_invoiceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_receipt_invoiceActionPerformed
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         // TODO add your handling code here:
@@ -201,9 +184,9 @@ public class fm_main extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnProfileActionPerformed
 
-    private void userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userActionPerformed
+    private void current_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_current_userActionPerformed
 
-    }//GEN-LAST:event_userActionPerformed
+    }//GEN-LAST:event_current_userActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,9 +229,8 @@ public class fm_main extends javax.swing.JFrame {
     private javax.swing.JButton btnReport;
     private javax.swing.JButton btn_inventory_list;
     private javax.swing.JButton btn_order_list;
-    private javax.swing.JButton btn_receipt_invoice;
     private javax.swing.JButton btn_req_list;
+    private javax.swing.JTextField current_user;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField user;
     // End of variables declaration//GEN-END:variables
 }

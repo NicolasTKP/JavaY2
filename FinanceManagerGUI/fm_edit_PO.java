@@ -4,31 +4,92 @@
  */
 package com.mycompany.JavaY2.FinanceManagerGUI;
 
+import com.mycompany.JavaY2.Class.Edit;
+import com.mycompany.JavaY2.Class.ValidateFormat;
 import com.mycompany.JavaY2.Object.SessionManager;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author User
  */
 public class fm_edit_PO extends javax.swing.JFrame {
-//    String user = SessionManager.getInstance().username;
+    private Map<String, String[]> supplierDetails;
+    
     public fm_edit_PO() {
-        
     }
     
-    public fm_edit_PO(String orderID, String itemID, String itemName, int quantity, double unitPrice, String supplierID, String supplierName){
+    public fm_edit_PO(String orderID, String itemID, String itemName, int quantity, double unitPrice, String supplierID){
         initComponents();
+        current_user.setText(SessionManager.getInstance().username.toUpperCase());
+        current_user.setEditable(false);
+        
+        order_idField.setEditable(false);
+        item_idField.setEditable(false);
+        item_nameField.setEditable(false);
+        stock_priceField.setEditable(false);
+        supplier_idField.setEditable(false);
         
         order_idField.setText(orderID);
         item_idField.setText(itemID);
         item_nameField.setText(itemName);
         quantityField.setText(String.valueOf(quantity));
-        unit_priceField.setText(String.valueOf(unitPrice));
+        stock_priceField.setText(String.valueOf(unitPrice));
         supplier_idField.setText(supplierID);
-//        sname_list.setSelectedItem(supplierName);
+        
+        supplierDetails = getSupplierDetails(itemName);
+        sname_list.setModel(new DefaultComboBoxModel<>(supplierDetails.keySet().toArray(new String[0])));
+        
+        for (Map.Entry<String, String[]> entry : supplierDetails.entrySet()){
+            if(entry.getValue()[1].equals(supplierID)){
+                sname_list.setSelectedItem(entry.getKey());
+                break;
+            }
+        }
         
     }
-
+    
+    private static String getSupplierNameByID(String supplierID){
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"))) {
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] columns = line.split("\\|");
+                if (columns[0].equals(supplierID)) { 
+                    return columns[1]; // Return supplier name
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+    }
+        return null; // Return null if no match is found
+    }
+    
+    private static Map<String, String[]> getSupplierDetails(String itemName) {
+    Map<String, String[]> supplierDetails = new HashMap<>(); // supplierName -> {itemID, supplierID, unitPrice}
+    
+    try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/items"))) {
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] column = line.split("\\|");
+            if (column[1].equals(itemName)) { // Match item name
+                String supplierID = column[6];
+                String supplierName = getSupplierNameByID(supplierID);
+                if (supplierName != null) {
+                    supplierDetails.put(supplierName, new String[]{column[0], supplierID, column[2]}); // {itemID, supplierID, unitPrice}
+                }
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return supplierDetails;
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,14 +108,16 @@ public class fm_edit_PO extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
         item_idField = new javax.swing.JTextField();
         item_nameField = new javax.swing.JTextField();
         quantityField = new javax.swing.JTextField();
-        unit_priceField = new javax.swing.JTextField();
+        stock_priceField = new javax.swing.JTextField();
         supplier_idField = new javax.swing.JTextField();
         sname_list = new javax.swing.JComboBox<>();
         btnBack = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        current_user = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,31 +147,33 @@ public class fm_edit_PO extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
         jLabel8.setText("Supplier Name");
 
-        jButton1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-        jButton1.setText("Save");
-        jButton1.setPreferredSize(new java.awt.Dimension(200, 50));
+        btnSave.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        btnSave.setText("Save");
+        btnSave.setPreferredSize(new java.awt.Dimension(200, 50));
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         item_idField.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-//        item_idField.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                item_idFieldActionPerformed(evt);
-//            }
-//        });
+
 
         item_nameField.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
 
         quantityField.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
 
-        unit_priceField.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-//        unit_priceField.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                unit_priceFieldActionPerformed(evt);
-//            }
-//        });
+        stock_priceField.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        
 
         supplier_idField.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
 
         sname_list.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        sname_list.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sname_listActionPerformed(evt);
+            }
+        });
 
         btnBack.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
         btnBack.setText("<");
@@ -116,6 +181,14 @@ public class fm_edit_PO extends javax.swing.JFrame {
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Current User:");
+
+        current_user.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                current_userActionPerformed(evt);
             }
         });
 
@@ -129,9 +202,6 @@ public class fm_edit_PO extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(258, 258, 258)
-                                .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(193, 193, 193)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -148,13 +218,20 @@ public class fm_edit_PO extends javax.swing.JFrame {
                                     .addComponent(order_idField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                                     .addComponent(item_nameField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                                     .addComponent(quantityField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                    .addComponent(unit_priceField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                    .addComponent(stock_priceField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                                     .addComponent(supplier_idField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                    .addComponent(sname_list, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addComponent(sname_list, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(258, 258, 258)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(368, 368, 368)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(332, Short.MAX_VALUE))
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,7 +239,11 @@ public class fm_edit_PO extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel9)
+                                .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -183,7 +264,7 @@ public class fm_edit_PO extends javax.swing.JFrame {
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(unit_priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(stock_priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -193,7 +274,7 @@ public class fm_edit_PO extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(sname_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
 
@@ -204,6 +285,49 @@ public class fm_edit_PO extends javax.swing.JFrame {
         this.dispose();
         new fm_purchase_order().setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void sname_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sname_listActionPerformed
+        String selectedSupplier = (String) sname_list.getSelectedItem();
+        if(supplierDetails.containsKey(selectedSupplier)){
+            String[] details = supplierDetails.get(selectedSupplier);
+            item_idField.setText(details[0]); // Update item ID
+            supplier_idField.setText(details[1]); // Update supplier ID
+            stock_priceField.setText(details[2]); // Update unit price
+        }     
+    }//GEN-LAST:event_sname_listActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        try{
+            String current_orderID = order_idField.getText();
+            String new_item_id = item_idField.getText();
+            int new_quantity = Integer.parseInt(quantityField.getText());
+            double new_stockPrice = Double.parseDouble(stock_priceField.getText());
+            double new_amount = new_quantity * new_stockPrice;  
+            String new_supplierID = supplier_idField.getText();
+    //        String new_supplierName = String.valueOf(sname_list.getSelectedItem());
+    
+            if(new_quantity <= 0){
+                JOptionPane.showMessageDialog(this, "Quantity must be a positive integer!", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            Edit.purchaseOrders(current_orderID, 2, new_item_id);
+            Edit.purchaseOrders(current_orderID, 4, String.valueOf(new_quantity));
+            Edit.purchaseOrders(current_orderID, 5, String.valueOf(new_stockPrice));
+            Edit.purchaseOrders(current_orderID, 6, String.valueOf(new_amount));
+            Edit.purchaseOrders(current_orderID, 7, new_supplierID);
+    //        Edit.purchaseOrders(current_orderID, 1, new_supplierName); remain first(if need to use it later) - to update the latest supplier name in the PO
+        }catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Quantity must be a valid integer!", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        this.dispose();         
+        new fm_purchase_order().setVisible(true);  
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void current_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_current_userActionPerformed
+
+    }//GEN-LAST:event_current_userActionPerformed
     
 
 
@@ -222,9 +346,10 @@ public class fm_edit_PO extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JTextField current_user;
     private javax.swing.JTextField item_idField;
     private javax.swing.JTextField item_nameField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -233,10 +358,11 @@ public class fm_edit_PO extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField order_idField;
     private javax.swing.JTextField quantityField;
     private javax.swing.JComboBox<String> sname_list;
+    private javax.swing.JTextField stock_priceField;
     private javax.swing.JTextField supplier_idField;
-    private javax.swing.JTextField unit_priceField;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,4 +1,10 @@
 item_id|item_name|stock_price|sales_per_day|ordering_lead_time|safety_level|supplier_id|group_id
-I001|orange|3.5|5|7|35|SU001|G001
+I001|apple|3.5|5|7|35|SU001|G002
 I002|orange|4.5|5|7|35|SU002|G001
 I003|apple|3.5|5|7|35|SU001|G002
+I004|apple|4.0|5|7|35|SU003|G002
+I005|apple|5.0|5|7|35|SU004|G002
+I006|orange|5.5|5|7|35|SU005|G001
+I007|orange|5.0|5|7|35|SU006|G001
+I008|banana|4.0|5|7|35|SU005|G003
+I009|banana|4.5|5|7|35|SU006|G003
