@@ -10,6 +10,8 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -135,5 +137,27 @@ public class FinanceManagerFunction {
 //        return new ArrayList<>(supplierNames);
 //    }
     
-    
+    public static void payment(String orderID, int column,String value){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/receives"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/receives", false));
+            String[] items;
+            String line;
+            for (int i = 0; i < linesList.size(); i++) {
+                line = linesList.get(i);
+                items = line.split("\\|");
+                if (items.length>column && items[0].equals(orderID)){
+                    items[column] = value;
+                }
+                bw.write(String.join("|",items));
+                if (i < linesList.size() - 1) {
+                    bw.newLine();
+                }
+            }
+            bw.flush();
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }   
 }

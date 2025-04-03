@@ -1,5 +1,5 @@
 order_id|group_id|item_name|quantity|amount|date_received|status (cancel, received, not received)|payment_date|payment_status (-,unpaid,paid)
 O001|G002|apple|10|35.0|01042025|Not Received|-|-
 O002|G001|apple|20|90.0|02042025|Received|-|Unpaid
-O003|G001|orange|18|72.0|03042025|Received|-|Unpaid
+O003|G001|orange|18|72.0|03042025|Received|03042025|Paid
 O004|G003|banana|16|72.0|04042025|Received|-|Unpaid
