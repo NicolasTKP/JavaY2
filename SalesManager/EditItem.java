@@ -280,6 +280,7 @@ public class EditItem extends javax.swing.JFrame {
         
         String input_ordering_lead_time = jTextField_ordering_lead_time.getText();
         int ordering_lead_time = Integer.parseInt(input_ordering_lead_time);
+        
         item.setOrderingLeadTime(ordering_lead_time);
         
         int safety_level = item.setSafetyLevel(sales_per_day, ordering_lead_time);

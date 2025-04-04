@@ -4,13 +4,20 @@
  */
 package com.mycompany.JavaY2.SalesManager;
 
+import com.mycompany.JavaY2.Class.Item;
 import com.mycompany.JavaY2.Class.Supplier;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
+import javax.swing.Box;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.JPanel;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -24,7 +31,34 @@ public class AddSupplier extends javax.swing.JFrame {
     public AddSupplier() {
         initComponents();
     }
+    
+    public String getGroupID(String supply_items, String inventory_file_path) {
+        String lastGroupID = "G000"; // Default ID if none exists
+        String group_id = null;
 
+        try (BufferedReader br = new BufferedReader(new FileReader(inventory_file_path))) {
+            String line;
+            br.readLine(); // Skip header
+
+            while ((line = br.readLine()) != null) {
+                String[] itemColumns = line.split("\\|");
+
+                if (itemColumns.length >= 2 && supply_items.equals(itemColumns[1])) {
+                    return itemColumns[0]; // Return existing group_id if found
+                }
+                lastGroupID = itemColumns[0]; // Keep track of the last group_id
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+
+        // Generate a new group ID if no match is found
+        int lastNumber = Integer.parseInt(lastGroupID.substring(1)); // Extract number
+        int newNumber = lastNumber + 1;
+        group_id = String.format("G%03d", newNumber);
+
+        return group_id;
+    }    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,6 +80,7 @@ public class AddSupplier extends javax.swing.JFrame {
         jButton_add_supplier = new javax.swing.JButton();
         jTextField_supply_item = new javax.swing.JTextField();
         jLabel_payment_term = new javax.swing.JLabel();
+        jButton_cancel_add_supplier = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,9 +126,23 @@ public class AddSupplier extends javax.swing.JFrame {
         });
 
         jTextField_supply_item.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jTextField_supply_item.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_supply_itemActionPerformed(evt);
+            }
+        });
 
         jLabel_payment_term.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel_payment_term.setText("Payment Term:");
+
+        jButton_cancel_add_supplier.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jButton_cancel_add_supplier.setText("Cancel");
+        jButton_cancel_add_supplier.setToolTipText("");
+        jButton_cancel_add_supplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_cancel_add_supplierActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,8 +167,10 @@ public class AddSupplier extends javax.swing.JFrame {
                             .addComponent(jTextField_contact_number)
                             .addComponent(jTextField_supply_item)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(302, 302, 302)
-                        .addComponent(jButton_add_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(215, 215, 215)
+                        .addComponent(jButton_add_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67)
+                        .addComponent(jButton_cancel_add_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(85, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -147,9 +198,11 @@ public class AddSupplier extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField_payment_term, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel_payment_term))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(jButton_add_supplier)
-                .addGap(35, 35, 35))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton_add_supplier)
+                    .addComponent(jButton_cancel_add_supplier))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
@@ -160,9 +213,15 @@ public class AddSupplier extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_supplier_nameActionPerformed
 
     private void jButton_add_supplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_add_supplierActionPerformed
-        String file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\suppliers";
+        String supplier_file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\suppliers";
+        String item_file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\items";
+        String inventory_file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\inventory";
         Supplier supplier = new Supplier();
-
+        Item item = new Item();
+        
+        boolean isNewItemID = true;
+        boolean isNewGroupID = true;
+ 
         while (true){
             String supplier_id = supplier.setSupplierID();
             
@@ -181,44 +240,190 @@ public class AddSupplier extends javax.swing.JFrame {
             String payment_term = jTextField_payment_term.getText();
             supplier.setPaymentTerm(payment_term);
             
-            try (BufferedReader br = new BufferedReader(new FileReader(file_path))) {
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                String[] columns = line.split("\\|"); 
+            String group_id = getGroupID(supply_items, inventory_file_path);   
+            
+            if (supplier_name.isEmpty() || address.isEmpty()|| contact_number.isEmpty() || payment_term.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Please fill in all the required fields.");
+            }
+            
+            try (BufferedReader supplier_br = new BufferedReader(new FileReader(supplier_file_path))) {
+                String line;
+            
+                while ((line = supplier_br.readLine()) != null) {
+                    String[] columns = line.split("\\|"); 
                 
-                if (columns.length < 6){
-                    continue;
-                } 
+                    if (columns.length < 6){
+                        continue;
+                    } 
                 
-                if (supplier_name.trim().equalsIgnoreCase(columns[1].trim()) && supply_items.trim().equalsIgnoreCase(columns[4].trim())) {
-                    JOptionPane.showMessageDialog(null, "The entered item already supplied by an existed supplier. Please key in again");
-                    return;
-                    }
+                    if (supplier_name.trim().equalsIgnoreCase(columns[1].trim()) && supply_items.trim().equalsIgnoreCase(columns[4].trim())) {
+                        JOptionPane.showMessageDialog(null, "The entered item already supplied by an existed supplier. Please key in again");
+                        return;
+                        }
                 }
             } catch (IOException e) {
                 System.out.println("Error reading file: " + e.getMessage());
             }                  
             
+//            try (BufferedReader item_br = new BufferedReader(new FileReader(item_file_path))) {
+//                List<String> lines = item_br.lines().toList(); 
+//                boolean foundMatch = false; 
+//
+//                for (String line : lines) {  
+//                    String[] columns = line.split("\\|");
+//
+//                    if (columns.length >= 1 && supplier.setSupplyItems(supply_items).equalsIgnoreCase(columns[0])) {
+//                        isNewItemID = false;
+//                        foundMatch = true; 
+//                        break; 
+//                    }
+//                }
+//                if (!foundMatch) {
+//                    JOptionPane.showMessageDialog(null, "No matching item found in supplier list.");
+//                }
+//            } catch (IOException e) {
+//                JOptionPane.showMessageDialog(null, "Error reading inventory file: " + e.getMessage());
+//            }
             
-            String supplier_details = supplier_id + "|" + supplier_name + "|" + address + "|" + contact_number + "|" + supply_items + "|" + payment_term;
+            try (BufferedReader br = new BufferedReader(new FileReader(inventory_file_path))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] columns = line.split("\\|");
+                    if (columns.length >= 1 && group_id.equalsIgnoreCase(columns[0])) {
+                        isNewGroupID = false;  // Group ID already exists
+                        break;
+                    }
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Error reading inventory file: " + e.getMessage());
+            }
             
+            double stock_price = 0.0;      
+            int sales_per_day = 0;
+            int ordering_lead_time = 0;
+            int quantity = 0;
+            double retail_price = 0.0;
+            
+//            if(isNewItemID){
+                JSpinner jSpinner_stock_price = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 10000.0, 0.1));
+                JSpinner jSpinner_sales_per_day =  new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
+                JSpinner jSpinner_ordering_lead_time = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
+                JSpinner jSpinner_quantity = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));                
+                JSpinner jSpinner_retail_price = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 10000.0, 0.1));
+                
+                JPanel panel = new JPanel();
+                
+                panel.add(new JLabel("Stock Price: "));
+                panel.add(jSpinner_stock_price);
+                panel.add(Box.createVerticalStrut(10)); 
+                 
+                panel.add(new JLabel("Sales per day: "));            
+                panel.add(jSpinner_sales_per_day);
+                panel.add(Box.createVerticalStrut(10)); 
+                
+                panel.add(new JLabel("Ordering lead time: "));                  
+                panel.add(jSpinner_ordering_lead_time);
+                panel.add(Box.createVerticalStrut(10)); 
+                
+                panel.add(new JLabel("Quantity: "));                  
+                panel.add(jSpinner_quantity);
+                panel.add(Box.createVerticalStrut(10));  
+                
+                panel.add(new JLabel("Retail price: "));                  
+                panel.add(jSpinner_retail_price);
+                panel.add(Box.createVerticalStrut(10)); 
+                
+                int result = JOptionPane.showConfirmDialog(null, panel, "Enter Item Details", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                
+                if (result != JOptionPane.OK_OPTION) {
+                    JOptionPane.showMessageDialog(this, "User cancelled input.");
+                    return;
+                }
 
-             try (BufferedWriter bw = new BufferedWriter(new FileWriter(file_path, true))){
-                bw.write(supplier_details + "\n");
-                JOptionPane.showMessageDialog(null, "Supplier added successfully");
-                this.dispose();
-                break;
+                stock_price = (double) jSpinner_stock_price.getValue();
+                stock_price = Double.parseDouble(String.format("%.2f", stock_price));
+                
+                sales_per_day = (int) jSpinner_sales_per_day.getValue();
+                
+                ordering_lead_time = (int) jSpinner_ordering_lead_time.getValue();
 
-            }catch (IOException e){
-                JOptionPane.showMessageDialog(null, "Error writing to file: " + e.getMessage());
-            }         
+                quantity = (int) jSpinner_quantity.getValue();
+                
+                retail_price = (double) jSpinner_retail_price.getValue();
+                retail_price = Double.parseDouble(String.format("%.2f", retail_price));
+                
+                if (stock_price < 0 || ordering_lead_time < 0 || retail_price <0) {
+                    JOptionPane.showMessageDialog(this, "Stock price and ordering lead time must be greater than zero.");
+                    return;
+                }           
+//            } 
+            
+            String supplier_details = supplier_id + "|" + supplier_name + "|" + address + "|" + contact_number + "|" + item.setItemID() + "|" + payment_term;
+            
+            String item_details = item.setItemID() + "|" + supply_items.toLowerCase() + "|" + stock_price + "|" + sales_per_day 
+                                     + "|" + ordering_lead_time + "|" + item.setSafetyLevel(sales_per_day, ordering_lead_time) + "|" + supplier_id + "|" + group_id;                             
+                
+            String inventory_details = group_id + "|" + supply_items.toLowerCase() + "|" + quantity + "|" + retail_price;
+            
+            if (isNewGroupID) {
+                
+                try (BufferedWriter supplier_bw = new BufferedWriter(new FileWriter(supplier_file_path, true))){
+                    supplier_bw.write(supplier_details + "\n");
+                    this.dispose();
+                }catch (IOException e){
+                    JOptionPane.showMessageDialog(null, "Error writing to file: " + e.getMessage());
+                }
+                
+                try (BufferedWriter item_bw = new BufferedWriter(new FileWriter(item_file_path, true))) {
+                    item_bw.write(item_details + "\n");
+                    this.dispose();
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "Error writing to item file: " + e.getMessage());
+                } 
+                
+                try (BufferedWriter inventory_bw = new BufferedWriter(new FileWriter(inventory_file_path, true))) {
+                    inventory_bw.write(inventory_details + "\n");
+                    this.dispose();
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "Error writing to item file: " + e.getMessage());
+                }                   
+                JOptionPane.showMessageDialog(null, "New supplier, new item and new group ID has been added to the system.");
+                break;      
+                
+            } else{
+                
+                try (BufferedWriter supplier_bw = new BufferedWriter(new FileWriter(supplier_file_path, true))){
+                    supplier_bw.write(supplier_details + "\n");
+                    this.dispose();
+                }catch (IOException e){
+                    JOptionPane.showMessageDialog(null, "Error writing to file: " + e.getMessage());
+                }
+                
+                try (BufferedWriter item_bw = new BufferedWriter(new FileWriter(item_file_path, true))) {
+                    item_bw.write(item_details + "\n");
+                    this.dispose();
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "Error writing to item file: " + e.getMessage());
+                }
+                
+                JOptionPane.showMessageDialog(null, "New supplier and new item has been added to the system.");
+                break;    
+
+            }                
         }
     }//GEN-LAST:event_jButton_add_supplierActionPerformed
 
     private void jTextField_payment_termActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_payment_termActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_payment_termActionPerformed
+
+    private void jTextField_supply_itemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_supply_itemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_supply_itemActionPerformed
+
+    private void jButton_cancel_add_supplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_cancel_add_supplierActionPerformed
+        new SupplierEntry().setVisible(true);
+    }//GEN-LAST:event_jButton_cancel_add_supplierActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,6 +463,7 @@ public class AddSupplier extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_add_supplier;
+    private javax.swing.JButton jButton_cancel_add_supplier;
     private javax.swing.JLabel jLabel_add_new_supplier;
     private javax.swing.JLabel jLabel_address;
     private javax.swing.JLabel jLabel_contact;

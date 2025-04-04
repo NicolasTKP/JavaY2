@@ -7,6 +7,10 @@ package com.mycompany.JavaY2.Class;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,14 +23,13 @@ public class Supplier {
     public String address;
     public String contact_number;
     public String supply_items;
-
     String payment_term;
 
     public Supplier(){
         
     }
     
-    public Supplier(String supplier_id, String supplier_name, String address, String contact_number, String supply_items){
+    public Supplier(String supplier_id, String supplier_name, String address, String contact_number, String supply_items, String payment_term){
         this.supplier_id = supplier_id;
         this.supplier_name = supplier_name;
         this.address = address;
@@ -152,15 +155,46 @@ public class Supplier {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error reading file");
         }
         return null; // Return null if supplier ID is not found
     }
-    
-    public void setSupplyItems(String supply_items){
-        this.supply_items = supply_items.toLowerCase().trim();           
-    }
 
+    public String setSupplyItems(String supply_items) {
+        Map<String, String> itemMap = new HashMap<>();
+        String file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\items";
+        // Read items.txt and create a map (item_name -> item_id)
+        try (BufferedReader br = new BufferedReader(new FileReader(file_path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] columns = line.split("\\|");
+                if (columns.length > 1) {
+                    itemMap.put(columns[1].toLowerCase(), columns[0]); // item_name -> item_id
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error reading file");
+        }
+        
+        StringBuilder itemIDList = new StringBuilder();
+        String[] supplyItemsArray = supply_items.trim().split(",");      
+        
+        for (String supplyItem : supplyItemsArray) {
+            supplyItem = supplyItem.trim().toLowerCase();
+            if (itemMap.containsKey(supplyItem)) {
+                if (itemIDList.length() > 0) {
+                    itemIDList.append(", ");
+                }
+                itemIDList.append(itemMap.get(supplyItem));
+            } else{
+                JOptionPane.showMessageDialog(null, "Item is not found. Please enter the item details first ");
+            }
+        }
+        
+        return itemIDList.toString();
+    }
+    
+    
     public String getPaymentTerm(){
         return payment_term;
     }

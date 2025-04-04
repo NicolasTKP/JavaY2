@@ -101,29 +101,7 @@ public class Item {
         }
         this.item_name = item_name;
     }
-    
-//    public int getQuantity(){
-//        return quantity;
-//    }
-//    
-//    public void setQuantity(String input_quantity){
-//        if (input_quantity.isEmpty()){
-//            JOptionPane.showMessageDialog(null, "Please enter item quantity.");
-//        }else if (!input_quantity.matches("\\d+")){
-//            JOptionPane.showMessageDialog(null, "Please enter a whole number for item quantity.");
-//        }else{
-//            try{
-//                int quantity = Integer.parseInt(input_quantity);
-//                if (quantity <=0){
-//                    JOptionPane.showMessageDialog(null, "Item quantity cannot be 0 or less than 0");
-//                }else{
-//                    this.quantity = quantity;
-//                }
-//            }catch(NumberFormatException e){
-//                JOptionPane.showMessageDialog(null, "Please enter a valid integer for item quantity.");
-//            }
-//        } 
-//    }
+   
     
     public double getStockPrice(){
         return stock_price;
@@ -148,29 +126,6 @@ public class Item {
         } 
     }
     
-//    public double getRetailPrice(){
-//        return retail_price;
-//    }
-//    
-//    public void setRetailPrice(String input_retail_price){
-//        if (input_retail_price.isEmpty()){
-//            JOptionPane.showMessageDialog(null, "Please enter item retail price.");
-//        }else if (!input_retail_price.matches("^\\d+(\\.\\d+)?$")){
-//            JOptionPane.showMessageDialog(null, "Please enter a valid integer for item retail price.");
-//        }else{
-//            try{
-//                double retail_price= Double.parseDouble(input_retail_price);
-//                if (quantity <=0){
-//                    JOptionPane.showMessageDialog(null, "Item retail price cannot be 0 or less than 0");
-//                }else{
-//                    this.retail_price = retail_price;
-//                }
-//            }catch(NumberFormatException e){
-//                JOptionPane.showMessageDialog(null, "Please enter a valid integer for item retail price.");
-//            }
-//        } 
-//    }
-
     public String getSupplierID(){
         String file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\suppliers";
         try (BufferedReader br = new BufferedReader(new FileReader(file_path))) {
@@ -187,11 +142,22 @@ public class Item {
         return supplier_id;
     }
     
-    public String setSupplierID(String supplier){
-        this.supplier_id = getSupplierID();
-        return this.supplier_id;
+    public String setSupplierID(String supplier_id) {
+        String file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\suppliers";
+        try (BufferedReader br = new BufferedReader(new FileReader(file_path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length > 1 && parts[1].equalsIgnoreCase(supplier_id)) {
+                    return parts[0]; // Return item_id
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error reading file.");
+        }
+        return null; // Return null if item not found
     }
-
+    
     public int getSalesPerDay(){
         return sales_per_day;
     }
@@ -226,11 +192,6 @@ public class Item {
         return safety_level;
     }
   
-//    private String getNextGroupID(String lastGroupID) {
-//    int number = Integer.parseInt(lastGroupID.substring(1)); // Extract number part
-//    number++; // Increment
-//    return String.format("G%03d", number); // Format as Gxxx (e.g., G003)
-//}
     public String getNextGroupID(String lastGroupID) {
         int lastNumber = Integer.parseInt(lastGroupID.substring(1)); // Extract number part
         int newNumber = lastNumber + 1;    

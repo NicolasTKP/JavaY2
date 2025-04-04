@@ -56,6 +56,7 @@ public class SupplierEntry extends javax.swing.JFrame {
 
             }
         } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error reading file");
         }         
         
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -75,6 +76,7 @@ public class SupplierEntry extends javax.swing.JFrame {
                         }
                     }
                 } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "Error reading file");                    
                 }                   
             }
         });
@@ -134,7 +136,6 @@ public class SupplierEntry extends javax.swing.JFrame {
 
         jTable_supplier.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTable_supplier.setModel(container);
-        jTable_supplier.setEnabled(false);
         jTable_supplier.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable_supplierMouseClicked(evt);

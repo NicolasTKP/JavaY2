@@ -209,8 +209,8 @@ public class EditSupplier extends javax.swing.JFrame {
         String contact_number = jTextField_contact_number.getText();
         supplier.setContact(contact_number);   
         
-        String supply_items = jTextField_supply_item.getText();
-        supplier.setSupplyItems(supply_items);
+        String input_supply_items = jTextField_supply_item.getText();
+        supplier.setSupplyItems(input_supply_items);
         
         String payment_term = jTextField_payment_term.getText();
         supplier.setPaymentTerm(payment_term);
@@ -230,7 +230,7 @@ public class EditSupplier extends javax.swing.JFrame {
                     }
 
                 if (columns[0].trim().equals(supplier_id.trim())) {
-                    line = supplier_id + "|" + supplier_name + "|" + address + "|" + contact_number + "|" + supply_items + "|" + payment_term;
+                    line = supplier_id + "|" + supplier_name + "|" + address + "|" + contact_number + "|" + supplier.setSupplyItems(input_supply_items) + "|" + payment_term;
                     found = true;
                 }
                 updatedContent.append(line).append("\n");  

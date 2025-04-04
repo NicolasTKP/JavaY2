@@ -124,7 +124,8 @@ public class sales_manager_homepage extends javax.swing.JFrame {
     }//GEN-LAST:event_JButton_supplier_entryActionPerformed
 
     private void JButton_purchase_requisitionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButton_purchase_requisitionActionPerformed
-        // TODO add your handling code here:
+        new PREntry().setVisible(true);
+        dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_JButton_purchase_requisitionActionPerformed
 
     private void JButton_purchase_orderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButton_purchase_orderActionPerformed

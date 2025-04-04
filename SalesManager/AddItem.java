@@ -24,9 +24,7 @@ import javax.swing.SpinnerNumberModel;
  * @author User
  */
 public class AddItem extends javax.swing.JFrame {
-    
-    private final Map<String, List<String>> itemSupplierMap = new HashMap<>();
-    String supplier_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/suppliers";
+
     /**
      * Creates new form add_item
      */
@@ -264,7 +262,7 @@ public class AddItem extends javax.swing.JFrame {
 
                 quantity = (int) jSpinner_quantity.getValue();
                 retail_price = (double) jSpinner_retail_price.getValue();
-
+                retail_price = Double.parseDouble(String.format("%.2f", retail_price));
                 if (quantity < 0 || retail_price < 0) {
                     JOptionPane.showMessageDialog(this, "Quantity and Retail Price must be greater than zero.");
                     return;
@@ -272,7 +270,7 @@ public class AddItem extends javax.swing.JFrame {
             }     
             
             String item_details = item_id + "|" + item_name.toLowerCase() + "|" + input_stock_price + "|" + sales_per_day + "|" + ordering_lead_time 
-                    + "|" + safety_level + "|" + supplier_id + "|" + group_id;
+                    + "|" + safety_level + "|" + item.setSupplierID(supplier_id) + "|" + group_id;
                                   
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(file_path, true))){
                 bw.write(item_details + "\n");
