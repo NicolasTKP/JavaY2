@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Edit {
@@ -145,5 +146,56 @@ public class Edit {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void receives(String orderID, int column,String value){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/receives"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/receives", false));
+            String[] receives;
+            String line;
+            for (int i = 0; i < linesList.size(); i++) {
+                line = linesList.get(i);
+                receives = line.split("\\|");
+                if (receives.length>column && receives[0].equals(orderID.toUpperCase())){
+                    receives[column] = value;
+                }
+                bw.write(String.join("|",receives));
+                if (i < linesList.size() - 1) {
+                    bw.newLine();
+                }
+            }
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void removeItemForInventory(String supplierID, String itemID){
+        String item_line = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/suppliers",0, supplierID, 4);
+        assert item_line != null;
+        String[] items_id = item_line.split(",");
+        List<String> items = new ArrayList<>();
+        for(String item:items_id){
+            System.out.println(item);
+            if(!item.equals(itemID)){
+                items.add(item);
+            }
+        }
+        items_id = items.toArray(new String[0]);
+        item_line = String.join(",", items_id);
+        Edit.supplier(supplierID,4,item_line);
+    }
+
+    public static void addItemForInventory(String supplierID, String itemID){
+        String item_line = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/suppliers",0, supplierID, 4);
+        assert item_line != null;
+
+        if (!item_line.isEmpty() && !item_line.isBlank()){
+            item_line = item_line + "," + itemID;
+        }else{
+            item_line = itemID;
+        }
+        Edit.supplier(supplierID,4,item_line);
     }
 }

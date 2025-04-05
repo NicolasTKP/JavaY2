@@ -12,6 +12,9 @@ import com.mycompany.JavaY2.Object.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -592,6 +595,10 @@ public class admin_inventory_management extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int selected_row = jTable1.getSelectedRow();
+        if (selected_row == -1){
+            JOptionPane.showMessageDialog(null, "Please select an item to delete", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         String item_id = jTable1.getValueAt(selected_row,0).toString();
         int result = JOptionPane.showConfirmDialog(null, "Confirm to delete the item: "+item_id+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
@@ -618,10 +625,14 @@ public class admin_inventory_management extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         int selected_row = jTable1.getSelectedRow();
+        if (selected_row == -1){
+            JOptionPane.showMessageDialog(null, "Please select an item to edit", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         String[] options = {"Stock Price", "Sales Per Day", "Ordering Lead Time", "Supplier"};
         String option = (String) JOptionPane.showInputDialog(
                 null,
-                "Choose a supplier:",
+                "Choose a column to edit:",
                 "Dropdown Selection",
                 JOptionPane.QUESTION_MESSAGE,
                 null,
@@ -635,6 +646,9 @@ public class admin_inventory_management extends javax.swing.JFrame {
             case "Stock Price":
                 while (true){
                     String stock_price = JOptionPane.showInputDialog("Enter new stock price:");
+                    if (stock_price == null){
+                        return;
+                    }
                     if (ValidateFormat.unitPrice(stock_price)){
                         int result = JOptionPane.showConfirmDialog(null, "Confirm to change stock price to: "+stock_price+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                         if(result == JOptionPane.YES_OPTION){
@@ -652,6 +666,9 @@ public class admin_inventory_management extends javax.swing.JFrame {
             case "Sales Per Day":
                 while (true){
                     String sales_per_day = JOptionPane.showInputDialog("Enter new sales per day:");
+                    if (sales_per_day == null){
+                        return;
+                    }
                     if (ValidateFormat.quantityUnit(sales_per_day)){
                         int result = JOptionPane.showConfirmDialog(null, "Confirm to change sales per day to: "+sales_per_day+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                         if(result == JOptionPane.YES_OPTION){
@@ -672,6 +689,9 @@ public class admin_inventory_management extends javax.swing.JFrame {
             case "Ordering Lead Time":
                 while (true){
                     String ordering_lead_time = JOptionPane.showInputDialog("Enter new ordering lead time:");
+                    if (ordering_lead_time == null){
+                        return;
+                    }
                     if (ValidateFormat.quantityUnit(ordering_lead_time)){
                         int result = JOptionPane.showConfirmDialog(null, "Confirm to change ordering lead time to: "+ordering_lead_time+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                         if(result == JOptionPane.YES_OPTION){
@@ -714,27 +734,8 @@ public class admin_inventory_management extends javax.swing.JFrame {
                 if(result == JOptionPane.YES_OPTION) {
                     supplier_id = Search.getSupplierID(supplier_id);
                     String old_supplier = Search.getSupplierID(jTable1.getValueAt(selected_row, 6).toString());
-                    String item_line = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/suppliers",0, old_supplier, 4);
-                    assert item_line != null;
-                    String[] items_id = item_line.split(",");
-                    List<String> items = new ArrayList<>();
-                    for(String item:items_id){
-                        System.out.println(item);
-                        if(!item.equals(item_id)){
-                            items.add(item);
-                        }
-                    }
-                    items_id = items.toArray(new String[0]);
-                    item_line = String.join(",", items_id);
-                    Edit.supplier(old_supplier,4,item_line);
-
-                    item_line = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/suppliers",0, supplier_id, 4);
-                    if (item_line != null && !item_line.isEmpty() && !item_line.isBlank()){
-                        item_line = item_line + "," + item_id;
-                    }else{
-                        item_line = item_id;
-                    }
-                    Edit.supplier(supplier_id,4,item_line);
+                    Edit.removeItemForInventory(old_supplier,item_id);
+                    Edit.addItemForInventory(supplier_id,item_id);
                     Edit.item(item_id, 6, supplier_id);
                     JOptionPane.showMessageDialog(null, "Supplier successfully updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
                     UpdateTable.forItems(jTable1);
@@ -761,14 +762,174 @@ public class admin_inventory_management extends javax.swing.JFrame {
             }
         }
 
+        //Quantity
+        String quantity = "0";
+
+        //Retail Price
+        String retail_price;
+        while (true){
+            retail_price = JOptionPane.showInputDialog("Insert retail price:");
+            if (ValidateFormat.unitPrice(retail_price)){
+                break;
+            }else{
+                JOptionPane.showMessageDialog(null, "The item name already exist, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
+        String line = group_id + "|" + item_name + "|" + quantity + "|" + retail_price;
+        int result = JOptionPane.showConfirmDialog(null, "Confirm to add a new inventory group: "+item_name+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
+        if(result == JOptionPane.YES_OPTION) {
+            TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/inventory", line);
+            JOptionPane.showMessageDialog(null, "New item group added successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+            UpdateTable.forInventory(jTable2);
+        }
+
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        int selected_row = jTable2.getSelectedRow();
+        if (selected_row == -1){
+            JOptionPane.showMessageDialog(null, "Please select an inventory item group to delete", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String item_name = jTable2.getValueAt(selected_row, 1).toString();
+        int result = JOptionPane.showConfirmDialog(null, "Confirm to delete inventory group: "+item_name+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
+        if(result == JOptionPane.YES_OPTION) {
+            String group_id = jTable2.getValueAt(selected_row,0).toString();
+            TextFile.deleteLine("src/main/java/com/mycompany/JavaY2/TextFile/inventory", group_id,0);
+            try {
+                List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
+                for (String line:linesList){
+                    String[] lines = line.split("\\|");
+                    if (lines[7].equals(group_id)){
+                        String supplier_id = lines[6];
+                        String item_id = lines[0];
+                        Edit.removeItemForInventory(supplier_id,item_id);
+                        TextFile.deleteLine("src/main/java/com/mycompany/JavaY2/TextFile/items", item_id, 0);
+                    }
+                }
+            }catch (IOException e){
+                return;
+            }
+            UpdateTable.forInventory(jTable2);
+            UpdateTable.forItems(jTable1);
+            JOptionPane.showMessageDialog(null, "Item group deleted successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        int selected_row = jTable2.getSelectedRow();
+        if (selected_row == -1){
+            JOptionPane.showMessageDialog(null, "Please select an inventory item group to modify", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String[] options = {"Item Name", "Quantity", "Retail Price"};
+        String option = (String) JOptionPane.showInputDialog(
+                null,
+                "Choose a column to edit:",
+                "Dropdown Selection",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+        if (option == null){
+            return;
+        }
+        switch(option){
+            case "Item Name":
+                String item_name;
+                while (true){
+                    item_name = JOptionPane.showInputDialog("Insert item name:");
+                    if (item_name.length()>3 && ValidateFormat.itemName(item_name)){
+                        break;
+                    }else{
+                        JOptionPane.showMessageDialog(null, "The item name already exist, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+                int result = JOptionPane.showConfirmDialog(null, "Confirm to change the item name to: "+item_name+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
+                if(result == JOptionPane.YES_OPTION) {
+                    String group_id = jTable2.getValueAt(selected_row,0).toString();
+                    Edit.inventory(group_id, 1, item_name);
+                    try {
+                        List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
+                        for (String line:linesList){
+                            String[] lines = line.split("\\|");
+                            if (lines[7].equals(group_id)){
+                                String item_id = lines[0];
+                                Edit.item(item_id,1,item_name);
+                            }
+                        }
+                    }catch (IOException e){
+                        return;
+                    }
+                    UpdateTable.forItems(jTable1);
+                    UpdateTable.forInventory(jTable2);
+                    JOptionPane.showMessageDialog(null, "Item name updated successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+
+                }
+                break;
+
+            case "Quantity":
+                String[] receives = Query.getNotReceivedReceives();
+                if (receives.length == 0){
+                    JOptionPane.showMessageDialog(null, "No order had been placed recently", "Warning", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                String receive = (String) JOptionPane.showInputDialog(
+                        null,
+                        "Choose an item that received:",
+                        "Dropdown Selection",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        receives,
+                        receives[0]);
+                if (receive == null){
+                    return;
+                }
+                int result2 = JOptionPane.showConfirmDialog(null, "Are you confirm that the order: "+receive+ " is received?", "Confirmation",JOptionPane.YES_NO_OPTION);
+                if(result2 == JOptionPane.YES_OPTION) {
+                    String item_id = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/receives",0,receive,1);
+                    String group_id = Search.getGroupIDbyItemName(Search.getItemNamebyItemID(item_id));
+                    Edit.receives(receive,6, "Received");
+                    String receive_quantity = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/receives",0,receive,3);
+                    String inventory_quantity = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/inventory",0,group_id,2);
+                    assert receive_quantity != null;
+                    assert inventory_quantity != null;
+                    String quantity = Integer.toString(Integer.parseInt(receive_quantity) + Integer.parseInt(inventory_quantity));
+                    Edit.inventory(group_id,2,quantity);
+                    String date = Query.getCurrectDate();
+                    Edit.receives(receive,5,date);
+                    UpdateTable.forInventory(jTable2);
+                    JOptionPane.showMessageDialog(null, "Quantity updated successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                }
+                break;
+
+            case "Retail Price":
+                while (true){
+                    String group_id = jTable2.getValueAt(selected_row,0).toString();
+                    String retail_price = JOptionPane.showInputDialog("Enter new retail price:");
+                    if (retail_price == null){
+                        return;
+                    }
+                    if (ValidateFormat.unitPrice(retail_price)){
+                        int result3 = JOptionPane.showConfirmDialog(null, "Confirm to change retail price to: "+retail_price+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
+                        if(result3 == JOptionPane.YES_OPTION){
+                            Edit.inventory(group_id, 3, retail_price);
+                            JOptionPane.showMessageDialog(null, "Retail price successfully updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                            UpdateTable.forInventory(jTable2);
+                            break;
+                        }
+                    }else {
+                        JOptionPane.showMessageDialog(null, "Invalid format for retail price, please try again", "WARNING", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+                break;
+
+            default:
+                return;
+        }
+
     }//GEN-LAST:event_jButton8ActionPerformed
 
     /**

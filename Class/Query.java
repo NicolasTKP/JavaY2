@@ -9,6 +9,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Query {
@@ -192,6 +194,25 @@ public class Query {
         }
     }
 
+    public static String[] getNotReceivedReceives(){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/receives"));
+            List<String> ls = new ArrayList<>();
+            for (int i=1;i<linesList.size();i++){
+                String line = linesList.get(i);
+                String[] column = line.split("\\|");
+                if (column[6].equals("Not Received")){
+                    ls.add(column[0]);
+                }
+            }
+            return ls.toArray(new String[0]);
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String[] notUsedSuppliers(String[] suppliers, String group_id){
         try {
             List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
@@ -207,5 +228,11 @@ public class Query {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String getCurrectDate(){
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+        return today.format(formatter);
     }
 }
