@@ -1,2 +1,2 @@
-order_id|item_id|item_name|quantity|amount|status (cancel, received, not received)|payment_status (-,unpaid,paid)
-O001|I001|orange|10|35.0|Not Received|-
+order_id|item_id|item_name|quantity|amount|date_received|status (cancel, received, not received)|payment_date|payment_status (-,unpaid,paid)
+O001|I001|orange|10|35.0|-|Not Received|-|-

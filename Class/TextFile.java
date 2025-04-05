@@ -45,4 +45,19 @@ public class TextFile {
             e.printStackTrace();
         }
     }
+
+    public static String getColumn(String path, int target_column, String target, int get_column){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get(path));
+            for (String line:linesList) {
+                if (line.split("\\|")[target_column].strip().equals(target.strip())) {
+                    return line.split("\\|")[get_column];
+                }
+            }
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

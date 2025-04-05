@@ -36,7 +36,7 @@ public class ObjectList {
                 order.supplier_id = lines[7];
                 order.order_date = LocalDate.parse(lines[8], formatter);
                 order.order_status = lines[9];
-                order.item_name = Search.getItemName(lines[2]);
+                order.item_name = Search.getItemNamebyItemID(lines[2]);
                 order.supplier_name = Search.getSupplierName(lines[7]);
                 ls.add(order);
             }
@@ -72,10 +72,12 @@ public class ObjectList {
                     receive.supplier_id = lines[7];
                     receive.order_date = LocalDate.parse(lines[8], formatter);
                     receive.order_status = lines[9];
-                    receive.item_name = Search.getItemName(lines[2]);
+                    receive.item_name = Search.getItemNamebyItemID(lines[2]);
                     receive.supplier_name = Search.getSupplierName(lines[7]);
                     receive.delivery_status = Search.getDeliveryStatus(receive.order_id);
                     receive.payment_status = Search.getPaymentStatus(receive.order_id);
+                    receive.date_received = Search.getDateReceived(receive.order_id);
+                    receive.payment_date = Search.getPaymentDate(receive.order_id);
                     ls.add(receive);
                 }
             }
@@ -114,7 +116,58 @@ public class ObjectList {
         }
     }
 
+    public List<Item> getItems(){
+        List<Item> ls = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/items"));
+            String line;
+            String[] lines;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                Item item = new Item();
+                lines = line.split("\\|");
+                item.item_id = lines[0];
+                item.item_name = lines[1];
+                item.stock_price = Double.parseDouble(lines[2]);
+                item.sales_per_day = Integer.parseInt(lines[3]);
+                item.ordering_lead_time = Integer.parseInt(lines[4]);
+                item.safety_level = Integer.parseInt(lines[5]);
+                item.supplier_id = lines[6];
+                item.group_id = lines[7];
+                ls.add(item);
+            }
+            br.close();
+            return ls;
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+
+    public List<Inventory> getInventory(){
+        List<Inventory> ls = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            String line;
+            String[] lines;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                Inventory inventory = new Inventory();
+                lines = line.split("\\|");
+                inventory.group_id = lines[0];
+                inventory.item_name = lines[1];
+                inventory.quantity = Integer.parseInt(lines[2]);
+                inventory.retail_price = Double.parseDouble(lines[3]);
+                ls.add(inventory);
+            }
+            br.close();
+            return ls;
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
 }

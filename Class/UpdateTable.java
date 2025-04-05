@@ -1,9 +1,6 @@
 package com.mycompany.JavaY2.Class;
 
-import com.mycompany.JavaY2.Object.ObjectList;
-import com.mycompany.JavaY2.Object.PurchaseOrder;
-import com.mycompany.JavaY2.Object.Receives;
-import com.mycompany.JavaY2.Object.User;
+import com.mycompany.JavaY2.Object.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -46,7 +43,7 @@ public class UpdateTable {
     public static void forReceive(JTable jTable){
         ObjectList objectList = new ObjectList();
         List<Receives> receives = objectList.getReceives();
-        String[][] matrix = new String[receives.size()][6];
+        String[][] matrix = new String[receives.size()][7];
         Receives receive;
         for (int i = 0;i<receives.size();i++){
             receive = receives.get(i);
@@ -56,11 +53,12 @@ public class UpdateTable {
             matrix[i][3] = Integer.toString(receive.quantity);
             matrix[i][4] = Double.toString(receive.amount);
             matrix[i][5] = receive.delivery_status;
+            matrix[i][6] = receive.date_received;
         }
         jTable.setModel(new DefaultTableModel(
                                 matrix,
                                 new String [] {
-                                        "Order_ID", "Item_ID", "Item_Name","Quantity","Amount","Delivery_Status"                                }
+                                        "Order_ID", "Item_ID", "Item_Name","Quantity","Amount","Delivery Status","Date Received"                                }
                         ){
                             @Override
                             public boolean isCellEditable(int row, int column) {
@@ -86,6 +84,61 @@ public class UpdateTable {
                                 matrix,
                                 new String [] {
                                         "User_ID", "Username", "Password","Role"}
+                        ){
+                            @Override
+                            public boolean isCellEditable(int row, int column) {
+                                return false;
+                            }
+                        }
+        );
+    }
+
+    public static void forItems(JTable jTable){
+        ObjectList objectList = new ObjectList();
+        List<Item> items = objectList.getItems();
+        String[][] matrix = new String[items.size()][8];
+        Item item;
+        for (int i = 0;i<items.size();i++){
+            item = items.get(i);
+            matrix[i][0] = item.item_id;
+            matrix[i][1] = item.item_name;
+            matrix[i][2] = Double.toString(item.stock_price);
+            matrix[i][3] = Integer.toString(item.sales_per_day);
+            matrix[i][4] = Integer.toString(item.ordering_lead_time);
+            matrix[i][5] = Integer.toString(item.safety_level);
+            matrix[i][6] = Search.getSupplierName(item.supplier_id);
+            matrix[i][7] = item.group_id;
+
+        }
+        jTable.setModel(new DefaultTableModel(
+                                matrix,
+                                new String [] {
+                                        "Item_ID", "Item Name","Stock Price","Sales Per Day","Ordering Lead Time", "Safety Level", "Supplier", "Group ID"}
+                        ){
+                            @Override
+                            public boolean isCellEditable(int row, int column) {
+                                return false;
+                            }
+                        }
+        );
+    }
+
+    public static void forInventory(JTable jTable){
+        ObjectList objectList = new ObjectList();
+        List<Inventory> inventories = objectList.getInventory();
+        String[][] matrix = new String[inventories.size()][4];
+        Inventory inventory;
+        for (int i = 0;i<inventories.size();i++){
+            inventory = inventories.get(i);
+            matrix[i][0] = inventory.group_id;
+            matrix[i][1] = inventory.item_name;
+            matrix[i][2] = Integer.toString(inventory.quantity);
+            matrix[i][3] = Double.toString(inventory.retail_price);
+        }
+        jTable.setModel(new DefaultTableModel(
+                                matrix,
+                                new String [] {
+                                        "Group_ID", "Item Name","Quantity","Retail Price"}
                         ){
                             @Override
                             public boolean isCellEditable(int row, int column) {

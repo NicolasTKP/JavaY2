@@ -75,12 +75,12 @@
               <Font name="Segoe UI" size="18" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    matrix,&#xa;    new String [] {&#xa;        &quot;Order_ID&quot;, &quot;Item_ID&quot;, &quot;Item_Name&quot;,&quot;Quantity&quot;,&quot;Amount&quot;,&quot;Delivery_Status&quot;&#xa;    }&#xa;){&#xa;    @Override&#xa;    public boolean isCellEditable(int row, int column) {&#xa;        return false; // This makes all cells non-editable&#xa;    }&#xa;}&#xa;" type="code"/>
+              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    matrix,&#xa;    new String [] {&#xa;        &quot;Order_ID&quot;, &quot;Item_ID&quot;, &quot;Item_Name&quot;,&quot;Quantity&quot;,&quot;Amount&quot;,&quot;Delivery Status&quot;,&quot;Date Received&quot;&#xa;    }&#xa;){&#xa;    @Override&#xa;    public boolean isCellEditable(int row, int column) {&#xa;        return false; // This makes all cells non-editable&#xa;    }&#xa;}&#xa;" type="code"/>
             </Property>
             <Property name="rowHeight" type="int" value="25"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);&#xa;ObjectList objectList = new ObjectList();&#xa;List&lt;Receives&gt; receives = objectList.getReceives();&#xa;String[][] matrix = new String[receives.size()][6];&#xa;Receives receive;&#xa;for (int i = 0;i&lt;receives.size();i++){&#xa;    receive = receives.get(i);&#xa;    matrix[i][0] = receive.order_id;&#xa;    matrix[i][1] = receive.item_id;&#xa;    matrix[i][2] = receive.item_name;&#xa;    matrix[i][3] = Integer.toString(receive.quantity);&#xa;    matrix[i][4] = Double.toString(receive.amount);&#xa;    matrix[i][5] = receive.delivery_status;&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);&#xa;ObjectList objectList = new ObjectList();&#xa;List&lt;Receives&gt; receives = objectList.getReceives();&#xa;String[][] matrix = new String[receives.size()][7];&#xa;Receives receive;&#xa;for (int i = 0;i&lt;receives.size();i++){&#xa;    receive = receives.get(i);&#xa;    matrix[i][0] = receive.order_id;&#xa;    matrix[i][1] = receive.item_id;&#xa;    matrix[i][2] = receive.item_name;&#xa;    matrix[i][3] = Integer.toString(receive.quantity);&#xa;    matrix[i][4] = Double.toString(receive.amount);&#xa;    matrix[i][5] = receive.delivery_status;&#xa;    matrix[i][6] = receive.date_received;&#xa;}"/>
           </AuxValues>
         </Component>
       </SubComponents>

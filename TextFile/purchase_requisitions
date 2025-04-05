@@ -1,2 +1,2 @@
-request_id|item_id(foreign key)|user_id|quantity|request_date|required_date|supplier_id|status (pending,approved,rejected)
-R001|I001|U001|30|01042025|02052025|SU001|Pending
+request_id|group_id|user_id|quantity|request_date|required_date|status (pending,approved,rejected)
+R001|G002|U001|30|01042025|02052025|Pending

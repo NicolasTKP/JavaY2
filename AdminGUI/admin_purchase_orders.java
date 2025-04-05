@@ -218,18 +218,20 @@ public class admin_purchase_orders extends JFrame {
         if (selectedRow == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
         }else{
-            String[] ls = new String[7];
+            String[] ls = new String[9];
             Object order_id = jTable1.getValueAt(selectedRow,0);
             Edit.purchaseOrders(order_id.toString(),9,"Approved");
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setValueAt("Approved",selectedRow,9);
             ls[0] = order_id.toString();
-            ls[1] = Objects.requireNonNull(Search.getFromPO(ls[0], 2)).toUpperCase();
-            ls[2] = Search.getItemName(ls[1]);
+            ls[1] = Search.getFromPO(ls[0],2);
+            ls[2] = jTable1.getValueAt(selectedRow,2).toString();
             ls[3] = Search.getFromPO(ls[0],4);
             ls[4] = Search.getFromPO(ls[0],6);
-            ls[5] = "Not Received";
-            ls[6] = "-";
+            ls[5] = "-";
+            ls[6] = "Not Received";
+            ls[7] = "-";
+            ls[8] = "-";
             TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/receives",String.join("|",ls));
             JOptionPane.showMessageDialog(null, "Successfully Approved The Purchase Order", "Successful", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -333,8 +335,34 @@ public class admin_purchase_orders extends JFrame {
             return;
         }
 
+        //Supplier ID
+        String group_id = Search.getFromPR(purchase_order[1],1);
+        String[] suppliers = Search.getSuppliersByGroupID(group_id);
+        assert suppliers != null;
+        if (suppliers.length>0){
+            String choice = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Select a supplier:",
+                    "Dropdown Selection",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    suppliers,
+                    suppliers[0]);
+            if (choice!=null){
+                System.out.println(Search.getSupplierID(choice));
+                purchase_order[7] = Search.getSupplierID(choice);
+            }else {
+                JOptionPane.showMessageDialog(null, "Canceled", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }else {
+            JOptionPane.showMessageDialog(null, "No supplier found, please register one", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+
         //Item ID
-        purchase_order[2] = Search.getFromPR(purchase_order[1],1);
+        purchase_order[2] = Search.getItemID(purchase_order[7],group_id);
 
         //User ID
         purchase_order[3] = SessionManager.getInstance().userID;
@@ -343,15 +371,25 @@ public class admin_purchase_orders extends JFrame {
         purchase_order[4] = Search.getFromPR(purchase_order[1], 3);
 
         //unit price
-        purchase_order[5] = Search.getFromInventory(purchase_order[2], 3);
+        purchase_order[5] = Search.getFromItems(purchase_order[2], 2);
+        String unit_price;
+        while (true){
+            unit_price = JOptionPane.showInputDialog("Enter Unit Pirce:",purchase_order[5]);
+            if (unit_price == null){
+                return;
+            }else if (ValidateFormat.unitPrice(unit_price)){
+                purchase_order[5] = unit_price;
+                break;
+            }else{
+                JOptionPane.showMessageDialog(null, "Invalid unit price format", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
 
         //Amount
         assert purchase_order[4] != null;
-        assert purchase_order[5] != null;
         purchase_order[6] = Double.toString(Double.parseDouble(purchase_order[4]) * Double.parseDouble(purchase_order[5]));
 
-        //Supplier ID
-        purchase_order[7] = Search.getFromPR(purchase_order[1], 6);
 
         //Order Date
         LocalDate today = LocalDate.now();
@@ -368,7 +406,8 @@ public class admin_purchase_orders extends JFrame {
 
         if(result == JOptionPane.YES_OPTION){
             TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders", String.join("|",purchase_order));
-            Edit.purchaseRequisitions(purchase_order[1], 7,"Approved");
+            Edit.item(purchase_order[2], 2, unit_price);
+            Edit.purchaseRequisitions(purchase_order[1], 6,"Approved");
             JOptionPane.showMessageDialog(null, "Purchase Order Place Successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forPO(jTable1);
         }
@@ -380,7 +419,10 @@ public class admin_purchase_orders extends JFrame {
         int selected_row = jTable1.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to edit", "Warning", JOptionPane.WARNING_MESSAGE);
-        }else{
+        }else if(jTable1.getValueAt(selected_row,9).equals("Approved")){
+            JOptionPane.showMessageDialog(null, "Cannot edit a PO that already been approved", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
             Object orderID = jTable1.getValueAt(selected_row,0);
             String order_ID = orderID.toString();
             String[] options = {"Item","Username","Quantity", "Unit Price", "Order Date"};
@@ -400,17 +442,29 @@ public class admin_purchase_orders extends JFrame {
                            return;
                         }
                         else if (Query.ifItemExist(itemID)){
-                            int result = JOptionPane.showConfirmDialog(null, "Do you want change item to: "+ Search.getItemName(itemID), "Confirmation", JOptionPane.YES_NO_OPTION);
+                            int result = JOptionPane.showConfirmDialog(null, "Do you want change item to: "+ Search.getItemNamebyItemID(itemID), "Confirmation", JOptionPane.YES_NO_OPTION);
 
                             if(result == JOptionPane.YES_OPTION){
-                                String unitPrice = Search.getFromInventory(itemID, 3);
-                                assert unitPrice != null;
+                                String unitPrice;
+
+                                while (true){
+                                    unitPrice = JOptionPane.showInputDialog("Enter Unit Pirce:",Search.getFromItems(itemID, 2));
+                                    if (unitPrice == null){
+                                        return;
+                                    }else if (ValidateFormat.unitPrice(unitPrice)){
+                                        break;
+                                    }else{
+                                        JOptionPane.showMessageDialog(null, "Invalid unit price format", "Warning", JOptionPane.WARNING_MESSAGE);
+                                    }
+                                }
+
                                 String amount = Double.toString(Double.parseDouble(unitPrice) * Double.parseDouble(jTable1.getValueAt(selected_row,4).toString()));
-                                String supplier = Search.getFromInventory(itemID, 6);
+                                String supplier = Search.getFromItems(itemID, 6);
                                 Edit.purchaseOrders(order_ID,2, itemID);
                                 Edit.purchaseOrders(order_ID,5, unitPrice);
                                 Edit.purchaseOrders(order_ID,6,amount);
                                 Edit.purchaseOrders(order_ID,7,supplier);
+                                Edit.item(itemID,2, unitPrice);
                                 JOptionPane.showMessageDialog(null, "Successfully update the item", "Successful", JOptionPane.INFORMATION_MESSAGE);
                                 UpdateTable.forPO(jTable1);
                             }
@@ -419,6 +473,7 @@ public class admin_purchase_orders extends JFrame {
                             JOptionPane.showMessageDialog(null, "Item doesn't exist please try again", "Warning", JOptionPane.WARNING_MESSAGE);
                         }
                     }
+                    break;
 
                 case "Username":
                     while (true){
@@ -442,6 +497,7 @@ public class admin_purchase_orders extends JFrame {
 
                         }
                     }
+                    break;
 
                 case "Quantity":
                     while(true){
@@ -463,6 +519,7 @@ public class admin_purchase_orders extends JFrame {
                             JOptionPane.showMessageDialog(null, "Invalid quantity format please try again", "Warning", JOptionPane.WARNING_MESSAGE);
                         }
                     }
+                    break;
 
                 case "Unit Price":
                     while (true){
@@ -478,6 +535,8 @@ public class admin_purchase_orders extends JFrame {
                                 String amount = Double.toString(Double.parseDouble(unitPrice) * Double.parseDouble(jTable1.getValueAt(selected_row,4).toString()));
                                 Edit.purchaseOrders(order_ID,5, unitPrice);
                                 Edit.purchaseOrders(order_ID,6,amount);
+                                String item_id = Search.getFromPO(order_ID,2);
+                                Edit.item(item_id, 2, unitPrice);
                                 UpdateTable.forPO(jTable1);
                             }
                             break;
@@ -485,6 +544,7 @@ public class admin_purchase_orders extends JFrame {
                             JOptionPane.showMessageDialog(null, "Invalid unit price format please try again", "Warning", JOptionPane.WARNING_MESSAGE);
                         }
                     }
+                    break;
 
                 case "Order Date":
                     while (true){
@@ -505,6 +565,7 @@ public class admin_purchase_orders extends JFrame {
                         }
 
                     }
+                    break;
 
                 case null:
 
