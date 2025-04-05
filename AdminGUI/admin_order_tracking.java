@@ -46,7 +46,7 @@ public class admin_order_tracking extends javax.swing.JFrame {
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         ObjectList objectList = new ObjectList();
         List<Receives> receives = objectList.getReceives();
-        String[][] matrix = new String[receives.size()][6];
+        String[][] matrix = new String[receives.size()][7];
         Receives receive;
         for (int i = 0;i<receives.size();i++){
             receive = receives.get(i);
@@ -56,12 +56,13 @@ public class admin_order_tracking extends javax.swing.JFrame {
             matrix[i][3] = Integer.toString(receive.quantity);
             matrix[i][4] = Double.toString(receive.amount);
             matrix[i][5] = receive.delivery_status;
+            matrix[i][6] = receive.date_received;
         }
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             matrix,
             new String [] {
-                "Order_ID", "Item_ID", "Item_Name","Quantity","Amount","Delivery_Status"
+                "Order_ID", "Item_ID", "Item_Name","Quantity","Amount","Delivery Status","Date Received"
             }
         ){
             @Override

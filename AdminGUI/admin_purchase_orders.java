@@ -218,7 +218,7 @@ public class admin_purchase_orders extends JFrame {
         if (selectedRow == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
         }else{
-            String[] ls = new String[7];
+            String[] ls = new String[9];
             Object order_id = jTable1.getValueAt(selectedRow,0);
             Edit.purchaseOrders(order_id.toString(),9,"Approved");
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -228,8 +228,10 @@ public class admin_purchase_orders extends JFrame {
             ls[2] = jTable1.getValueAt(selectedRow,2).toString();
             ls[3] = Search.getFromPO(ls[0],4);
             ls[4] = Search.getFromPO(ls[0],6);
-            ls[5] = "Not Received";
-            ls[6] = "-";
+            ls[5] = "-";
+            ls[6] = "Not Received";
+            ls[7] = "-";
+            ls[8] = "-";
             TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/receives",String.join("|",ls));
             JOptionPane.showMessageDialog(null, "Successfully Approved The Purchase Order", "Successful", JOptionPane.INFORMATION_MESSAGE);
         }

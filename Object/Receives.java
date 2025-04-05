@@ -9,10 +9,12 @@ import java.util.Set;
 public class Receives extends PurchaseOrder {
     public String delivery_status;
     public String payment_status;
+    public String date_received;
+    public String payment_date;
 
     Receives(){
     }
-    Receives(String order_id, String request_id, String item_id, String user_id, String username, int quantity, double unit_price, double amount, String supplier_id, LocalDate order_date, String order_status, String item_name, String supplier_name, String delivery_status, String payment_status){
+    Receives(String order_id, String request_id, String item_id, String user_id, String username, int quantity, double unit_price, double amount, String supplier_id, LocalDate order_date, String order_status, String item_name, String supplier_name, String date_received, String delivery_status, String payment_date, String payment_status){
         this.order_id = order_id;
         this.request_id = request_id;
         this.item_id = item_id;
@@ -28,6 +30,8 @@ public class Receives extends PurchaseOrder {
         this.supplier_name = supplier_name;
         this.delivery_status = delivery_status;
         this.payment_status = payment_status;
+        this.date_received = date_received;
+        this.payment_date = payment_date;
     }
 
     public boolean anyMatch(String keyword){
@@ -46,7 +50,9 @@ public class Receives extends PurchaseOrder {
                 this.item_name.toLowerCase(),
                 this.supplier_name.toLowerCase(),
                 this.delivery_status.toLowerCase(),
-                this.payment_status.toLowerCase()
+                this.payment_status.toLowerCase(),
+                this.date_received.toLowerCase(),
+                this.payment_date.toLowerCase()
         ));
         return valuesToCheck.contains(keyword);
     }

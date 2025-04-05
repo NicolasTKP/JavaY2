@@ -76,6 +76,8 @@ public class ObjectList {
                     receive.supplier_name = Search.getSupplierName(lines[7]);
                     receive.delivery_status = Search.getDeliveryStatus(receive.order_id);
                     receive.payment_status = Search.getPaymentStatus(receive.order_id);
+                    receive.date_received = Search.getDateReceived(receive.order_id);
+                    receive.payment_date = Search.getPaymentDate(receive.order_id);
                     ls.add(receive);
                 }
             }
