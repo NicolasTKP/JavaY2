@@ -147,4 +147,30 @@ public class UpdateTable {
                         }
         );
     }
+
+    public static void forInventoryValue(JTable jTable){
+        ObjectList objectList = new ObjectList();
+        List<Inventory_Value> inventories = objectList.getInventoryValue();
+        String[][] matrix = new String[inventories.size()][5];
+        Inventory_Value inventory;
+        for (int i = 0;i<inventories.size();i++){
+            inventory = inventories.get(i);
+            matrix[i][0] = inventory.group_id;
+            matrix[i][1] = inventory.item_name;
+            matrix[i][2] = Integer.toString(inventory.quantity);
+            matrix[i][3] = Double.toString(inventory.average_unit_price);
+            matrix[i][4] = Double.toString(inventory.actual_value);
+        }
+        jTable.setModel(new DefaultTableModel(
+                                matrix,
+                                new String [] {
+                                        "Group ID", "Item Name", "Quantity", "Average Unit Price", "Actual Value"}
+                        ){
+                            @Override
+                            public boolean isCellEditable(int row, int column) {
+                                return false;
+                            }
+                        }
+        );
+    }
 }

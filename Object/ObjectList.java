@@ -1,5 +1,6 @@
 package com.mycompany.JavaY2.Object;
 
+import com.mycompany.JavaY2.Class.Query;
 import com.mycompany.JavaY2.Class.Search;
 
 import java.io.BufferedReader;
@@ -160,6 +161,51 @@ public class ObjectList {
                 inventory.quantity = Integer.parseInt(lines[2]);
                 inventory.retail_price = Double.parseDouble(lines[3]);
                 ls.add(inventory);
+            }
+            br.close();
+            return ls;
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Inventory_Value> getInventoryValue(){
+        List<Inventory_Value> ls = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            String line;
+            String[] lines;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                Inventory_Value inventory_value = new Inventory_Value();
+                lines = line.split("\\|");
+                inventory_value.group_id = lines[0];
+                inventory_value.item_name = lines[1];
+                inventory_value.quantity = Integer.parseInt(lines[2]);
+                inventory_value.retail_price = Double.parseDouble(lines[3]);
+                String[] purcahse_orders = Query.getAllPurchaseOrder(inventory_value.group_id);
+                assert purcahse_orders != null;
+                int quantity = inventory_value.quantity;
+                double unit_prices = 0.0;
+                double total_value = 0.0;
+                for (String order:purcahse_orders){
+                    String[] orders = order.split("\\|");
+                    if (Integer.parseInt(orders[0]) < quantity){
+                        total_value = total_value + Double.parseDouble(orders[2]);
+                        quantity = quantity - Integer.parseInt(orders[0]);
+                    }else if(Integer.parseInt(orders[0]) > quantity){
+                        total_value = total_value + (Double.parseDouble(Integer.toString(quantity)) * Double.parseDouble(orders[1]));
+                        break;
+                    }else{
+                        total_value = total_value + Double.parseDouble(orders[2]);
+                        break;
+                    }
+                }
+                unit_prices = total_value/Double.parseDouble(Integer.toString(inventory_value.quantity));
+                inventory_value.average_unit_price = unit_prices;
+                inventory_value.actual_value = total_value;
+                ls.add(inventory_value);
             }
             br.close();
             return ls;
