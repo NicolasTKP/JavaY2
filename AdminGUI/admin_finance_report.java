@@ -275,6 +275,12 @@ public class admin_finance_report extends javax.swing.JFrame {
     jTextField10.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
     jTextField10.setText("");
     jTextField10.setFocusable(false);
+    int row_count = jTable1.getRowCount();
+    double total = 0.0;
+    for(int i = 0; i< row_count;i++){
+        total = total + Double.parseDouble(jTable1.getValueAt(i,4).toString());
+    }
+    jTextField10.setText(Double.toString(total));
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
