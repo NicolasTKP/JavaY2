@@ -215,6 +215,32 @@ public class ObjectList {
         }
     }
 
+    public List<Payment> getPayments(){
+        List<Payment> ls = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/receives"));
+            String line;
+            String[] lines;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                Payment payment = new Payment();
+                lines = line.split("\\|");
+                payment.order_id = lines[0];
+                payment.item_id = lines[1];
+                payment.quantity = Integer.parseInt(lines[3]);
+                payment.amount = Double.parseDouble(lines[4]);
+                payment.payment_status = lines[8];
+                payment.payment_date = lines[7];
+                ls.add(payment);
+            }
+            br.close();
+            return ls;
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 }
 

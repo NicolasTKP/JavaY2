@@ -173,4 +173,31 @@ public class UpdateTable {
                         }
         );
     }
+
+    public static void forPayment(JTable jTable){
+        ObjectList objectList = new ObjectList();
+        List<Payment> payments = objectList.getPayments();
+        String[][] matrix = new String[payments.size()][6];
+        Payment payment;
+        for (int i = 0;i<payments.size();i++){
+            payment = payments.get(i);
+            matrix[i][0] = payment.order_id;
+            matrix[i][1] = payment.item_id;
+            matrix[i][2] = Integer.toString(payment.quantity);
+            matrix[i][3] = Double.toString(payment.amount);
+            matrix[i][4] = payment.payment_status;
+            matrix[i][5] = payment.payment_date;
+        }
+        jTable.setModel(new DefaultTableModel(
+                                matrix,
+                                new String [] {
+                                        "Order ID", "Item ID", "Quantity", "Amount", "Payment Status", "Payment Date"}
+                        ){
+                            @Override
+                            public boolean isCellEditable(int row, int column) {
+                                return false;
+                            }
+                        }
+        );
+    }
 }

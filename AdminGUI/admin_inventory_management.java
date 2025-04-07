@@ -913,6 +913,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
                     Edit.inventory(group_id,2,quantity);
                     String date = Query.getCurrectDate();
                     Edit.receives(receive,5,date);
+                    Edit.receives(receive,8, "Unpaid");
                     UpdateTable.forInventory(jTable2);
                     JOptionPane.showMessageDialog(null, "Quantity updated successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
                 }
