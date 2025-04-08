@@ -200,4 +200,31 @@ public class UpdateTable {
                         }
         );
     }
+
+    public static void forSupplier(JTable jTable){
+        ObjectList objectList = new ObjectList();
+        List<Supplier> suppliers = objectList.getSuppliers();
+        String[][] matrix = new String[suppliers.size()][6];
+        Supplier supplier;
+        for (int i = 0;i<suppliers.size();i++){
+            supplier = suppliers.get(i);
+            matrix[i][0] = supplier.supplier_id;
+            matrix[i][1] = supplier.supplier_name;
+            matrix[i][2] = supplier.address;
+            matrix[i][3] = supplier.contact;
+            matrix[i][4] = supplier.supply_items;
+            matrix[i][5] = supplier.payment_term;
+        }
+        jTable.setModel(new DefaultTableModel(
+                                matrix,
+                                new String [] {
+                                        "Supplier ID", "Supplier Name", "Address", "Contact", "Supply Items","Payment Term"}
+                        ){
+                            @Override
+                            public boolean isCellEditable(int row, int column) {
+                                return false;
+                            }
+                        }
+        );
+    }
 }

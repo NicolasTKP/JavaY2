@@ -241,6 +241,32 @@ public class ObjectList {
         }
     }
 
+    public List<Supplier> getSuppliers(){
+        List<Supplier> ls = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"));
+            String line;
+            String[] lines;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                Supplier supplier = new Supplier();
+                lines = line.split("\\|");
+                supplier.supplier_id = lines[0];
+                supplier.supplier_name = lines[1];
+                supplier.address = lines[2];
+                supplier.contact = lines[3];
+                supplier.supply_items = lines[4];
+                supplier.payment_term = lines[5];
+                ls.add(supplier);
+            }
+            br.close();
+            return ls;
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 }
 
