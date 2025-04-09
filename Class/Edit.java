@@ -1,12 +1,12 @@
 package com.mycompany.JavaY2.Class;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Edit {
     public static void purchaseOrders(String orderID, int column,String value){
@@ -171,6 +171,29 @@ public class Edit {
         }
     }
 
+    public static void dailySalesItems(String dailySalesID, int column,String value){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/daily_sales_items"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/daily_sales_items", false));
+            String[] sales;
+            String line;
+            for (int i = 0; i < linesList.size(); i++) {
+                line = linesList.get(i);
+                sales = line.split("\\|");
+                if (sales.length>column && sales[0].equals(dailySalesID.toUpperCase())){
+                    sales[column] = value;
+                }
+                bw.write(String.join("|",sales));
+                if (i < linesList.size() - 1) {
+                    bw.newLine();
+                }
+            }
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void removeItemForInventory(String supplierID, String itemID){
         String item_line = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/suppliers",0, supplierID, 4);
         assert item_line != null;
@@ -197,5 +220,33 @@ public class Edit {
             item_line = itemID;
         }
         Edit.supplier(supplierID,4,item_line);
+    }
+
+    public static void updateSalesTxt(){
+        String first_line = "sales_id|date|amount";
+        Map<String, Double> sales = new HashMap<>();
+        try{
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/daily_sales_items"));
+            linesList.removeFirst();
+            for (String line:linesList){
+                String[] lines = line.split("\\|");
+                sales.put(lines[4], sales.getOrDefault(lines[4],0.0) + (Double.parseDouble(lines[3])*Double.parseDouble(lines[1])));
+            }
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/sales", false));
+            bw.write(first_line);
+            int i = 1;
+            for (Map.Entry<String, Double> entry : sales.entrySet()) {
+                String date = entry.getKey();
+                String amount = Double.toString(entry.getValue());
+                String sales_id = String.format("%s%05d", "S", i);
+                i++;
+                bw.newLine();
+                bw.write(sales_id+"|"+date+"|"+amount);
+            }
+            bw.close();
+        }catch (IOException e){
+
+        }
     }
 }

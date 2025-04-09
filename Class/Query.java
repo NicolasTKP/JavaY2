@@ -90,6 +90,21 @@ public class Query {
         }
     }
 
+    public static String getLatestDailySalesID(){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/daily_sales_items"));
+            String line = linesList.getLast();
+            String latest = line.split("\\|")[0];
+            int number = Integer.parseInt(latest.substring(2));
+            number++;
+            return String.format("%s%05d", "DS", number);
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String[] getPendingPR(){
         try {
             List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/purchase_requisitions"));
@@ -234,5 +249,32 @@ public class Query {
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
         return today.format(formatter);
+    }
+
+    public static String[] getAllPurchaseOrder(String groupID){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders"));
+            Map<LocalDate, String> map = new HashMap<>();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+            for(int i = 1; i<linesList.size();i++){
+                String line = linesList.get(i);
+                String[] lines = line.split("\\|");
+                String str_date = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/receives", 0, lines[0], 5);
+                if (!(str_date == null) && !str_date.equals("-")){
+                    LocalDate date = LocalDate.parse(str_date, formatter);
+                    if(Search.getGroupIDbyItemName(Search.getItemNamebyItemID(lines[2])).equals(groupID)){
+                        String item = lines[4] + "|" + lines[5] + "|" + lines[6];
+                        map.put(date, item);
+                    }
+                }
+            }
+            Map<LocalDate, String> sortedMap = new TreeMap<>((a, b) -> b.compareTo(a));
+            sortedMap.putAll(map);
+            return sortedMap.values().toArray(new String[0]);
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

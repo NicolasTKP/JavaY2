@@ -1,5 +1,6 @@
 package com.mycompany.JavaY2.Object;
 
+import com.mycompany.JavaY2.Class.Query;
 import com.mycompany.JavaY2.Class.Search;
 
 import java.io.BufferedReader;
@@ -109,6 +110,7 @@ public class ObjectList {
                 ls.add(user);
             }
             br.close();
+            ls.reversed();
             return ls;
         }catch (IOException e) {
             e.printStackTrace();
@@ -163,6 +165,128 @@ public class ObjectList {
             }
             br.close();
             return ls;
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Inventory_Value> getInventoryValue(){
+        List<Inventory_Value> ls = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            String line;
+            String[] lines;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                Inventory_Value inventory_value = new Inventory_Value();
+                lines = line.split("\\|");
+                inventory_value.group_id = lines[0];
+                inventory_value.item_name = lines[1];
+                inventory_value.quantity = Integer.parseInt(lines[2]);
+                inventory_value.retail_price = Double.parseDouble(lines[3]);
+                String[] purcahse_orders = Query.getAllPurchaseOrder(inventory_value.group_id);
+                assert purcahse_orders != null;
+                int quantity = inventory_value.quantity;
+                double unit_prices = 0.0;
+                double total_value = 0.0;
+                for (String order:purcahse_orders){
+                    String[] orders = order.split("\\|");
+                    if (Integer.parseInt(orders[0]) < quantity){
+                        total_value = total_value + Double.parseDouble(orders[2]);
+                        quantity = quantity - Integer.parseInt(orders[0]);
+                    }else if(Integer.parseInt(orders[0]) > quantity){
+                        total_value = total_value + (Double.parseDouble(Integer.toString(quantity)) * Double.parseDouble(orders[1]));
+                        break;
+                    }else{
+                        total_value = total_value + Double.parseDouble(orders[2]);
+                        break;
+                    }
+                }
+                unit_prices = total_value/Double.parseDouble(Integer.toString(inventory_value.quantity));
+                inventory_value.average_unit_price = unit_prices;
+                inventory_value.actual_value = total_value;
+                ls.add(inventory_value);
+            }
+            br.close();
+            return ls;
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Payment> getPayments(){
+        List<Payment> ls = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/receives"));
+            String line;
+            String[] lines;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                Payment payment = new Payment();
+                lines = line.split("\\|");
+                payment.order_id = lines[0];
+                payment.item_id = lines[1];
+                payment.quantity = Integer.parseInt(lines[3]);
+                payment.amount = Double.parseDouble(lines[4]);
+                payment.payment_status = lines[8];
+                payment.payment_date = lines[7];
+                ls.add(payment);
+            }
+            br.close();
+            return ls;
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Supplier> getSuppliers(){
+        List<Supplier> ls = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"));
+            String line;
+            String[] lines;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                Supplier supplier = new Supplier();
+                lines = line.split("\\|");
+                supplier.supplier_id = lines[0];
+                supplier.supplier_name = lines[1];
+                supplier.address = lines[2];
+                supplier.contact = lines[3];
+                supplier.supply_items = lines[4];
+                supplier.payment_term = lines[5];
+                ls.add(supplier);
+            }
+            br.close();
+            return ls;
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<DailySale> getDailySales(){
+        List<DailySale> ls = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/daily_sales_items"));
+            String line;
+            String[] lines;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                DailySale daily_sales = new DailySale();
+                lines = line.split("\\|");
+                daily_sales.daily_sales_id = lines[0];
+                daily_sales.quantity = Integer.parseInt(lines[1]);
+                daily_sales.group_id = lines[2];
+                daily_sales.retail_price = Double.parseDouble(lines[3]);
+                daily_sales.date = lines[4];
+                ls.add(daily_sales);
+            }
+            br.close();
+            return ls.reversed();
         }catch (IOException e) {
             e.printStackTrace();
             return null;

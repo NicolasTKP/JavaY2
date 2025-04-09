@@ -359,4 +359,24 @@ public class Search {
         }
     }
 
+    public static String getRetailPrice(String groupID){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                if (line.split("\\|")[0].equals(groupID.toUpperCase())){
+                    return line.split("\\|")[3];
+                }
+
+            }
+            br.close();
+            return null;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
