@@ -227,4 +227,30 @@ public class UpdateTable {
                         }
         );
     }
+
+    public static void forDailySale(JTable jTable){
+        ObjectList objectList = new ObjectList();
+        List<DailySale> daily_sales = objectList.getDailySales();
+        String[][] matrix = new String[daily_sales.size()][5];
+        DailySale daily_sale;
+        for (int i = 0;i<daily_sales.size();i++){
+            daily_sale = daily_sales.get(i);
+            matrix[i][0] = daily_sale.daily_sales_id;
+            matrix[i][1] = Integer.toString(daily_sale.quantity);
+            matrix[i][2] = Search.getItemNamebyGroupID(daily_sale.group_id);
+            matrix[i][3] = Double.toString(daily_sale.retail_price);
+            matrix[i][4] = daily_sale.date;
+        }
+        jTable.setModel(new DefaultTableModel(
+                                matrix,
+                                new String [] {
+                                        "Daily Sales ID", "Quantity", "Item Name", "Retail Price", "Date"}
+                        ){
+                            @Override
+                            public boolean isCellEditable(int row, int column) {
+                                return false;
+                            }
+                        }
+        );
+    }
 }

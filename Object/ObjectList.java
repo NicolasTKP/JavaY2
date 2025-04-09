@@ -110,6 +110,7 @@ public class ObjectList {
                 ls.add(user);
             }
             br.close();
+            ls.reversed();
             return ls;
         }catch (IOException e) {
             e.printStackTrace();
@@ -261,6 +262,31 @@ public class ObjectList {
             }
             br.close();
             return ls;
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<DailySale> getDailySales(){
+        List<DailySale> ls = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/daily_sales_items"));
+            String line;
+            String[] lines;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                DailySale daily_sales = new DailySale();
+                lines = line.split("\\|");
+                daily_sales.daily_sales_id = lines[0];
+                daily_sales.quantity = Integer.parseInt(lines[1]);
+                daily_sales.group_id = lines[2];
+                daily_sales.retail_price = Double.parseDouble(lines[3]);
+                daily_sales.date = lines[4];
+                ls.add(daily_sales);
+            }
+            br.close();
+            return ls.reversed();
         }catch (IOException e) {
             e.printStackTrace();
             return null;

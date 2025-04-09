@@ -17,10 +17,7 @@ import java.util.List;
 
 public class test {
     public static void main(String[] args) {
-        String[] ls = Query.getAllPurchaseOrder("G002");
-        for (String item:ls){
-            System.out.println(item);
-        }
+        Edit.updateSalesTxt();
 
 
     }
