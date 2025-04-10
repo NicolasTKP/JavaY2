@@ -253,4 +253,32 @@ public class UpdateTable {
                         }
         );
     }
+
+    public static void forPR(JTable jTable){
+        ObjectList objectList = new ObjectList();
+        List<PurchaseRequisition> purchase_requisitions = objectList.getPurchaseRequisitions();
+        String[][] matrix = new String[purchase_requisitions.size()][7];
+        PurchaseRequisition purchase_requisition;
+        for (int i = 0;i<purchase_requisitions.size();i++){
+            purchase_requisition = purchase_requisitions.get(i);
+            matrix[i][0] = purchase_requisition.request_id;
+            matrix[i][1] = purchase_requisition.item_name;
+            matrix[i][2] = Search.getUsername(purchase_requisition.user_id);
+            matrix[i][3] = Integer.toString(purchase_requisition.quantity);
+            matrix[i][4] = purchase_requisition.request_date;
+            matrix[i][5] = purchase_requisition.required_date;
+            matrix[i][6] = purchase_requisition.status;
+        }
+        jTable.setModel(new DefaultTableModel(
+                                matrix,
+                                new String [] {
+                                        "Request ID", "Item Name", "Username", "Quantity", "Request Date", "Required Date", "Status"}
+                        ){
+                            @Override
+                            public boolean isCellEditable(int row, int column) {
+                                return false;
+                            }
+                        }
+        );
+    }
 }

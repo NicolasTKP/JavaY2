@@ -105,6 +105,21 @@ public class Query {
         }
     }
 
+    public static String getLatestRequestID(){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/purchase_requisitions"));
+            String line = linesList.getLast();
+            String latest = line.split("\\|")[0];
+            int number = Integer.parseInt(latest.substring(2));
+            number++;
+            return String.format("%s%03d", "R", number);
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String[] getPendingPR(){
         try {
             List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/purchase_requisitions"));
