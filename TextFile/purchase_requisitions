@@ -1,2 +1,2 @@
 request_id|group_id|user_id|quantity|request_date|required_date|status (pending,approved,rejected)
-R001|G002|U001|30|01042025|02052025|Pending
+R001|G001|U001|10|01052025|02052025|Pending

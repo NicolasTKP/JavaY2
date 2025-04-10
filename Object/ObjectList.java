@@ -293,6 +293,34 @@ public class ObjectList {
         }
     }
 
+    public List<PurchaseRequisition> getPurchaseRequisitions(){
+        List<PurchaseRequisition> ls = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/purchase_requisitions"));
+            String line;
+            String[] lines;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                PurchaseRequisition purchase_requisition = new PurchaseRequisition();
+                lines = line.split("\\|");
+                purchase_requisition.request_id = lines[0];
+                purchase_requisition.group_id = lines[1];
+                purchase_requisition.user_id = lines[2];
+                purchase_requisition.quantity = Integer.parseInt(lines[3]);
+                purchase_requisition.request_date = lines[4];
+                purchase_requisition.required_date = lines[5];
+                purchase_requisition.status = lines[6];
+                purchase_requisition.item_name = Search.getItemNamebyGroupID(purchase_requisition.group_id);
+                ls.add(purchase_requisition);
+            }
+            br.close();
+            return ls.reversed();
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 }
 

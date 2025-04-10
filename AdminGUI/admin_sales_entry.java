@@ -369,6 +369,7 @@ public class admin_sales_entry extends javax.swing.JFrame {
                     UpdateTable.forDailySale(jTable1);
                     Edit.updateSalesTxt();
                 }
+                break;
 
             case "Retail Price":
                 String retail_price;
