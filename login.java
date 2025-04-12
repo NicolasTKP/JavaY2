@@ -5,6 +5,7 @@
 package com.mycompany.JavaY2;
 
 import com.mycompany.JavaY2.AdminGUI.admin_mainpage;
+import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.Object.SessionManager;
 
 import javax.swing.*;
@@ -162,6 +163,7 @@ public class login extends javax.swing.JFrame {
                 pass = line.split("\\|")[2];
                 role = line.split("\\|")[3];
                 if (username.equals(user) && password.equals(pass)){
+                    Edit.updateSalesTxt();
                     JOptionPane.showMessageDialog(null, "Login Successfully, you will be redirect to the main page", "Successfully", JOptionPane.INFORMATION_MESSAGE);
                     if (role.equals("admin")){
                         SessionManager.getInstance().userID = line.split("\\|")[0];
