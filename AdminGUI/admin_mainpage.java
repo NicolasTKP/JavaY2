@@ -4,6 +4,9 @@
  */
 package com.mycompany.JavaY2.AdminGUI;
 
+import com.mycompany.JavaY2.Class.Query;
+
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -39,6 +42,12 @@ public class admin_mainpage extends javax.swing.JFrame {
         jButton10 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Admin Main Page");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                notification(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jButton1.setText("Purchase Orders");
@@ -150,10 +159,9 @@ public class admin_mainpage extends javax.swing.JFrame {
                 .addGap(167, 167, 167)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton7)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton6)
-                        .addComponent(jButton5)
-                        .addComponent(jButton8)))
+                    .addComponent(jButton6)
+                    .addComponent(jButton5)
+                    .addComponent(jButton8))
                 .addContainerGap(977, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -206,28 +214,48 @@ public class admin_mainpage extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        admin_finance_report page = new admin_finance_report();
+        page.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        admin_inventory_management page = new admin_inventory_management();
+        page.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        admin_supplier page = new admin_supplier();
+        page.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        admin_purchase_requisition page = new admin_purchase_requisition();
+        page.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        admin_sales_entry page = new admin_sales_entry();
+        page.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
+        admin_profile page = new admin_profile();
+        page.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void notification(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_notification
+        String line = Query.getLowStockItems();
+        assert line != null;
+        if (!line.isEmpty() || !line.isBlank()){
+            JOptionPane.showMessageDialog(null, "Items: "+line+"\nis having low stock, you might want to restock it", "Alert", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_notification
 
     /**
      * @param args the command line arguments

@@ -29,7 +29,16 @@ public class ValidateFormat {
     }
 
     public static boolean username(String username){
-        return username.length() >= 4;
+        String[] usernames = Query.getAllUsername();
+        if (username.length() <4){
+            return false;
+        }
+        for(String item:usernames){
+            if(item.equals(username)){
+                return false;
+            }
+        }
+        return true;
     }
 
     public static boolean password(String password){

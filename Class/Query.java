@@ -224,6 +224,48 @@ public class Query {
         }
     }
 
+    public static String[] getAllUsername(){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/users"));
+            String[] ls = new String[linesList.size()-1];
+            for (int i=1;i<linesList.size();i++){
+                String line = linesList.get(i);
+                String[] column = line.split("\\|");
+                ls[i-1] = column[1];
+            }
+            return ls;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getLowStockItems(){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
+            StringBuilder res = new StringBuilder();
+            for (int i=1;i<linesList.size();i++){
+                String line = linesList.get(i);
+                String[] column = line.split("\\|");
+                int safety_level = Integer.parseInt(column[5]);
+                int stock = Integer.parseInt(Search.getFromInventory(column[7], 2));
+                if (stock < safety_level){
+                    if (res.toString().equals("")){
+                        res = new StringBuilder(column[0] + " " + column[1]);
+                    }else{
+                        res.append(",").append(column[0]).append(" ").append(column[1]);
+                    }
+                }
+            }
+            return res.toString();
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String[] getNotReceivedReceives(){
         try {
             List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/receives"));
