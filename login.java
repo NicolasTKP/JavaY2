@@ -165,7 +165,7 @@ public class login extends javax.swing.JFrame {
                 if (username.equals(user) && password.equals(pass)){
                     Edit.updateSalesTxt();
                     JOptionPane.showMessageDialog(null, "Login Successfully, you will be redirect to the main page", "Successfully", JOptionPane.INFORMATION_MESSAGE);
-                    if (role.equals("admin")){
+                    if (role.equals("admin") || role.equals("root")){
                         SessionManager.getInstance().userID = line.split("\\|")[0];
                         SessionManager.getInstance().username = user;
                         SessionManager.getInstance().password = pass;

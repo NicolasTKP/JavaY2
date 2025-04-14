@@ -9,15 +9,48 @@
 
 #Edit the purchase requisitions txt file with the target of requestID, column representing the exact column to modify, value is the new value to replace the old value
 
+**users(String userID, int column, String value)** -> Void
+
+#Edit the user txt file with the target of userID
+
+**inventory(String groupID, int column, String value)** -> Void
+
+#Edit the inventory txt file with the target of groupID
+
+**item(String itemID, int column, String value)** -> Void
+
+#Edit the item txt file with the target of itemID
+
+**supplier(String supplierID, int column, String value)** -> Void
+
+#Edit the inventory txt file with the target of supplierID
+
+**receives(String orderID, int column, String value)** -> Void
+
+#Edit the inventory txt file with the target of orderID
+
+**dailySalesItems(String dailySalesID, int column, String value)** -> Void
+
+#Edit the inventory txt file with the target of dailySalesID
+
+**removeItemForInventory(String supplierID, String itemID)** -> Void
+
+#Remove an item from the inventory by targeting supplierID and itemID
+
+**addItemForInventory(String supplierID, String itemID)** -> Void
+
+#Add an item into inventory by inserting supplierID and itemID
+
+**updateSalesTxt()** -> Void
+
+#Update the sales txt with latest daily sales record
+
 ## Matrix
 **removeEmptyRows(String[][] matrix)** -> Clean Matrix
 
 #Remove all rows with at least **one** empty value in **any** of the column
 
 ## Query
-**anyMatchOrder(PurchaseOrder order, String keyword)** -> boolean value
-
-#Check if any value of order match with keyword, the order datatype is PurchaseOrder object
 
 **getLatestOrderID()** -> order ID
 
