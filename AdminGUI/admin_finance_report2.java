@@ -10,6 +10,7 @@ import com.mycompany.JavaY2.Class.Query;
 import com.mycompany.JavaY2.Class.UpdateTable;
 import com.mycompany.JavaY2.Object.ObjectList;
 import com.mycompany.JavaY2.Object.Payment;
+import com.mycompany.JavaY2.Object.SessionManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -236,6 +237,11 @@ public class admin_finance_report2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selected_row = jTable1.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to pay", "Warning", JOptionPane.WARNING_MESSAGE);

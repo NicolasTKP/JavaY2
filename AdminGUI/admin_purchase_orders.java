@@ -230,6 +230,11 @@ public class admin_purchase_orders extends JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -237,6 +242,7 @@ public class admin_purchase_orders extends JFrame {
             String[] ls = new String[9];
             Object order_id = jTable1.getValueAt(selectedRow,0);
             Edit.purchaseOrders(order_id.toString(),9,"Approved");
+            Edit.purchaseOrders(order_id.toString(),8,Query.getCurrectDate());
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setValueAt("Approved",selectedRow,9);
             ls[0] = order_id.toString();
@@ -254,6 +260,11 @@ public class admin_purchase_orders extends JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to reject", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -307,6 +318,11 @@ public class admin_purchase_orders extends JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selected_row = jTable1.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to delete", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -324,6 +340,11 @@ public class admin_purchase_orders extends JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         String[] purchase_order = new String[10];
 
         //Order ID
@@ -408,9 +429,7 @@ public class admin_purchase_orders extends JFrame {
 
 
         //Order Date
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
-        purchase_order[8] = today.format(formatter);;
+        purchase_order[8] = "-";
 
         //Order Status
         purchase_order[9] = "Pending";
@@ -430,6 +449,11 @@ public class admin_purchase_orders extends JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selected_row = jTable1.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to edit", "Warning", JOptionPane.WARNING_MESSAGE);

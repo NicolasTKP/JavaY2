@@ -9,6 +9,7 @@ import com.mycompany.JavaY2.Class.Matrix;
 import com.mycompany.JavaY2.Class.UpdateTable;
 import com.mycompany.JavaY2.Object.ObjectList;
 import com.mycompany.JavaY2.Object.Receives;
+import com.mycompany.JavaY2.Object.SessionManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -201,6 +202,11 @@ public class admin_order_tracking extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selected_row = jTable1.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to cancel", "Warning", JOptionPane.WARNING_MESSAGE);

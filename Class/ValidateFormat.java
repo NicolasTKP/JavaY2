@@ -1,6 +1,11 @@
 package com.mycompany.JavaY2.Class;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.IllegalFormatException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -79,5 +84,24 @@ public class ValidateFormat {
             return true;
         }
         return false;
+    }
+
+    public static boolean prItems(String groupID){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/purchase_requisitions"));
+
+            for (int i=1;i<linesList.size();i++){
+                String line = linesList.get(i);
+                String[] column = line.split("\\|");
+                if (column[6].equals("Pending")&&column[1].equals(groupID)){
+                    return false;
+                }
+            }
+            return true;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

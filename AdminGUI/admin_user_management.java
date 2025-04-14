@@ -217,9 +217,14 @@ public class admin_user_management extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         String user_id = Query.getLatestUserID();
         String username;
-        String password;
+
         //Username
         while(true){
             username = JOptionPane.showInputDialog("Enter Username:");
@@ -277,6 +282,11 @@ public class admin_user_management extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -292,6 +302,11 @@ public class admin_user_management extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -332,7 +347,6 @@ public class admin_user_management extends javax.swing.JFrame {
                     break;
 
                 case "Password":
-                    String password;
                     while(true){
                         password = JOptionPane.showInputDialog("Enter Password:");
                         if(password == null || password.isEmpty()){

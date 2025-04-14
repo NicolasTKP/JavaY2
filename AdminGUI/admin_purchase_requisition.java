@@ -227,6 +227,17 @@ public class admin_purchase_requisition extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (SessionManager.getInstance().raising_pr){
+            JOptionPane.showMessageDialog(null, "Other purchase manager are currently raising pr", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }else {
+            SessionManager.getInstance().raising_pr = true;
+        }
         //Request ID
         String request_id = Query.getLatestRequestID();
 
@@ -237,11 +248,11 @@ public class admin_purchase_requisition extends javax.swing.JFrame {
             item_name = JOptionPane.showInputDialog("Insert Item Name");
             if (item_name==null){
                 return;
-            }else if(!ValidateFormat.itemName(item_name)){
+            }else if(!ValidateFormat.itemName(item_name) && ValidateFormat.prItems(Search.getGroupIDbyItemName(item_name))){
                 group_id = Search.getGroupIDbyItemName(item_name);
                 break;
             }else {
-                JOptionPane.showMessageDialog(null, "The item name doesn't exist", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "The item name doesn't exist or the PR of this item already exist", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         }
 
@@ -282,12 +293,18 @@ public class admin_purchase_requisition extends javax.swing.JFrame {
             String line = request_id + "|" + group_id + "|" + user_id + "|" + quantity+ "|" + request_date + "|" + required_date + "|" + "Pending";
             TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/purchase_requisitions", line);
             JOptionPane.showMessageDialog(null, "The PR added successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            SessionManager.getInstance().raising_pr = false;
             UpdateTable.forPR(jTable1);
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selected_row = jTable1.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to delete", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -303,6 +320,11 @@ public class admin_purchase_requisition extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) throws ParseException {//GEN-FIRST:event_jButton4ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selected_row = jTable1.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to edit", "Warning", JOptionPane.WARNING_MESSAGE);

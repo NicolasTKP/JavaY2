@@ -7,6 +7,7 @@ package com.mycompany.JavaY2.AdminGUI;
 import com.mycompany.JavaY2.Class.*;
 import com.mycompany.JavaY2.Object.Inventory_Value;
 import com.mycompany.JavaY2.Object.ObjectList;
+import com.mycompany.JavaY2.Object.SessionManager;
 import com.mycompany.JavaY2.Object.Supplier;
 
 import javax.swing.*;
@@ -240,6 +241,11 @@ public class admin_supplier extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         //Supplier id
         String supplier_id;
         supplier_id = Query.getLatestSupplierID();
@@ -306,6 +312,11 @@ public class admin_supplier extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selected_row = jTable1.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to delete", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -321,6 +332,11 @@ public class admin_supplier extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selected_row = jTable1.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to delete", "Warning", JOptionPane.WARNING_MESSAGE);
