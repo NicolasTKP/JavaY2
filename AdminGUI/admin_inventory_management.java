@@ -5,10 +5,7 @@
 package com.mycompany.JavaY2.AdminGUI;
 
 import com.mycompany.JavaY2.Class.*;
-import com.mycompany.JavaY2.Object.Inventory;
-import com.mycompany.JavaY2.Object.Item;
-import com.mycompany.JavaY2.Object.ObjectList;
-import com.mycompany.JavaY2.Object.User;
+import com.mycompany.JavaY2.Object.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -294,6 +291,11 @@ public class admin_inventory_management extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         String group_id;
         String item_name;
         String retail_price;
@@ -607,6 +609,11 @@ public class admin_inventory_management extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selected_row = jTable1.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(null, "Please select an item to delete", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -637,6 +644,11 @@ public class admin_inventory_management extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selected_row = jTable1.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(null, "Please select an item to edit", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -761,6 +773,11 @@ public class admin_inventory_management extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         //Group ID
         String group_id = Query.getLatestGroupID();
 
@@ -801,6 +818,11 @@ public class admin_inventory_management extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selected_row = jTable2.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(null, "Please select an inventory item group to delete", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -832,6 +854,11 @@ public class admin_inventory_management extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (!password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selected_row = jTable2.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(null, "Please select an inventory item group to modify", "Warning", JOptionPane.WARNING_MESSAGE);
