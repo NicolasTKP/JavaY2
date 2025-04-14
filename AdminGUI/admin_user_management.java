@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.JavaY2.AdminGUI;
+import com.mycompany.JavaY2.Object.SessionManager;
 import com.mycompany.JavaY2.Object.User;
 import com.mycompany.JavaY2.Class.*;
 import com.mycompany.JavaY2.Object.ObjectList;
@@ -246,7 +247,12 @@ public class admin_user_management extends javax.swing.JFrame {
         }
 
         //Role
-        String[] options = {"Admin","Sales Manager","Purchase Manager", "Finance Manager", "Inventory Manager"};
+        String[] options;
+        if (SessionManager.getInstance().role.equals("root")){
+            options = new String[]{"Admin", "Sales Manager", "Purchase Manager", "Finance Manager", "Inventory Manager"};
+        }else{
+            options = new String[]{"Sales Manager", "Purchase Manager", "Finance Manager", "Inventory Manager"};
+        }
         String choice = (String) JOptionPane.showInputDialog(
                 null,
                 "Choose a role:",
@@ -347,7 +353,12 @@ public class admin_user_management extends javax.swing.JFrame {
                     break;
 
                 case "Role":
-                    String[] roles = {"Admin","Sales Manager","Purchase Manager", "Finance Manager", "Inventory Manager"};
+                    String[] roles;
+                    if (SessionManager.getInstance().role.equals("root")){
+                        roles = new String[]{"Admin", "Sales Manager", "Purchase Manager", "Finance Manager", "Inventory Manager"};
+                    }else{
+                        roles = new String[]{"Sales Manager", "Purchase Manager", "Finance Manager", "Inventory Manager"};
+                    }
                     String role = (String) JOptionPane.showInputDialog(
                             null,
                             "Choose a role:",
