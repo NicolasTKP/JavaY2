@@ -292,7 +292,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String password = JOptionPane.showInputDialog("Please insert your user password");
-        if (!password.equals(SessionManager.getInstance().password)){
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
             JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -610,7 +610,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String password = JOptionPane.showInputDialog("Please insert your user password");
-        if (!password.equals(SessionManager.getInstance().password)){
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
             JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -645,7 +645,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         String password = JOptionPane.showInputDialog("Please insert your user password");
-        if (!password.equals(SessionManager.getInstance().password)){
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
             JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -774,7 +774,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         String password = JOptionPane.showInputDialog("Please insert your user password");
-        if (!password.equals(SessionManager.getInstance().password)){
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
             JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -819,7 +819,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         String password = JOptionPane.showInputDialog("Please insert your user password");
-        if (!password.equals(SessionManager.getInstance().password)){
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
             JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -855,7 +855,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         String password = JOptionPane.showInputDialog("Please insert your user password");
-        if (!password.equals(SessionManager.getInstance().password)){
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
             JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
