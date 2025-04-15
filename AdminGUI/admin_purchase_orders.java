@@ -231,7 +231,7 @@ public class admin_purchase_orders extends JFrame {
 
     private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String password = JOptionPane.showInputDialog("Please insert your user password");
-        if (!password.equals(SessionManager.getInstance().password)){
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
             JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -261,7 +261,7 @@ public class admin_purchase_orders extends JFrame {
 
     private void jButton2ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String password = JOptionPane.showInputDialog("Please insert your user password");
-        if (!password.equals(SessionManager.getInstance().password)){
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
             JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -341,7 +341,7 @@ public class admin_purchase_orders extends JFrame {
 
     private void jButton5ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         String password = JOptionPane.showInputDialog("Please insert your user password");
-        if (!password.equals(SessionManager.getInstance().password)){
+        if (password == null || password == null || !password.equals(SessionManager.getInstance().password)){
             JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -450,7 +450,7 @@ public class admin_purchase_orders extends JFrame {
 
     private void jButton6ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         String password = JOptionPane.showInputDialog("Please insert your user password");
-        if (!password.equals(SessionManager.getInstance().password)){
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
             JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }

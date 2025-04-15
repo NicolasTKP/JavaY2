@@ -129,7 +129,7 @@ public class admin_profile extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String password = JOptionPane.showInputDialog("Please insert your user password");
-        if (!password.equals(SessionManager.getInstance().password)){
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
             JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }

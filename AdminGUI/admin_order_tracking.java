@@ -203,7 +203,7 @@ public class admin_order_tracking extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         String password = JOptionPane.showInputDialog("Please insert your user password");
-        if (!password.equals(SessionManager.getInstance().password)){
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
             JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
