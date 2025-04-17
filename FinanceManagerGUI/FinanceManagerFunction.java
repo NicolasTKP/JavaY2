@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.swing.JOptionPane;
 
-//ABC
+
 public class FinanceManagerFunction {
     public static void editFMProfile(String currentUsername, String fmUsername, String fmPassword, String fmRole) {
 
