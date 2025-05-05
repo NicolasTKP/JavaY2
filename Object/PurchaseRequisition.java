@@ -4,12 +4,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class PurchaseRequisition {
-    public String request_id;
+public class PurchaseRequisition extends Request {
     public String group_id;
-    public String item_name;
-    public String user_id;
-    public int quantity;
     public String request_date;
     public String required_date;
     public String status;

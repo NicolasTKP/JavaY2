@@ -146,7 +146,7 @@ public class admin_profile extends javax.swing.JFrame {
             }
         } else{
             if (!ValidateFormat.password(password)){
-                JOptionPane.showMessageDialog(null, "Invalid format for password, please try again (Length > 6)", "WARNING", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Invalid format for password, please try again (Length > 6 and including at least one upper case, one lower case, one number, and one special character)", "WARNING", JOptionPane.WARNING_MESSAGE);
                 return;
             }
         }

@@ -47,7 +47,8 @@ public class ValidateFormat {
     }
 
     public static boolean password(String password){
-        return password.length() >= 7;
+        String regex = "^(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]).{7,}$";
+        return password.matches(regex);
     }
 
     public static boolean itemName(String item_name){

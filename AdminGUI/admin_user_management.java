@@ -247,7 +247,7 @@ public class admin_user_management extends javax.swing.JFrame {
             else if(ValidateFormat.password(password)){
                 break;
             }else {
-                JOptionPane.showMessageDialog(null, "Invalid password format, length of password must be at least 7 characters, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Invalid password format, length of password must be at least 7 characters and including at least one upper case, one lower case, one number, and one special character, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         }
 
@@ -355,7 +355,7 @@ public class admin_user_management extends javax.swing.JFrame {
                         else if(ValidateFormat.password(password)){
                             break;
                         }else {
-                            JOptionPane.showMessageDialog(null, "Invalid password format, length of password must be at least 7 characters, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Invalid password format, length of password must at least 6 characters and including at least one upper case, one lower case, one number, and one special character, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
                         }
                     }
                     int result2 = JOptionPane.showConfirmDialog(null, "Do you want sure you want change password to: "+password, "Confirmation",JOptionPane.YES_NO_OPTION);
