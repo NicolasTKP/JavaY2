@@ -5,19 +5,15 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class PurchaseOrder {
+public class PurchaseOrder extends Request {
     public String order_id;
-    public String request_id;
     public String item_id;
-    public String user_id;
     public String username;
-    public int quantity;
     public double unit_price;
     public double amount;
     public String supplier_id;
     public LocalDate order_date;
     public String order_status;
-    public String item_name;
     public String supplier_name;
 
     PurchaseOrder(){
