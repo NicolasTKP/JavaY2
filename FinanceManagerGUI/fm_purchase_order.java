@@ -324,7 +324,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
                 model.setValueAt("Approved",selected_row,9); //Pending - Approved on table
                 ls[0] = order_id;
                 ls[1] = Objects.requireNonNull(Search.getFromPO(ls[0], 2));
-                ls[2] = Search.getItemName(ls[1]);
+//                ls[2] = Search.getItemName(ls[1]);
                 ls[3] = Search.getFromPO(ls[0],4);
                 ls[4] = Search.getFromPO(ls[0],6);
                 TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/receives",String.join("|",ls));
