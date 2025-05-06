@@ -20,49 +20,75 @@ import java.util.Set;
 
 public class test {
     public static void main(String[] args) {
-//        SessionManager.getInstance().username = "hello";
-//        System.out.println(SessionManager.getInstance().username);
-        String itemName = "apple"; // Example item name to search for
-        List<String> suppliers = getSuppliersForItem(itemName);
+//      SessionManager.getInstance().username = "hello";
+//      System.out.println(SessionManager.getInstance().username);
         
-        System.out.println("Suppliers for " + itemName + ": " + suppliers);
-    }
-    public static List<String> getSuppliersForItem(String itemName) {
-        Map<String, String> itemToSupplierMap = new HashMap<>(); // itemID -> supplierID
-        Map<String, String> supplierNameMap = new HashMap<>(); // supplierID -> supplierName
+    
+        JLabel role = new JLabel("Role");
+        JTextField roleField = new JTextField(SessionManager.getInstance().role = "FinanceManager");
+        JLabel username = new JLabel("Username");
+        JTextField usernameField = new JTextField(SessionManager.getInstance().username = "bryan");
+        JLabel password = new JLabel("Enter your password");
+        JPasswordField passwordField = new JPasswordField();
         
-        // Read items file to get itemID -> supplierID mapping
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/items"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] columns = line.split("\\|");
-                if (columns[1].equalsIgnoreCase(itemName)) { // Match item name
-                    itemToSupplierMap.put(columns[0], columns[6]); // itemID -> supplierID
+        
+        Object[] ob = null;
+        int result = JOptionPane.showConfirmDialog(null, ob, "Please enter your credentials", JOptionPane.OK_CANCEL_OPTION);
+        
+        if(result == JOptionPane.OK_OPTION){
+            try(BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/users"))){
+                br.readLine();
+                String line;
+                while((line = br.readLine()) != null){
+                    String[] columns = line.split("\\|");
+                    if(columns[3].equals(roleField) && columns[1].equals(usernameField) && columns[2].equals(passwordField)){
+                        JOptionPane.showMessageDialog(null, "Successful Credentials", "You enter the correct credentials", JOptionPane.PLAIN_MESSAGE);
+                    }
                 }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        // Read suppliers file to get supplierID -> supplierName mapping
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] columns = line.split("\\|");
-                supplierNameMap.put(columns[0], columns[1]); // supplierID -> supplierName
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        // Get unique supplier names for the given item
-        Set<String> supplierNames = new HashSet<>();
-        for (String supplierID : itemToSupplierMap.values()) {
-            if (supplierNameMap.containsKey(supplierID)) {
-                supplierNames.add(supplierNameMap.get(supplierID));
+            }catch (IOException e){
+                e.printStackTrace();
             }
         }
-        
-        return new ArrayList<>(supplierNames);
+    
     }
+        
+//    public static List<String> getSuppliersForItem(String itemName) {
+//        Map<String, String> itemToSupplierMap = new HashMap<>(); // itemID -> supplierID
+//        Map<String, String> supplierNameMap = new HashMap<>(); // supplierID -> supplierName
+//        
+//        // Read items file to get itemID -> supplierID mapping
+//        try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/items"))) {
+//            String line;
+//            while ((line = br.readLine()) != null) {
+//                String[] columns = line.split("\\|");
+//                if (columns[1].equalsIgnoreCase(itemName)) { // Match item name
+//                    itemToSupplierMap.put(columns[0], columns[6]); // itemID -> supplierID
+//                }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        
+//        // Read suppliers file to get supplierID -> supplierName mapping
+//        try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"))) {
+//            String line;
+//            while ((line = br.readLine()) != null) {
+//                String[] columns = line.split("\\|");
+//                supplierNameMap.put(columns[0], columns[1]); // supplierID -> supplierName
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        
+//        // Get unique supplier names for the given item
+//        Set<String> supplierNames = new HashSet<>();
+//        for (String supplierID : itemToSupplierMap.values()) {
+//            if (supplierNameMap.containsKey(supplierID)) {
+//                supplierNames.add(supplierNameMap.get(supplierID));
+//            }
+//        }
+//        
+//        return new ArrayList<>(supplierNames);
+//    }
+
 }

@@ -1,5 +1,5 @@
 order_id|request_id|item_id|user_id|quantity|unit_price|amount|supplier_id|order_date|order_status (pending,approved,rejected)
-O001|R001|I003|U001|15|3.5|52.5|SU001|01052025|Pending
-O002|R002|I002|U001|20|4.5|90.0|SU002|02052025|Pending
-O003|R003|I006|U001|18|4.0|72.0|SU005|03052025|Pending
+O001|R001|I003|U001|15|3.5|52.5|SU001|01052025|Approved
+O002|R002|I002|U001|20|4.5|90.0|SU002|02052025|Rejected
+O003|R003|I007|U001|18|5.0|90.0|SU006|03052025|Pending
 O004|R004|I009|U001|16|4.5|72.0|SU006|04052025|Pending
