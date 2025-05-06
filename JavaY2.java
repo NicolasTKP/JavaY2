@@ -11,7 +11,8 @@ package com.mycompany.JavaY2;
 public class JavaY2 {
 
     public static void main(String[] args) {
-        System.out.println();
+        login page = new login();
+        page.setVisible(true);
     }
 
 

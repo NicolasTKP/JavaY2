@@ -4,7 +4,8 @@
  */
 package com.mycompany.JavaY2;
 
-import com.mycompany.JavaY2.FinanceManagerGUI.fm_main;
+import com.mycompany.JavaY2.AdminGUI.admin_mainpage;
+import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.Object.SessionManager;
 
 import javax.swing.*;
@@ -162,23 +163,15 @@ public class login extends javax.swing.JFrame {
                 pass = line.split("\\|")[2];
                 role = line.split("\\|")[3];
                 if (username.equals(user) && password.equals(pass)){
+                    Edit.updateSalesTxt();
                     JOptionPane.showMessageDialog(null, "Login Successfully, you will be redirect to the main page", "Successfully", JOptionPane.INFORMATION_MESSAGE);
-                    if (role.equals("admin")){
+                    if (role.equals("admin") || role.equals("root")){
                         SessionManager.getInstance().userID = line.split("\\|")[0];
                         SessionManager.getInstance().username = user;
                         SessionManager.getInstance().password = pass;
                         SessionManager.getInstance().role = role;
                         admin_mainpage frame = new admin_mainpage();
                         frame.setVisible(true);
-                        this.dispose();
-                    }else if(role.equals("finance manager")){
-                        SessionManager.getInstance().userID = line.split("\\|")[0];
-                        SessionManager.getInstance().username = user;
-                        SessionManager.getInstance().password = pass;
-                        SessionManager.getInstance().role = role;
-                        fm_main frame = new fm_main();
-                        frame.setVisible(true);
-                        frame.setLocationRelativeTo(null);
                         this.dispose();
                     }
                 }

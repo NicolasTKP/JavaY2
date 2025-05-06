@@ -1,7 +1,3 @@
 supplier_id|supplier_name|address|contact|supply_items(item_id)|payment_term
-SU001|Local Fruit supplier|Kuala Lumpur|011-111-1111|I001,I003|pay after ship
-SU002|Local Orange supplier|Kuala Lumpur|011-111-1112|I002|pay within 30 days after received
-SU003|US Apple Supplier|USA|011-111-1113|I004|pay within 30 days after received
-SU004|China Apple Supplier|China|011-111-1114|I005|pay within 30 days after received
-SU005|US Fruits Supplier|USA|011-111-1115|I006,I008|pay within 30 days after received
-SU006|China Fruits Supplier|China|011-111-1116|I007,I009|pay within 30 days after received
+SU001|Hello supplier|Kuala Lumpur|011-111-1111|I001,I002|pay after ship
+SU002|aPPLE supplier|Kuala Lumpur|011-111-1112|I003|pay within 30 days after received

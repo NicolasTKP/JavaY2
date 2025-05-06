@@ -2,15 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.JavaY2;
+package com.mycompany.JavaY2.AdminGUI;
 
+import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.Class.Matrix;
-import com.mycompany.JavaY2.Class.Query;
 import com.mycompany.JavaY2.Class.UpdateTable;
 import com.mycompany.JavaY2.Object.ObjectList;
-import com.mycompany.JavaY2.Object.PurchaseOrder;
 import com.mycompany.JavaY2.Object.Receives;
+import com.mycompany.JavaY2.Object.SessionManager;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
@@ -42,12 +43,15 @@ public class admin_order_tracking extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         ObjectList objectList = new ObjectList();
         List<Receives> receives = objectList.getReceives();
-        String[][] matrix = new String[receives.size()][6];
+        String[][] matrix = new String[receives.size()][7];
         Receives receive;
         for (int i = 0;i<receives.size();i++){
             receive = receives.get(i);
@@ -57,12 +61,13 @@ public class admin_order_tracking extends javax.swing.JFrame {
             matrix[i][3] = Integer.toString(receive.quantity);
             matrix[i][4] = Double.toString(receive.amount);
             matrix[i][5] = receive.delivery_status;
+            matrix[i][6] = receive.date_received;
         }
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             matrix,
             new String [] {
-                "Order_ID", "Item_ID", "Item_Name","Quantity","Amount","Delivery_Status"
+                "Order_ID", "Item_ID", "Item_Name","Quantity","Amount","Delivery Status","Date Received"
             }
         ){
             @Override
@@ -97,24 +102,40 @@ public class admin_order_tracking extends javax.swing.JFrame {
         }
     });
 
+    jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+    jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    jLabel2.setText("Orders");
+
+    jButton3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+    jButton3.setText("Cancel");
+    jButton3.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton3ActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                    .addGap(64, 64, 64)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1376, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(15, 15, 15)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1376, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addContainerGap(60, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
@@ -123,12 +144,15 @@ public class admin_order_tracking extends javax.swing.JFrame {
             .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                 .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
+                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(33, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(18, 18, 18)
+            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+            .addContainerGap())
     );
 
     pack();
@@ -145,7 +169,7 @@ public class admin_order_tracking extends javax.swing.JFrame {
             Receives receive;
             for (int i = 0; i < receives.size(); i++) {
                 receive = receives.get(i);
-                if (Query.anyMatchReceive(receive,keyword)) {
+                if (receive.anyMatch(keyword)) {
                     receive = receives.get(i);
                     matrix[i][0] = receive.order_id;
                     matrix[i][1] = receive.item_id;
@@ -176,6 +200,31 @@ public class admin_order_tracking extends javax.swing.JFrame {
         page.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int selected_row = jTable1.getSelectedRow();
+        if (selected_row == -1){
+            JOptionPane.showMessageDialog(null, "Please select a row to cancel", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String status = jTable1.getValueAt(selected_row,5).toString();
+        if (status.equals("Received")){
+            JOptionPane.showMessageDialog(null, "Cannot cancel an order that already received", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String order_id = jTable1.getValueAt(selected_row,0).toString();
+        int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to cancel PO: "+order_id, "Confirmation",JOptionPane.YES_NO_OPTION);
+        if(result == JOptionPane.YES_OPTION){
+            Edit.receives(order_id,6, "Cancelled");
+            JOptionPane.showMessageDialog(null, "Purchase Order had been cancelled successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+            UpdateTable.forReceive(jTable1);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -215,7 +264,9 @@ public class admin_order_tracking extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
