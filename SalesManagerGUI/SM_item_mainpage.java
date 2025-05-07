@@ -2,19 +2,70 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.javaY2.SalesManagerGUI;
+package com.mycompany.JavaY2.SalesManagerGUI;
 
+import com.mycompany.JavaY2.Class.TextFile;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author User
  */
-public class Sales_manager_item_management extends javax.swing.JFrame {
-
+public class SM_item_mainpage extends javax.swing.JFrame {
+    private final String item_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/items";
+    private final DefaultTableModel container = new DefaultTableModel();
+    private final String columnName[] = {"Item ID", "Item Name", "Stock Price", "Sales per day", "Ordering Lead Time (Days)", "Safety Level", "Supplier", "Group ID"};
     /**
      * Creates new form sales_manager_item_management
      */
-    public Sales_manager_item_management() {
+    public SM_item_mainpage() {
         initComponents();
+        container.setRowCount(0);
+        container.setColumnIdentifiers(columnName);
+        item_table.setRowHeight(50);
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(item_file_path))) {
+            String line;
+            Set<String> uniqueRows = new HashSet<>();
+            
+            br.readLine(); 
+            while ((line = br.readLine()) != null) {
+                if (!uniqueRows.contains(line)){
+                    uniqueRows.add(line);
+                    String item_details[] = line.split("\\|");
+                    container.addRow(item_details);                   
+                }
+
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading item text file for item table.");
+        }
+        
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                container.setRowCount(0);
+                try (BufferedReader br = new BufferedReader(new FileReader(item_file_path))) {
+                    String line;
+                    Set<String> uniqueRows = new HashSet<>();
+
+                    br.readLine(); 
+                    while ((line = br.readLine()) != null) {
+                        if (!uniqueRows.contains(line)){
+                            uniqueRows.add(line);
+                            String item_details[] = line.split("\\|");
+                            container.addRow(item_details);                   
+                        }
+                    }
+                } catch (IOException e) {
+                }                   
+            }
+        });                
     }
 
     /**
@@ -31,7 +82,7 @@ public class Sales_manager_item_management extends javax.swing.JFrame {
         edit_item_button = new javax.swing.JButton();
         delete_item_button = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        item_table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,18 +118,14 @@ public class Sales_manager_item_management extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        item_table.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        item_table.setModel(container);
+        item_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                item_tableMouseClicked(evt);
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        });
+        jScrollPane1.setViewportView(item_table);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,9 +138,9 @@ public class Sales_manager_item_management extends javax.swing.JFrame {
                     .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edit_item_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(add_item_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addGap(42, 42, 42)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,11 +151,11 @@ public class Sales_manager_item_management extends javax.swing.JFrame {
                         .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(77, 77, 77)
                         .addComponent(add_item_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(102, 102, 102)
                         .addComponent(edit_item_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(98, 98, 98)
                         .addComponent(delete_item_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap(74, Short.MAX_VALUE))
         );
 
@@ -116,20 +163,75 @@ public class Sales_manager_item_management extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void add_item_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_item_buttonActionPerformed
-       new Sales_manager_add_item().setVisible(true);
+       new SM_item_add().setVisible(true);
     }//GEN-LAST:event_add_item_buttonActionPerformed
 
     private void homepage_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homepage_button1ActionPerformed
-        // TODO add your handling code here:
+        new SM_mainpage().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_homepage_button1ActionPerformed
 
     private void edit_item_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_item_buttonActionPerformed
-        // TODO add your handling code here:
+        int selected_row = item_table.getSelectedRow();
+        
+        if (selected_row != -1) {
+            int response = JOptionPane.showConfirmDialog(
+                null,
+                "Are you sure to edit this item?",
+                "Confirm To Edit?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (response == JOptionPane.YES_OPTION) {
+                String item_id = item_table.getValueAt(selected_row , 0).toString();
+                String item_name = item_table.getValueAt(selected_row , 1).toString();
+                String stock_price = item_table.getValueAt(selected_row , 2).toString();
+                String sales_per_day = item_table.getValueAt(selected_row , 3).toString();
+                String ordering_lead_time = item_table.getValueAt(selected_row , 4).toString();
+                String safety_level = item_table.getValueAt(selected_row , 5).toString();
+                String supplier_id = item_table.getValueAt(selected_row , 6).toString();
+                String group_id = item_table.getValueAt(selected_row , 7).toString();
+
+                new SM_item_edit(item_id, item_name, stock_price, sales_per_day, ordering_lead_time, safety_level, supplier_id, group_id).setVisible(true);
+            } else {
+                // Cancel editing
+            JOptionPane.showMessageDialog(null, "You have decided to not edit item details. Back to item mainpage now");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select an item to edit.");
+        }
     }//GEN-LAST:event_edit_item_buttonActionPerformed
 
     private void delete_item_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_item_buttonActionPerformed
-        // TODO add your handling code here:
+        int selected_row = item_table.getSelectedRow();
+        
+        String selected_id = item_table.getValueAt(selected_row, 0).toString();
+        
+        if (selected_row != -1) {
+            int response = JOptionPane.showConfirmDialog(
+                null,
+                "Are you sure to delete this item?",
+                "Confirm To Delete?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (response == JOptionPane.YES_OPTION) {
+                TextFile.deleteTextfileLine(item_file_path, selected_id);
+                JOptionPane.showMessageDialog(null, "You have deleted the item. Item table is updated");
+            } else {
+                // Cancel editing
+            JOptionPane.showMessageDialog(null, "You have decided to not delete the item. Back to item mainpage now");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select an item to delete.");
+        }
     }//GEN-LAST:event_delete_item_buttonActionPerformed
+
+    private void item_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_item_tableMouseClicked
+        System.out.println(item_table.getSelectedRow());
+    }//GEN-LAST:event_item_tableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -148,21 +250,23 @@ public class Sales_manager_item_management extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Sales_manager_item_management.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_item_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Sales_manager_item_management.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_item_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Sales_manager_item_management.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_item_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Sales_manager_item_management.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_item_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Sales_manager_item_management().setVisible(true);
+                new SM_item_mainpage().setVisible(true);
             }
         });
     }
@@ -172,7 +276,7 @@ public class Sales_manager_item_management extends javax.swing.JFrame {
     private javax.swing.JButton delete_item_button;
     private javax.swing.JButton edit_item_button;
     private javax.swing.JButton homepage_button1;
+    private javax.swing.JTable item_table;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

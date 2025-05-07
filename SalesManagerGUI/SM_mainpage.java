@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.javaY2.SalesManagerGUI;
+package com.mycompany.JavaY2.SalesManagerGUI;
 
 /**
  *
  * @author User
  */
-public class Sales_manager_mainpage extends javax.swing.JFrame {
+public class SM_mainpage extends javax.swing.JFrame {
 
     /**
      * Creates new form SalesManagerHomepage
      */
-    public Sales_manager_mainpage() {
+    public SM_mainpage() {
         initComponents();
     }
 
@@ -136,7 +136,8 @@ public class Sales_manager_mainpage extends javax.swing.JFrame {
     }//GEN-LAST:event_daily_sales_buttonActionPerformed
 
     private void item_management_button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_management_button3ActionPerformed
-        // TODO add your handling code here:
+        new SM_item_mainpage().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_item_management_button3ActionPerformed
 
     private void supplier_management_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplier_management_buttonActionPerformed
@@ -164,14 +165,18 @@ public class Sales_manager_mainpage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Sales_manager_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Sales_manager_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Sales_manager_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Sales_manager_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -180,7 +185,7 @@ public class Sales_manager_mainpage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Sales_manager_mainpage().setVisible(true);
+                new SM_mainpage().setVisible(true);
             }
         });
     }

@@ -142,8 +142,9 @@ public class Item {
         this.ordering_lead_time = ordering_lead_time;
     }
     
-    public void setSafetyLevel(int sales_per_day, int ordering_lead_time){
-        this.safety_level = this.sales_per_day * this.ordering_lead_time;
+    public int setSafetyLevel(int sales_per_day, int ordering_lead_time){
+        this.safety_level = sales_per_day * ordering_lead_time;
+        return safety_level;
     }
     
     public int getSafetyLevel(){
@@ -230,5 +231,22 @@ public class Item {
         return true;
     }
     
+    public static boolean checkIsNewSupplier(String supplier_name){
+        String supplier_file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\suppliers";
+        try (BufferedReader br = new BufferedReader(new FileReader(supplier_file_path))) {
+            br.readLine();
+            String line;
 
+            while ((line = br.readLine()) != null) {
+                String[] columns = line.split("\\|"); // Get first column (item_id)
+                if(columns.length >=1 && supplier_name.equalsIgnoreCase(columns[1])){
+                    return false;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading supplier text file");
+        }
+        return true;        
+        
+    }
 }

@@ -2,24 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.javaY2.SalesManagerGUI;
+package com.mycompany.JavaY2.SalesManagerGUI;
 import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.Item;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
+
 /**
  *
  * @author User
  */
-public class Sales_manager_add_item extends javax.swing.JFrame {
+public class SM_item_add extends javax.swing.JFrame {
 
     /**
      * Creates new form sales_manager_add_item
      */
-    public Sales_manager_add_item() {
+    public SM_item_add() {
         initComponents();
     }
 
@@ -44,8 +41,11 @@ public class Sales_manager_add_item extends javax.swing.JFrame {
         sales_per_day_spinner = new javax.swing.JSpinner();
         ordering_lead_time_spinner = new javax.swing.JSpinner();
         add_item_button = new javax.swing.JButton();
+        cancel_add_item_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1000, 750));
+        setMinimumSize(new java.awt.Dimension(1000, 750));
 
         add_item_label.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         add_item_label.setText("Key in the details of new item.");
@@ -87,19 +87,27 @@ public class Sales_manager_add_item extends javax.swing.JFrame {
             }
         });
 
+        cancel_add_item_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        cancel_add_item_button.setText("Cancel");
+        cancel_add_item_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancel_add_item_buttonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(130, 130, 130)
+                .addContainerGap(98, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(item_name_label2)
                     .addComponent(item_name_label1)
                     .addComponent(item_name_label3)
                     .addComponent(item_name_label4)
                     .addComponent(item_name_label))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(supplier_name_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -117,12 +125,14 @@ public class Sales_manager_add_item extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(428, 428, 428)
-                        .addComponent(add_item_button))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(add_item_label)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(add_item_label))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(246, 246, 246)
+                        .addComponent(cancel_add_item_button, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, 100)
+                        .addComponent(add_item_button)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,9 +160,11 @@ public class Sales_manager_add_item extends javax.swing.JFrame {
                         .addGap(47, 47, 47)
                         .addComponent(item_name_label))
                     .addComponent(supplier_name_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-                .addComponent(add_item_button)
-                .addGap(59, 59, 59))
+                .addGap(67, 67, 67)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(add_item_button)
+                    .addComponent(cancel_add_item_button))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         stock_price_spinner.setEditor(new javax.swing.JSpinner.NumberEditor(stock_price_spinner, "0.00"));
@@ -172,47 +184,20 @@ public class Sales_manager_add_item extends javax.swing.JFrame {
         stock_price = Double.parseDouble(String.format("%.2f", stock_price));
         int sales_per_day = (int) sales_per_day_spinner.getValue();
         int ordering_lead_time = (int) ordering_lead_time_spinner.getValue();
+        int safety_level = item.setSafetyLevel(sales_per_day, ordering_lead_time);
         String supplier_name = supplier_name_textfield.getText();
         String group_id = item.setGroupID(item_name);
         
-        String item_details = item_id + "|" + item_name + "|" + stock_price + "|" + sales_per_day + "|" + ordering_lead_time + "|" + supplier_name + "|" + group_id;        
+        String item_details = item_id + "|" + item_name + "|" + stock_price + "|" + sales_per_day + "|" + ordering_lead_time + "|" + safety_level + "|" + supplier_name + "|" + group_id;
         
         if (item_name.isEmpty() || supplier_name.isEmpty()){
             JOptionPane.showMessageDialog(this,"Please fill in all the fields");
             
         }else if(Item.checkIsNewGroupID(group_id)){
-            int quantity = 0;
-            double retail_price =0;
-            
-            JSpinner jSpinner_quantity = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
-            JSpinner jSpinner_retail_price = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 10000.0, 0.1));
-
-            JPanel panel = new JPanel();
-            panel.add(new JLabel("Quantity: "));
-            panel.add(jSpinner_quantity);
-            panel.add(new JLabel("Retail Price: "));
-            panel.add(jSpinner_retail_price);
-
-                // Show JOptionPane with the Panel
-            int result = JOptionPane.showConfirmDialog(null, panel, "Enter Item Details", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-            if (result != JOptionPane.OK_OPTION) {
-                JOptionPane.showMessageDialog(this, "User cancelled input.");
-                return;
-            }
-            
-            quantity = (int) jSpinner_quantity.getValue();
-            retail_price = (double) jSpinner_retail_price.getValue();
-            retail_price = Double.parseDouble(String.format("%.2f", retail_price));
-            if (quantity < 0 || retail_price < 0) {
-                JOptionPane.showMessageDialog(this, "Quantity and Retail Price must be greater than zero.");
-            }
-            
-            String inventory_details = group_id + "|" + item_name + "|" + quantity + "|" + retail_price;
-            TextFile.addLine(inventory_file_path, inventory_details);
             TextFile.addLine(item_file_path, item_details);
-            JOptionPane.showMessageDialog(this,"New item with new group has been added successfully, inventory is updated");
+            JOptionPane.showMessageDialog(this,"New item has been added successfully. Please enter the details of the new item group.");
             this.dispose();
+            new SM_inventory_add(group_id, item_name).setVisible(true);
             
         }else{
             TextFile.addLine(item_file_path, item_details);
@@ -225,6 +210,11 @@ public class Sales_manager_add_item extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_add_item_buttonActionPerformed
+
+    private void cancel_add_item_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_add_item_buttonActionPerformed
+        JOptionPane.showMessageDialog(this,"You have cancel adding new item. Back to item mainpage now.");
+        this.dispose();   
+    }//GEN-LAST:event_cancel_add_item_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,21 +233,27 @@ public class Sales_manager_add_item extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Sales_manager_add_item.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_item_add.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Sales_manager_add_item.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_item_add.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Sales_manager_add_item.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_item_add.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Sales_manager_add_item.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_item_add.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Sales_manager_add_item().setVisible(true);
+                new SM_item_add().setVisible(true);
             }
         });
     }
@@ -265,6 +261,7 @@ public class Sales_manager_add_item extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_item_button;
     private javax.swing.JLabel add_item_label;
+    private javax.swing.JButton cancel_add_item_button;
     private javax.swing.JLabel item_name_label;
     private javax.swing.JLabel item_name_label1;
     private javax.swing.JLabel item_name_label2;
