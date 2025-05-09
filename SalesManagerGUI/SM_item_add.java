@@ -124,7 +124,12 @@ public class SM_item_add extends javax.swing.JFrame {
         });
 
         add_new_supplier_button.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        add_new_supplier_button.setText("Add New Supplier");
+        add_new_supplier_button.setText("New Supplier? Add Now");
+        add_new_supplier_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                add_new_supplier_buttonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -142,28 +147,32 @@ public class SM_item_add extends javax.swing.JFrame {
                         .addComponent(add_item_button)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(98, Short.MAX_VALUE)
+                .addGap(98, 98, 98)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(item_name_label)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(item_name_label2)
-                            .addComponent(item_name_label3)
-                            .addComponent(item_name_label4))
-                        .addGap(47, 47, 47)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(stock_price_spinner)
-                            .addComponent(sales_per_day_spinner)
-                            .addComponent(ordering_lead_time_spinner, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(add_new_supplier_button)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(add_new_supplier_button))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(129, 129, 129)
+                                .addComponent(supplier_combo_box, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(item_name_label1)
-                                .addComponent(item_name_label))
-                            .addGap(129, 129, 129)
+                                .addComponent(item_name_label2)
+                                .addComponent(item_name_label3)
+                                .addComponent(item_name_label4))
+                            .addGap(47, 47, 47)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(item_name_textfield, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
-                                .addComponent(supplier_combo_box, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(stock_price_spinner)
+                                .addComponent(sales_per_day_spinner)
+                                .addComponent(ordering_lead_time_spinner, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(item_name_label1)
+                            .addGap(187, 187, 187)
+                            .addComponent(item_name_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(116, 116, 116))
         );
         layout.setVerticalGroup(
@@ -175,13 +184,15 @@ public class SM_item_add extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(item_name_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(item_name_label1))
-                .addGap(32, 32, 32)
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(item_name_label)
-                    .addComponent(supplier_combo_box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(item_name_label))
+                    .addComponent(supplier_combo_box, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(add_new_supplier_button)
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(stock_price_spinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(item_name_label2))
@@ -197,7 +208,7 @@ public class SM_item_add extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(add_item_button)
                     .addComponent(cancel_add_item_button))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         stock_price_spinner.setEditor(new javax.swing.JSpinner.NumberEditor(stock_price_spinner, "0.00"));
@@ -254,6 +265,10 @@ public class SM_item_add extends javax.swing.JFrame {
     private void supplier_combo_boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplier_combo_boxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_supplier_combo_boxActionPerformed
+
+    private void add_new_supplier_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_new_supplier_buttonActionPerformed
+        new SM_supplier_add().setVisible(true);
+    }//GEN-LAST:event_add_new_supplier_buttonActionPerformed
 
     /**
      * @param args the command line arguments

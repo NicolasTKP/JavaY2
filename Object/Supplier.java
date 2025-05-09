@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import javax.swing.JOptionPane;
 
 public class Supplier {
     public String supplier_id;
@@ -14,9 +15,10 @@ public class Supplier {
     public String payment_term;
 
 
-    Supplier(){
+    public Supplier(){
     }
-    Supplier(String supplier_id, String supplier_name, String address, String contact, String supply_items, String payment_term){
+    
+    public Supplier(String supplier_id, String supplier_name, String address, String contact, String supply_items, String payment_term){
         this.supplier_id = supplier_id;
         this.supplier_name = supplier_name;
         this.address = address;
@@ -98,6 +100,15 @@ public class Supplier {
     
     public void setContactNumber(String contact){
         this.contact = contact;
+    }
+    
+    public static boolean validateContact(String contact){
+        String contact_regex = "^01[0-9]-\\d{3}-\\d{4}$";
+        if(!contact.matches(contact_regex)){  
+            return false;
+        }else{
+            return true;            
+        }
     }
     
     public String getContactNumber(){

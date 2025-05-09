@@ -4,6 +4,7 @@
  */
 package com.mycompany.JavaY2.SalesManagerGUI;
 
+import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.javaY2.Class.DataMapping;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -29,6 +31,14 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
     public SM_supplier_mainpage() {
         initComponents();
         populateSupplierTable();
+        
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                supplierContainer.setRowCount(0);
+                populateSupplierTable();                                
+            }
+        });
     }
     
     private void populateSupplierTable(){
@@ -81,6 +91,7 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1500, 750));
+        setPreferredSize(new java.awt.Dimension(1500, 750));
 
         delete_supplier_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         delete_supplier_button.setText("Delete Supplier");
@@ -130,18 +141,18 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(76, 76, 76)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(add_supplier_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(delete_supplier_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edit_supplier_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(61, 61, 61)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,15 +177,63 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void delete_supplier_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_supplier_buttonActionPerformed
+        int selected_row = supplier_table.getSelectedRow();
+        
+        String selected_id = supplier_table.getValueAt(selected_row, 0).toString();
+        
+        if (selected_row != -1) {
+            int response = JOptionPane.showConfirmDialog(
+                null,
+                "Are you sure to delete this supplier?",
+                "Confirm To Delete?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+            );
 
+            if (response == JOptionPane.YES_OPTION) {
+                TextFile.deleteTextfileLine(supplier_file_path, selected_id);
+                JOptionPane.showMessageDialog(null, "You have deleted the supplier. Supplier table is updated");
+            } else {
+                // Cancel editing
+            JOptionPane.showMessageDialog(null, "You have decided to not delete the supplier. Back to supplier mainpage now");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a supplier to delete.");
+        }
     }//GEN-LAST:event_delete_supplier_buttonActionPerformed
 
     private void edit_supplier_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_supplier_buttonActionPerformed
+        int selected_row = supplier_table.getSelectedRow();
+        
+        if (selected_row != -1) {
+            int response = JOptionPane.showConfirmDialog(
+                null,
+                "Are you sure to edit this supplier?",
+                "Confirm To Edit?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+            );
 
+            if (response == JOptionPane.YES_OPTION) {
+                String supplier_id = supplier_table.getValueAt(selected_row,0).toString();
+                String supplier_name = supplier_table.getValueAt(selected_row,1).toString();
+                String address = supplier_table.getValueAt(selected_row,2).toString();
+                String contact_number = supplier_table.getValueAt(selected_row,3).toString();
+                String supply_item = supplier_table.getValueAt(selected_row,4).toString();
+                String payment_term = supplier_table.getValueAt(selected_row,5).toString();
+                
+                new SM_supplier_edit(supplier_id, supplier_name, address, contact_number, supply_item, payment_term).setVisible(true);
+            } else {
+                // Cancel editing
+            JOptionPane.showMessageDialog(null, "You have decided to not edit supplier details. Back to supplier mainpage now");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a supplier to edit.");
+        }
     }//GEN-LAST:event_edit_supplier_buttonActionPerformed
 
     private void add_supplier_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_supplier_buttonActionPerformed
-        new SM_item_add().setVisible(true);
+        new SM_supplier_add().setVisible(true);
     }//GEN-LAST:event_add_supplier_buttonActionPerformed
 
     private void homepage_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homepage_button1ActionPerformed
