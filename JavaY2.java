@@ -10,10 +10,10 @@ package com.mycompany.JavaY2;
  */
 public class JavaY2 {
 
-//    public static void main(String[] args) {
-//        login page = new login();
-//        page.setVisible(true);
-//    }
+    public static void main(String[] args) {
+        login page = new login();
+        page.setVisible(true);
+    }
 
 
 }

@@ -123,7 +123,8 @@ public class SM_mainpage extends javax.swing.JFrame {
     }//GEN-LAST:event_purchase_requisition_buttonActionPerformed
 
     private void daily_sales_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daily_sales_buttonActionPerformed
-        // TODO add your handling code here:
+        new SM_daily_sales_mainpage().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_daily_sales_buttonActionPerformed
 
     private void item_management_button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_management_button3ActionPerformed

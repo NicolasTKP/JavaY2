@@ -52,7 +52,6 @@ public class SM_supplier_add extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1000, 750));
-        setPreferredSize(new java.awt.Dimension(1000, 750));
 
         add_item_label.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         add_item_label.setText("Supplier Name:");
