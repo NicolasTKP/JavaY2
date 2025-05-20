@@ -1,10 +1,11 @@
 package com.mycompany.JavaY2.Class;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import javax.swing.*;
+import java.awt.*;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TextFile {
@@ -60,4 +61,70 @@ public class TextFile {
             return null;
         }
     }
+
+    public static boolean editTextfileRow(Component parent_component, String file_path, String primary_key, int column_index, String updated_line, int file_column_number){
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(file_path));
+            StringBuilder updated_file = new StringBuilder();
+            String line;
+            boolean found = false;
+
+            while((line = br.readLine()) !=null){
+                String[] columns = line.split("\\|");
+
+                if(columns[column_index].trim().equals(primary_key.trim())){
+                    updated_file.append(updated_line).append("\n");
+                    found = true;
+                }else{
+                    updated_file.append(line).append("\n");
+                }
+            }
+            br.close();
+
+            if(!found){
+                JOptionPane.showMessageDialog(parent_component, "Data now found");
+                return false;
+            }
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file_path, false));
+            bw.write(updated_file.toString());
+            bw.close();
+
+            return true;
+        }catch(IOException e){
+            System.out.println("Error reading " + file_path);
+            return false;
+        }
+    }
+    public static boolean deleteTextfileLine(String file_path, String selected_id){
+        List<String> updated_lines = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file_path))) {
+            String line = br.readLine(); // Read header
+            if (line != null) {
+                updated_lines.add(line); // Keep header
+            }
+
+            while ((line = br.readLine()) != null) {
+                if (!line.startsWith(selected_id + "|")) {
+                    updated_lines.add(line);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the " + file_path);
+            return false;
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file_path))) {
+            for (String updated_line : updated_lines) {
+                bw.write(updated_line);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error writing to the " + file_path);
+            return false;
+        }
+        return true;
+    }
+    
 }
