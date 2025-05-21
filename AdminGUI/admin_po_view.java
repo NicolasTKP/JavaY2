@@ -4,21 +4,20 @@
  */
 package com.mycompany.JavaY2.AdminGUI;
 
-import com.mycompany.JavaY2.Class.Search;
-
 /**
  *
  * @author USER
  */
-public class admin_pr_view extends javax.swing.JFrame {
-    public String request_ID;
+public class admin_po_view extends javax.swing.JFrame {
+    String order_ID;
     /**
-     * Creates new form admin_pr_view
+     * Creates new form admin_po_view
      */
-    public admin_pr_view(String request_ID) {
-        this.request_ID = request_ID;
+    public admin_po_view(String order_ID) {
+        this.order_ID = order_ID;
         initComponents();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,79 +27,21 @@ public class admin_pr_view extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("Request ID:");
-
-        jTextField1.setEditable(false);
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTextField1.setText(this.request_ID);
-        jTextField1.setFocusable(false);
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Request Date:");
-
-        jTextField2.setEditable(false);
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTextField2.setText(Search.getFromPR(this.request_ID, 4));
-        jTextField2.setFocusable(false);
-
-        String group_ID = Search.getFromPR(this.request_ID, 1);
-        String quantity = Search.getFromPR(this.request_ID, 3);
-        String stock = Search.getFromInventory(group_ID,2);
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {group_ID, Search.getItemNamebyGroupID(group_ID), quantity, stock,(Integer.parseInt(quantity)+Integer.parseInt(stock))}
-            },
-            new String [] {
-                "Group ID", "Item Name", "Quantity", "Remaining Stock", "Stock after Restock"
-            }
-        ));
-        jTable1.setAutoscrolls(false);
-        jTable1.setEnabled(false);
-        jTable1.setFocusable(false);
-        jTable1.setRowHeight(25);
-        jScrollPane2.setViewportView(jTable1);
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Request By:");
-
-        jTextField3.setEditable(false);
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTextField3.setText(Search.getUsername(Search.getFromPR(this.request_ID, 2)));
-        jTextField3.setFocusable(false);
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("Required Date:");
-
-        jTextField4.setEditable(false);
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTextField4.setText(Search.getFromPR(this.request_ID, 5));
-        jTextField4.setFocusable(false);
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText(Search.getFromPR(this.request_ID, 6));
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton1.setText("Back");
@@ -110,51 +51,104 @@ public class admin_pr_view extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Order ID:");
+
+        jTextField1.setEditable(false);
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField1.setText(this.order_ID);
+        jTextField1.setFocusable(false);
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setText("Request By:");
+
+        jTextField3.setEditable(false);
+        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField3.setText("a");
+        jTextField3.setFocusable(false);
+
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Purchase Requisition");
+        jLabel6.setText("Purchase Order");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText("Order Date:");
+
+        jTextField2.setEditable(false);
+        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField2.setText("a");
+        jTextField2.setFocusable(false);
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel4.setText("Based on Purchase Requisition:");
+
+        jTextField4.setEditable(false);
+        jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField4.setText("a");
+        jTextField4.setFocusable(false);
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel5.setText("Supplier:");
+
+        jTextField5.setEditable(false);
+        jTextField5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField5.setText("a");
+        jTextField5.setFocusable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(496, 496, 496)
                         .addComponent(jLabel6)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 962, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(28, 28, 28))))
+                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(26, 26, 26))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -162,19 +156,23 @@ public class admin_pr_view extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2))
-                .addGap(67, 67, 67)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(433, 433, 433)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(516, 516, 516))
         );
 
         pack();
@@ -185,6 +183,10 @@ public class admin_pr_view extends javax.swing.JFrame {
         page.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,20 +205,20 @@ public class admin_pr_view extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(admin_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(admin_po_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(admin_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(admin_po_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(admin_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(admin_po_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(admin_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(admin_po_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new admin_pr_view("").setVisible(true);
+                new admin_po_view("").setVisible(true);
             }
         });
     }
@@ -229,11 +231,11 @@ public class admin_pr_view extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }

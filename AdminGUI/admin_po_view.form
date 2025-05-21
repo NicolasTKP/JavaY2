@@ -24,42 +24,48 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jButton1" min="-2" pref="114" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="496" max="-2" attributes="0"/>
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="jLabel1" min="-2" pref="103" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextField1" min="-2" pref="124" max="-2" attributes="0"/>
-                      <EmptySpace pref="962" max="32767" attributes="0"/>
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextField2" min="-2" pref="124" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <EmptySpace min="643" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="jLabel5" min="-2" pref="174" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="jLabel3" min="-2" pref="103" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jTextField3" min="-2" pref="124" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jTextField2" min="-2" pref="124" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel1" min="-2" pref="103" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jTextField1" min="-2" pref="124" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="jLabel3" min="-2" pref="103" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jTextField3" min="-2" pref="124" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jTextField4" min="-2" pref="124" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel5" min="-2" pref="103" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jTextField5" min="-2" pref="124" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -68,7 +74,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButton1" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                   <Component id="jLabel6" alignment="3" max="32767" attributes="0"/>
@@ -77,33 +83,52 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                   <Component id="jTextField1" alignment="3" max="32767" attributes="0"/>
-                  <Component id="jLabel2" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="jTextField2" alignment="3" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel3" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="jTextField3" alignment="3" max="32767" attributes="0"/>
                   <Component id="jLabel4" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                   <Component id="jTextField4" alignment="3" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane2" min="-2" pref="53" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="433" max="-2" attributes="0"/>
-              <Component id="jLabel5" min="-2" pref="49" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel2" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="jTextField2" alignment="3" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel3" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="jTextField3" alignment="3" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel5" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="jTextField5" alignment="3" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="516" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="18" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="&quot;Back&quot;" type="code"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
+    </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Request ID:"/>
+        <Property name="text" type="java.lang.String" value="Order ID:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField1">
@@ -113,58 +138,14 @@
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="this.request_ID" type="code"/>
+          <Connection code="this.order_ID" type="code"/>
         </Property>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="18" style="0"/>
-        </Property>
-        <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Request Date:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="jTextField2">
-      <Properties>
-        <Property name="editable" type="boolean" value="false"/>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="18" style="0"/>
-        </Property>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Search.getFromPR(this.request_ID, 4)" type="code"/>
-        </Property>
-        <Property name="focusable" type="boolean" value="false"/>
-      </Properties>
-    </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane2">
-      <AuxValues>
-        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-      </AuxValues>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="0"/>
-            </Property>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        {group_ID, Search.getItemNamebyGroupID(group_ID), quantity, stock,(Integer.parseInt(quantity)+Integer.parseInt(stock))}&#xa;    },&#xa;    new String [] {&#xa;        &quot;Group ID&quot;, &quot;Item Name&quot;, &quot;Quantity&quot;, &quot;Remaining Stock&quot;, &quot;Stock after Restock&quot;&#xa;    }&#xa;)" type="code"/>
-            </Property>
-            <Property name="autoscrolls" type="boolean" value="false"/>
-            <Property name="enabled" type="boolean" value="false"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="rowHeight" type="int" value="25"/>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="String group_ID = Search.getFromPR(this.request_ID, 1);&#xa;String quantity = Search.getFromPR(this.request_ID, 3);&#xa;String stock = Search.getFromInventory(group_ID,2);"/>
-          </AuxValues>
-        </Component>
-      </SubComponents>
-    </Container>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -181,7 +162,39 @@
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Search.getUsername(Search.getFromPR(this.request_ID, 2))" type="code"/>
+          <Connection code="&quot;a&quot;" type="code"/>
+        </Property>
+        <Property name="focusable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel6">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="36" style="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="&quot;Purchase Order&quot;" type="code"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="18" style="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="Order Date:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextField2">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="18" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="&quot;a&quot;" type="code"/>
         </Property>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
@@ -192,7 +205,7 @@
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Required Date:"/>
+        <Property name="text" type="java.lang.String" value="Based on Purchase Requisition:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField4">
@@ -202,7 +215,7 @@
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Search.getFromPR(this.request_ID, 5)" type="code"/>
+          <Connection code="&quot;a&quot;" type="code"/>
         </Property>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
@@ -210,37 +223,25 @@
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="24" style="0"/>
+          <Font name="Segoe UI" size="18" style="0"/>
         </Property>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Search.getFromPR(this.request_ID, 6)" type="code"/>
-        </Property>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="Supplier:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JTextField" name="jTextField5">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="&quot;Back&quot;" type="code"/>
+          <Connection code="&quot;a&quot;" type="code"/>
         </Property>
+        <Property name="focusable" type="boolean" value="false"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel6">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="36" style="0"/>
-        </Property>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="&quot;Purchase Requisition&quot;" type="code"/>
-        </Property>
-      </Properties>
+    <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
   </SubComponents>
 </Form>
