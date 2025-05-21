@@ -341,6 +341,26 @@ public class Search {
         }
     }
 
+    public static String getFromSuppliers(String supplierID, int column){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"));
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                if (line.split("\\|")[0].equals(supplierID.toUpperCase())){
+                    return line.split("\\|")[column];
+                }
+
+            }
+            br.close();
+            return null;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String[] getSuppliersByGroupID(String groupID){
         try {
             List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
