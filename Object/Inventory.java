@@ -12,9 +12,9 @@ public class Inventory {
     public double retail_price;
 
 
-    Inventory(){
+    public Inventory(){
     }
-    Inventory(String group_id, String item_name, int quantity, double retail_price){
+    public Inventory(String group_id, String item_name, int quantity, double retail_price){
         this.group_id = group_id;
         this.item_name = item_name;
         this.quantity = quantity;

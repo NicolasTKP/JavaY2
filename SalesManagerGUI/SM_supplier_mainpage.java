@@ -5,6 +5,7 @@
 package com.mycompany.JavaY2.SalesManagerGUI;
 
 import com.mycompany.JavaY2.Class.TextFile;
+import com.mycompany.JavaY2.Object.Supplier;
 import com.mycompany.javaY2.Class.DataMapping;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -39,6 +40,13 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
                 populateSupplierTable();                                
             }
         });
+
+        supplier_search_bar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                supplierSearchFunction(supplier_search_bar.getText());
+            }
+        });
+        
     }
     
     private void populateSupplierTable(){
@@ -72,6 +80,51 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
             System.out.println("Error reading supplier text file for supplier table.");
         }        
     }
+    
+    private void supplierSearchFunction(String supplier_keyword) {
+        supplierContainer.setRowCount(0); // Clear existing rows
+        supplier_keyword = supplier_keyword.toLowerCase().trim();
+        
+        if (supplier_keyword.isEmpty()) {
+            populateSupplierTable(); // <- call your full data loader
+            return;
+        }
+            
+        DataMapping mapping = new DataMapping();
+        Map<String,String> item_map = mapping.IdNameMapping(item_file_path);
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(supplier_file_path))) {
+            String supplier_line;
+            Set<String> uniqueSupplierRows = new HashSet<>();
+            br.readLine(); // skip header
+
+            while ((supplier_line = br.readLine()) != null) {
+                if (!supplier_line.trim().isEmpty() && !uniqueSupplierRows.contains(supplier_line)) {
+                    String[] supplier_details = supplier_line.split("\\|");
+
+                    // Create an Item object from the line
+                    Supplier supplier = new Supplier(
+                        supplier_details[0], 
+                        supplier_details[1],
+                        supplier_details[2], 
+                        supplier_details[3], 
+                        supplier_details[4], 
+                        supplier_details[5]
+                    );
+
+                    if (supplier.anyMatch(supplier_keyword)) {
+                        // Replace supplier_id with supplier_name
+                        supplier_details[4] = item_map.get(supplier_details[4]);
+                        supplierContainer.addRow(supplier_details);
+                        uniqueSupplierRows.add(supplier_line);
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading item file during search: " + e.getMessage());
+        }
+    }    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,10 +141,10 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         supplier_table = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        supplier_search_bar = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1500, 750));
-        setPreferredSize(new java.awt.Dimension(1500, 750));
 
         delete_supplier_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         delete_supplier_button.setText("Delete Supplier");
@@ -137,6 +190,16 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(supplier_table);
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel2.setText("Supplier Search Bar");
+
+        supplier_search_bar.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        supplier_search_bar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supplier_search_barActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -149,16 +212,25 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
                     .addComponent(delete_supplier_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edit_supplier_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(supplier_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1120, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabel1)
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2))
+                    .addComponent(supplier_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -245,6 +317,11 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
         System.out.println(supplier_table.getSelectedRow());
     }//GEN-LAST:event_supplier_tableMouseClicked
 
+    private void supplier_search_barActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplier_search_barActionPerformed
+        String supplier_keyword = supplier_search_bar.getText();
+        supplierSearchFunction(supplier_keyword);
+    }//GEN-LAST:event_supplier_search_barActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -286,7 +363,9 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
     private javax.swing.JButton edit_supplier_button;
     private javax.swing.JButton homepage_button1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField supplier_search_bar;
     private javax.swing.JTable supplier_table;
     // End of variables declaration//GEN-END:variables
 }

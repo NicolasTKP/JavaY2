@@ -1,3 +1,5 @@
 supplier_id|supplier_name|address|contact|supply_items(item_id)|payment_term
 SU001|Hello supplier|Kuala Lumpur|011-111-1111|I002|pay after ship
 
+
+
