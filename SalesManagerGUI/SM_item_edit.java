@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
  * @author User
  */
 public class SM_item_edit extends javax.swing.JFrame {
+    private final String item_file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\items";
+    private final String inventory_file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\inventory";
     /**
      * Creates new form SM_item_edit
      * @param item_id
@@ -223,7 +225,7 @@ public class SM_item_edit extends javax.swing.JFrame {
                         .addGap(79, 79, 79)
                         .addComponent(add_item_label))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(242, 242, 242)
+                        .addGap(263, 263, 263)
                         .addComponent(cancel_edit_item_button, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(100, 100, 100)
                         .addComponent(edit_item_button)))
@@ -266,11 +268,11 @@ public class SM_item_edit extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(item_name_label6)
                     .addComponent(group_id_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(edit_item_button)
                     .addComponent(cancel_edit_item_button))
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
 
         stock_price_spinner.setEditor(new javax.swing.JSpinner.NumberEditor(stock_price_spinner, "0.00"));
@@ -279,13 +281,12 @@ public class SM_item_edit extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancel_edit_item_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_edit_item_buttonActionPerformed
-        JOptionPane.showMessageDialog(this,"You have cancel adding new item. Back to item mainpage now.");
+        JOptionPane.showMessageDialog(this,"You have cancel editing the item details. Back to item mainpage now.");
         this.dispose();
     }//GEN-LAST:event_cancel_edit_item_buttonActionPerformed
 
     private void edit_item_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_item_buttonActionPerformed
-        String item_file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\items";
-        String inventory_file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\inventory";
+
 
         String item_id = item_id_textfield.getText();
         String updated_item_details = getItemDetails(item_id);
