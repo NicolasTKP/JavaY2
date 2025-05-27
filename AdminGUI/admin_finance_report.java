@@ -258,6 +258,11 @@ public class admin_finance_report extends javax.swing.JFrame {
         jTextField9.setText("");
         jTextField9.setFocusable(false);
         jTextField9.setText(Double.toString(Double.parseDouble(jTextField3.getText()) - Double.parseDouble(jTextField6.getText())));
+        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField9ActionPerformed(evt);
+            }
+        });
 
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         ObjectList objectList = new ObjectList();
@@ -580,6 +585,10 @@ public class admin_finance_report extends javax.swing.JFrame {
     private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
 
     }//GEN-LAST:event_jTextField12ActionPerformed
+
+    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField9ActionPerformed
 
     /**
      * @param args the command line arguments

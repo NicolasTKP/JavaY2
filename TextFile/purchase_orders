@@ -1,3 +1,3 @@
 order_id|request_id|item_id|user_id|quantity|unit_price|amount|supplier_id|order_date|order_status (pending,approved,rejected)
-O001|R001|I004|U001|10|4.0|40.0|SU003|01052025|Pending
-O002|R002|I005|U001|20|5.0|100.0|SU004|06042025|Approved
+O001|R001|I003|U001|10|0.5|5.0|SU003|01052025|Approved
+O002|R002|I002|U001|20|5.0|100.0|SU004|06042025|Approved

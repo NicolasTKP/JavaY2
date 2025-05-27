@@ -73,6 +73,8 @@ public class fm_purchase_order extends javax.swing.JFrame {
         rejectBtn = new javax.swing.JButton();
         orderFilter = new javax.swing.JComboBox<>();
         btnEditPO = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        searchPOField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -192,6 +194,16 @@ public class fm_purchase_order extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        jLabel3.setText("Search:");
+
+        searchPOField.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        searchPOField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchPOFieldKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -201,7 +213,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 408, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 413, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(323, 323, 323)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -229,6 +241,10 @@ public class fm_purchase_order extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(btnEditPO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(searchPOField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(322, 322, 322)
                                         .addComponent(orderFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jScrollPane1))))))
                 .addGap(15, 15, 15))
@@ -259,10 +275,12 @@ public class fm_purchase_order extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel1))
-                .addGap(0, 10, Short.MAX_VALUE)
+                .addGap(0, 9, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(orderFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditPO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEditPO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchPOField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -312,21 +330,30 @@ public class fm_purchase_order extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void approveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveBtnActionPerformed
+        String password = JOptionPane.showInputDialog("Please enter your credential before approving the Purchase Order");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password entered, you are not allowed to approve or reject", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selected_row = orderTable.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(this, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
         }else{
             int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to approve the purchase order?", "Confirm Approval", JOptionPane.YES_NO_OPTION); 
             if(choice == JOptionPane.YES_OPTION) {
-                String[] ls = new String[7];
+                String[] ls = new String[9];
                 String order_id = orderTable.getValueAt(selected_row,0).toString();
                 Edit.purchaseOrders(order_id,9,"Approved"); //Pending - Approved in text file
                 model.setValueAt("Approved",selected_row,9); //Pending - Approved on table
                 ls[0] = order_id;
-                ls[1] = Objects.requireNonNull(Search.getFromPO(ls[0], 2));
-//                ls[2] = Search.getItemName(ls[1]);
+                ls[1] = orderTable.getValueAt(selected_row,2).toString();
+                ls[2] = Search.getItemNamebyItemID(ls[1]);
                 ls[3] = Search.getFromPO(ls[0],4);
                 ls[4] = Search.getFromPO(ls[0],6);
+                ls[5] = "-";
+                ls[6] = "Not Received";
+                ls[7] = "-";
+                ls[8] = "-";
                 TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/receives",String.join("|",ls));
                 JOptionPane.showMessageDialog(this, "You Have Approved The Purchase Order Sucessfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -334,6 +361,11 @@ public class fm_purchase_order extends javax.swing.JFrame {
     }//GEN-LAST:event_approveBtnActionPerformed
 
     private void rejectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectBtnActionPerformed
+        String password = JOptionPane.showInputDialog("Please enter your credential before rejecting the Purchase Order");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password entered, you are not allowed to approve or reject", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selected_row = orderTable.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(this, "Please select a row to reject", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -362,6 +394,11 @@ public class fm_purchase_order extends javax.swing.JFrame {
     }//GEN-LAST:event_orderFilterActionPerformed
 
     private void btnEditPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPOActionPerformed
+        String password = JOptionPane.showInputDialog("Please enter your credential before rejecting the Purchase Order");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password entered, you are not allowed to approve or reject", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int selectedRow = orderTable.getSelectedRow();
         String orderStatus = String.valueOf(model.getValueAt(selectedRow, 9));
         
@@ -389,6 +426,12 @@ public class fm_purchase_order extends javax.swing.JFrame {
     private void orderTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTableMouseReleased
 
     }//GEN-LAST:event_orderTableMouseReleased
+
+    private void searchPOFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchPOFieldKeyReleased
+        TableRowSorter<DefaultTableModel> search = new TableRowSorter<>(model);
+        orderTable.setRowSorter(search);
+        search.setRowFilter(RowFilter.regexFilter(searchPOField.getText()));
+    }//GEN-LAST:event_searchPOFieldKeyReleased
 
     /**
      * @param args the command line arguments
@@ -438,9 +481,11 @@ public class fm_purchase_order extends javax.swing.JFrame {
     private javax.swing.JTextField current_user;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> orderFilter;
     private javax.swing.JTable orderTable;
     private javax.swing.JButton rejectBtn;
+    private javax.swing.JTextField searchPOField;
     // End of variables declaration//GEN-END:variables
 }
