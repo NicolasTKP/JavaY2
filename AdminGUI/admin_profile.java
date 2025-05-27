@@ -171,6 +171,18 @@ public class admin_profile extends javax.swing.JFrame {
                     SM_mainpage sm_mainpage = new SM_mainpage();
                     sm_mainpage.setVisible(true);
                     break;
+                case "purchase manager":
+                    //PM mainpage;
+                    //PM mainpage.setVisible(true);
+                    break;
+                case "inventory manager":
+                    //IM mainpage;
+                    //IM mainpage.setVisible(true);
+                    break;
+                case "finance manager":
+                    //FM mainpage;
+                    //FM mainpage.setVisible(true);
+                    break;
                 default:
                     admin_mainpage admin_mainpage = new admin_mainpage();
                     admin_mainpage.setVisible(true);

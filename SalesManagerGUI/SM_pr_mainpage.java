@@ -25,7 +25,8 @@ import javax.swing.table.DefaultTableModel;
 public class SM_pr_mainpage extends javax.swing.JFrame {
     private final String pr_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/purchase_requisitions";
     private final String inventory_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/inventory";
-    
+    private final String user_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/users";
+        
     private final DefaultTableModel prContainer = new DefaultTableModel();
     private final String prTableColumnName[] = {"Request ID", "Item Name", "Raised By", "Quantity", "Request Date", "Required Date", "Status"};
 
@@ -54,8 +55,12 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
     private void populatePrTable(){
         DataMapping mapping = new DataMapping();
         Map<String,String> inventory_map = mapping.IdNameMapping(inventory_file_path);
+        Map<String,String> user_map = mapping.IdNameMapping(user_file_path);
+        
         Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
         column_mappings.put(1, inventory_map); // supplier_id column
+        column_mappings.put(2, user_map); 
+        
         TextFile.populateTable(prContainer, prTableColumnName, pr_file_path, 50, pr_table, column_mappings);          
     }        
     
@@ -71,7 +76,8 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
             
         DataMapping mapping = new DataMapping();
         Map<String,String> inventory_map = mapping.IdNameMapping(inventory_file_path);
-
+        Map<String,String> user_map = mapping.IdNameMapping(user_file_path);
+        
         try (BufferedReader br = new BufferedReader(new FileReader(pr_file_path))) {
             String pr_line;
             Set<String> uniquePrRows = new HashSet<>();
@@ -85,7 +91,7 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
                     PurchaseRequisition pr = new PurchaseRequisition(
                             pr_details[0],
                             inventory_map.get(pr_details[1]),
-                            pr_details[2],
+                            user_map.get(pr_details[2]),
                             Integer.parseInt(pr_details[3]),
                             pr_details[4],
                             pr_details[5],
@@ -95,6 +101,7 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
                     if (pr.anyPrMatch(pr_keyword)) {
                         
                         pr_details[1] = inventory_map.get(pr_details[1]);
+                        pr_details[2] = user_map.get(pr_details[2]);
                         prContainer.addRow(pr_details);
                         uniquePrRows.add(pr_line);
                     }
