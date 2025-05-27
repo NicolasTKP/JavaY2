@@ -5,6 +5,7 @@
 package com.mycompany.JavaY2.SalesManagerGUI;
 
 import com.mycompany.JavaY2.Class.TextFile;
+import com.mycompany.JavaY2.Object.PurchaseRequisition;
 import com.mycompany.javaY2.Class.DataMapping;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -39,7 +40,13 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
                 prContainer.setRowCount(0);
                 populatePrTable();                                
             }
-        });            
+        });
+        
+        pr_search_bar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                prSearchFunction(pr_search_bar.getText());
+            }
+        });   
     }
     
     private void populatePrTable(){
@@ -72,6 +79,52 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
             System.out.println("Error reading inventory text file for inventory table.");
         }        
     }
+
+    private void prSearchFunction(String pr_keyword) {
+        prContainer.setRowCount(0); // Clear existing rows
+        pr_keyword = pr_keyword.toLowerCase().trim();
+        
+        if (pr_keyword.isEmpty()) {
+            populatePrTable(); // <- call your full data loader
+            return;
+        }
+            
+        DataMapping mapping = new DataMapping();
+        Map<String,String> inventory_map = mapping.IdNameMapping(inventory_file_path);
+
+        try (BufferedReader br = new BufferedReader(new FileReader(pr_file_path))) {
+            String pr_line;
+            Set<String> uniquePrRows = new HashSet<>();
+            br.readLine(); // skip header
+
+            while ((pr_line = br.readLine()) != null) {
+                if (!pr_line.trim().isEmpty() && !uniquePrRows.contains(pr_line)) {
+                    String[] pr_details = pr_line.split("\\|");
+                    
+                    // Create an Item object from the line
+                    PurchaseRequisition pr = new PurchaseRequisition(
+                            pr_details[0],
+                            inventory_map.get(pr_details[1]),
+                            pr_details[2],
+                            Integer.parseInt(pr_details[3]),
+                            pr_details[4],
+                            pr_details[5],
+                            pr_details[6]
+                    );
+
+                    if (pr.anyPrMatch(pr_keyword)) {
+                        
+                        pr_details[1] = inventory_map.get(pr_details[1]);
+                        prContainer.addRow(pr_details);
+                        uniquePrRows.add(pr_line);
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading PR file during search: " + e.getMessage());
+        }
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -89,9 +142,10 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
         add_item_label1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pr_table = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        pr_search_bar = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1500, 750));
 
         homepage_button1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         homepage_button1.setText("Homepage");
@@ -137,6 +191,16 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(pr_table);
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel2.setText("PR Search Bar");
+
+        pr_search_bar.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        pr_search_bar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pr_search_barActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -149,17 +213,22 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
                     .addComponent(delete_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edit_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(add_item_label1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(add_item_label1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pr_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(82, Short.MAX_VALUE)
                         .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(77, 77, 77)
                         .addComponent(add_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -168,9 +237,14 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
                         .addGap(89, 89, 89)
                         .addComponent(delete_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(add_item_label1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(add_item_label1)
+                                .addComponent(jLabel2))
+                            .addComponent(pr_search_bar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)))
                 .addGap(58, 58, 58))
         );
 
@@ -247,6 +321,11 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
         System.out.println(pr_table.getSelectedRow());
     }//GEN-LAST:event_pr_tableMouseClicked
 
+    private void pr_search_barActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pr_search_barActionPerformed
+        String pr_keyword = pr_search_bar.getText();
+        prSearchFunction(pr_keyword);
+    }//GEN-LAST:event_pr_search_barActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -289,7 +368,9 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
     private javax.swing.JButton delete_pr_button;
     private javax.swing.JButton edit_pr_button;
     private javax.swing.JButton homepage_button1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField pr_search_bar;
     private javax.swing.JTable pr_table;
     // End of variables declaration//GEN-END:variables
 }
