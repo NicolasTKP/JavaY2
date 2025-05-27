@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.JavaY2.SalesManagerGUI;
+import com.mycompany.JavaY2.Object.DailySale;
 import com.mycompany.javaY2.Class.DataMapping;
 import java.util.HashSet;
 import java.util.Map;
@@ -32,6 +33,12 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 salesContainer.setRowCount(0);
                 populateSalesTable();                           
+            }
+        });
+
+        daily_sales_search_bar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                dailySalesSearchFunction(daily_sales_search_bar.getText());
             }
         });        
     }
@@ -66,7 +73,50 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
             System.out.println("Error reading item text file for item table.");
         }         
     }
+    
+    private void dailySalesSearchFunction(String daily_sales_keyword) {
+        salesContainer.setRowCount(0); // Clear existing rows
+        daily_sales_keyword = daily_sales_keyword.toLowerCase().trim();
+        
+        if (daily_sales_keyword.isEmpty()) {
+            populateSalesTable(); // <- call your full data loader
+            return;
+        }
+            
+        DataMapping mapping = new DataMapping();
+        Map<String,String> inventory_map = mapping.IdNameMapping(inventory_file_path);
 
+        try (BufferedReader br = new BufferedReader(new FileReader(daily_sales_file_path))) {
+            String daily_sales_line;
+            Set<String> uniqueSalesRows = new HashSet<>();
+            br.readLine(); // skip header
+
+            while ((daily_sales_line = br.readLine()) != null) {
+                if (!daily_sales_line.trim().isEmpty() && !uniqueSalesRows.contains(daily_sales_line)) {
+                    String[] daily_sales_details = daily_sales_line.split("\\|");
+                    
+                    // Create an Item object from the line
+                    DailySale daily_sales = new DailySale(
+                            daily_sales_details[0],
+                            Integer.parseInt(daily_sales_details[1]),
+                            inventory_map.get(daily_sales_details[2]),
+                            Double.parseDouble(daily_sales_details[3]),
+                            daily_sales_details[4]
+                    );
+
+                    if (daily_sales.anyMatch(daily_sales_keyword)) {
+                        
+                        daily_sales_details[2] = inventory_map.get(daily_sales_details[2]);
+                        salesContainer.addRow(daily_sales_details);
+                        uniqueSalesRows.add(daily_sales_line);
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading daily sales file during search: " + e.getMessage());
+        }
+    }
 
 
     /**
@@ -85,6 +135,8 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         sales_table = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        daily_sales_search_bar = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -127,6 +179,16 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("Daily Sales Table");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel2.setText("Daily Sales Search Bar");
+
+        daily_sales_search_bar.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        daily_sales_search_bar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                daily_sales_search_barActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,17 +201,26 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
                     .addComponent(add_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edit_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(daily_sales_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
-                .addGap(33, 33, 33)
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(daily_sales_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2))
+                    .addComponent(jLabel1))
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,6 +253,11 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
     private void delete_sales_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_sales_buttonActionPerformed
 
     }//GEN-LAST:event_delete_sales_buttonActionPerformed
+
+    private void daily_sales_search_barActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daily_sales_search_barActionPerformed
+        String daily_sales_keyword = daily_sales_search_bar.getText();
+        dailySalesSearchFunction(daily_sales_keyword);
+    }//GEN-LAST:event_daily_sales_search_barActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,10 +296,12 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_sales_button;
+    private javax.swing.JTextField daily_sales_search_bar;
     private javax.swing.JButton delete_sales_button;
     private javax.swing.JButton edit_sales_button;
     private javax.swing.JButton homepage_button1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable sales_table;
     // End of variables declaration//GEN-END:variables

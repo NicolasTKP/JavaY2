@@ -29,11 +29,35 @@ public class PurchaseRequisition extends Request {
         this.status = status;
     }
 
+    public PurchaseRequisition(String request_id, String group_id, String user_id, int quantity, String request_date, String required_date, String status){
+        this.request_id = request_id;
+        this.group_id = group_id;
+        this.user_id = user_id;
+        this.quantity = quantity;
+        this.request_date = request_date;
+        this.required_date = required_date;
+        this.status = status;
+    }
+
+
     public boolean anyMatch(String keyword){
         Set<String> valuesToCheck = new HashSet<>(Arrays.asList(
                 this.request_id.toLowerCase(),
                 this.group_id.toLowerCase(),
                 this.item_name.toLowerCase(),
+                this.user_id.toLowerCase(),
+                Integer.toString(this.quantity),
+                this.request_date,
+                this.required_date,
+                this.status
+        ));
+        return valuesToCheck.contains(keyword);
+    }
+
+    public boolean anyPrMatch(String keyword){
+        Set<String> valuesToCheck = new HashSet<>(Arrays.asList(
+                this.request_id.toLowerCase(),
+                this.group_id.toLowerCase(),
                 this.user_id.toLowerCase(),
                 Integer.toString(this.quantity),
                 this.request_date,

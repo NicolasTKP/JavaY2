@@ -151,7 +151,7 @@ public class SM_item_mainpage extends javax.swing.JFrame {
                         Integer.parseInt(item_details[3]), // sales_per_day
                         Integer.parseInt(item_details[4]), // ordering_lead_time
                         Integer.parseInt(item_details[5]), // safety_level
-                        item_details[6], // supplier_id
+                        supplier_map.get(item_details[6]), // supplier_id
                         item_details[7]  // group_id
                     );
 
