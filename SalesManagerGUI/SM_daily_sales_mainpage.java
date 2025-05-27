@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.JavaY2.SalesManagerGUI;
+import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.DailySale;
 import com.mycompany.javaY2.Class.DataMapping;
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
+import java.util.HashMap;
 
 /**
  *
@@ -44,34 +46,11 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
     }
     
     private void populateSalesTable(){
-        salesContainer.setRowCount(0);
-        salesContainer.setColumnIdentifiers(salesTableColumnName);
-        sales_table.setRowHeight(50);
-
         DataMapping mapping = new DataMapping();
         Map<String, String> inventory_map = mapping.IdNameMapping(inventory_file_path);
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(daily_sales_file_path))) {
-            String item_line;
-            Set<String> uniqueItemRows = new HashSet<>();
-            
-            br.readLine(); 
-            while ((item_line = br.readLine()) != null) {
-                if (!uniqueItemRows.contains(item_line)){
-                    if (item_line.trim().isEmpty()){
-                        continue;                        
-                    } 
-                    String sales_details[] = item_line.split("\\|");
-                    String group_id = sales_details[2];
-                    String item_name = inventory_map.get(group_id);
-                    sales_details[2] = item_name;
-                    salesContainer.addRow(sales_details);                   
-                }
-
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading item text file for item table.");
-        }         
+        Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
+        column_mappings.put(2, inventory_map); // supplier_id column
+        TextFile.populateTable(salesContainer, salesTableColumnName, daily_sales_file_path, 50, sales_table, column_mappings);          
     }
     
     private void dailySalesSearchFunction(String daily_sales_keyword) {

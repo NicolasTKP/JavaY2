@@ -10,6 +10,7 @@ import com.mycompany.javaY2.Class.DataMapping;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -50,35 +51,13 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
     }
     
     private void populatePrTable(){
-        prContainer.setRowCount(0);
-        prContainer.setColumnIdentifiers(prTableColumnName);
-        pr_table.setRowHeight(50);
-        
         DataMapping mapping = new DataMapping();
         Map<String,String> inventory_map = mapping.IdNameMapping(inventory_file_path);
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(pr_file_path))) {
-            String pr_line;
-            Set<String> uniquePrRows = new HashSet<>();
-            
-            br.readLine(); 
-            while ((pr_line = br.readLine()) != null) {
-                if (!uniquePrRows.contains(pr_line)){
-                    if (pr_line.trim().isEmpty()){
-                        continue;                        
-                    } 
-                    String pr_details[] = pr_line.split("\\|");
-                    String group_id = pr_details[1];
-                    String item_name = inventory_map.get(group_id);
-                    pr_details[1] = item_name;
-                    prContainer.addRow(pr_details);                   
-                }
-
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading inventory text file for inventory table.");
-        }        
-    }
+        Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
+        column_mappings.put(1, inventory_map); // supplier_id column
+        TextFile.populateTable(prContainer, prTableColumnName, pr_file_path, 50, pr_table, column_mappings);          
+    }        
+    
 
     private void prSearchFunction(String pr_keyword) {
         prContainer.setRowCount(0); // Clear existing rows
