@@ -11,9 +11,8 @@ import com.mycompany.javaY2.Class.DataMapping;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashSet;
+import com.mycompany.JavaY2.Object.SessionManager;
 import java.util.Map;
-import java.util.Set;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 /**
@@ -213,7 +212,7 @@ public class SM_pr_add extends javax.swing.JFrame {
         
         String request_id = pr.setRequestID();
         String selected_item = (String) item_combo_box.getSelectedItem();
-        String user_id = "U001";
+        String user_id = SessionManager.getInstance().userID;
         int quantity = (int) pr_quantity_spinner.getValue();
         String request_date = formatted_date;
         String required_date = required_date_textfield.getText();
