@@ -4,20 +4,17 @@
  */
 package com.mycompany.JavaY2.SalesManagerGUI;
 
-import com.mycompany.JavaY2.Class.Matrix;
-import com.mycompany.JavaY2.Class.Search;
+
 import com.mycompany.JavaY2.Class.TextFile;
-import com.mycompany.JavaY2.Class.UpdateTable;
 import com.mycompany.JavaY2.Object.Inventory;
 import com.mycompany.JavaY2.Object.Item;
-import com.mycompany.JavaY2.Object.ObjectList;
 import com.mycompany.javaY2.Class.DataMapping;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -41,7 +38,7 @@ public class SM_item_mainpage extends javax.swing.JFrame {
         initComponents();
         populateItemTable();
         populateInventoryTable();
-        
+      
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -49,7 +46,7 @@ public class SM_item_mainpage extends javax.swing.JFrame {
                 populateItemTable();
                 
                 inventoryContainer.setRowCount(0);
-                populateInventoryTable();                                     
+                populateInventoryTable();             
             }
         });
         
@@ -67,60 +64,17 @@ public class SM_item_mainpage extends javax.swing.JFrame {
     }
     
     private void populateItemTable(){
-        itemContainer.setRowCount(0);
-        itemContainer.setColumnIdentifiers(itemTableColumnName);
-        item_table.setRowHeight(50);
-        
         DataMapping mapping = new DataMapping();
-        Map<String,String> supplier_map = mapping.IdNameMapping(supplier_file_path);
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(item_file_path))) {
-            String item_line;
-            Set<String> uniqueItemRows = new HashSet<>();
-            
-            br.readLine(); 
-            while ((item_line = br.readLine()) != null) {
-                if (!uniqueItemRows.contains(item_line)){
-                    if (item_line.trim().isEmpty()){
-                        continue;                        
-                    } 
-                    String item_details[] = item_line.split("\\|");
-                    String supplier_id = item_details[6];
-                    String supplier_name = supplier_map.get(supplier_id);
-                    item_details[6] = supplier_name;
-                    itemContainer.addRow(item_details);                   
-                }
-
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading item text file for item table.");
-        }        
+        Map<String, String> supplier_map = mapping.IdNameMapping(supplier_file_path);
+        Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
+        column_mappings.put(6, supplier_map); // supplier_id column
+        TextFile.populateTable(itemContainer, itemTableColumnName, item_file_path, 50, item_table, column_mappings);         
     }
-    
+ 
     private void populateInventoryTable(){
-        inventoryContainer.setRowCount(0);
-        inventoryContainer.setColumnIdentifiers(inventoryTableColumnName);
-        inventory_table.setRowHeight(50);
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(inventory_file_path))) {
-            String inventory_line;
-            Set<String> uniqueInventoryRows = new HashSet<>();
-            
-            br.readLine(); 
-            while ((inventory_line = br.readLine()) != null) {
-                if (!uniqueInventoryRows.contains(inventory_line)){
-                    if (inventory_line.trim().isEmpty()){
-                        continue;                        
-                    } 
-                    String inventory_details[] = inventory_line.split("\\|");
-                    inventoryContainer.addRow(inventory_details);                   
-                }
-
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading inventory text file for inventory table.");
-        }
+        TextFile.populateTable(inventoryContainer, inventoryTableColumnName, inventory_file_path, 50, inventory_table);         
     }
+
     
     private void itemSearchFunction(String item_keyword) {
         itemContainer.setRowCount(0); // Clear existing rows
