@@ -6,7 +6,11 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.swing.table.DefaultTableModel;
 
 public class TextFile {
 
@@ -127,4 +131,66 @@ public class TextFile {
         return true;
     }
     
+    public static void populateTable(DefaultTableModel tableModel, String[] columnNames, String filePath, int rowHeight, javax.swing.JTable table) {
+        tableModel.setRowCount(0);
+        tableModel.setColumnIdentifiers(columnNames);
+        table.setRowHeight(rowHeight);
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            Set<String> uniqueRows = new HashSet<>();
+
+            br.readLine(); // Skip header
+            while ((line = br.readLine()) != null) {
+                if (line.trim().isEmpty() || !uniqueRows.add(line)) {
+                    continue;
+                }
+                String[] rowData = line.split("\\|");
+                tableModel.addRow(rowData);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file to populate JTable: " + filePath);
+        }
+    }
+
+    // Overloaded with mapping
+    public static void populateTable(DefaultTableModel model,
+                                             String[] columns,
+                                             String filePath,
+                                             int rowHeight,
+                                             JTable table,
+                                             Map<Integer, Map<String, String>> columnMappings) {
+
+        model.setRowCount(0);
+        model.setColumnIdentifiers(columns);
+        table.setRowHeight(rowHeight);
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            Set<String> uniqueRows = new HashSet<>();
+            br.readLine(); // Skip header
+
+            while ((line = br.readLine()) != null) {
+                if (line.trim().isEmpty() || !uniqueRows.add(line)) continue;
+
+                String[] rowData = line.split("\\|");
+
+                // Apply mappings to specific columns
+                if (columnMappings != null) {
+                    for (Map.Entry<Integer, Map<String, String>> entry : columnMappings.entrySet()) {
+                        int index = entry.getKey();
+                        Map<String, String> map = entry.getValue();
+
+                        if (index < rowData.length && map.containsKey(rowData[index])) {
+                            rowData[index] = map.get(rowData[index]);
+                        }
+                    }
+                }
+
+                model.addRow(rowData);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + filePath);
+        }
+    }
 }

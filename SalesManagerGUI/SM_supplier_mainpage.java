@@ -10,6 +10,7 @@ import com.mycompany.javaY2.Class.DataMapping;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -50,35 +51,11 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
     }
     
     private void populateSupplierTable(){
-        supplierContainer.setRowCount(0);
-        supplierContainer.setColumnIdentifiers(supplierTableColumnName);
-        supplier_table.setRowHeight(50);
-        
         DataMapping mapping = new DataMapping();
         Map<String,String> item_map = mapping.IdNameMapping(item_file_path);
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(supplier_file_path))) {
-            String supplier_line;
-            Set<String> uniqueSupplierRows = new HashSet<>();
-            
-            br.readLine(); 
-            while ((supplier_line = br.readLine()) != null) {
-                if (!uniqueSupplierRows.contains(supplier_line)){
-                    if (supplier_line.trim().isEmpty()){
-                        continue;                        
-                    } 
-
-                    String supplier_details[] = supplier_line.split("\\|");
-                    String item_id = supplier_details[4];
-                    String item_name = item_map.get(item_id);
-                    supplier_details[4] = item_name;
-                    supplierContainer.addRow(supplier_details);                   
-                }
-
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading supplier text file for supplier table.");
-        }        
+        Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
+        column_mappings.put(4, item_map); // supplier_id column
+        TextFile.populateTable(supplierContainer, supplierTableColumnName, supplier_file_path, 50, supplier_table, column_mappings);          
     }
     
     private void supplierSearchFunction(String supplier_keyword) {
