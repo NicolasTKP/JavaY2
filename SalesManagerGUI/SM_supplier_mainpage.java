@@ -1,0 +1,371 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package com.mycompany.JavaY2.SalesManagerGUI;
+
+import com.mycompany.JavaY2.Class.TextFile;
+import com.mycompany.JavaY2.Object.Supplier;
+import com.mycompany.javaY2.Class.DataMapping;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author User
+ */
+public class SM_supplier_mainpage extends javax.swing.JFrame {
+    private final String item_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/items";
+    private final String supplier_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/suppliers";
+    
+    private final DefaultTableModel supplierContainer = new DefaultTableModel();
+    private final String supplierTableColumnName[] = {"Supplier ID", "Supplier Name", "Address", "Contact", "Supply Items", "Payment Term"};
+    /**
+     * Creates new form SM_supplier_mainpage
+     */
+    public SM_supplier_mainpage() {
+        initComponents();
+        populateSupplierTable();
+        
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                supplierContainer.setRowCount(0);
+                populateSupplierTable();                                
+            }
+        });
+
+        supplier_search_bar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                supplierSearchFunction(supplier_search_bar.getText());
+            }
+        });
+        
+    }
+    
+    private void populateSupplierTable(){
+        supplierContainer.setRowCount(0);
+        supplierContainer.setColumnIdentifiers(supplierTableColumnName);
+        supplier_table.setRowHeight(50);
+        
+        DataMapping mapping = new DataMapping();
+        Map<String,String> item_map = mapping.IdNameMapping(item_file_path);
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(supplier_file_path))) {
+            String supplier_line;
+            Set<String> uniqueSupplierRows = new HashSet<>();
+            
+            br.readLine(); 
+            while ((supplier_line = br.readLine()) != null) {
+                if (!uniqueSupplierRows.contains(supplier_line)){
+                    if (supplier_line.trim().isEmpty()){
+                        continue;                        
+                    } 
+
+                    String supplier_details[] = supplier_line.split("\\|");
+                    String item_id = supplier_details[4];
+                    String item_name = item_map.get(item_id);
+                    supplier_details[4] = item_name;
+                    supplierContainer.addRow(supplier_details);                   
+                }
+
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading supplier text file for supplier table.");
+        }        
+    }
+    
+    private void supplierSearchFunction(String supplier_keyword) {
+        supplierContainer.setRowCount(0); // Clear existing rows
+        supplier_keyword = supplier_keyword.toLowerCase().trim();
+        
+        if (supplier_keyword.isEmpty()) {
+            populateSupplierTable(); // <- call your full data loader
+            return;
+        }
+            
+        DataMapping mapping = new DataMapping();
+        Map<String,String> item_map = mapping.IdNameMapping(item_file_path);
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(supplier_file_path))) {
+            String supplier_line;
+            Set<String> uniqueSupplierRows = new HashSet<>();
+            br.readLine(); // skip header
+
+            while ((supplier_line = br.readLine()) != null) {
+                if (!supplier_line.trim().isEmpty() && !uniqueSupplierRows.contains(supplier_line)) {
+                    String[] supplier_details = supplier_line.split("\\|");
+
+                    // Create an Item object from the line
+                    Supplier supplier = new Supplier(
+                        supplier_details[0], 
+                        supplier_details[1],
+                        supplier_details[2], 
+                        supplier_details[3], 
+                        supplier_details[4], 
+                        supplier_details[5]
+                    );
+
+                    if (supplier.anyMatch(supplier_keyword)) {
+                        // Replace supplier_id with supplier_name
+                        supplier_details[4] = item_map.get(supplier_details[4]);
+                        supplierContainer.addRow(supplier_details);
+                        uniqueSupplierRows.add(supplier_line);
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading item file during search: " + e.getMessage());
+        }
+    }    
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        delete_supplier_button = new javax.swing.JButton();
+        edit_supplier_button = new javax.swing.JButton();
+        add_supplier_button = new javax.swing.JButton();
+        homepage_button1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        supplier_table = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        supplier_search_bar = new javax.swing.JTextField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        delete_supplier_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        delete_supplier_button.setText("Delete Supplier");
+        delete_supplier_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delete_supplier_buttonActionPerformed(evt);
+            }
+        });
+
+        edit_supplier_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        edit_supplier_button.setText("Edit Supplier");
+        edit_supplier_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edit_supplier_buttonActionPerformed(evt);
+            }
+        });
+
+        add_supplier_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        add_supplier_button.setText("Add Supplier");
+        add_supplier_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                add_supplier_buttonActionPerformed(evt);
+            }
+        });
+
+        homepage_button1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        homepage_button1.setText("Homepage");
+        homepage_button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                homepage_button1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel1.setText("Supplier Table");
+
+        supplier_table.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        supplier_table.setModel(supplierContainer);
+        supplier_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                supplier_tableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(supplier_table);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel2.setText("Supplier Search Bar");
+
+        supplier_search_bar.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        supplier_search_bar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supplier_search_barActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(add_supplier_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(delete_supplier_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edit_supplier_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(supplier_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2))
+                    .addComponent(supplier_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(77, 77, 77)
+                        .addComponent(add_supplier_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(94, 94, 94)
+                        .addComponent(edit_supplier_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(94, 94, 94)
+                        .addComponent(delete_supplier_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
+                .addGap(58, 58, 58))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void delete_supplier_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_supplier_buttonActionPerformed
+        int selected_row = supplier_table.getSelectedRow();
+        
+        String selected_id = supplier_table.getValueAt(selected_row, 0).toString();
+        
+        if (selected_row != -1) {
+            int response = JOptionPane.showConfirmDialog(
+                null,
+                "Are you sure to delete this supplier?",
+                "Confirm To Delete?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (response == JOptionPane.YES_OPTION) {
+                TextFile.deleteTextfileLine(supplier_file_path, selected_id);
+                JOptionPane.showMessageDialog(null, "You have deleted the supplier. Supplier table is updated");
+            } else {
+                // Cancel editing
+            JOptionPane.showMessageDialog(null, "You have decided to not delete the supplier. Back to supplier mainpage now");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a supplier to delete.");
+        }
+    }//GEN-LAST:event_delete_supplier_buttonActionPerformed
+
+    private void edit_supplier_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_supplier_buttonActionPerformed
+        int selected_row = supplier_table.getSelectedRow();
+        
+        if (selected_row != -1) {
+            int response = JOptionPane.showConfirmDialog(
+                null,
+                "Are you sure to edit this supplier?",
+                "Confirm To Edit?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (response == JOptionPane.YES_OPTION) {
+                String supplier_id = supplier_table.getValueAt(selected_row,0).toString();
+                String supplier_name = supplier_table.getValueAt(selected_row,1).toString();
+                String address = supplier_table.getValueAt(selected_row,2).toString();
+                String contact_number = supplier_table.getValueAt(selected_row,3).toString();
+                String supply_item = supplier_table.getValueAt(selected_row,4).toString();
+                String payment_term = supplier_table.getValueAt(selected_row,5).toString();
+                
+                new SM_supplier_edit(supplier_id, supplier_name, address, contact_number, supply_item, payment_term).setVisible(true);
+            } else {
+                // Cancel editing
+            JOptionPane.showMessageDialog(null, "You have decided to not edit supplier details. Back to supplier mainpage now");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a supplier to edit.");
+        }
+    }//GEN-LAST:event_edit_supplier_buttonActionPerformed
+
+    private void add_supplier_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_supplier_buttonActionPerformed
+        new SM_supplier_add().setVisible(true);
+    }//GEN-LAST:event_add_supplier_buttonActionPerformed
+
+    private void homepage_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homepage_button1ActionPerformed
+        new SM_mainpage().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_homepage_button1ActionPerformed
+
+    private void supplier_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supplier_tableMouseClicked
+        System.out.println(supplier_table.getSelectedRow());
+    }//GEN-LAST:event_supplier_tableMouseClicked
+
+    private void supplier_search_barActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplier_search_barActionPerformed
+        String supplier_keyword = supplier_search_bar.getText();
+        supplierSearchFunction(supplier_keyword);
+    }//GEN-LAST:event_supplier_search_barActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(SM_supplier_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(SM_supplier_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(SM_supplier_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(SM_supplier_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new SM_supplier_mainpage().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton add_supplier_button;
+    private javax.swing.JButton delete_supplier_button;
+    private javax.swing.JButton edit_supplier_button;
+    private javax.swing.JButton homepage_button1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField supplier_search_bar;
+    private javax.swing.JTable supplier_table;
+    // End of variables declaration//GEN-END:variables
+}

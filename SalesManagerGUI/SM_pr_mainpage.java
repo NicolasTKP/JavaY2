@@ -1,0 +1,376 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package com.mycompany.JavaY2.SalesManagerGUI;
+
+import com.mycompany.JavaY2.Class.TextFile;
+import com.mycompany.JavaY2.Object.PurchaseRequisition;
+import com.mycompany.javaY2.Class.DataMapping;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author User
+ */
+public class SM_pr_mainpage extends javax.swing.JFrame {
+    private final String pr_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/purchase_requisitions";
+    private final String inventory_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/inventory";
+    
+    private final DefaultTableModel prContainer = new DefaultTableModel();
+    private final String prTableColumnName[] = {"Request ID", "Item Name", "Raised By", "Quantity", "Request Date", "Required Date", "Status"};
+
+    /**
+     * Creates new form SM_purchase_requisition_mainpage
+     */
+    public SM_pr_mainpage() {
+        initComponents();
+        populatePrTable();
+        
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                prContainer.setRowCount(0);
+                populatePrTable();                                
+            }
+        });
+        
+        pr_search_bar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                prSearchFunction(pr_search_bar.getText());
+            }
+        });   
+    }
+    
+    private void populatePrTable(){
+        prContainer.setRowCount(0);
+        prContainer.setColumnIdentifiers(prTableColumnName);
+        pr_table.setRowHeight(50);
+        
+        DataMapping mapping = new DataMapping();
+        Map<String,String> inventory_map = mapping.IdNameMapping(inventory_file_path);
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(pr_file_path))) {
+            String pr_line;
+            Set<String> uniquePrRows = new HashSet<>();
+            
+            br.readLine(); 
+            while ((pr_line = br.readLine()) != null) {
+                if (!uniquePrRows.contains(pr_line)){
+                    if (pr_line.trim().isEmpty()){
+                        continue;                        
+                    } 
+                    String pr_details[] = pr_line.split("\\|");
+                    String group_id = pr_details[1];
+                    String item_name = inventory_map.get(group_id);
+                    pr_details[1] = item_name;
+                    prContainer.addRow(pr_details);                   
+                }
+
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading inventory text file for inventory table.");
+        }        
+    }
+
+    private void prSearchFunction(String pr_keyword) {
+        prContainer.setRowCount(0); // Clear existing rows
+        pr_keyword = pr_keyword.toLowerCase().trim();
+        
+        if (pr_keyword.isEmpty()) {
+            populatePrTable(); // <- call your full data loader
+            return;
+        }
+            
+        DataMapping mapping = new DataMapping();
+        Map<String,String> inventory_map = mapping.IdNameMapping(inventory_file_path);
+
+        try (BufferedReader br = new BufferedReader(new FileReader(pr_file_path))) {
+            String pr_line;
+            Set<String> uniquePrRows = new HashSet<>();
+            br.readLine(); // skip header
+
+            while ((pr_line = br.readLine()) != null) {
+                if (!pr_line.trim().isEmpty() && !uniquePrRows.contains(pr_line)) {
+                    String[] pr_details = pr_line.split("\\|");
+                    
+                    // Create an Item object from the line
+                    PurchaseRequisition pr = new PurchaseRequisition(
+                            pr_details[0],
+                            inventory_map.get(pr_details[1]),
+                            pr_details[2],
+                            Integer.parseInt(pr_details[3]),
+                            pr_details[4],
+                            pr_details[5],
+                            pr_details[6]
+                    );
+
+                    if (pr.anyPrMatch(pr_keyword)) {
+                        
+                        pr_details[1] = inventory_map.get(pr_details[1]);
+                        prContainer.addRow(pr_details);
+                        uniquePrRows.add(pr_line);
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading PR file during search: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        homepage_button1 = new javax.swing.JButton();
+        add_pr_button = new javax.swing.JButton();
+        edit_pr_button = new javax.swing.JButton();
+        delete_pr_button = new javax.swing.JButton();
+        add_item_label1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        pr_table = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        pr_search_bar = new javax.swing.JTextField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        homepage_button1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        homepage_button1.setText("Homepage");
+        homepage_button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                homepage_button1ActionPerformed(evt);
+            }
+        });
+
+        add_pr_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        add_pr_button.setText("Add PR");
+        add_pr_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                add_pr_buttonActionPerformed(evt);
+            }
+        });
+
+        edit_pr_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        edit_pr_button.setText("Edit PR");
+        edit_pr_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edit_pr_buttonActionPerformed(evt);
+            }
+        });
+
+        delete_pr_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        delete_pr_button.setText("Delete PR");
+        delete_pr_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delete_pr_buttonActionPerformed(evt);
+            }
+        });
+
+        add_item_label1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        add_item_label1.setText("Purchase Requisition Table");
+
+        pr_table.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        pr_table.setModel(prContainer);
+        pr_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pr_tableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(pr_table);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel2.setText("PR Search Bar");
+
+        pr_search_bar.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        pr_search_bar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pr_search_barActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(add_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(delete_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edit_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(add_item_label1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pr_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(82, Short.MAX_VALUE)
+                        .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(77, 77, 77)
+                        .addComponent(add_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(84, 84, 84)
+                        .addComponent(edit_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(89, 89, 89)
+                        .addComponent(delete_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(add_item_label1)
+                                .addComponent(jLabel2))
+                            .addComponent(pr_search_bar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)))
+                .addGap(58, 58, 58))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void homepage_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homepage_button1ActionPerformed
+        new SM_mainpage().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_homepage_button1ActionPerformed
+
+    private void add_pr_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_pr_buttonActionPerformed
+        new SM_pr_add().setVisible(true);
+    }//GEN-LAST:event_add_pr_buttonActionPerformed
+
+    private void edit_pr_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_pr_buttonActionPerformed
+        int selected_row = pr_table.getSelectedRow();
+
+        if (selected_row != -1) {
+            int response = JOptionPane.showConfirmDialog(
+                null,
+                "Are you sure to edit this PR?",
+                "Confirm To Edit?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (response == JOptionPane.YES_OPTION) {
+                String request_id = pr_table.getValueAt(selected_row , 0).toString();
+                String item_name = pr_table.getValueAt(selected_row , 1).toString();
+                String sm_id = pr_table.getValueAt(selected_row , 2).toString();
+                String quantity = pr_table.getValueAt(selected_row , 3).toString();
+                String request_date = pr_table.getValueAt(selected_row , 4).toString();
+                String required_date = pr_table.getValueAt(selected_row , 5).toString();
+                String status = pr_table.getValueAt(selected_row , 6).toString();
+
+                new SM_pr_edit(request_id, item_name, sm_id, quantity, request_date, required_date, status).setVisible(true);
+            } else {
+                // Cancel editing
+                JOptionPane.showMessageDialog(null, "You have decided to not edit PR details. Back to PR mainpage now");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a PR to edit.");
+        }
+    }//GEN-LAST:event_edit_pr_buttonActionPerformed
+
+    private void delete_pr_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_pr_buttonActionPerformed
+        int selected_row = pr_table.getSelectedRow();
+
+        String selected_id = pr_table.getValueAt(selected_row, 0).toString();
+
+        if (selected_row != -1) {
+            int response = JOptionPane.showConfirmDialog(
+                null,
+                "Are you sure to delete this PR?",
+                "Confirm To Delete?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (response == JOptionPane.YES_OPTION) {
+                TextFile.deleteTextfileLine(pr_file_path, selected_id);
+                JOptionPane.showMessageDialog(null, "You have deleted the PR. PR table is updated");
+            } else {
+                // Cancel editing
+                JOptionPane.showMessageDialog(null, "You have decided to not delete the PR. Back to PR mainpage now");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a PR to delete.");
+        }
+    }//GEN-LAST:event_delete_pr_buttonActionPerformed
+
+    private void pr_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pr_tableMouseClicked
+        System.out.println(pr_table.getSelectedRow());
+    }//GEN-LAST:event_pr_tableMouseClicked
+
+    private void pr_search_barActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pr_search_barActionPerformed
+        String pr_keyword = pr_search_bar.getText();
+        prSearchFunction(pr_keyword);
+    }//GEN-LAST:event_pr_search_barActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(SM_pr_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(SM_pr_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(SM_pr_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(SM_pr_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new SM_pr_mainpage().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel add_item_label1;
+    private javax.swing.JButton add_pr_button;
+    private javax.swing.JButton delete_pr_button;
+    private javax.swing.JButton edit_pr_button;
+    private javax.swing.JButton homepage_button1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField pr_search_bar;
+    private javax.swing.JTable pr_table;
+    // End of variables declaration//GEN-END:variables
+}
