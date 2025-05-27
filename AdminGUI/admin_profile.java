@@ -7,6 +7,7 @@ package com.mycompany.JavaY2.AdminGUI;
 import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.Class.ValidateFormat;
 import com.mycompany.JavaY2.Object.SessionManager;
+import com.mycompany.JavaY2.SalesManagerGUI.SM_mainpage;
 
 import javax.swing.*;
 
@@ -164,8 +165,22 @@ public class admin_profile extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        admin_mainpage page = new admin_mainpage();
-        page.setVisible(true);
+        if(SessionManager.getInstance().role != null) {
+            switch (SessionManager.getInstance().role) {
+                case "sales manager":
+                    SM_mainpage sm_mainpage = new SM_mainpage();
+                    sm_mainpage.setVisible(true);
+                    break;
+                default:
+                    admin_mainpage admin_mainpage = new admin_mainpage();
+                    admin_mainpage.setVisible(true);
+                    break;
+            }
+        }else {
+            admin_mainpage admin_mainpage = new admin_mainpage();
+            admin_mainpage.setVisible(true);
+        }
+
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
