@@ -4,6 +4,8 @@
  */
 package com.mycompany.JavaY2.SalesManagerGUI;
 
+import com.mycompany.JavaY2.AdminGUI.admin_profile;
+
 /**
  *
  * @author User
@@ -115,7 +117,9 @@ public class SM_mainpage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void profile_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profile_buttonActionPerformed
-        // TODO add your handling code here:
+        admin_profile page = new admin_profile();
+        page.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_profile_buttonActionPerformed
 
     private void purchase_requisition_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_purchase_requisition_buttonActionPerformed

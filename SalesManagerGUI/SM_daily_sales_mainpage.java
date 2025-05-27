@@ -6,12 +6,14 @@ package com.mycompany.JavaY2.SalesManagerGUI;
 import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.DailySale;
 import com.mycompany.javaY2.Class.DataMapping;
+import com.mycompany.JavaY2.Object.SessionManager;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -222,7 +224,15 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
     }//GEN-LAST:event_homepage_button1ActionPerformed
 
     private void add_sales_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_sales_buttonActionPerformed
-        new SM_daily_sales_add().setVisible(true);
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }else{
+            new SM_daily_sales_add().setVisible(true);            
+        }        
+        
+
     }//GEN-LAST:event_add_sales_buttonActionPerformed
 
     private void edit_sales_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_sales_buttonActionPerformed

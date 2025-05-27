@@ -6,6 +6,7 @@ package com.mycompany.JavaY2.SalesManagerGUI;
 
 import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.PurchaseRequisition;
+import com.mycompany.JavaY2.Object.SessionManager;
 import com.mycompany.javaY2.Class.DataMapping;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -236,12 +237,25 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
     }//GEN-LAST:event_homepage_button1ActionPerformed
 
     private void add_pr_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_pr_buttonActionPerformed
-        new SM_pr_add().setVisible(true);
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }else{
+            new SM_pr_add().setVisible(true);            
+        }        
+
     }//GEN-LAST:event_add_pr_buttonActionPerformed
 
     private void edit_pr_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_pr_buttonActionPerformed
         int selected_row = pr_table.getSelectedRow();
-
+        
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         if (selected_row != -1) {
             int response = JOptionPane.showConfirmDialog(
                 null,
@@ -273,6 +287,12 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
     private void delete_pr_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_pr_buttonActionPerformed
         int selected_row = pr_table.getSelectedRow();
 
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         String selected_id = pr_table.getValueAt(selected_row, 0).toString();
 
         if (selected_row != -1) {
