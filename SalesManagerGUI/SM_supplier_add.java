@@ -7,7 +7,7 @@ package com.mycompany.JavaY2.SalesManagerGUI;
 import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Class.ValidateFormat;
 import com.mycompany.JavaY2.Object.Supplier;
-import com.mycompany.javaY2.Class.DataMapping;
+import com.mycompany.JavaY2.Class.DataMapping;
 import java.util.ArrayList;
 import java.util.List;
 import com.mycompany.JavaY2.Class.DataMapping;
@@ -216,7 +216,7 @@ public class SM_supplier_add extends javax.swing.JFrame {
         if (supplier_name.isEmpty() || contact_number.isEmpty() || address.isEmpty() || payment_term.isEmpty() ){
             JOptionPane.showMessageDialog(this, "Please enter all the required fields.");
             
-        }else if(Supplier.validateContact(contact_number)){
+        }else if(ValidateFormat.contact(contact_number)){
             JOptionPane.showMessageDialog(this, "Invalid contact number format.");    
             
         }else{        
