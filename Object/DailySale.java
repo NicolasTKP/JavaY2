@@ -1,7 +1,6 @@
 package com.mycompany.JavaY2.Object;
 
 import com.mycompany.JavaY2.Class.TextFile;
-import com.mycompany.javaY2.Class.DataMapping;
 import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.FileReader;

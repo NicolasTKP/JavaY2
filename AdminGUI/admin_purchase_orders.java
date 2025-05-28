@@ -266,8 +266,8 @@ public class admin_purchase_orders extends JFrame {
             if(result != JOptionPane.YES_OPTION){
                 return;
             }
-            Edit.purchaseOrders(order_id.toString(),9,"Approved");
-            Edit.purchaseOrders(order_id.toString(),8,Query.getCurrectDate());
+            Edit.editingColumn("PO",order_id.toString(),9,"Approved");
+            Edit.editingColumn("PO",order_id.toString(),8,Query.getCurrectDate());
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setValueAt("Approved",selectedRow,9);
             ls[0] = order_id.toString();
@@ -305,7 +305,7 @@ public class admin_purchase_orders extends JFrame {
             if(result != JOptionPane.YES_OPTION){
                 return;
             }
-            Edit.purchaseOrders(order_id.toString(),9,"Rejected");
+            Edit.editingColumn("PO",order_id.toString(),9,"Rejected");
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setValueAt("Rejected",selectedRow,9);
             JOptionPane.showMessageDialog(null, "Successfully Rejected The Purchase Order", "Successful", JOptionPane.INFORMATION_MESSAGE);
@@ -478,8 +478,8 @@ public class admin_purchase_orders extends JFrame {
 
         if(result == JOptionPane.YES_OPTION){
             TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders", String.join("|",purchase_order));
-            Edit.item(purchase_order[2], 2, unit_price);
-            Edit.purchaseRequisitions(purchase_order[1], 6,"Approved");
+            Edit.editingColumn("item",purchase_order[2], 2, unit_price);
+            Edit.editingColumn("PR",purchase_order[1], 6,"Approved");
             JOptionPane.showMessageDialog(null, "Purchase Order Place Successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forPO(jTable1);
         }
@@ -496,8 +496,8 @@ public class admin_purchase_orders extends JFrame {
         int selected_row = jTable1.getSelectedRow();
         if (selected_row == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to edit", "Warning", JOptionPane.WARNING_MESSAGE);
-        }else if(jTable1.getValueAt(selected_row,9).equals("Approved")){
-            JOptionPane.showMessageDialog(null, "Cannot edit a PO that already been approved", "Warning", JOptionPane.WARNING_MESSAGE);
+        }else if(!jTable1.getValueAt(selected_row,9).equals("Pending")){
+            JOptionPane.showMessageDialog(null, "Cannot edit a PO that already been approved/rejected", "Warning", JOptionPane.WARNING_MESSAGE);
         }
         else{
             Object orderID = jTable1.getValueAt(selected_row,0);
@@ -537,11 +537,11 @@ public class admin_purchase_orders extends JFrame {
 
                                 String amount = Double.toString(Double.parseDouble(unitPrice) * Double.parseDouble(jTable1.getValueAt(selected_row,4).toString()));
                                 String supplier = Search.getFromItems(itemID, 6);
-                                Edit.purchaseOrders(order_ID,2, itemID);
-                                Edit.purchaseOrders(order_ID,5, unitPrice);
-                                Edit.purchaseOrders(order_ID,6,amount);
-                                Edit.purchaseOrders(order_ID,7,supplier);
-                                Edit.item(itemID,2, unitPrice);
+                                Edit.editingColumn("PO",order_ID,2, itemID);
+                                Edit.editingColumn("PO",order_ID,5, unitPrice);
+                                Edit.editingColumn("PO",order_ID,6,amount);
+                                Edit.editingColumn("PO",order_ID,7,supplier);
+                                Edit.editingColumn("item",itemID,2, unitPrice);
                                 JOptionPane.showMessageDialog(null, "Successfully update the item", "Successful", JOptionPane.INFORMATION_MESSAGE);
                                 UpdateTable.forPO(jTable1);
                             }
@@ -563,7 +563,7 @@ public class admin_purchase_orders extends JFrame {
 
                             if(result == JOptionPane.YES_OPTION) {
                                 String userID = Search.getUserID(username);
-                                Edit.purchaseOrders(order_ID, 3, userID);
+                                Edit.editingColumn("PO",order_ID, 3, userID);
                                 JOptionPane.showMessageDialog(null, "Successfully update the username", "Successful", JOptionPane.INFORMATION_MESSAGE);
                                 UpdateTable.forPO(jTable1);
                             }
@@ -587,8 +587,8 @@ public class admin_purchase_orders extends JFrame {
 
                             if(result == JOptionPane.YES_OPTION) {
                                 String amount = Double.toString(Double.parseDouble(quantity) * Double.parseDouble(jTable1.getValueAt(selected_row,5).toString()));
-                                Edit.purchaseOrders(order_ID,4, quantity);
-                                Edit.purchaseOrders(order_ID,6,amount);
+                                Edit.editingColumn("PO",order_ID,4, quantity);
+                                Edit.editingColumn("PO",order_ID,6,amount);
                                 UpdateTable.forPO(jTable1);
                             }
                             break;
@@ -610,10 +610,10 @@ public class admin_purchase_orders extends JFrame {
 
                             if(result == JOptionPane.YES_OPTION) {
                                 String amount = Double.toString(Double.parseDouble(unitPrice) * Double.parseDouble(jTable1.getValueAt(selected_row,4).toString()));
-                                Edit.purchaseOrders(order_ID,5, unitPrice);
-                                Edit.purchaseOrders(order_ID,6,amount);
+                                Edit.editingColumn("PO",order_ID,5, unitPrice);
+                                Edit.editingColumn("PO",order_ID,6,amount);
                                 String item_id = Search.getFromPO(order_ID,2);
-                                Edit.item(item_id, 2, unitPrice);
+                                Edit.editingColumn("item",item_id, 2, unitPrice);
                                 UpdateTable.forPO(jTable1);
                             }
                             break;
@@ -633,7 +633,7 @@ public class admin_purchase_orders extends JFrame {
                             int result = JOptionPane.showConfirmDialog(null, "Do you want change date to: " + date, "Confirmation", JOptionPane.YES_NO_OPTION);
 
                             if(result == JOptionPane.YES_OPTION) {
-                                Edit.purchaseOrders(order_ID,8,date);
+                                Edit.editingColumn("PO",order_ID,8,date);
                                 UpdateTable.forPO(jTable1);
                             }
                             break;
