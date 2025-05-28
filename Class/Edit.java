@@ -50,7 +50,6 @@ public class Edit {
         String[] items_id = item_line.split(",");
         List<String> items = new ArrayList<>();
         for(String item:items_id){
-            System.out.println(item);
             if(!item.equals(itemID)){
                 items.add(item);
             }

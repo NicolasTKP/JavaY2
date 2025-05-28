@@ -13,8 +13,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -267,7 +265,7 @@ public class admin_purchase_orders extends JFrame {
                 return;
             }
             Edit.editingColumn("PO",order_id.toString(),9,"Approved");
-            Edit.editingColumn("PO",order_id.toString(),8,Query.getCurrectDate());
+            Edit.editingColumn("PO",order_id.toString(),8,Query.getCurrentDate());
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setValueAt("Approved",selectedRow,9);
             ls[0] = order_id.toString();
