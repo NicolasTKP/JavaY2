@@ -6,7 +6,11 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.swing.table.DefaultTableModel;
 
 public class TextFile {
 
@@ -96,6 +100,7 @@ public class TextFile {
             return false;
         }
     }
+    
     public static boolean deleteTextfileLine(String file_path, String selected_id){
         List<String> updated_lines = new ArrayList<>();
 
@@ -126,5 +131,111 @@ public class TextFile {
         }
         return true;
     }
-    
+
+    public static boolean adjustInventoryQuantity(Component parent_component, String file_path, String group_id, int quantity_difference) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file_path));
+            StringBuilder updated_file = new StringBuilder();
+            String line;
+            boolean found = false;
+
+            while ((line = br.readLine()) != null) {
+                String[] columns = line.split("\\|");
+
+                if (columns.length >= 3 && columns[0].trim().equals(group_id.trim())) {
+                    int current_quantity = Integer.parseInt(columns[2].trim());
+                    int new_quantity = current_quantity + quantity_difference;
+
+                    // Update the quantity in the correct column
+                    columns[2] = String.valueOf(new_quantity);
+
+                    // Reconstruct the line and mark as found
+                    String updated_line = String.join("|", columns);
+                    updated_file.append(updated_line).append("\n");
+                    found = true;
+                } else {
+                    updated_file.append(line).append("\n");
+                }
+            }
+            br.close();
+
+            if (!found) {
+                JOptionPane.showMessageDialog(parent_component, "Group ID not found in inventory.");
+                return false;
+            }
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file_path, false));
+            bw.write(updated_file.toString());
+            bw.close();
+
+            return true;
+        } catch (IOException | NumberFormatException e) {
+            JOptionPane.showMessageDialog(parent_component, "Error updating inventory: " + e.getMessage());
+            return false;
+        }
+    }
+
+
+    public static void populateTable(DefaultTableModel tableModel, String[] columnNames, String filePath, int rowHeight, javax.swing.JTable table) {
+        tableModel.setRowCount(0);
+        tableModel.setColumnIdentifiers(columnNames);
+        table.setRowHeight(rowHeight);
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            Set<String> uniqueRows = new HashSet<>();
+
+            br.readLine(); // Skip header
+            while ((line = br.readLine()) != null) {
+                if (line.trim().isEmpty() || !uniqueRows.add(line)) {
+                    continue;
+                }
+                String[] rowData = line.split("\\|");
+                tableModel.addRow(rowData);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file to populate JTable: " + filePath);
+        }
+    }
+
+    // Overloaded with mapping
+    public static void populateTable(DefaultTableModel model,
+                                             String[] columns,
+                                             String filePath,
+                                             int rowHeight,
+                                             JTable table,
+                                             Map<Integer, Map<String, String>> columnMappings) {
+
+        model.setRowCount(0);
+        model.setColumnIdentifiers(columns);
+        table.setRowHeight(rowHeight);
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            Set<String> uniqueRows = new HashSet<>();
+            br.readLine(); // Skip header
+
+            while ((line = br.readLine()) != null) {
+                if (line.trim().isEmpty() || !uniqueRows.add(line)) continue;
+
+                String[] rowData = line.split("\\|");
+
+                // Apply mappings to specific columns
+                if (columnMappings != null) {
+                    for (Map.Entry<Integer, Map<String, String>> entry : columnMappings.entrySet()) {
+                        int index = entry.getKey();
+                        Map<String, String> map = entry.getValue();
+
+                        if (index < rowData.length && map.containsKey(rowData[index])) {
+                            rowData[index] = map.get(rowData[index]);
+                        }
+                    }
+                }
+
+                model.addRow(rowData);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + filePath);
+        }
+    }
 }

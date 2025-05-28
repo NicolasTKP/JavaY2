@@ -21,10 +21,10 @@ public class DailySale {
 
     public DailySale(){
     }
-    public DailySale(String daily_sales_id, String group_id, int quantity, double retail_price, String date){
+    public DailySale(String daily_sales_id, int quantity, String group_id, double retail_price, String date){
         this.daily_sales_id = daily_sales_id;
-        this.group_id = group_id;
         this.quantity = quantity;
+        this.group_id = group_id;
         this.retail_price = retail_price;
         this.date = date;
     }

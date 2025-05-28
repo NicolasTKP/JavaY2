@@ -4,13 +4,18 @@
  */
 package com.mycompany.JavaY2.SalesManagerGUI;
 
+
 import com.mycompany.JavaY2.Class.TextFile;
+import com.mycompany.JavaY2.Object.Inventory;
+import com.mycompany.JavaY2.Object.Item;
+import com.mycompany.JavaY2.Object.SessionManager;
 import com.mycompany.javaY2.Class.DataMapping;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -34,7 +39,7 @@ public class SM_item_mainpage extends javax.swing.JFrame {
         initComponents();
         populateItemTable();
         populateInventoryTable();
-        
+      
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -42,66 +47,120 @@ public class SM_item_mainpage extends javax.swing.JFrame {
                 populateItemTable();
                 
                 inventoryContainer.setRowCount(0);
-                populateInventoryTable();                                     
+                populateInventoryTable();             
             }
-        });                
+        });
+        
+        item_search_bar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                itemSearchFunction(item_search_bar.getText());
+            }
+        });
+        
+        inventory_search_bar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                inventorySearchFunction(inventory_search_bar.getText());
+            }
+        });
     }
     
     private void populateItemTable(){
-        itemContainer.setRowCount(0);
-        itemContainer.setColumnIdentifiers(itemTableColumnName);
-        item_table.setRowHeight(50);
+        DataMapping mapping = new DataMapping();
+        Map<String, String> supplier_map = mapping.IdNameMapping(supplier_file_path);
+        Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
+        column_mappings.put(6, supplier_map); // supplier_id column
+        TextFile.populateTable(itemContainer, itemTableColumnName, item_file_path, 50, item_table, column_mappings);         
+    }
+ 
+    private void populateInventoryTable(){
+        TextFile.populateTable(inventoryContainer, inventoryTableColumnName, inventory_file_path, 50, inventory_table);         
+    }
+
+    
+    private void itemSearchFunction(String item_keyword) {
+        itemContainer.setRowCount(0); // Clear existing rows
+        item_keyword = item_keyword.toLowerCase().trim();
         
+        if (item_keyword.isEmpty()) {
+            populateItemTable(); // <- call your full data loader
+            return;
+        }
+            
         DataMapping mapping = new DataMapping();
         Map<String,String> supplier_map = mapping.IdNameMapping(supplier_file_path);
-        
+
         try (BufferedReader br = new BufferedReader(new FileReader(item_file_path))) {
             String item_line;
             Set<String> uniqueItemRows = new HashSet<>();
-            
-            br.readLine(); 
-            while ((item_line = br.readLine()) != null) {
-                if (!uniqueItemRows.contains(item_line)){
-                    if (item_line.trim().isEmpty()){
-                        continue;                        
-                    } 
-                    String item_details[] = item_line.split("\\|");
-                    String supplier_id = item_details[6];
-                    String supplier_name = supplier_map.get(supplier_id);
-                    item_details[6] = supplier_name;
-                    itemContainer.addRow(item_details);                   
-                }
+            br.readLine(); // skip header
 
+            while ((item_line = br.readLine()) != null) {
+                if (!item_line.trim().isEmpty() && !uniqueItemRows.contains(item_line)) {
+                    String[] item_details = item_line.split("\\|");
+
+                    // Create an Item object from the line
+                    Item item = new Item(
+                        item_details[0], // item_id
+                        item_details[1], // item_name
+                        Double.parseDouble(item_details[2]), // stock_price
+                        Integer.parseInt(item_details[3]), // sales_per_day
+                        Integer.parseInt(item_details[4]), // ordering_lead_time
+                        Integer.parseInt(item_details[5]), // safety_level
+                        supplier_map.get(item_details[6]), // supplier_id
+                        item_details[7]  // group_id
+                    );
+
+                    if (item.anyMatch(item_keyword)) {
+                        // Replace supplier_id with supplier_name
+                        item_details[6] = supplier_map.get(item_details[6]);
+                        itemContainer.addRow(item_details);
+                        uniqueItemRows.add(item_line);
+                    }
+                }
             }
+
         } catch (IOException e) {
-            System.out.println("Error reading item text file for item table.");
-        }        
+            System.out.println("Error reading item file during search: " + e.getMessage());
+        }
     }
-    
-    private void populateInventoryTable(){
-        inventoryContainer.setRowCount(0);
-        inventoryContainer.setColumnIdentifiers(inventoryTableColumnName);
-        inventory_table.setRowHeight(50);
+
+    private void inventorySearchFunction(String inventory_keyword) {
+        inventoryContainer.setRowCount(0); // Clear existing rows
+        inventory_keyword = inventory_keyword.toLowerCase().trim();
         
+        if (inventory_keyword.isEmpty()) {
+            populateInventoryTable(); // <- call your full data loader
+            return;
+        }
+            
         try (BufferedReader br = new BufferedReader(new FileReader(inventory_file_path))) {
             String inventory_line;
             Set<String> uniqueInventoryRows = new HashSet<>();
-            
-            br.readLine(); 
-            while ((inventory_line = br.readLine()) != null) {
-                if (!uniqueInventoryRows.contains(inventory_line)){
-                    if (inventory_line.trim().isEmpty()){
-                        continue;                        
-                    } 
-                    String inventory_details[] = inventory_line.split("\\|");
-                    inventoryContainer.addRow(inventory_details);                   
-                }
+            br.readLine(); // skip header
 
+            while ((inventory_line = br.readLine()) != null) {
+                if (!inventory_line.trim().isEmpty() && !uniqueInventoryRows.contains(inventory_line)) {
+                    String[] inventory_details = inventory_line.split("\\|");
+
+                    // Create an Item object from the line
+                    Inventory inventory = new Inventory(
+                            inventory_details[0],
+                            inventory_details[1],
+                            Integer.parseInt(inventory_details[2]),
+                            Double.parseDouble(inventory_details[3])
+                    );
+
+                    if (inventory.anyMatch(inventory_keyword)) {
+                        inventoryContainer.addRow(inventory_details);
+                        uniqueInventoryRows.add(inventory_line);
+                    }
+                }
             }
+
         } catch (IOException e) {
-            System.out.println("Error reading inventory text file for inventory table.");
+            System.out.println("Error reading item file during search: " + e.getMessage());
         }
-    }
+    }    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -111,6 +170,7 @@ public class SM_item_mainpage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         add_item_button = new javax.swing.JButton();
         homepage_button1 = new javax.swing.JButton();
         edit_item_button = new javax.swing.JButton();
@@ -121,9 +181,14 @@ public class SM_item_mainpage extends javax.swing.JFrame {
         inventory_table = new javax.swing.JTable();
         add_item_label = new javax.swing.JLabel();
         add_item_label1 = new javax.swing.JLabel();
+        item_search_bar = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        inventory_search_bar = new javax.swing.JTextField();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1500, 750));
 
         add_item_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         add_item_button.setText("Add Item");
@@ -181,6 +246,26 @@ public class SM_item_mainpage extends javax.swing.JFrame {
         add_item_label1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         add_item_label1.setText("Item Table");
 
+        item_search_bar.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        item_search_bar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_search_barActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel1.setText("Item Search Bar");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel2.setText("Inventory Search Bar");
+
+        inventory_search_bar.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        inventory_search_bar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inventory_search_barActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -193,18 +278,36 @@ public class SM_item_mainpage extends javax.swing.JFrame {
                     .addComponent(delete_item_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edit_item_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(add_item_label1)
-                    .addComponent(add_item_label)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(add_item_label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(inventory_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(add_item_label1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(item_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1120, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
-                .addComponent(add_item_label1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(36, Short.MAX_VALUE)
+                        .addComponent(add_item_label1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(item_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -213,7 +316,11 @@ public class SM_item_mainpage extends javax.swing.JFrame {
                         .addComponent(add_item_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(add_item_label)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(add_item_label)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(inventory_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -221,14 +328,22 @@ public class SM_item_mainpage extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(delete_item_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addGap(48, 48, 48))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void add_item_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_item_buttonActionPerformed
-       new SM_item_add().setVisible(true);
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }else{
+            new SM_item_add().setVisible(true);           
+        }       
+        
+
     }//GEN-LAST:event_add_item_buttonActionPerformed
 
     private void homepage_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homepage_button1ActionPerformed
@@ -238,6 +353,12 @@ public class SM_item_mainpage extends javax.swing.JFrame {
 
     private void edit_item_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_item_buttonActionPerformed
         int selected_row = item_table.getSelectedRow();
+        
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
         if (selected_row != -1) {
             int response = JOptionPane.showConfirmDialog(
@@ -271,6 +392,12 @@ public class SM_item_mainpage extends javax.swing.JFrame {
     private void delete_item_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_item_buttonActionPerformed
         int selected_row = item_table.getSelectedRow();
         
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         String selected_id = item_table.getValueAt(selected_row, 0).toString();
         
         if (selected_row != -1) {
@@ -301,6 +428,16 @@ public class SM_item_mainpage extends javax.swing.JFrame {
     private void inventory_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventory_tableMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_inventory_tableMouseClicked
+
+    private void item_search_barActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_search_barActionPerformed
+        String item_keyword = item_search_bar.getText();
+        itemSearchFunction(item_keyword);
+    }//GEN-LAST:event_item_search_barActionPerformed
+
+    private void inventory_search_barActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventory_search_barActionPerformed
+        String inventory_keyword = inventory_search_bar.getText();
+        inventorySearchFunction(inventory_keyword);
+    }//GEN-LAST:event_inventory_search_barActionPerformed
 
     /**
      * @param args the command line arguments
@@ -347,8 +484,13 @@ public class SM_item_mainpage extends javax.swing.JFrame {
     private javax.swing.JButton delete_item_button;
     private javax.swing.JButton edit_item_button;
     private javax.swing.JButton homepage_button1;
+    private javax.swing.JTextField inventory_search_bar;
     private javax.swing.JTable inventory_table;
+    private javax.swing.JTextField item_search_bar;
     private javax.swing.JTable item_table;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables

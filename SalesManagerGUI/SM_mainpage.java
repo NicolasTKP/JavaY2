@@ -4,6 +4,9 @@
  */
 package com.mycompany.JavaY2.SalesManagerGUI;
 
+import com.mycompany.JavaY2.AdminGUI.admin_profile;
+import com.mycompany.JavaY2.Object.SessionManager;
+
 /**
  *
  * @author User
@@ -31,6 +34,7 @@ public class SM_mainpage extends javax.swing.JFrame {
         daily_sales_button = new javax.swing.JButton();
         item_management_button3 = new javax.swing.JButton();
         supplier_management_button = new javax.swing.JButton();
+        log_out_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,6 +80,14 @@ public class SM_mainpage extends javax.swing.JFrame {
             }
         });
 
+        log_out_button.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        log_out_button.setText("Log Out");
+        log_out_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                log_out_buttonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -93,7 +105,9 @@ public class SM_mainpage extends javax.swing.JFrame {
                     .addComponent(supplier_management_button, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                     .addComponent(profile_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(163, 163, 163)
-                .addComponent(purchase_requisition_button, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(purchase_requisition_button, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                    .addComponent(log_out_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(105, 105, 105))
         );
         layout.setVerticalGroup(
@@ -105,9 +119,11 @@ public class SM_mainpage extends javax.swing.JFrame {
                     .addComponent(supplier_management_button, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(purchase_requisition_button, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(115, 115, 115)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(daily_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(profile_button, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(log_out_button, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(daily_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(profile_button, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(164, Short.MAX_VALUE))
         );
 
@@ -115,11 +131,14 @@ public class SM_mainpage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void profile_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profile_buttonActionPerformed
-        // TODO add your handling code here:
+        admin_profile page = new admin_profile();
+        page.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_profile_buttonActionPerformed
 
     private void purchase_requisition_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_purchase_requisition_buttonActionPerformed
-        // TODO add your handling code here:
+        new SM_pr_mainpage().setVisible(true);
+        this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_purchase_requisition_buttonActionPerformed
 
     private void daily_sales_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daily_sales_buttonActionPerformed
@@ -136,6 +155,13 @@ public class SM_mainpage extends javax.swing.JFrame {
         new SM_supplier_mainpage().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_supplier_management_buttonActionPerformed
+
+    private void log_out_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_log_out_buttonActionPerformed
+        com.mycompany.JavaY2.login page = new com.mycompany.JavaY2.login();
+        page.setVisible(true);
+        SessionManager.clearCache();
+        this.dispose();
+    }//GEN-LAST:event_log_out_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,6 +208,7 @@ public class SM_mainpage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton daily_sales_button;
     private javax.swing.JButton item_management_button3;
+    private javax.swing.JButton log_out_button;
     private javax.swing.JButton profile_button;
     private javax.swing.JButton purchase_requisition_button;
     private javax.swing.JButton supplier_management_button;

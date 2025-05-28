@@ -7,6 +7,7 @@ package com.mycompany.JavaY2;
 import com.mycompany.JavaY2.AdminGUI.admin_mainpage;
 import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.Object.SessionManager;
+import com.mycompany.JavaY2.SalesManagerGUI.SM_mainpage;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -171,6 +172,14 @@ public class login extends javax.swing.JFrame {
                         SessionManager.getInstance().password = pass;
                         SessionManager.getInstance().role = role;
                         admin_mainpage frame = new admin_mainpage();
+                        frame.setVisible(true);
+                        this.dispose();
+                    }else if(role.equals("sales manager")){
+                        SessionManager.getInstance().userID = line.split("\\|")[0];
+                        SessionManager.getInstance().username = user;
+                        SessionManager.getInstance().password = pass;
+                        SessionManager.getInstance().role = role;
+                        SM_mainpage frame = new SM_mainpage();
                         frame.setVisible(true);
                         this.dispose();
                     }
