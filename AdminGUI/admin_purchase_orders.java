@@ -257,6 +257,15 @@ public class admin_purchase_orders extends JFrame {
         }else{
             String[] ls = new String[9];
             Object order_id = jTable1.getValueAt(selectedRow,0);
+            String status = jTable1.getValueAt(selectedRow,9).toString();
+            if (!Objects.equals(status, "Pending")){
+                JOptionPane.showMessageDialog(null, "Cannot approve a PO that already approved/rejected", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to approve: "+order_id.toString(), "Confirmation",JOptionPane.YES_NO_OPTION);
+            if(result != JOptionPane.YES_OPTION){
+                return;
+            }
             Edit.purchaseOrders(order_id.toString(),9,"Approved");
             Edit.purchaseOrders(order_id.toString(),8,Query.getCurrectDate());
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -287,6 +296,15 @@ public class admin_purchase_orders extends JFrame {
             JOptionPane.showMessageDialog(null, "Please select a row to reject", "Warning", JOptionPane.WARNING_MESSAGE);
         }else{
             Object order_id = jTable1.getValueAt(selectedRow,0);
+            String status = jTable1.getValueAt(selectedRow,9).toString();
+            if (!Objects.equals(status, "Pending")){
+                JOptionPane.showMessageDialog(null, "Cannot reject a PO that already approved/rejected", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to reject: "+order_id.toString(), "Confirmation",JOptionPane.YES_NO_OPTION);
+            if(result != JOptionPane.YES_OPTION){
+                return;
+            }
             Edit.purchaseOrders(order_id.toString(),9,"Rejected");
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setValueAt("Rejected",selectedRow,9);
