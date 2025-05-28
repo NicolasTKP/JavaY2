@@ -16,7 +16,7 @@ public class PurchaseOrder extends Request {
     public String order_status;
     public String supplier_name;
 
-    PurchaseOrder(){
+    public PurchaseOrder(){
     }
     PurchaseOrder(String order_id, String request_id, String item_id, String user_id, String username, int quantity, double unit_price, double amount, String supplier_id, LocalDate order_date, String order_status, String item_name, String supplier_name){
         this.order_id = order_id;

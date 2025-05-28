@@ -23,7 +23,11 @@ public class UpdateTable {
             matrix[i][5] = Double.toString(order.unit_price);
             matrix[i][6] = Double.toString(order.amount);
             matrix[i][7] = order.supplier_name;
-            matrix[i][8] = order.order_date.toString();
+            if (order.order_date != null){
+                matrix[i][8] = order.order_date.toString();
+            }else{
+                matrix[i][8] = "-";
+            }
             matrix[i][9] = order.order_status;
         }
         jTable.setModel(new DefaultTableModel(

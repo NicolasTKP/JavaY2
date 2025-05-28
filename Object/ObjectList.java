@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -35,7 +36,12 @@ public class ObjectList {
                 order.unit_price = Double.parseDouble(lines[5]);
                 order.amount = Double.parseDouble(lines[6]);
                 order.supplier_id = lines[7];
-                order.order_date = LocalDate.parse(lines[8], formatter);
+                try{
+                    order.order_date = LocalDate.parse(lines[8], formatter);
+                }catch (DateTimeParseException e){
+                    order.order_date = null;
+                }
+
                 order.order_status = lines[9];
                 order.item_name = Search.getItemNamebyItemID(lines[2]);
                 order.supplier_name = Search.getSupplierName(lines[7]);
@@ -204,7 +210,7 @@ public class ObjectList {
                     }
                 }
                 unit_prices = total_value/Double.parseDouble(Integer.toString(inventory_value.quantity));
-                inventory_value.average_unit_price = unit_prices;
+                inventory_value.average_unit_price = Math.round(unit_prices*100.0)/100.0;
                 inventory_value.actual_value = total_value;
                 ls.add(inventory_value);
             }

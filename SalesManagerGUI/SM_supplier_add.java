@@ -10,6 +10,7 @@ import com.mycompany.JavaY2.Object.Supplier;
 import com.mycompany.javaY2.Class.DataMapping;
 import java.util.ArrayList;
 import java.util.List;
+import com.mycompany.JavaY2.Class.DataMapping;
 import java.util.Map;
 import javax.swing.JOptionPane;
 
