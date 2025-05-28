@@ -73,7 +73,11 @@ public class admin_purchase_orders extends JFrame {
             matrix[i][5] = Double.toString(order.unit_price);
             matrix[i][6] = Double.toString(order.amount);
             matrix[i][7] = order.supplier_name;
-            matrix[i][8] = order.order_date.toString();
+            if (order.order_date != null){
+                matrix[i][8] = order.order_date.toString();
+            }else{
+                matrix[i][8] = "-";
+            }
             matrix[i][9] = order.order_status;
         }
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -268,6 +272,7 @@ public class admin_purchase_orders extends JFrame {
             ls[8] = "-";
             TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/receives",String.join("|",ls));
             JOptionPane.showMessageDialog(null, "Successfully Approved The Purchase Order", "Successful", JOptionPane.INFORMATION_MESSAGE);
+            UpdateTable.forPO(jTable1);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -309,7 +314,11 @@ public class admin_purchase_orders extends JFrame {
                     matrix[i][5] = Double.toString(order.unit_price);
                     matrix[i][6] = Double.toString(order.amount);
                     matrix[i][7] = order.supplier_name;
-                    matrix[i][8] = order.order_date.toString();
+                    if (order.order_date != null){
+                        matrix[i][8] = order.order_date.toString();
+                    }else{
+                        matrix[i][8] = "-";
+                    }
                     matrix[i][9] = order.order_status;
                 }
             }
