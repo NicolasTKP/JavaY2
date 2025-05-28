@@ -69,11 +69,11 @@ public class SM_item_mainpage extends javax.swing.JFrame {
         Map<String, String> supplier_map = mapping.IdNameMapping(supplier_file_path);
         Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
         column_mappings.put(6, supplier_map); // supplier_id column
-        TextFile.populateTable(itemContainer, itemTableColumnName, item_file_path, 50, item_table, column_mappings);         
+        TextFile.populateTable(itemContainer, item_table, itemTableColumnName, item_file_path, 50,column_mappings);         
     }
  
     private void populateInventoryTable(){
-        TextFile.populateTable(inventoryContainer, inventoryTableColumnName, inventory_file_path, 50, inventory_table);         
+        TextFile.populateTable(inventoryContainer, inventory_table, inventoryTableColumnName, inventory_file_path, 50);         
     }
 
     

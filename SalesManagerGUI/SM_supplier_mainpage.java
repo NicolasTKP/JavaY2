@@ -56,7 +56,7 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
         Map<String,String> item_map = mapping.IdNameMapping(item_file_path);
         Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
         column_mappings.put(4, item_map); // supplier_id column
-        TextFile.populateTable(supplierContainer, supplierTableColumnName, supplier_file_path, 50, supplier_table, column_mappings);          
+        TextFile.populateTable(supplierContainer, supplier_table, supplierTableColumnName, supplier_file_path, 50, column_mappings);          
     }
     
     private void supplierSearchFunction(String supplier_keyword) {
