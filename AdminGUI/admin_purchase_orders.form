@@ -30,6 +30,8 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
+                          <Component id="jButton8" min="-2" pref="178" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jButton2" min="-2" pref="178" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jButton1" min="-2" pref="178" max="-2" attributes="0"/>
@@ -101,6 +103,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButton1" alignment="3" pref="42" max="32767" attributes="0"/>
                   <Component id="jButton2" alignment="3" pref="42" max="32767" attributes="0"/>
+                  <Component id="jButton8" alignment="3" pref="42" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -128,7 +131,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);&#xa;ObjectList objectList = new ObjectList();&#xa;List&lt;PurchaseOrder&gt; orders = objectList.getPurchaseOrders();&#xa;String[][] matrix = new String[orders.size()][10];&#xa;PurchaseOrder order;&#xa;for (int i = 0;i&lt;orders.size();i++){&#xa;    order = orders.get(i);&#xa;    matrix[i][0] = order.order_id;&#xa;    matrix[i][1] = order.request_id;&#xa;    matrix[i][2] = order.item_name;&#xa;    matrix[i][3] = order.username;&#xa;    matrix[i][4] = Integer.toString(order.quantity);&#xa;    matrix[i][5] = Double.toString(order.unit_price);&#xa;    matrix[i][6] = Double.toString(order.amount);&#xa;    matrix[i][7] = order.supplier_name;&#xa;    matrix[i][8] = order.order_date.toString();&#xa;    matrix[i][9] = order.order_status;&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);&#xa;ObjectList objectList = new ObjectList();&#xa;List&lt;PurchaseOrder&gt; orders = objectList.getPurchaseOrders();&#xa;String[][] matrix = new String[orders.size()][10];&#xa;PurchaseOrder order;&#xa;for (int i = 0;i&lt;orders.size();i++){&#xa;    order = orders.get(i);&#xa;    matrix[i][0] = order.order_id;&#xa;    matrix[i][1] = order.request_id;&#xa;    matrix[i][2] = order.item_name;&#xa;    matrix[i][3] = order.username;&#xa;    matrix[i][4] = Integer.toString(order.quantity);&#xa;    matrix[i][5] = Double.toString(order.unit_price);&#xa;    matrix[i][6] = Double.toString(order.amount);&#xa;    matrix[i][7] = order.supplier_name;&#xa;    if (order.order_date != null){&#xa;        matrix[i][8] = order.order_date.toString();&#xa;    }else{&#xa;        matrix[i][8] = &quot;-&quot;;&#xa;    }&#xa;    matrix[i][9] = order.order_status;&#xa;}"/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -253,6 +256,19 @@
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="Purchase Order"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton8">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="24" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="&quot;View&quot;" type="code"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

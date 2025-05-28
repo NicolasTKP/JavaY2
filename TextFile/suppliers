@@ -1,3 +1,4 @@
 supplier_id|supplier_name|address|contact|supply_items(item_id)|payment_term
-SU001|Hello supplier|Kuala Lumpur|011-111-1111|I001,I002|pay after ship
-SU002|aPPLE supplier|Kuala Lumpur|011-111-1112|I003|pay within 30 days after received
+SU001|Hello supplier|Kuala Lumpur|011-111-1114|I001,I002,I005|pay after ship
+SU002|apple supplier|Kuala Lumpur|011-111-1112|I001|pay after ship
+SU003|carot supplier|Kuala Lumpur|011-111-1113|I006|Pay after received

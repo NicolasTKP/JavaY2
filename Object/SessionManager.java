@@ -18,4 +18,8 @@ public class SessionManager {
         return instance;
     }
 
+    public static synchronized void clearCache() {
+        instance = new SessionManager();
+    }
+
 }
