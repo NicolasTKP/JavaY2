@@ -286,7 +286,7 @@ public class admin_purchase_requisition extends javax.swing.JFrame {
         }
 
         //Request Date
-        String request_date = Query.getCurrectDate();
+        String request_date = Query.getCurrentDate();
 
         //Required Date
         String required_date;

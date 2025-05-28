@@ -395,8 +395,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
         }
         else if (choice.equals("Choose from existing supplier")){
             //Supplier ID
-            String[] suppliers = Query.getAllSupplier();
-            suppliers = Query.notUsedSuppliers(suppliers, group_id);
+            String[] suppliers = Query.notUsedSuppliers(group_id);
             assert suppliers != null;
             if (suppliers.length == 0){
                 JOptionPane.showMessageDialog(null, "All supplier in record are supplying this product already", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -741,9 +740,8 @@ public class admin_inventory_management extends javax.swing.JFrame {
 
             case "Supplier":
                 String supplier_id;
-                String[] suppliers = Query.getAllSupplier();
                 String group_id = jTable1.getValueAt(selected_row, 7).toString();
-                suppliers = Query.notUsedSuppliers(suppliers, group_id);
+                String[] suppliers = Query.notUsedSuppliers(group_id);
                 assert suppliers != null;
                 if (suppliers.length == 0){
                     JOptionPane.showMessageDialog(null, "All supplier in record are supplying this product already", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -916,7 +914,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
                 break;
 
             case "Quantity":
-                String[] receives = Query.getNotReceivedReceives();
+                String[] receives = Query.getNotReceivedOrders();
                 if (receives.length == 0){
                     JOptionPane.showMessageDialog(null, "No order had been placed recently", "Warning", JOptionPane.WARNING_MESSAGE);
                     return;
@@ -943,7 +941,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
                     assert inventory_quantity != null;
                     String quantity = Integer.toString(Integer.parseInt(receive_quantity) + Integer.parseInt(inventory_quantity));
                     Edit.editingColumn("inventory",group_id,2,quantity);
-                    String date = Query.getCurrectDate();
+                    String date = Query.getCurrentDate();
                     Edit.editingColumn("receive", receive,5,date);
                     Edit.editingColumn("receive", receive,8, "Unpaid");
                     UpdateTable.forInventory(jTable2);
