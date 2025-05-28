@@ -61,7 +61,7 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
         column_mappings.put(1, inventory_map); // supplier_id column
         column_mappings.put(2, user_map); 
         
-        TextFile.populateTable(prContainer, prTableColumnName, pr_file_path, 50, pr_table, column_mappings);          
+        TextFile.populateTable(prContainer, pr_table, prTableColumnName, pr_file_path, 50,column_mappings);          
     }        
     
 

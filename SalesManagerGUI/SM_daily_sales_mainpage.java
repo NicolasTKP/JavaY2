@@ -52,7 +52,7 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
         Map<String, String> inventory_map = mapping.IdNameMapping(inventory_file_path);
         Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
         column_mappings.put(2, inventory_map); // supplier_id column
-        TextFile.populateTable(salesContainer, salesTableColumnName, daily_sales_file_path, 50, sales_table, column_mappings);          
+        TextFile.populateTable(salesContainer, sales_table, salesTableColumnName, daily_sales_file_path, 50,column_mappings);          
     }
     
     private void dailySalesSearchFunction(String daily_sales_keyword) {
