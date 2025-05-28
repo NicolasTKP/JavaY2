@@ -51,15 +51,15 @@ public class im_track_lowstock extends javax.swing.JFrame {
                 }
             };
             jTable1.setModel(model);
-            com.mycompany.JavaY2.InventoryManager.TextFileAbstraction tfa = new com.mycompany.JavaY2.InventoryManager.TextFileAbstraction();
-            List<Inventory> lowStockList = tfa.getLowStockItems();
+            com.mycompany.JavaY2.InventoryManager.TextFileHandling tfh = new com.mycompany.JavaY2.InventoryManager.TextFileHandling();
+            List<Inventory> lowStockList = tfh.getLowStockItems();
 
             for (Inventory inventory : lowStockList){
                 Object[] rowData = {
-                    inventory.getGroupId(),
-                    inventory.getInventoryItemName(),
-                    inventory.getQuantity(),
-                    inventory.getRetailPrice()
+                    inventory.group_id,
+                    inventory.item_name,
+                    inventory.quantity,
+                    inventory.retail_price
                 };
                 model.addRow(rowData);
             }

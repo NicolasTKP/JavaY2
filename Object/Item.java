@@ -17,7 +17,8 @@ public class Item {
 
     Item(){
     }
-    Item(String item_id, String item_name, double stock_price, int sales_per_day, int ordering_lead_time,int safety_level, String supplier_id, String group_id){
+
+    public Item(String item_id, String item_name, double stock_price, int sales_per_day, int ordering_lead_time, int safety_level, String supplier_id, String group_id){
         this.item_id = item_id;
         this.item_name = item_name;
         this.sales_per_day = sales_per_day;

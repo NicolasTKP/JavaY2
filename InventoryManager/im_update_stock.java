@@ -111,8 +111,8 @@ public class im_update_stock extends javax.swing.JFrame {
                 }
             };
             jTable1.setModel(model);
-            TextFileAbstraction tfa = new TextFileAbstraction();
-            List<Receive> receiveList = tfa.getReceiveList();
+            com.mycompany.JavaY2.InventoryManager.TextFileHandling tfh = new com.mycompany.JavaY2.InventoryManager.TextFileHandling();
+            List<Receive> receiveList = tfh.getReceiveList();
 
             for (Receive receive : receiveList){
                 Object[] rowData = {

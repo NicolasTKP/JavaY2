@@ -4,6 +4,7 @@
  */
 package com.mycompany.JavaY2.InventoryManager;
 
+import com.mycompany.JavaY2.Class.Search;
 import com.mycompany.JavaY2.Object.Item;
 import com.mycompany.JavaY2.Object.Receive;
 import com.mycompany.JavaY2.Object.Inventory;
@@ -19,7 +20,7 @@ import java.util.Map;
  *
  * @author Kaiqi
  */
-public class TextFileAbstraction {
+public class TextFileHandling {
     public List<Item> getItemList(){
         List<Item> itemList = new ArrayList<>();
         try {
@@ -33,10 +34,10 @@ public class TextFileAbstraction {
                 }
                 Item item = new Item(
                     data[0],                     
-                    data[1],                    
-                    Double.parseDouble(data[2]),  
-                    Integer.parseInt(data[3]),    
-                    Integer.parseInt(data[4]),   
+                    data[1],
+                    Double.parseDouble(data[2]),
+                    Integer.parseInt(data[3]),
+                    Integer.parseInt(data[4]),
                     Integer.parseInt(data[5]),   
                     data[6],                      
                     data[7]                       
@@ -91,8 +92,10 @@ public class TextFileAbstraction {
         List<Item> itemList = getItemList();
         Map<String, Item> itemMap  = new HashMap<>();
         for (Item item : itemList){
-            String key = item.getItemName().toLowerCase() + "|" + item.getGroupId().toLowerCase();
-            itemMap.put(key, item);
+            String key = item.item_name.toLowerCase() + "|" + Search.getGroupIDbyItemName(item.item_name).toLowerCase();
+            itemMap.merge(key, item, (existingItem, newItem) ->
+                newItem.safety_level > existingItem.safety_level ? newItem : existingItem
+            );
         }
         
         try {
@@ -110,12 +113,12 @@ public class TextFileAbstraction {
                     String key = itemName.toLowerCase() + "|" + groupId.toLowerCase();
                     Item item = itemMap.get(key);
                     
-                    if(item != null && quantity <= item.getSafetyLevel()){
+                    if(item != null && quantity <= item.safety_level){
                         Inventory lowStock = new Inventory(
                         groupId,
                         itemName,
                         quantity,
-                        item.getSafetyLevel()
+                        item.safety_level
                     );
                     lowStockAlerts.add(lowStock);
                     }

@@ -1,3 +1,4 @@
 user_id|username|password|role
 U001|ntkp|ntkp123|root
 U002|testing|testing|finance manager
+U003|nee|nee123|inventory manager

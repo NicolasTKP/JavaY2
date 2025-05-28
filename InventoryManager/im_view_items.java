@@ -88,19 +88,19 @@ public class im_view_items extends javax.swing.JFrame {
                 }
             };
             jTable1.setModel(model);
-            com.mycompany.JavaY2.InventoryManager.TextFileAbstraction tfa = new com.mycompany.JavaY2.InventoryManager.TextFileAbstraction();
-            List<Item> itemList = tfa.getItemList();
+            com.mycompany.JavaY2.InventoryManager.TextFileHandling tfh = new com.mycompany.JavaY2.InventoryManager.TextFileHandling();
+            List<Item> itemList = tfh.getItemList();
 
             for (Item item : itemList) {
                 Object[] rowData = {
-                    item.getItemId(),
-                    item.getItemName(),
-                    item.getStockPrice(),
-                    item.getSalesPerDay(),
-                    item.getOrderingLeadTime(),
-                    item.getSafetyLevel(),
-                    item.getSupplierId(),
-                    item.getGroupId()
+                    item.item_id,
+                    item.item_name,
+                    item.stock_price,
+                    item.sales_per_day,
+                    item.ordering_lead_time,
+                    item.safety_level,
+                    item.supplier_id,
+                    item.group_id
                 };
                 model.addRow(rowData);
             }
