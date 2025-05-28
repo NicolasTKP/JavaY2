@@ -73,7 +73,11 @@ public class admin_purchase_orders extends JFrame {
             matrix[i][5] = Double.toString(order.unit_price);
             matrix[i][6] = Double.toString(order.amount);
             matrix[i][7] = order.supplier_name;
-            matrix[i][8] = order.order_date.toString();
+            if (order.order_date != null){
+                matrix[i][8] = order.order_date.toString();
+            }else{
+                matrix[i][8] = "-";
+            }
             matrix[i][9] = order.order_status;
         }
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -253,6 +257,15 @@ public class admin_purchase_orders extends JFrame {
         }else{
             String[] ls = new String[9];
             Object order_id = jTable1.getValueAt(selectedRow,0);
+            String status = jTable1.getValueAt(selectedRow,9).toString();
+            if (!Objects.equals(status, "Pending")){
+                JOptionPane.showMessageDialog(null, "Cannot approve a PO that already approved/rejected", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to approve: "+order_id.toString(), "Confirmation",JOptionPane.YES_NO_OPTION);
+            if(result != JOptionPane.YES_OPTION){
+                return;
+            }
             Edit.purchaseOrders(order_id.toString(),9,"Approved");
             Edit.purchaseOrders(order_id.toString(),8,Query.getCurrectDate());
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -268,6 +281,7 @@ public class admin_purchase_orders extends JFrame {
             ls[8] = "-";
             TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/receives",String.join("|",ls));
             JOptionPane.showMessageDialog(null, "Successfully Approved The Purchase Order", "Successful", JOptionPane.INFORMATION_MESSAGE);
+            UpdateTable.forPO(jTable1);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -282,6 +296,15 @@ public class admin_purchase_orders extends JFrame {
             JOptionPane.showMessageDialog(null, "Please select a row to reject", "Warning", JOptionPane.WARNING_MESSAGE);
         }else{
             Object order_id = jTable1.getValueAt(selectedRow,0);
+            String status = jTable1.getValueAt(selectedRow,9).toString();
+            if (!Objects.equals(status, "Pending")){
+                JOptionPane.showMessageDialog(null, "Cannot reject a PO that already approved/rejected", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to reject: "+order_id.toString(), "Confirmation",JOptionPane.YES_NO_OPTION);
+            if(result != JOptionPane.YES_OPTION){
+                return;
+            }
             Edit.purchaseOrders(order_id.toString(),9,"Rejected");
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setValueAt("Rejected",selectedRow,9);
@@ -309,7 +332,11 @@ public class admin_purchase_orders extends JFrame {
                     matrix[i][5] = Double.toString(order.unit_price);
                     matrix[i][6] = Double.toString(order.amount);
                     matrix[i][7] = order.supplier_name;
-                    matrix[i][8] = order.order_date.toString();
+                    if (order.order_date != null){
+                        matrix[i][8] = order.order_date.toString();
+                    }else{
+                        matrix[i][8] = "-";
+                    }
                     matrix[i][9] = order.order_status;
                 }
             }
