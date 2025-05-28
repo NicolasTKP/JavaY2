@@ -154,8 +154,8 @@ public class admin_profile extends javax.swing.JFrame {
 
         int result = JOptionPane.showConfirmDialog(null, "Confirm to update user profile with username: "+username+ "\nand password: "+password+" ?", "Confirmation",JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
-            Edit.users(SessionManager.getInstance().userID, 1, username);
-            Edit.users(SessionManager.getInstance().userID, 2, password);
+            Edit.editingColumn("user",SessionManager.getInstance().userID, 1, username);
+            Edit.editingColumn("user",SessionManager.getInstance().userID, 2, password);
             SessionManager.getInstance().username = username;
             SessionManager.getInstance().password = password;
             JOptionPane.showMessageDialog(null, "Update successfully", "Success", JOptionPane.INFORMATION_MESSAGE);

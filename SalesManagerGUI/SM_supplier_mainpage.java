@@ -6,7 +6,7 @@ package com.mycompany.JavaY2.SalesManagerGUI;
 
 import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.Supplier;
-import com.mycompany.javaY2.Class.DataMapping;
+import com.mycompany.JavaY2.Class.DataMapping;
 import com.mycompany.JavaY2.Object.SessionManager;
 import java.io.BufferedReader;
 import java.io.FileReader;

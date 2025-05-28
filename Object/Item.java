@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JOptionPane;
-import com.mycompany.javaY2.Class.DataMapping;
+import com.mycompany.JavaY2.Class.DataMapping;
 import java.util.Map;
 
 public class Item {

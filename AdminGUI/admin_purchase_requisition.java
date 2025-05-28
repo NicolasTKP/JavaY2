@@ -378,7 +378,7 @@ public class admin_purchase_requisition extends javax.swing.JFrame {
                 }
                 int result = JOptionPane.showConfirmDialog(null, "Confirm to update item name to: "+item_name+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                 if(result == JOptionPane.YES_OPTION){
-                    Edit.purchaseRequisitions(request_id, 1, group_id);
+                    Edit.editingColumn("PR",request_id, 1, group_id);
                     JOptionPane.showMessageDialog(null, "The item name updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                     UpdateTable.forPR(jTable1);
                 }
@@ -398,7 +398,7 @@ public class admin_purchase_requisition extends javax.swing.JFrame {
                 }
                 int result2 = JOptionPane.showConfirmDialog(null, "Confirm to update item quantity to: "+quantity+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                 if(result2 == JOptionPane.YES_OPTION){
-                    Edit.purchaseRequisitions(request_id,3, quantity);
+                    Edit.editingColumn("PR",request_id,3, quantity);
                     JOptionPane.showMessageDialog(null, "The item quantity updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                     UpdateTable.forPR(jTable1);
                 }
@@ -423,7 +423,7 @@ public class admin_purchase_requisition extends javax.swing.JFrame {
                 }
                 int result3 = JOptionPane.showConfirmDialog(null, "Confirm to update date to: "+date+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                 if(result3 == JOptionPane.YES_OPTION){
-                    Edit.purchaseRequisitions(request_id,4, date);
+                    Edit.editingColumn("PR",request_id,4, date);
                     JOptionPane.showMessageDialog(null, "The request date updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                     UpdateTable.forPR(jTable1);
                 }
@@ -447,7 +447,7 @@ public class admin_purchase_requisition extends javax.swing.JFrame {
                 }
                 int result4 = JOptionPane.showConfirmDialog(null, "Confirm to update date to: "+date+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                 if(result4 == JOptionPane.YES_OPTION){
-                    Edit.purchaseRequisitions(request_id,5, date);
+                    Edit.editingColumn("PR",request_id,5, date);
                     JOptionPane.showMessageDialog(null, "The required date updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                     UpdateTable.forPR(jTable1);
                 }
@@ -464,7 +464,7 @@ public class admin_purchase_requisition extends javax.swing.JFrame {
 
                         if(result5 == JOptionPane.YES_OPTION) {
                             String userID = Search.getUserID(username);
-                            Edit.purchaseRequisitions(request_id, 2, userID);
+                            Edit.editingColumn("PR",request_id, 2, userID);
                             JOptionPane.showMessageDialog(null, "Successfully update the username", "Successful", JOptionPane.INFORMATION_MESSAGE);
                             UpdateTable.forPR(jTable1);
                         }

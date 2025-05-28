@@ -220,7 +220,7 @@ public class admin_order_tracking extends javax.swing.JFrame {
         String order_id = jTable1.getValueAt(selected_row,0).toString();
         int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to cancel PO: "+order_id, "Confirmation",JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
-            Edit.receives(order_id,6, "Cancelled");
+            Edit.editingColumn("receive", order_id,6, "Cancelled");
             JOptionPane.showMessageDialog(null, "Purchase Order had been cancelled successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forReceive(jTable1);
         }
