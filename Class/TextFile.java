@@ -176,9 +176,9 @@ public class TextFile {
     }
 
 
-    public static void populateTable(DefaultTableModel tableModel, String[] columnNames, String filePath, int rowHeight, javax.swing.JTable table) {
-        tableModel.setRowCount(0);
-        tableModel.setColumnIdentifiers(columnNames);
+    public static void populateTable(DefaultTableModel model, JTable table, String[] columns, String filePath, int rowHeight){
+        model.setRowCount(0);
+        model.setColumnIdentifiers(columns);
         table.setRowHeight(rowHeight);
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -191,7 +191,7 @@ public class TextFile {
                     continue;
                 }
                 String[] rowData = line.split("\\|");
-                tableModel.addRow(rowData);
+                model.addRow(rowData);
             }
         } catch (IOException e) {
             System.out.println("Error reading file to populate JTable: " + filePath);
@@ -199,13 +199,7 @@ public class TextFile {
     }
 
     // Overloaded with mapping
-    public static void populateTable(DefaultTableModel model,
-                                             String[] columns,
-                                             String filePath,
-                                             int rowHeight,
-                                             JTable table,
-                                             Map<Integer, Map<String, String>> columnMappings) {
-
+    public static void populateTable(DefaultTableModel model, JTable table, String[] columns, String filePath, int rowHeight, Map<Integer, Map<String, String>> columnMappings) {
         model.setRowCount(0);
         model.setColumnIdentifiers(columns);
         table.setRowHeight(rowHeight);
@@ -221,17 +215,33 @@ public class TextFile {
                 String[] rowData = line.split("\\|");
 
                 // Apply mappings to specific columns
-                if (columnMappings != null) {
-                    for (Map.Entry<Integer, Map<String, String>> entry : columnMappings.entrySet()) {
-                        int index = entry.getKey();
-                        Map<String, String> map = entry.getValue();
+            if (columnMappings != null) {
+                for (Map.Entry<Integer, Map<String, String>> entry : columnMappings.entrySet()) {
+                    int index = entry.getKey();
+                    Map<String, String> map = entry.getValue();
 
-                        if (index < rowData.length && map.containsKey(rowData[index])) {
-                            rowData[index] = map.get(rowData[index]);
+                    if (index < rowData.length) {
+                        String originalValue = rowData[index];
+
+                        if (originalValue.contains(",")) {
+                            String[] parts = originalValue.split(",");
+                            List<String> mappedValues = new ArrayList<>();
+
+                            for (String part : parts) {
+                                String trimmed = part.trim();
+                                String mapped = map.getOrDefault(trimmed, trimmed);
+                                mappedValues.add(mapped);
+                            }
+
+                            rowData[index] = String.join(", ", mappedValues);
+                        } else {
+                            String trimmed = originalValue.trim();
+                            String mapped = map.getOrDefault(trimmed, trimmed);
+                            rowData[index] = mapped;
                         }
                     }
                 }
-
+            }
                 model.addRow(rowData);
             }
         } catch (IOException e) {
