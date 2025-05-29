@@ -101,37 +101,6 @@ public class TextFile {
         }
     }
     
-    public static boolean deleteTextfileLine(String file_path, String selected_id){
-        List<String> updated_lines = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(file_path))) {
-            String line = br.readLine(); // Read header
-            if (line != null) {
-                updated_lines.add(line); // Keep header
-            }
-
-            while ((line = br.readLine()) != null) {
-                if (!line.startsWith(selected_id + "|")) {
-                    updated_lines.add(line);
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading the " + file_path);
-            return false;
-        }
-
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file_path))) {
-            for (String updated_line : updated_lines) {
-                bw.write(updated_line);
-                bw.newLine();
-            }
-        } catch (IOException e) {
-            System.err.println("Error writing to the " + file_path);
-            return false;
-        }
-        return true;
-    }
-
     public static boolean adjustInventoryQuantity(Component parent_component, String file_path, String group_id, int quantity_difference) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(file_path));
