@@ -272,7 +272,8 @@ public class admin_mainpage extends javax.swing.JFrame {
         String line = Query.getLowStockItems();
         assert line != null;
         if (!line.isEmpty() || !line.isBlank()){
-            JOptionPane.showMessageDialog(null, "Items: "+line+"\nis having low stock, you might want to restock it", "Alert", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Items: "+line+"\nis having low stock, you might want to restock it",
+                    "Alert", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_notification
 
