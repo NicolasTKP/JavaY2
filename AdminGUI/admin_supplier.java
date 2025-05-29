@@ -215,7 +215,6 @@ public class admin_supplier extends javax.swing.JFrame {
             for (int i = 0; i < suppliers.size(); i++) {
                 supplier = suppliers.get(i);
                 if (supplier.anyMatch(keyword)) {
-                    supplier = suppliers.get(i);
                     matrix[i][0] = supplier.supplier_id;
                     matrix[i][1] = supplier.supplier_name;
                     matrix[i][2] = supplier.address;
@@ -326,6 +325,10 @@ public class admin_supplier extends javax.swing.JFrame {
         int result = JOptionPane.showConfirmDialog(null, "Confirm to delete supplier: "+Search.getSupplierName(supplier_id)+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
             TextFile.deleteLine("src/main/java/com/mycompany/JavaY2/TextFile/suppliers", supplier_id, 0);
+            String[] items = jTable1.getValueAt(selected_row,4).toString().split(",");
+            for (String item:items){
+                TextFile.deleteLine("src/main/java/com/mycompany/JavaY2/TextFile/items", item, 0);
+            }
             JOptionPane.showMessageDialog(null, "Supplier deleted successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forSupplier(jTable1);
         }

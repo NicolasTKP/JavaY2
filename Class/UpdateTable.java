@@ -49,6 +49,7 @@ public class UpdateTable {
     public static void forReceive(JTable jTable){
         ObjectList objectList = new ObjectList();
         List<Receives> receives = objectList.getReceives();
+        receives = receives.reversed();
         String[][] matrix = new String[receives.size()][7];
         Receives receive;
         for (int i = 0;i<receives.size();i++){

@@ -3,12 +3,10 @@ package com.mycompany.JavaY2.Object;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.swing.JOptionPane;
 import com.mycompany.JavaY2.Class.DataMapping;
-import java.util.Map;
+import com.mycompany.JavaY2.Class.Search;
 
 public class Item {
     public String item_id;
@@ -43,7 +41,8 @@ public class Item {
                 Integer.toString(ordering_lead_time),
                 Integer.toString(safety_level),
                 this.supplier_id.toLowerCase(),
-                this.group_id.toLowerCase()
+                this.group_id.toLowerCase(),
+                Objects.requireNonNull(Search.getSupplierName(this.supplier_id)).toLowerCase()
         ));
         return valuesToCheck.contains(keyword);
     }

@@ -247,21 +247,25 @@ public class admin_purchase_orders extends JFrame {
     private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String password = JOptionPane.showInputDialog("Please insert your user password");
         if (password == null || !password.equals(SessionManager.getInstance().password)){
-            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow == -1){
-            JOptionPane.showMessageDialog(null, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please select a row to approve", "Warning",
+                    JOptionPane.WARNING_MESSAGE);
         }else{
             String[] ls = new String[9];
             Object order_id = jTable1.getValueAt(selectedRow,0);
             String status = jTable1.getValueAt(selectedRow,9).toString();
             if (!Objects.equals(status, "Pending")){
-                JOptionPane.showMessageDialog(null, "Cannot approve a PO that already approved/rejected", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Cannot approve a PO that already approved/rejected",
+                        "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to approve: "+order_id.toString(), "Confirmation",JOptionPane.YES_NO_OPTION);
+            int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to approve: "+
+                    order_id.toString(), "Confirmation",JOptionPane.YES_NO_OPTION);
             if(result != JOptionPane.YES_OPTION){
                 return;
             }
@@ -279,7 +283,8 @@ public class admin_purchase_orders extends JFrame {
             ls[7] = "-";
             ls[8] = "-";
             TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/receives",String.join("|",ls));
-            JOptionPane.showMessageDialog(null, "Successfully Approved The Purchase Order", "Successful", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Successfully Approved The Purchase Order",
+                    "Successful", JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forPO(jTable1);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -368,11 +373,13 @@ public class admin_purchase_orders extends JFrame {
         }else{
             Object orderID = jTable1.getValueAt(selected_row, 0);
             String order_ID = orderID.toString();
-            int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to delete PO: "+orderID, "Confirmation",JOptionPane.YES_NO_OPTION);
+            int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to delete PO: "+orderID,
+                    "Confirmation",JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.YES_OPTION){
                 TextFile.deleteLine("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders",order_ID,0);
                 TextFile.deleteLine("src/main/java/com/mycompany/JavaY2/TextFile/receives",order_ID,0);
-                JOptionPane.showMessageDialog(null, "Successfully delete the selected PO", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Successfully delete the selected PO", "Successful",
+                        JOptionPane.INFORMATION_MESSAGE);
                 UpdateTable.forPO(jTable1);
             }
         }
@@ -500,7 +507,8 @@ public class admin_purchase_orders extends JFrame {
         if (selected_row == -1){
             JOptionPane.showMessageDialog(null, "Please select a row to edit", "Warning", JOptionPane.WARNING_MESSAGE);
         }else if(!jTable1.getValueAt(selected_row,9).equals("Pending")){
-            JOptionPane.showMessageDialog(null, "Cannot edit a PO that already been approved/rejected", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Cannot edit a PO that already been approved/rejected",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
         }
         else{
             Object orderID = jTable1.getValueAt(selected_row,0);
@@ -522,7 +530,8 @@ public class admin_purchase_orders extends JFrame {
                            return;
                         }
                         else if (Query.ifItemExist(itemID)){
-                            int result = JOptionPane.showConfirmDialog(null, "Do you want change item to: "+ Search.getItemNamebyItemID(itemID), "Confirmation", JOptionPane.YES_NO_OPTION);
+                            int result = JOptionPane.showConfirmDialog(null, "Do you want change item to: "+
+                                    Search.getItemNamebyItemID(itemID), "Confirmation", JOptionPane.YES_NO_OPTION);
 
                             if(result == JOptionPane.YES_OPTION){
                                 String unitPrice;
@@ -534,23 +543,27 @@ public class admin_purchase_orders extends JFrame {
                                     }else if (ValidateFormat.unitPrice(unitPrice)){
                                         break;
                                     }else{
-                                        JOptionPane.showMessageDialog(null, "Invalid unit price format", "Warning", JOptionPane.WARNING_MESSAGE);
+                                        JOptionPane.showMessageDialog(null, "Invalid unit price format", "Warning",
+                                                JOptionPane.WARNING_MESSAGE);
                                     }
                                 }
 
-                                String amount = Double.toString(Double.parseDouble(unitPrice) * Double.parseDouble(jTable1.getValueAt(selected_row,4).toString()));
+                                String amount = Double.toString(Double.parseDouble(unitPrice) *
+                                        Double.parseDouble(jTable1.getValueAt(selected_row,4).toString()));
                                 String supplier = Search.getFromItems(itemID, 6);
                                 Edit.editingColumn("PO",order_ID,2, itemID);
                                 Edit.editingColumn("PO",order_ID,5, unitPrice);
                                 Edit.editingColumn("PO",order_ID,6,amount);
                                 Edit.editingColumn("PO",order_ID,7,supplier);
                                 Edit.editingColumn("item",itemID,2, unitPrice);
-                                JOptionPane.showMessageDialog(null, "Successfully update the item", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Successfully update the item", "Successful",
+                                        JOptionPane.INFORMATION_MESSAGE);
                                 UpdateTable.forPO(jTable1);
                             }
                             break;
                         }else {
-                            JOptionPane.showMessageDialog(null, "Item doesn't exist please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Item doesn't exist please try again", "Warning",
+                                    JOptionPane.WARNING_MESSAGE);
                         }
                     }
                     break;
@@ -562,18 +575,21 @@ public class admin_purchase_orders extends JFrame {
                             return;
                         }
                         else if(Query.ifUserExist(username)){
-                            int result = JOptionPane.showConfirmDialog(null, "Do you want change username to: " + username, "Confirmation", JOptionPane.YES_NO_OPTION);
+                            int result = JOptionPane.showConfirmDialog(null, "Do you want change username to: " +
+                                    username, "Confirmation", JOptionPane.YES_NO_OPTION);
 
                             if(result == JOptionPane.YES_OPTION) {
                                 String userID = Search.getUserID(username);
                                 Edit.editingColumn("PO",order_ID, 3, userID);
-                                JOptionPane.showMessageDialog(null, "Successfully update the username", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Successfully update the username", "Successful",
+                                        JOptionPane.INFORMATION_MESSAGE);
                                 UpdateTable.forPO(jTable1);
                             }
 
                             break;
                         }else{
-                            JOptionPane.showMessageDialog(null, "User doesn't exist please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "User doesn't exist please try again", "Warning",
+                                    JOptionPane.WARNING_MESSAGE);
 
                         }
                     }
@@ -586,17 +602,20 @@ public class admin_purchase_orders extends JFrame {
                             return;
                         }
                         else if (ValidateFormat.quantityUnit(quantity)){
-                            int result = JOptionPane.showConfirmDialog(null, "Do you want change quantity to: " + quantity, "Confirmation", JOptionPane.YES_NO_OPTION);
+                            int result = JOptionPane.showConfirmDialog(null, "Do you want change quantity to: " +
+                                    quantity, "Confirmation", JOptionPane.YES_NO_OPTION);
 
                             if(result == JOptionPane.YES_OPTION) {
-                                String amount = Double.toString(Double.parseDouble(quantity) * Double.parseDouble(jTable1.getValueAt(selected_row,5).toString()));
+                                String amount = Double.toString(Double.parseDouble(quantity) *
+                                        Double.parseDouble(jTable1.getValueAt(selected_row,5).toString()));
                                 Edit.editingColumn("PO",order_ID,4, quantity);
                                 Edit.editingColumn("PO",order_ID,6,amount);
                                 UpdateTable.forPO(jTable1);
                             }
                             break;
                         }else {
-                            JOptionPane.showMessageDialog(null, "Invalid quantity format please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Invalid quantity format please try again", "Warning",
+                                    JOptionPane.WARNING_MESSAGE);
                         }
                     }
                     break;
@@ -609,10 +628,12 @@ public class admin_purchase_orders extends JFrame {
                         }
                         else if(ValidateFormat.unitPrice(unitPrice)){
                             unitPrice = String.format("%.1f",Double.parseDouble(unitPrice));
-                            int result = JOptionPane.showConfirmDialog(null, "Do you want change unit price to: " + unitPrice, "Confirmation", JOptionPane.YES_NO_OPTION);
+                            int result = JOptionPane.showConfirmDialog(null, "Do you want change unit price to: " +
+                                    unitPrice, "Confirmation", JOptionPane.YES_NO_OPTION);
 
                             if(result == JOptionPane.YES_OPTION) {
-                                String amount = Double.toString(Double.parseDouble(unitPrice) * Double.parseDouble(jTable1.getValueAt(selected_row,4).toString()));
+                                String amount = Double.toString(Double.parseDouble(unitPrice) *
+                                        Double.parseDouble(jTable1.getValueAt(selected_row,4).toString()));
                                 Edit.editingColumn("PO",order_ID,5, unitPrice);
                                 Edit.editingColumn("PO",order_ID,6,amount);
                                 String item_id = Search.getFromPO(order_ID,2);
@@ -621,7 +642,8 @@ public class admin_purchase_orders extends JFrame {
                             }
                             break;
                         }else {
-                            JOptionPane.showMessageDialog(null, "Invalid unit price format please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Invalid unit price format please try again", "Warning",
+                                    JOptionPane.WARNING_MESSAGE);
                         }
                     }
                     break;
@@ -633,7 +655,8 @@ public class admin_purchase_orders extends JFrame {
                             return;
                         }
                         else if(ValidateFormat.date(date)){
-                            int result = JOptionPane.showConfirmDialog(null, "Do you want change date to: " + date, "Confirmation", JOptionPane.YES_NO_OPTION);
+                            int result = JOptionPane.showConfirmDialog(null, "Do you want change date to: " +
+                                    date, "Confirmation", JOptionPane.YES_NO_OPTION);
 
                             if(result == JOptionPane.YES_OPTION) {
                                 Edit.editingColumn("PO",order_ID,8,date);
@@ -641,7 +664,8 @@ public class admin_purchase_orders extends JFrame {
                             }
                             break;
                         }else {
-                            JOptionPane.showMessageDialog(null, "Invalid date format please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Invalid date format please try again", "Warning",
+                                    JOptionPane.WARNING_MESSAGE);
                         }
 
                     }
