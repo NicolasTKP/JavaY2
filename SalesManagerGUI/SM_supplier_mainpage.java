@@ -247,8 +247,15 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
             );
 
             if (response == JOptionPane.YES_OPTION) {
-                TextFile.deleteTextfileLine(supplier_file_path, selected_id);
-                JOptionPane.showMessageDialog(null, "You have deleted the supplier. Supplier table is updated");
+                TextFile.deleteLine(supplier_file_path, selected_id,0);
+                String[] items = supplier_table.getValueAt(selected_row, 4).toString().split(",");
+                for(String item:items){
+                    DataMapping mapping = new DataMapping();
+                    Map<String,String> item_map = mapping.NameIdMapping(item_file_path);
+                    String item_id = item_map.get(item);
+                    TextFile.deleteLine(item_file_path, item_id, 0);
+                }
+                JOptionPane.showMessageDialog(null, "You have deleted the supplier, items supplied by the supplier also being removed. Supplier table and item table is updated");
             } else {
                 // Cancel editing
             JOptionPane.showMessageDialog(null, "You have decided to not delete the supplier. Back to supplier mainpage now");

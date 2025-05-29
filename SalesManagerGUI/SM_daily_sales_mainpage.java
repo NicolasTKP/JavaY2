@@ -297,10 +297,8 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
             );
 
             if (response == JOptionPane.YES_OPTION) { 
-                TextFile.deleteTextfileLine(daily_sales_file_path, selected_id);
+                TextFile.deleteLine(daily_sales_file_path, selected_id, 0);
                 TextFile.adjustInventoryQuantity(this, inventory_file_path, group_id, quantity_difference); 
-                
-                
                 JOptionPane.showMessageDialog(null, "You have deleted the daily sales record. Daily sales table is updated, inventory is restored");;
             } else {
                 // Cancel editing
