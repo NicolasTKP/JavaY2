@@ -59,6 +59,7 @@ public class admin_purchase_orders extends JFrame {
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         ObjectList objectList = new ObjectList();
         List<PurchaseOrder> orders = objectList.getPurchaseOrders();
+        orders = orders.reversed();
         String[][] matrix = new String[orders.size()][10];
         PurchaseOrder order;
         for (int i = 0;i<orders.size();i++){
@@ -317,6 +318,7 @@ public class admin_purchase_orders extends JFrame {
         }else{
             ObjectList objectList = new ObjectList();
             List<PurchaseOrder> orders = objectList.getPurchaseOrders();
+            orders = orders.reversed();
             String[][] matrix = new String[orders.size()][10];
             PurchaseOrder order;
             for (int i = 0; i < orders.size(); i++) {

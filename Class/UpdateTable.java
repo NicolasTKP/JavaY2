@@ -11,6 +11,7 @@ public class UpdateTable {
     public static void forPO(JTable jTable){
         ObjectList objectList = new ObjectList();
         List<PurchaseOrder> orders = objectList.getPurchaseOrders();
+        orders = orders.reversed();
         String[][] matrix = new String[orders.size()][10];
         PurchaseOrder order;
         for (int i = 0;i<orders.size();i++){
@@ -33,7 +34,8 @@ public class UpdateTable {
         jTable.setModel(new DefaultTableModel(
                                  matrix,
                                  new String [] {
-                                         "Order_ID", "Request_ID", "Item_Name", "Username","Quantity","Unit_Price","Amount","Supplier","Order_Date","Order_Status"
+                                         "Order_ID", "Request_ID", "Item_Name", "Username","Quantity","Unit_Price","Amount",
+                                         "Supplier","Order_Date","Order_Status"
                                  }
                          ){
                              @Override
