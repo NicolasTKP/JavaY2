@@ -432,7 +432,8 @@ public class admin_purchase_orders extends JFrame {
                 return;
             }
         }else {
-            JOptionPane.showMessageDialog(null, "No supplier found, please register one", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No supplier found, please register one", "Warning",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -474,13 +475,15 @@ public class admin_purchase_orders extends JFrame {
         purchase_order[9] = "Pending";
 
 
-        int result = JOptionPane.showConfirmDialog(null, "Do you want to raise a purchase order based of PR: "+ purchase_order[1], "Confirmation", JOptionPane.YES_NO_OPTION);
+        int result = JOptionPane.showConfirmDialog(null, "Do you want to raise a purchase order based of PR: "+
+                purchase_order[1], "Confirmation", JOptionPane.YES_NO_OPTION);
 
         if(result == JOptionPane.YES_OPTION){
             TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders", String.join("|",purchase_order));
             Edit.editingColumn("item",purchase_order[2], 2, unit_price);
             Edit.editingColumn("PR",purchase_order[1], 6,"Approved");
-            JOptionPane.showMessageDialog(null, "Purchase Order Place Successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Purchase Order Place Successfully","Successful",
+                    JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forPO(jTable1);
         }
 
