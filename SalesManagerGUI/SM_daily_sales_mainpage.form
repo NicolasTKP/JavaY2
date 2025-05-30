@@ -31,7 +31,7 @@
                   <Component id="add_sales_button" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
                   <Component id="edit_sales_button" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jScrollPane1" min="-2" pref="1100" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
@@ -42,7 +42,7 @@
                       <Component id="daily_sales_search_bar" min="-2" pref="292" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="42" max="32767" attributes="0"/>
+              <EmptySpace pref="36" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

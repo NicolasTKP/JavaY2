@@ -12,14 +12,13 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 import java.io.FileNotFoundException;
 import java.util.Map;
-//import javax.swing.text.Document;
 
 /**
  *
  * @author Kaiqi
  */
-public class GenerateStockReportPdf {
-    public static void writePdf(String fileName, Map<String, String> itemNameDateMap){
+public class GenerateStockReportPdf extends GeneratedDate{
+    public static void writePdf(String fileName, Map<String, StockReportContent> itemNameDateMap){
         try{
             PdfWriter writer = new PdfWriter(fileName);
             PdfDocument pdf = new PdfDocument(writer);
@@ -33,17 +32,27 @@ public class GenerateStockReportPdf {
             document.add(title);
             document.add(new Paragraph("\n"));
             
-            float columnWidth[] = {200f, 200f};
+            float columnWidth[] = {200f, 200f, 200f, 200f};
             Table table = new Table(columnWidth);
+            table.addHeaderCell("Group ID");
             table.addHeaderCell("Item Name");
+            table.addHeaderCell("Quantity");
             table.addHeaderCell("Latest Date Received");
 
-            for(Map.Entry<String, String> entry : itemNameDateMap.entrySet()){
-                table.addCell(entry.getKey());
-                table.addCell(entry.getValue());
+            for(StockReportContent entry : itemNameDateMap.values()){
+                table.addCell(entry.groupId);
+                table.addCell(entry.itemName);
+                table.addCell(String.valueOf(entry.quantity));
+                table.addCell(entry.dateReceived);
             }
 
             document.add(table);
+            document.add(new Paragraph("\n"));
+            String generatedDate = GeneratedDate.getCurrentDate();
+            Paragraph dateParagraph = new Paragraph("Generated at: " + generatedDate)
+                    .setTextAlignment(TextAlignment.RIGHT)
+                    .setFontSize(10);
+            document.add(dateParagraph);
             document.close();
             System.out.println("PDF created successfully");
         

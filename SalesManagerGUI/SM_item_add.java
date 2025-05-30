@@ -3,9 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.JavaY2.SalesManagerGUI;
+import com.mycompany.JavaY2.Class.DataMapping;
 import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.Item;
-import com.mycompany.javaY2.Class.DataMapping;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import java.io.*;

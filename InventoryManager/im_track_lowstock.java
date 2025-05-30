@@ -5,7 +5,6 @@
 package com.mycompany.JavaY2.InventoryManager;
 
 import com.mycompany.JavaY2.Object.Inventory;
-import com.mycompany.JavaY2.Object.Item;
 import java.util.List;
 
 /**

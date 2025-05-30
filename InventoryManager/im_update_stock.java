@@ -4,16 +4,20 @@
  */
 package com.mycompany.JavaY2.InventoryManager;
 
+import com.mycompany.JavaY2.Class.Edit;
+import com.mycompany.JavaY2.Class.UpdateTable;
+import com.mycompany.JavaY2.Class.Query;
+import com.mycompany.JavaY2.Class.Search;
+import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.Receive;
+import com.mycompany.JavaY2.Object.SessionManager;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.swing.JOptionPane;
 
 /**
@@ -63,6 +67,7 @@ public class im_update_stock extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1500, 750));
@@ -144,6 +149,13 @@ public class im_update_stock extends javax.swing.JFrame {
                 }
             });
 
+            jButton3.setText("Cancel");
+            jButton3.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton3ActionPerformed(evt);
+                }
+            });
+
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
             layout.setHorizontalGroup(
@@ -152,11 +164,13 @@ public class im_update_stock extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(35, 35, 35)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(36, 36, 36)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGap(0, 34, Short.MAX_VALUE))
             );
             layout.setVerticalGroup(
@@ -166,7 +180,8 @@ public class im_update_stock extends javax.swing.JFrame {
                     .addContainerGap(67, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(40, 40, 40))
@@ -180,124 +195,70 @@ public class im_update_stock extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        String usernameEntered = JOptionPane.showInputDialog(this, "Enter username: ");
-        String passwordEntered = JOptionPane.showInputDialog(this, "Enter password: ");
-        boolean authorized = false;
-        
-        String users_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/users";
-        
-        try(BufferedReader br = new BufferedReader(new FileReader(users_file_path))){
-            String line;
-            br.readLine();
-            
-            while((line = br.readLine()) != null){
-                String[] data = line.split("\\|");
-                String username = data[1];
-                String password = data[2];
-                String role = data[3];
-                
-                if(usernameEntered.equals(username) && passwordEntered.equals(password)){
-                    if (role.equalsIgnoreCase("inventory manager")){
-                        authorized = true;
-                        break;
-                    }else {
-                        JOptionPane.showMessageDialog(this, "Access denied. Only inventory managers can perform this action.");
-                        return;
-                }
-            }
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-            if(!authorized){
-                JOptionPane.showMessageDialog(this, "Invalid username or password.");
-                return;
-            }
-        }catch (IOException e){
-            System.out.println(e.getMessage());
-        }
-        
         
         String selectedOrderId = (String) jComboBox1.getSelectedItem();
         if (selectedOrderId == null) return;
-        
+        if (!Search.getDeliveryStatus(selectedOrderId).equals("Not Received")){
+            JOptionPane.showMessageDialog(null, "You can only update the stock while the status is Not Received", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         String receives_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/receives";
         String inventory_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/inventory";
+       
+        String currentDate = Query.getCurrentDate();
         
-        List<String> updateReceiveStatus = new ArrayList<>();
-        String itemNameUpdate = null;
-        String currentDate = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("ddMMyyyy"));
-        int receiveQuantityUpdate = 0;
-        boolean alreadyUpdated = false;
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(receives_file_path))){
-            String line;
-            while ((line = br.readLine()) != null){
-                String[] data = line.split("\\|");
-                
-                if (data[0].equals(selectedOrderId)){
-                    if(data[6].equals("Received")){
-                        alreadyUpdated = true;
-                    } else{
-                    itemNameUpdate = data[2].trim();
-                    receiveQuantityUpdate = Integer.parseInt(data[3].trim());
-                    data[5] = currentDate;
-                    data[6] = "Received";
-                    line = String.join("|", data);
-                    }
-                }
-                updateReceiveStatus.add(line);
-            }
-        }catch (IOException e){
-            System.out.println("Error reading receives.txt: " + e.getMessage());
-            return;
+        int result = JOptionPane.showConfirmDialog(null, "Are you confirm that the order: "+selectedOrderId+ " is received?", "Confirmation",JOptionPane.YES_NO_OPTION);
+        if(result == JOptionPane.YES_OPTION) {
+            String item_id = TextFile.getColumn(receives_file_path,0,selectedOrderId,1);
+            String group_id = Search.getGroupIDbyItemName(Search.getItemNamebyItemID(item_id));
+            Edit.receives(selectedOrderId,6, "Received");
+            String receive_quantity = TextFile.getColumn(receives_file_path,0,selectedOrderId,3);
+            String inventory_quantity = TextFile.getColumn(inventory_file_path,0,group_id,2);
+            assert receive_quantity != null;
+            assert inventory_quantity != null;
+            String quantity = Integer.toString(Integer.parseInt(receive_quantity) + Integer.parseInt(inventory_quantity));
+            Edit.inventory(group_id,2,quantity);
+            String date = currentDate;
+            Edit.receives(selectedOrderId,5,date);
+            Edit.receives(selectedOrderId,8, "Unpaid");
+            JOptionPane.showMessageDialog(null, "Quantity updated successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
         }
-        
-        if (alreadyUpdated) {
-            JOptionPane.showMessageDialog(this, "This Order ID has already been updated.");
-            return;
-        }
-        
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(receives_file_path))){
-            for (String updatedLine : updateReceiveStatus){
-                bw.write(updatedLine);
-                bw.newLine();
-            }
-        }catch (IOException e){
-            System.out.println(e.getMessage());
-        }
-        
-        List<String> updateQuantityinInventory = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(inventory_file_path))){
-            String line;
-            while((line = br.readLine()) != null){
-                String[] data = line.split("\\|");
-                
-                if(data[1].trim().equals(itemNameUpdate)){
-                    int currentQuantity = Integer.parseInt(data[2].trim());
-                    int updatedQuantity = currentQuantity + receiveQuantityUpdate;
-                    data[2] = String.valueOf(updatedQuantity);
-                    line = String.join("|", data);
-                }
-                updateQuantityinInventory.add(line);
-            }
-        }catch (IOException e){
-            System.out.println(e.getMessage());
-        }
-        
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(inventory_file_path))){
-            for(String updatedLine : updateQuantityinInventory){
-                bw.write(updatedLine);
-                bw.newLine();
-            }
-        }catch (IOException e){
-            System.out.println(e.getMessage());
-        }
-        
-        JOptionPane.showMessageDialog(this, "Stock updated successfully!");
         
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int selected_row = jTable1.getSelectedRow();
+        if (selected_row == -1){
+            JOptionPane.showMessageDialog(null, "Please select a row to cancel", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String status = jTable1.getValueAt(selected_row,5).toString();
+        if (status.equals("Received")){
+            JOptionPane.showMessageDialog(null, "Cannot cancel an order that already received", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String order_id = jTable1.getValueAt(selected_row,0).toString();
+        int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to cancel PO: "+order_id, "Confirmation",JOptionPane.YES_NO_OPTION);
+        if(result == JOptionPane.YES_OPTION){
+            Edit.receives(order_id,6, "Cancelled");
+            JOptionPane.showMessageDialog(null, "Purchase Order had been cancelled successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+            UpdateTable.forReceive(jTable1);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -337,6 +298,7 @@ public class im_update_stock extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
