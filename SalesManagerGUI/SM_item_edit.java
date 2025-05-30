@@ -112,6 +112,11 @@ public class SM_item_edit extends javax.swing.JFrame {
 
         item_id_textfield.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         item_id_textfield.setEnabled(false);
+        item_id_textfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_id_textfieldActionPerformed(evt);
+            }
+        });
 
         item_name_label2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         item_name_label2.setText("Stock Price:");
@@ -301,6 +306,10 @@ public class SM_item_edit extends javax.swing.JFrame {
         
 
     }//GEN-LAST:event_edit_item_buttonActionPerformed
+
+    private void item_id_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_id_textfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_item_id_textfieldActionPerformed
 
 
 
