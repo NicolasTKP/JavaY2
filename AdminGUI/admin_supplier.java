@@ -408,14 +408,18 @@ public class admin_supplier extends javax.swing.JFrame {
                     }else if(ValidateFormat.contact(contact)){
                         break;
                     }else {
-                        JOptionPane.showMessageDialog(null, "Invalid contact number format or contact number already exist, please follow this format: 01x-xxx-xxxx", "Warning", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null,
+                                "Invalid contact number format or contact number already exist, please follow this format: 01x-xxx-xxxx", "Warning",
+                                JOptionPane.WARNING_MESSAGE);
                     }
                 }
-                int result3 = JOptionPane.showConfirmDialog(null, "Confirm to change supplier contact to: "+contact+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
+                int result3 = JOptionPane.showConfirmDialog(null, "Confirm to change supplier contact to: "+
+                        contact+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                 if(result3 == JOptionPane.YES_OPTION){
                     Edit.editingColumn("supplier", supplier_id,3,contact);
                     UpdateTable.forSupplier(jTable1);
-                    JOptionPane.showMessageDialog(null, "Supplier contact updated successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Supplier contact updated successfully", "Successful",
+                            JOptionPane.INFORMATION_MESSAGE);
                 }
                 break;
 

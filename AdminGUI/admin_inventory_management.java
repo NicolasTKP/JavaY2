@@ -680,15 +680,18 @@ public class admin_inventory_management extends javax.swing.JFrame {
                         return;
                     }
                     if (ValidateFormat.unitPrice(stock_price)){
-                        int result = JOptionPane.showConfirmDialog(null, "Confirm to change stock price to: "+stock_price+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
+                        int result = JOptionPane.showConfirmDialog(null, "Confirm to change stock price to: "+
+                                stock_price+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                         if(result == JOptionPane.YES_OPTION){
                             Edit.editingColumn("item", item_id, 2, stock_price);
-                            JOptionPane.showMessageDialog(null, "Stock price successfully updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Stock price successfully updated", "Successful",
+                                    JOptionPane.INFORMATION_MESSAGE);
                             UpdateTable.forItems(jTable1);
                             break;
                         }
                     }else {
-                        JOptionPane.showMessageDialog(null, "Invalid format for stock price, please try again", "WARNING", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Invalid format for stock price, please try again", "WARNING",
+                                JOptionPane.WARNING_MESSAGE);
                     }
                 }
                 break;

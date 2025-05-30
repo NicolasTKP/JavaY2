@@ -688,7 +688,8 @@ public class admin_purchase_orders extends JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         int selected_row = jTable1.getSelectedRow();
         if (selected_row == -1){
-            JOptionPane.showMessageDialog(null, "Please select a row to view", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please select a row to view", "Warning",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
         admin_po_view page = new admin_po_view(jTable1.getValueAt(selected_row,0).toString());

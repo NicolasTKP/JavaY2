@@ -1,5 +1,5 @@
 item_id|item_name|stock_price|sales_per_day|ordering_lead_time|safety_level|supplier_id|group_id
-I001|apple|1|6|12|72|SU001|G002
+I001|apple|8.0|6|12|72|SU001|G002
 I002|orange|0.8|5|6|30|SU001|G001
 I003|apple|2|6|12|72|SU002|G002
-I005|carrot|7|10|7|70|SU001|G003
+I005|carrot|5|10|7|70|SU001|G003

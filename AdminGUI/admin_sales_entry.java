@@ -417,13 +417,16 @@ public class admin_sales_entry extends javax.swing.JFrame {
                     }else if(ValidateFormat.date(date)){
                         break;
                     }else {
-                        JOptionPane.showMessageDialog(null, "Invalid format for date, please try again (eg:01052025)", "Warning", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Invalid format for date, please try again (eg:01052025)",
+                                "Warning", JOptionPane.WARNING_MESSAGE);
                     }
                 }
-                int result4 = JOptionPane.showConfirmDialog(null, "Confirm to update date to: "+date+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
+                int result4 = JOptionPane.showConfirmDialog(null, "Confirm to update date to: "+date+ "?",
+                        "Confirmation",JOptionPane.YES_NO_OPTION);
                 if(result4 == JOptionPane.YES_OPTION){
                     Edit.editingColumn("daily_sales_item", daily_sales_id,4, date);
-                    JOptionPane.showMessageDialog(null, "The date updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "The date updated successfully", "Success",
+                            JOptionPane.INFORMATION_MESSAGE);
                     UpdateTable.forDailySale(jTable1);
                     Edit.updateSalesTxt();
                 }

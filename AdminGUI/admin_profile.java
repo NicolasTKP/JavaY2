@@ -143,17 +143,22 @@ public class admin_profile extends javax.swing.JFrame {
         }
         else if (!username.equals(SessionManager.getInstance().username)){
             if (!ValidateFormat.username(username)){
-                JOptionPane.showMessageDialog(null, "Invalid format for username or username redundant, please try again (Length > 3)", "WARNING", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Invalid format for username or username redundant, please try again (Length > 3)", "WARNING",
+                        JOptionPane.WARNING_MESSAGE);
                 return;
             }
         } else{
             if (!ValidateFormat.password(password)){
-                JOptionPane.showMessageDialog(null, "Invalid format for password, please try again (Length > 6 and including at least one upper case, one lower case, one number, and one special character)", "WARNING", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Invalid format for password, please try again (Length > 6 and including at least one upper case, one lower case, one number, and one special character)",
+                        "WARNING", JOptionPane.WARNING_MESSAGE);
                 return;
             }
         }
 
-        int result = JOptionPane.showConfirmDialog(null, "Confirm to update user profile with username: "+username+ "\nand password: "+password+" ?", "Confirmation",JOptionPane.YES_NO_OPTION);
+        int result = JOptionPane.showConfirmDialog(null, "Confirm to update user profile with username: "+username+ "\nand password: "+password+" ?", "Confirmation",
+                JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
             Edit.editingColumn("user",SessionManager.getInstance().userID, 1, username);
             Edit.editingColumn("user",SessionManager.getInstance().userID, 2, password);
