@@ -12,11 +12,8 @@ import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.Receive;
 import com.mycompany.JavaY2.Object.SessionManager;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -197,11 +194,11 @@ public class im_update_stock extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-//        String password = JOptionPane.showInputDialog("Please insert your user password");
-//        if (password == null || password == null || !password.equals(SessionManager.getInstance().password)){
-//            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
-//            return;
-//        }
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
         String selectedOrderId = (String) jComboBox1.getSelectedItem();
         if (selectedOrderId == null) return;
@@ -216,16 +213,16 @@ public class im_update_stock extends javax.swing.JFrame {
         if(result == JOptionPane.YES_OPTION) {
             String item_id = TextFile.getColumn(receives_file_path,0,selectedOrderId,1);
             String group_id = Search.getGroupIDbyItemName(Search.getItemNamebyItemID(item_id));
-            Edit.editingColumn(receives_file_path, selectedOrderId, 6, "Received");
+            Edit.editingColumn("receive", selectedOrderId, 6, "Received");
             String receive_quantity = TextFile.getColumn(receives_file_path,0,selectedOrderId,3);
             String inventory_quantity = TextFile.getColumn(inventory_file_path,0,group_id,2);
             assert receive_quantity != null;
             assert inventory_quantity != null;
             String quantity = Integer.toString(Integer.parseInt(receive_quantity) + Integer.parseInt(inventory_quantity));
-            Edit.editingColumn(inventory_file_path, group_id,2,quantity);
+            Edit.editingColumn("inventory", group_id,2,quantity);
             String date = currentDate;
-            Edit.editingColumn(receives_file_path, selectedOrderId,5,date);
-//            Edit.receives(selectedOrderId,8, "Unpaid");
+            Edit.editingColumn("receive", selectedOrderId,5,date);
+            Edit.editingColumn("receive",selectedOrderId,8, "Unpaid");
             JOptionPane.showMessageDialog(null, "Quantity updated successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
         }
         
