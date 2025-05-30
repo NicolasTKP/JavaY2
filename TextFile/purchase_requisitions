@@ -1,4 +1,4 @@
-request_id|group_id|user_id|quantity|request_date|required_date|status (pending,approved,rejected)
+request_id|group_id|user_id|quantity|request_date|required_date|status (Pending,Approved,Rejected)
 R001|G001|U001|10|01052025|02052025|Approved
 R002|G002|U001|80|28052025|30052025|Approved
 R003|G001|U001|60|28052025|30052025|Approved
@@ -10,3 +10,4 @@ R008|G003|U001|10|29052025|01062025|Approved
 R009|G002|U001|10|30052025|01062025|Approved
 R010|G002|U001|10|30052025|01062025|Approved
 R011|G002|U001|10|30052025|01062025|Approved
+R012|G003|U001|10|31052025|01062025|Pending
