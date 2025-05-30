@@ -5,7 +5,6 @@
 package com.mycompany.JavaY2.AdminGUI;
 
 import com.mycompany.JavaY2.Class.Query;
-import com.mycompany.JavaY2.JavaY2;
 import com.mycompany.JavaY2.Object.SessionManager;
 
 import javax.swing.*;
