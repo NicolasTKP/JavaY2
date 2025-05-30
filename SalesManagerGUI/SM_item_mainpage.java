@@ -410,7 +410,7 @@ public class SM_item_mainpage extends javax.swing.JFrame {
             );
 
             if (response == JOptionPane.YES_OPTION) {
-                TextFile.deleteTextfileLine(item_file_path, selected_id);
+                TextFile.deleteLine(item_file_path, selected_id, 0);
                 JOptionPane.showMessageDialog(null, "You have deleted the item. Item table is updated");
             } else {
                 // Cancel editing

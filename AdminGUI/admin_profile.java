@@ -6,6 +6,7 @@ package com.mycompany.JavaY2.AdminGUI;
 
 import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.Class.ValidateFormat;
+import com.mycompany.JavaY2.InventoryManager.im_mainpage;
 import com.mycompany.JavaY2.Object.SessionManager;
 import com.mycompany.JavaY2.SalesManagerGUI.SM_mainpage;
 
@@ -181,8 +182,8 @@ public class admin_profile extends javax.swing.JFrame {
                     //PM mainpage.setVisible(true);
                     break;
                 case "inventory manager":
-                    //IM mainpage;
-                    //IM mainpage.setVisible(true);
+                    im_mainpage im_mainpage = new im_mainpage();
+                    im_mainpage.setVisible(true);
                     break;
                 case "finance manager":
                     //FM mainpage;
