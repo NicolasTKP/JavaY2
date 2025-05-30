@@ -7,21 +7,25 @@ package com.mycompany.JavaY2.FinanceManagerGUI;
 import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.Class.Search;
 import com.mycompany.JavaY2.Class.TextFile;
+import com.mycompany.JavaY2.Object.PurchaseOrder;
 import com.mycompany.JavaY2.Object.SessionManager;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import javax.swing.*;
-//import javax.swing.JOptionPane;
-//import javax.swing.RowFilter;
+import javax.swing.DefaultListCellRenderer;
+//import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 public class fm_purchase_order extends javax.swing.JFrame {
+    private PurchaseOrder order;
     private DefaultTableModel model = new DefaultTableModel();
-    private String colName[] = {"Order ID", "Requisition ID", "Item ID", "User ID", "Quantity", "Unit Price", "Amount", "Supplier ID", "Order Date", "Order Status"}; 
+    private String colName[] = {"Order ID", "Requisition ID", "Item ID", "User ID", "Username", "Quantity", "Unit Price", "Amount", "Supplier ID", "Order Date", "Order Status"}; 
     private DefaultListCellRenderer listRenderer;
     
     public fm_purchase_order() {
@@ -35,6 +39,10 @@ public class fm_purchase_order extends javax.swing.JFrame {
             reader.readLine(); //skip the header line
             while ((line = reader.readLine()) != null) {
                 String[] orderDetails = line.split("\\|");
+                String username_by_id = Search.getUsername(orderDetails[3]);
+                String[] po_username = new String[orderDetails.length + 1];
+//                System.arraycopy(orderDetails, 0, fullRow, 0, 4);
+//                fullRow[4] = username;
                 model.addRow(orderDetails);
             }
             reader.close();
@@ -406,14 +414,14 @@ public class fm_purchase_order extends javax.swing.JFrame {
             if(orderStatus.equals("Pending")){
                 String orderID = String.valueOf(model.getValueAt(selectedRow, 0));
                 String itemID = String.valueOf(model.getValueAt(selectedRow, 2));
-                String itemName = FinanceManagerFunction.getItemName(itemID); //items.txt
-                int quantity = Integer.parseInt(String.valueOf(model.getValueAt(selectedRow, 4))); //int 
-                double unit_price = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 5))); //Double
+                String itemName = Search.getItemNamebyItemID(itemID); //items.txt
+                int quantity = Integer.parseInt(String.valueOf(model.getValueAt(selectedRow, 4))); 
+                double unit_price = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 5))); 
                 String supplierID = String.valueOf(model.getValueAt(selectedRow, 7));
-//              List<String> supplierName = FinanceManagerFunction.getSupplierNames(itemName);//suppliers.txt
+                
+                 PurchaseOrder po = new PurchaseOrder(orderID, itemID, itemName, quantity, unit_price, supplierID);
             
-                new fm_edit_PO(orderID, itemID, itemName, quantity, unit_price, supplierID).setVisible(true);
-//              System.out.println(String.valueOf(supplierName));
+                new fm_edit_PO(po).setVisible(true);
             }else {
                 JOptionPane.showMessageDialog(this, "You can only modified the Quantity and Supplier Name when the order status in Purchase Order is not yet been Approved or Rejected", "Warning", JOptionPane.WARNING_MESSAGE);
             }

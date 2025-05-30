@@ -5,7 +5,9 @@
 package com.mycompany.JavaY2.FinanceManagerGUI;
 
 import com.mycompany.JavaY2.Class.Edit;
+import com.mycompany.JavaY2.Class.Search;
 import com.mycompany.JavaY2.Class.ValidateFormat;
+import com.mycompany.JavaY2.Object.PurchaseOrder;
 import com.mycompany.JavaY2.Object.SessionManager;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -25,7 +27,7 @@ public class fm_edit_PO extends javax.swing.JFrame {
     public fm_edit_PO() {
     }
     
-    public fm_edit_PO(String orderID, String itemID, String itemName, int quantity, double unitPrice, String supplierID){
+    public fm_edit_PO(PurchaseOrder po){
         initComponents();
         current_user.setText(SessionManager.getInstance().username.toUpperCase());
         current_user.setEditable(false);
@@ -36,23 +38,22 @@ public class fm_edit_PO extends javax.swing.JFrame {
         stock_priceField.setEditable(false);
         supplier_idField.setEditable(false);
         
-        order_idField.setText(orderID);
-        item_idField.setText(itemID);
-        item_nameField.setText(itemName);
-        quantityField.setText(String.valueOf(quantity));
-        stock_priceField.setText(String.valueOf(unitPrice));
-        supplier_idField.setText(supplierID);
+        order_idField.setText(po.order_id);
+        item_idField.setText(po.item_id);
+        item_nameField.setText(Search.getItemNamebyItemID(po.item_id));
+        quantityField.setText(String.valueOf(po.quantity));
+        stock_priceField.setText(String.valueOf(po.unit_price));
+        supplier_idField.setText(po.supplier_id);
         
-        supplierDetails = getSupplierDetails(itemName);
+        supplierDetails = getSupplierDetails(po.item_name);
         sname_list.setModel(new DefaultComboBoxModel<>(supplierDetails.keySet().toArray(new String[0])));
         
         for (Map.Entry<String, String[]> entry : supplierDetails.entrySet()){
-            if(entry.getValue()[1].equals(supplierID)){
+            if(entry.getValue()[1].equals(po.supplier_id)){
                 sname_list.setSelectedItem(entry.getKey());
                 break;
             }
-        }
-        
+        } 
     }
     
     private static String getSupplierNameByID(String supplierID){

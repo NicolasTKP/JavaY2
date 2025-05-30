@@ -31,10 +31,10 @@ public class FinanceManagerFunction {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] column = line.split("\\|");
-                if (currentUsername.equals(column[1])) { 
-                    column[1] = fmUsername;  
-                    column[2] = fmPassword;  
-                    column[3] = fmRole; 
+                if (currentUsername.equals(column[1])) {
+                    column[1] = fmUsername;
+                    column[2] = fmPassword;
+                    column[3] = fmRole;
                     updated = true;
                 }
                 updatedLs.add(String.join("|", column));
@@ -50,7 +50,7 @@ public class FinanceManagerFunction {
                     bw.newLine();
                     SessionManager.getInstance().username = fmUsername;
                 }
-                
+
                 JOptionPane.showMessageDialog(null, "Profile has been updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "Error writing file: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -59,22 +59,6 @@ public class FinanceManagerFunction {
             JOptionPane.showMessageDialog(null, "You are not allowed to change others' credentials", "Warning", JOptionPane.WARNING_MESSAGE);
         }
 
-    }
-    
-    public static String getItemName(String itemID){
-        String itemsFilePath = "src/main/java/com/mycompany/JavaY2/TextFile/items";
-        try(BufferedReader br = new BufferedReader(new FileReader(itemsFilePath))){
-            String line; 
-            while((line = br.readLine()) != null){
-                String[] columns = line.split("\\|");
-                if(columns[0].equals(itemID)){
-                    return columns[1];
-                }
-            }
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-          return "Item ID not found";
     }
 
     
