@@ -267,7 +267,7 @@ public class admin_purchase_orders extends JFrame {
                 return;
             }
             Edit.purchaseOrders(order_id.toString(),9,"Approved");
-            Edit.purchaseOrders(order_id.toString(),8,Query.getCurrectDate());
+            Edit.purchaseOrders(order_id.toString(),8,Query.getCurrentDate());
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setValueAt("Approved",selectedRow,9);
             ls[0] = order_id.toString();

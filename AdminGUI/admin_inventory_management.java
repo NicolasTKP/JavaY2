@@ -943,7 +943,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
                     assert inventory_quantity != null;
                     String quantity = Integer.toString(Integer.parseInt(receive_quantity) + Integer.parseInt(inventory_quantity));
                     Edit.inventory(group_id,2,quantity);
-                    String date = Query.getCurrectDate();
+                    String date = Query.getCurrentDate();
                     Edit.receives(receive,5,date);
                     Edit.receives(receive,8, "Unpaid");
                     UpdateTable.forInventory(jTable2);

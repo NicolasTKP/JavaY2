@@ -261,7 +261,7 @@ public class admin_sales_entry extends javax.swing.JFrame {
         String retail_price = Search.getRetailPrice(group_id);
 
         //Date
-        String date = Query.getCurrectDate();
+        String date = Query.getCurrentDate();
 
         int result = JOptionPane.showConfirmDialog(null, "Confirm to add a new sales entry of item: "+item_name+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){

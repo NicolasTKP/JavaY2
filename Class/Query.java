@@ -302,7 +302,7 @@ public class Query {
         }
     }
 
-    public static String getCurrectDate(){
+    public static String getCurrentDate(){
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
         return today.format(formatter);
