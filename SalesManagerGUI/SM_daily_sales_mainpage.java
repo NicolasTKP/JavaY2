@@ -3,9 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.JavaY2.SalesManagerGUI;
-import com.mycompany.JavaY2.Class.DataMapping;
 import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.DailySale;
+import com.mycompany.JavaY2.Class.DataMapping;
 import com.mycompany.JavaY2.Object.SessionManager;
 import java.util.HashSet;
 import java.util.Map;
@@ -52,7 +52,7 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
         Map<String, String> inventory_map = mapping.IdNameMapping(inventory_file_path);
         Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
         column_mappings.put(2, inventory_map); // supplier_id column
-        TextFile.populateTable(salesContainer, salesTableColumnName, daily_sales_file_path, 50, sales_table, column_mappings);          
+        TextFile.populateTable(salesContainer, sales_table, salesTableColumnName, daily_sales_file_path, 50,column_mappings);          
     }
     
     private void dailySalesSearchFunction(String daily_sales_keyword) {
@@ -181,7 +181,7 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
                     .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(add_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edit_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -190,7 +190,7 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(daily_sales_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,10 +297,8 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
             );
 
             if (response == JOptionPane.YES_OPTION) { 
-                TextFile.deleteTextfileLine(daily_sales_file_path, selected_id);
+                TextFile.deleteLine(daily_sales_file_path, selected_id, 0);
                 TextFile.adjustInventoryQuantity(this, inventory_file_path, group_id, quantity_difference); 
-                
-                
                 JOptionPane.showMessageDialog(null, "You have deleted the daily sales record. Daily sales table is updated, inventory is restored");;
             } else {
                 // Cancel editing

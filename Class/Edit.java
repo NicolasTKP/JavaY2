@@ -9,181 +9,31 @@ import java.util.List;
 import java.util.Map;
 
 public class Edit {
-    public static void purchaseOrders(String orderID, int column,String value){
-        try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders"));
-            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders", false));
-            String[] items;
-            String line;
-            for (int i = 0; i < linesList.size(); i++) {
-                line = linesList.get(i);
-                items = line.split("\\|");
-                if (items.length>column && items[0].equals(orderID)){
-                    items[column] = value;
-                }
-                bw.write(String.join("|",items));
-                if (i < linesList.size() - 1) {
-                    bw.newLine();
-                }
-            }
-            bw.flush();
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public static void purchaseRequisitions(String requestID, int column,String value){
+    public static void editingColumn(String textfile, String id, int column,String value){
+        String path = switch (textfile) {
+            case "PO" -> "src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders";
+            case "PR" -> "src/main/java/com/mycompany/JavaY2/TextFile/purchase_requisitions";
+            case "user" -> "src/main/java/com/mycompany/JavaY2/TextFile/users";
+            case "inventory" -> "src/main/java/com/mycompany/JavaY2/TextFile/inventory";
+            case "item" -> "src/main/java/com/mycompany/JavaY2/TextFile/items";
+            case "supplier" -> "src/main/java/com/mycompany/JavaY2/TextFile/suppliers";
+            case "receive" -> "src/main/java/com/mycompany/JavaY2/TextFile/receives";
+            case "daily_sales_item" -> "src/main/java/com/mycompany/JavaY2/TextFile/daily_sales_items";
+            default -> "";
+        };
         try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/purchase_requisitions"));
-            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/purchase_requisitions", false));
-            String[] items;
+            List<String> linesList = Files.readAllLines(Paths.get(path));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(path, false));
+            String[] lines;
             String line;
             for (int i = 0; i < linesList.size(); i++) {
                 line = linesList.get(i);
-                items = line.split("\\|");
-                if (items.length>column && items[0].equals(requestID)){
-                    items[column] = value;
+                lines = line.split("\\|");
+                if (lines.length>column && lines[0].equals(id.toUpperCase())){
+                    lines[column] = value;
                 }
-                bw.write(String.join("|",items));
-                if (i < linesList.size() - 1) {
-                    bw.newLine();
-                }
-            }
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void users(String userID, int column,String value){
-        try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/users"));
-            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/users", false));
-            String[] items;
-            String line;
-            for (int i = 0; i < linesList.size(); i++) {
-                line = linesList.get(i);
-                items = line.split("\\|");
-                if (items.length>column && items[0].equals(userID)){
-                    items[column] = value;
-                }
-                bw.write(String.join("|",items));
-                if (i < linesList.size() - 1) {
-                    bw.newLine();
-                }
-            }
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void inventory(String groupID, int column,String value){
-        try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
-            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/inventory", false));
-            String[] items;
-            String line;
-            for (int i = 0; i < linesList.size(); i++) {
-                line = linesList.get(i);
-                items = line.split("\\|");
-                if (items.length>column && items[0].equals(groupID)){
-                    items[column] = value;
-                }
-                bw.write(String.join("|",items));
-                if (i < linesList.size() - 1) {
-                    bw.newLine();
-                }
-            }
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void item(String itemID, int column,String value){
-        try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
-            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/items", false));
-            String[] items;
-            String line;
-            for (int i = 0; i < linesList.size(); i++) {
-                line = linesList.get(i);
-                items = line.split("\\|");
-                if (items.length>column && items[0].equals(itemID.toUpperCase())){
-                    items[column] = value;
-                }
-                bw.write(String.join("|",items));
-                if (i < linesList.size() - 1) {
-                    bw.newLine();
-                }
-            }
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void supplier(String supplierID, int column,String value){
-        try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"));
-            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/suppliers", false));
-            String[] suppliers;
-            String line;
-            for (int i = 0; i < linesList.size(); i++) {
-                line = linesList.get(i);
-                suppliers = line.split("\\|");
-                if (suppliers.length>column && suppliers[0].equals(supplierID.toUpperCase())){
-                    suppliers[column] = value;
-                }
-                bw.write(String.join("|",suppliers));
-                if (i < linesList.size() - 1) {
-                    bw.newLine();
-                }
-            }
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void receives(String orderID, int column,String value){
-        try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/receives"));
-            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/receives", false));
-            String[] receives;
-            String line;
-            for (int i = 0; i < linesList.size(); i++) {
-                line = linesList.get(i);
-                receives = line.split("\\|");
-                if (receives.length>column && receives[0].equals(orderID.toUpperCase())){
-                    receives[column] = value;
-                }
-                bw.write(String.join("|",receives));
-                if (i < linesList.size() - 1) {
-                    bw.newLine();
-                }
-            }
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void dailySalesItems(String dailySalesID, int column,String value){
-        try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/daily_sales_items"));
-            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/com/mycompany/JavaY2/TextFile/daily_sales_items", false));
-            String[] sales;
-            String line;
-            for (int i = 0; i < linesList.size(); i++) {
-                line = linesList.get(i);
-                sales = line.split("\\|");
-                if (sales.length>column && sales[0].equals(dailySalesID.toUpperCase())){
-                    sales[column] = value;
-                }
-                bw.write(String.join("|",sales));
+                bw.write(String.join("|",lines));
                 if (i < linesList.size() - 1) {
                     bw.newLine();
                 }
@@ -200,14 +50,13 @@ public class Edit {
         String[] items_id = item_line.split(",");
         List<String> items = new ArrayList<>();
         for(String item:items_id){
-            System.out.println(item);
             if(!item.equals(itemID)){
                 items.add(item);
             }
         }
         items_id = items.toArray(new String[0]);
         item_line = String.join(",", items_id);
-        Edit.supplier(supplierID,4,item_line);
+        Edit.editingColumn("supplier", supplierID,4,item_line);
     }
 
     public static void addItemForInventory(String supplierID, String itemID){
@@ -219,7 +68,7 @@ public class Edit {
         }else{
             item_line = itemID;
         }
-        Edit.supplier(supplierID,4,item_line);
+        Edit.editingColumn("supplier", supplierID,4,item_line);
     }
 
     public static void updateSalesTxt(){

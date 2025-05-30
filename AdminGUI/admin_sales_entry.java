@@ -8,7 +8,6 @@ import com.mycompany.JavaY2.Class.*;
 import com.mycompany.JavaY2.Object.DailySale;
 import com.mycompany.JavaY2.Object.ObjectList;
 import com.mycompany.JavaY2.Object.SessionManager;
-import com.mycompany.JavaY2.Object.Supplier;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -269,7 +268,7 @@ public class admin_sales_entry extends javax.swing.JFrame {
             TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/daily_sales_items", line);
             int stock = Integer.parseInt(TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/inventory",0,group_id,2));
             String new_stock = Integer.toString(stock - Integer.parseInt(quantity));
-            Edit.inventory(group_id, 2, new_stock);
+            Edit.editingColumn("inventory",group_id, 2, new_stock);
             JOptionPane.showMessageDialog(null, "Successfully added a new daily sales", "Success", JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forDailySale(jTable1);
         }
@@ -294,7 +293,7 @@ public class admin_sales_entry extends javax.swing.JFrame {
             int stock = Integer.parseInt(TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/inventory", 0, group_id, 2));
             String new_stock = Integer.toString(stock + quantity);
             TextFile.deleteLine("src/main/java/com/mycompany/JavaY2/TextFile/daily_sales_items", daily_sales_id,0);
-            Edit.inventory(group_id, 2, new_stock);
+            Edit.editingColumn("inventory",group_id, 2, new_stock);
             JOptionPane.showMessageDialog(null, "Successfully delete a new daily sales", "Success", JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forDailySale(jTable1);
         }
@@ -345,13 +344,13 @@ public class admin_sales_entry extends javax.swing.JFrame {
                 if(result == JOptionPane.YES_OPTION){
                     String old_item_name = jTable1.getValueAt(selected_row, 2).toString();
                     int quantity = Integer.parseInt(jTable1.getValueAt(selected_row,1).toString());
-                    Edit.dailySalesItems(daily_sales_id, 2, group_id);
+                    Edit.editingColumn("daily_sales_item", daily_sales_id, 2, group_id);
                     //Update new item inventory
                     int stock = Integer.parseInt(TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/inventory", 0, group_id, 2)) - quantity;
-                    Edit.inventory(group_id,2, Integer.toString(stock));
+                    Edit.editingColumn("inventory",group_id,2, Integer.toString(stock));
                     //Update old item inventory
                     stock = Integer.parseInt(TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/inventory", 0, Search.getGroupIDbyItemName(old_item_name), 2)) + quantity;
-                    Edit.inventory(Search.getGroupIDbyItemName(old_item_name),2, Integer.toString(stock));
+                    Edit.editingColumn("inventory",Search.getGroupIDbyItemName(old_item_name),2, Integer.toString(stock));
 
                     JOptionPane.showMessageDialog(null, "The item name updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                     UpdateTable.forDailySale(jTable1);
@@ -374,12 +373,12 @@ public class admin_sales_entry extends javax.swing.JFrame {
                 if(result2 == JOptionPane.YES_OPTION){
                     int old_quantity = Integer.parseInt(jTable1.getValueAt(selected_row,1).toString());
                     int stock = Integer.parseInt(TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/inventory", 0, group_id, 2)) + old_quantity;
-                    Edit.inventory(group_id,2, Integer.toString(stock));
+                    Edit.editingColumn("inventory",group_id,2, Integer.toString(stock));
 
                     stock = Integer.parseInt(TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/inventory", 0, group_id, 2)) - Integer.parseInt(quantity);
-                    Edit.inventory(group_id,2, Integer.toString(stock));
+                    Edit.editingColumn("inventory",group_id,2, Integer.toString(stock));
 
-                    Edit.dailySalesItems(daily_sales_id, 1, quantity);
+                    Edit.editingColumn("daily_sales_item", daily_sales_id, 1, quantity);
 
                     JOptionPane.showMessageDialog(null, "The item quantity updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                     UpdateTable.forDailySale(jTable1);
@@ -402,7 +401,7 @@ public class admin_sales_entry extends javax.swing.JFrame {
                 int result3 = JOptionPane.showConfirmDialog(null, "Confirm to update item retail price to: "+retail_price+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                 if(result3 == JOptionPane.YES_OPTION){
                     retail_price = Double.toString(Math.round(Double.parseDouble(retail_price)* 10.0) / 10.0);
-                    Edit.dailySalesItems(daily_sales_id, 3, retail_price);
+                    Edit.editingColumn("daily_sales_item", daily_sales_id, 3, retail_price);
                     JOptionPane.showMessageDialog(null, "The item retail price updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                     UpdateTable.forDailySale(jTable1);
                     Edit.updateSalesTxt();
@@ -423,7 +422,7 @@ public class admin_sales_entry extends javax.swing.JFrame {
                 }
                 int result4 = JOptionPane.showConfirmDialog(null, "Confirm to update date to: "+date+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                 if(result4 == JOptionPane.YES_OPTION){
-                    Edit.dailySalesItems(daily_sales_id,4, date);
+                    Edit.editingColumn("daily_sales_item", daily_sales_id,4, date);
                     JOptionPane.showMessageDialog(null, "The date updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                     UpdateTable.forDailySale(jTable1);
                     Edit.updateSalesTxt();

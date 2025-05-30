@@ -340,7 +340,7 @@ public class admin_user_management extends javax.swing.JFrame {
                     }
                     int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want change username to: "+username, "Confirmation",JOptionPane.YES_NO_OPTION);
                     if(result == JOptionPane.YES_OPTION){
-                        Edit.users(user_id, 1, username);
+                        Edit.editingColumn("user",user_id, 1, username);
                         JOptionPane.showMessageDialog(null, "The username had successfully being updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
                         UpdateTable.forUser(jTable1);
                     }
@@ -360,7 +360,7 @@ public class admin_user_management extends javax.swing.JFrame {
                     }
                     int result2 = JOptionPane.showConfirmDialog(null, "Do you want sure you want change password to: "+password, "Confirmation",JOptionPane.YES_NO_OPTION);
                     if(result2 == JOptionPane.YES_OPTION){
-                        Edit.users(user_id, 2, password);
+                        Edit.editingColumn("user",user_id, 2, password);
                         JOptionPane.showMessageDialog(null, "The password had successfully being updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
                         UpdateTable.forUser(jTable1);
                     }
@@ -386,7 +386,7 @@ public class admin_user_management extends javax.swing.JFrame {
                     }
                     int result3 = JOptionPane.showConfirmDialog(null, "Do you want sure you want change role to: "+role, "Confirmation",JOptionPane.YES_NO_OPTION);
                     if(result3 == JOptionPane.YES_OPTION){
-                        Edit.users(user_id, 3, role.toLowerCase());
+                        Edit.editingColumn("user",user_id, 3, role.toLowerCase());
                         JOptionPane.showMessageDialog(null, "The role had successfully being updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
                         UpdateTable.forUser(jTable1);
                     }

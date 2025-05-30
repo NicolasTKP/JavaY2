@@ -4,10 +4,11 @@
  */
 package com.mycompany.JavaY2.SalesManagerGUI;
 
-import com.mycompany.JavaY2.Class.DataMapping;
 import com.mycompany.JavaY2.Class.TextFile;
 import javax.swing.JOptionPane;
 import com.mycompany.JavaY2.Object.PurchaseRequisition;
+import com.mycompany.JavaY2.Class.DataMapping;
+import com.mycompany.JavaY2.Class.ValidateFormat;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,6 +16,9 @@ import com.mycompany.JavaY2.Object.SessionManager;
 import java.util.Map;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 /**
  *
  * @author User
@@ -216,18 +220,22 @@ public class SM_pr_add extends javax.swing.JFrame {
         int quantity = (int) pr_quantity_spinner.getValue();
         String request_date = formatted_date;
         String required_date = required_date_textfield.getText();
-        String status = "pending";
+        String status = "Pending";
 
         DataMapping mapping = new DataMapping();
         Map<String, String> inventory_map = mapping.NameIdMapping(inventory_file_path);
         String group_id = inventory_map.get(selected_item);
-
+  
         String pr_details = request_id + "|" + group_id + "|" + user_id + "|" + quantity + "|" + request_date + "|" + required_date + "|" + status;
-
+                       
         if (quantity <=0){
             JOptionPane.showMessageDialog(this, "Please enter a valid item quantity.");
         }else if (required_date.isEmpty()){
             JOptionPane.showMessageDialog(this, "Please enter the item required date");
+        }else if(!ValidateFormat.date(required_date)){
+            JOptionPane.showMessageDialog(this, "Invalid date format. Please enter the request date as ddMMyyyy.");
+        }else if(!ValidateFormat.prItems(group_id)){
+            JOptionPane.showMessageDialog(this, "The PR of this item has been raised. Please wait for it to be processed.");
         }else{
             TextFile.addLine(pr_file_path, pr_details);
             JOptionPane.showMessageDialog(this,"New PR has been raised successfully");

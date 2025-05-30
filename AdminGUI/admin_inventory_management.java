@@ -395,8 +395,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
         }
         else if (choice.equals("Choose from existing supplier")){
             //Supplier ID
-            String[] suppliers = Query.getAllSupplier();
-            suppliers = Query.notUsedSuppliers(suppliers, group_id);
+            String[] suppliers = Query.notUsedSuppliers(group_id);
             assert suppliers != null;
             if (suppliers.length == 0){
                 JOptionPane.showMessageDialog(null, "All supplier in record are supplying this product already", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -532,9 +531,10 @@ public class admin_inventory_management extends javax.swing.JFrame {
             }else {
                 line = line +","+item_id;
             }
-            Edit.supplier(supplier_id,4,line);
+            Edit.editingColumn("supplier", supplier_id,4,line);
             JOptionPane.showMessageDialog(null, "New item successfully added", "Successful", JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forItems(jTable1);
+            UpdateTable.forInventory(jTable2);
         }else {
             return;
         }
@@ -641,7 +641,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
             }
             items_id = items.toArray(new String[0]);
             item_line = String.join(",", items_id);
-            Edit.supplier(supplier_id,4,item_line);
+            Edit.editingColumn("supplier", supplier_id,4,item_line);
             JOptionPane.showMessageDialog(null, "Selected item successfully deleted", "Successful", JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forItems(jTable1);
         }
@@ -682,7 +682,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
                     if (ValidateFormat.unitPrice(stock_price)){
                         int result = JOptionPane.showConfirmDialog(null, "Confirm to change stock price to: "+stock_price+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                         if(result == JOptionPane.YES_OPTION){
-                            Edit.item(item_id, 2, stock_price);
+                            Edit.editingColumn("item", item_id, 2, stock_price);
                             JOptionPane.showMessageDialog(null, "Stock price successfully updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
                             UpdateTable.forItems(jTable1);
                             break;
@@ -702,10 +702,10 @@ public class admin_inventory_management extends javax.swing.JFrame {
                     if (ValidateFormat.quantityUnit(sales_per_day)){
                         int result = JOptionPane.showConfirmDialog(null, "Confirm to change sales per day to: "+sales_per_day+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                         if(result == JOptionPane.YES_OPTION){
-                            Edit.item(item_id, 3, sales_per_day);
+                            Edit.editingColumn("item", item_id, 3, sales_per_day);
                             String ordering_lead_time = jTable1.getValueAt(selected_row, 4).toString();
                             String safety_level = Integer.toString(Integer.parseInt(sales_per_day) * Integer.parseInt(ordering_lead_time));
-                            Edit.item(item_id, 5, safety_level);
+                            Edit.editingColumn("item", item_id, 5, safety_level);
                             JOptionPane.showMessageDialog(null, "Sales per day successfully updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
                             UpdateTable.forItems(jTable1);
                             break;
@@ -725,10 +725,10 @@ public class admin_inventory_management extends javax.swing.JFrame {
                     if (ValidateFormat.quantityUnit(ordering_lead_time)){
                         int result = JOptionPane.showConfirmDialog(null, "Confirm to change ordering lead time to: "+ordering_lead_time+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                         if(result == JOptionPane.YES_OPTION){
-                            Edit.item(item_id, 4, ordering_lead_time);
+                            Edit.editingColumn("item", item_id, 4, ordering_lead_time);
                             String sales_per_day = jTable1.getValueAt(selected_row, 3).toString();
                             String safety_level = Integer.toString(Integer.parseInt(sales_per_day) * Integer.parseInt(ordering_lead_time));
-                            Edit.item(item_id, 5, safety_level);
+                            Edit.editingColumn("item", item_id, 5, safety_level);
                             JOptionPane.showMessageDialog(null, "Ordering lead time successfully updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
                             UpdateTable.forItems(jTable1);
                             break;
@@ -741,9 +741,8 @@ public class admin_inventory_management extends javax.swing.JFrame {
 
             case "Supplier":
                 String supplier_id;
-                String[] suppliers = Query.getAllSupplier();
                 String group_id = jTable1.getValueAt(selected_row, 7).toString();
-                suppliers = Query.notUsedSuppliers(suppliers, group_id);
+                String[] suppliers = Query.notUsedSuppliers(group_id);
                 assert suppliers != null;
                 if (suppliers.length == 0){
                     JOptionPane.showMessageDialog(null, "All supplier in record are supplying this product already", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -766,7 +765,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
                     String old_supplier = Search.getSupplierID(jTable1.getValueAt(selected_row, 6).toString());
                     Edit.removeItemForInventory(old_supplier,item_id);
                     Edit.addItemForInventory(supplier_id,item_id);
-                    Edit.item(item_id, 6, supplier_id);
+                    Edit.editingColumn("item", item_id, 6, supplier_id);
                     JOptionPane.showMessageDialog(null, "Supplier successfully updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
                     UpdateTable.forItems(jTable1);
                 }
@@ -869,7 +868,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please select an inventory item group to modify", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        String[] options = {"Item Name", "Quantity", "Retail Price"};
+        String[] options = {"Item Name", "Retail Price"};
         String option = (String) JOptionPane.showInputDialog(
                 null,
                 "Choose a column to edit:",
@@ -895,14 +894,14 @@ public class admin_inventory_management extends javax.swing.JFrame {
                 int result = JOptionPane.showConfirmDialog(null, "Confirm to change the item name to: "+item_name+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                 if(result == JOptionPane.YES_OPTION) {
                     String group_id = jTable2.getValueAt(selected_row,0).toString();
-                    Edit.inventory(group_id, 1, item_name);
+                    Edit.editingColumn("inventory",group_id, 1, item_name);
                     try {
                         List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
                         for (String line:linesList){
                             String[] lines = line.split("\\|");
                             if (lines[7].equals(group_id)){
                                 String item_id = lines[0];
-                                Edit.item(item_id,1,item_name);
+                                Edit.editingColumn("item", item_id,1,item_name);
                             }
                         }
                     }catch (IOException e){
@@ -912,42 +911,6 @@ public class admin_inventory_management extends javax.swing.JFrame {
                     UpdateTable.forInventory(jTable2);
                     JOptionPane.showMessageDialog(null, "Item name updated successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
 
-                }
-                break;
-
-            case "Quantity":
-                String[] receives = Query.getNotReceivedReceives();
-                if (receives.length == 0){
-                    JOptionPane.showMessageDialog(null, "No order had been placed recently", "Warning", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-                String receive = (String) JOptionPane.showInputDialog(
-                        null,
-                        "Choose an item that received:",
-                        "Dropdown Selection",
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        receives,
-                        receives[0]);
-                if (receive == null){
-                    return;
-                }
-                int result2 = JOptionPane.showConfirmDialog(null, "Are you confirm that the order: "+receive+ " is received?", "Confirmation",JOptionPane.YES_NO_OPTION);
-                if(result2 == JOptionPane.YES_OPTION) {
-                    String item_id = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/receives",0,receive,1);
-                    String group_id = Search.getGroupIDbyItemName(Search.getItemNamebyItemID(item_id));
-                    Edit.receives(receive,6, "Received");
-                    String receive_quantity = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/receives",0,receive,3);
-                    String inventory_quantity = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/inventory",0,group_id,2);
-                    assert receive_quantity != null;
-                    assert inventory_quantity != null;
-                    String quantity = Integer.toString(Integer.parseInt(receive_quantity) + Integer.parseInt(inventory_quantity));
-                    Edit.inventory(group_id,2,quantity);
-                    String date = Query.getCurrentDate();
-                    Edit.receives(receive,5,date);
-                    Edit.receives(receive,8, "Unpaid");
-                    UpdateTable.forInventory(jTable2);
-                    JOptionPane.showMessageDialog(null, "Quantity updated successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
                 }
                 break;
 
@@ -961,7 +924,7 @@ public class admin_inventory_management extends javax.swing.JFrame {
                     if (ValidateFormat.unitPrice(retail_price)){
                         int result3 = JOptionPane.showConfirmDialog(null, "Confirm to change retail price to: "+retail_price+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                         if(result3 == JOptionPane.YES_OPTION){
-                            Edit.inventory(group_id, 3, retail_price);
+                            Edit.editingColumn("inventory",group_id, 3, retail_price);
                             JOptionPane.showMessageDialog(null, "Retail price successfully updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
                             UpdateTable.forInventory(jTable2);
                             break;

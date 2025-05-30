@@ -1,11 +1,5 @@
 package com.mycompany.JavaY2.Class;
 
-import com.mycompany.JavaY2.Object.ObjectList;
-import com.mycompany.JavaY2.Object.PurchaseOrder;
-import com.mycompany.JavaY2.Object.Receives;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -241,73 +235,6 @@ public class Query {
         }
     }
 
-    public static String getLowStockItems(){
-        try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
-            StringBuilder res = new StringBuilder();
-            for (int i=1;i<linesList.size();i++){
-                String line = linesList.get(i);
-                String[] column = line.split("\\|");
-                int safety_level = Integer.parseInt(column[5]);
-                int stock = Integer.parseInt(Search.getFromInventory(column[7], 2));
-                if (stock < safety_level){
-                    if (res.toString().equals("")){
-                        res = new StringBuilder(column[0] + " " + column[1]);
-                    }else{
-                        res.append(",").append(column[0]).append(" ").append(column[1]);
-                    }
-                }
-            }
-            return res.toString();
-
-        }catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static String[] getNotReceivedReceives(){
-        try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/receives"));
-            List<String> ls = new ArrayList<>();
-            for (int i=1;i<linesList.size();i++){
-                String line = linesList.get(i);
-                String[] column = line.split("\\|");
-                if (column[6].equals("Not Received")){
-                    ls.add(column[0]);
-                }
-            }
-            return ls.toArray(new String[0]);
-
-        }catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static String[] notUsedSuppliers(String[] suppliers, String group_id){
-        try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
-            List<String> ls = new ArrayList<>(Arrays.asList(suppliers));
-            for (String line:linesList){
-                if(line.split("\\|")[7].equals(group_id)){
-                    ls.remove(Search.getSupplierName(line.split("\\|")[6]));
-                }
-            }
-            return ls.toArray(new String[0]);
-
-        }catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static String getCurrentDate(){
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
-        return today.format(formatter);
-    }
-
     public static String[] getAllPurchaseOrder(String groupID){
         try {
             List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders"));
@@ -334,4 +261,72 @@ public class Query {
             return null;
         }
     }
+
+    public static String getLowStockItems(){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
+            StringBuilder res = new StringBuilder();
+            for (int i=1;i<linesList.size();i++){
+                String line = linesList.get(i);
+                String[] column = line.split("\\|");
+                int safety_level = Integer.parseInt(column[5]);
+                int stock = Integer.parseInt(Search.getFromInventory(column[7], 2));
+                if (stock < safety_level){
+                    if (res.toString().equals("")){
+                        res = new StringBuilder(column[0] + " " + column[1]);
+                    }else{
+                        res.append(",").append(column[0]).append(" ").append(column[1]);
+                    }
+                }
+            }
+            return res.toString();
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String[] getNotReceivedOrders(){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/receives"));
+            List<String> ls = new ArrayList<>();
+            for (int i=1;i<linesList.size();i++){
+                String line = linesList.get(i);
+                String[] column = line.split("\\|");
+                if (column[6].equals("Not Received")){
+                    ls.add(column[0]);
+                }
+            }
+            return ls.toArray(new String[0]);
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String[] notUsedSuppliers(String group_id){
+        try {
+            List<String> itemList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
+            List<String> ls = new ArrayList<>(Arrays.asList(getAllSupplier()));
+            for (String item:itemList){
+                if(item.split("\\|")[7].equals(group_id)){
+                    ls.remove(Search.getSupplierName(item.split("\\|")[6]));
+                }
+            }
+            return ls.toArray(new String[0]);
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getCurrentDate(){
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+        return today.format(formatter);
+    }
+
 }
