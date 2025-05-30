@@ -6,7 +6,8 @@ package com.mycompany.JavaY2.SalesManagerGUI;
 
 import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.Supplier;
-import com.mycompany.javaY2.Class.DataMapping;
+import com.mycompany.JavaY2.Class.DataMapping;
+import com.mycompany.JavaY2.Object.SessionManager;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -55,7 +56,7 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
         Map<String,String> item_map = mapping.IdNameMapping(item_file_path);
         Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
         column_mappings.put(4, item_map); // supplier_id column
-        TextFile.populateTable(supplierContainer, supplierTableColumnName, supplier_file_path, 50, supplier_table, column_mappings);          
+        TextFile.populateTable(supplierContainer, supplier_table, supplierTableColumnName, supplier_file_path, 50, column_mappings);          
     }
     
     private void supplierSearchFunction(String supplier_keyword) {
@@ -228,6 +229,12 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
     private void delete_supplier_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_supplier_buttonActionPerformed
         int selected_row = supplier_table.getSelectedRow();
         
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         String selected_id = supplier_table.getValueAt(selected_row, 0).toString();
         
         if (selected_row != -1) {
@@ -240,8 +247,15 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
             );
 
             if (response == JOptionPane.YES_OPTION) {
-                TextFile.deleteTextfileLine(supplier_file_path, selected_id);
-                JOptionPane.showMessageDialog(null, "You have deleted the supplier. Supplier table is updated");
+                TextFile.deleteLine(supplier_file_path, selected_id,0);
+                String[] items = supplier_table.getValueAt(selected_row, 4).toString().split(",");
+                for(String item:items){
+                    DataMapping mapping = new DataMapping();
+                    Map<String,String> item_map = mapping.NameIdMapping(item_file_path);
+                    String item_id = item_map.get(item);
+                    TextFile.deleteLine(item_file_path, item_id, 0);
+                }
+                JOptionPane.showMessageDialog(null, "You have deleted the supplier, items supplied by the supplier also being removed. Supplier table and item table is updated");
             } else {
                 // Cancel editing
             JOptionPane.showMessageDialog(null, "You have decided to not delete the supplier. Back to supplier mainpage now");
@@ -253,6 +267,12 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
 
     private void edit_supplier_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_supplier_buttonActionPerformed
         int selected_row = supplier_table.getSelectedRow();
+        
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }  
         
         if (selected_row != -1) {
             int response = JOptionPane.showConfirmDialog(
@@ -282,7 +302,15 @@ public class SM_supplier_mainpage extends javax.swing.JFrame {
     }//GEN-LAST:event_edit_supplier_buttonActionPerformed
 
     private void add_supplier_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_supplier_buttonActionPerformed
-        new SM_supplier_add().setVisible(true);
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }else{
+            new SM_supplier_add().setVisible(true);            
+        }        
+        
+
     }//GEN-LAST:event_add_supplier_buttonActionPerformed
 
     private void homepage_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homepage_button1ActionPerformed

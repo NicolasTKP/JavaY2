@@ -70,6 +70,8 @@ public class SM_item_edit extends javax.swing.JFrame {
         String updated_item_details = item_id + "|" + item_name + "|" + stock_price + "|" + sales_per_day + "|" + ordering_lead_time + "|" + safety_level + "|" + supplier_name + "|" + group_id;
         return updated_item_details;
     }
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

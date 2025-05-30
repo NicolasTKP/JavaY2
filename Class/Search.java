@@ -261,6 +261,44 @@ public class Search {
         }
     }
 
+    public static String[] getSuppliersByGroupID(String groupID){
+        try {
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
+            List<String> ls = new ArrayList<>();
+            for (int i=1;i<linesList.size();i++){
+                String line = linesList.get(i);
+                String[] column = line.split("\\|");
+                if (column[7].equals(groupID)){
+                    ls.add(Search.getSupplierName(column[6]));
+                }
+            }
+            return Arrays.copyOf(ls.toArray(), ls.toArray().length, String[].class);
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getRetailPrice(String groupID){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                if (line.split("\\|")[0].equals(groupID.toUpperCase())){
+                    return line.split("\\|")[3];
+                }
+
+            }
+            br.close();
+            return null;
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String getFromPR(String requestID, int column){
         try {
             BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/purchase_requisitions"));
@@ -360,43 +398,4 @@ public class Search {
             return null;
         }
     }
-
-    public static String[] getSuppliersByGroupID(String groupID){
-        try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/items"));
-            List<String> ls = new ArrayList<>();
-            for (int i=1;i<linesList.size();i++){
-                String line = linesList.get(i);
-                String[] column = line.split("\\|");
-                if (column[7].equals(groupID)){
-                    ls.add(Search.getSupplierName(column[6]));
-                }
-            }
-            return Arrays.copyOf(ls.toArray(), ls.toArray().length, String[].class);
-        }catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static String getRetailPrice(String groupID){
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/inventory"));
-            String line;
-            br.readLine();
-            while ((line = br.readLine()) != null) {
-                if (line.split("\\|")[0].equals(groupID.toUpperCase())){
-                    return line.split("\\|")[3];
-                }
-
-            }
-            br.close();
-            return null;
-
-        }catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
 }

@@ -6,7 +6,9 @@ package com.mycompany.JavaY2.SalesManagerGUI;
 
 import com.mycompany.JavaY2.Class.TextFile;
 import javax.swing.JOptionPane;
-import com.mycompany.javaY2.Class.DataMapping;
+import com.mycompany.JavaY2.Class.DataMapping;
+import com.mycompany.JavaY2.Class.ValidateFormat;
+
 import java.util.Map;
 /**
  *
@@ -34,21 +36,6 @@ public class SM_supplier_edit extends javax.swing.JFrame {
         payment_term_textfield.setText(payment_term);
     }
 
-    private String getSupplierDetails(String supplier_id){
-        String supplier_name = supplier_name_textfield.getText().trim();
-        String address = address_textfield.getText().trim();
-        String contact_number = contact_number_textfield.getText().trim();
-        String supply_item_name = supply_item_textfield.getText().trim().toLowerCase();
-        String payment_term = payment_term_textfield.getText().trim().toLowerCase();
-        
-        DataMapping mapping = new DataMapping();
-        Map<String, String> item_map = mapping.NameIdMapping(item_file_path);
-        
-        String supply_item_id = item_map.get(supply_item_name);
-                
-        String supplier_details = supplier_id + "|" + supplier_name + "|" + address + "|" + contact_number + "|" + supply_item_id + "|" + payment_term;
-        return supplier_details;
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -220,13 +207,29 @@ public class SM_supplier_edit extends javax.swing.JFrame {
     private void add_supplier_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_supplier_buttonActionPerformed
 
         String supplier_id = supplier_id_textfield.getText().trim();
+        String supplier_name = supplier_name_textfield.getText().trim();
+        String address = address_textfield.getText().trim();
+        String contact_number = contact_number_textfield.getText().trim();
+        String supply_item_name = supply_item_textfield.getText().trim().toLowerCase();
+        String payment_term = payment_term_textfield.getText().trim().toLowerCase();
         
-        String updated_supplier_details = getSupplierDetails(supplier_id);
-        boolean edit_supplier_success = TextFile.editTextfileRow(this, supplier_file_path, supplier_id, 0, updated_supplier_details, 6 );
+        DataMapping mapping = new DataMapping();
+        Map<String, String> item_map = mapping.NameIdMapping(item_file_path);
         
-        if(edit_supplier_success){
-            JOptionPane.showMessageDialog(this, "Supplier has been edited successfully, back to supplier mainpage now");
-            this.dispose();
+        String supply_item_id = item_map.get(supply_item_name);
+        
+        if(address.isEmpty() || contact_number.isEmpty() || supply_item_name.isEmpty() || payment_term.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Please fill in all the required fields.");
+        }else if(!ValidateFormat.contact(contact_number)){
+             JOptionPane.showMessageDialog(this, "Invalid contact number format.");                
+        }else{
+            String updated_supplier_details = supplier_id + "|" + supplier_name + "|" + address + "|" + contact_number + "|" + supply_item_id + "|" + payment_term;        
+            boolean edit_supplier_success = TextFile.editTextfileRow(this, supplier_file_path, supplier_id, 0, updated_supplier_details, 6 );
+            
+            if(edit_supplier_success){
+                JOptionPane.showMessageDialog(this, "Supplier has been edited successfully, back to supplier mainpage now");
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_add_supplier_buttonActionPerformed
 

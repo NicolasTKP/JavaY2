@@ -80,10 +80,10 @@ public class PDFPrinter {
             return stockAfterRestock;
         }
     }
-    public void printPurchaseOrder(String orderID, String orderDate, String requester, String supplier, String PRID,
-                                   String shippingTerm, String paymentTerm, String vendorCode, String vendorName,
-                                   String vendorAddress, String vendorPhone, String totalAmount, String status,
-                                   PDFPrinter.PDFItem items) throws IOException, JRException {
+    public void print(String orderID, String orderDate, String requester, String supplier, String PRID,
+                      String shippingTerm, String paymentTerm, String vendorCode, String vendorName,
+                      String vendorAddress, String vendorPhone, String totalAmount, String status,
+                      PDFPrinter.PDFItem items) throws IOException, JRException {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("OrderID", orderID);
         parameters.put("OrderDate", orderDate);
@@ -143,8 +143,8 @@ public class PDFPrinter {
         }
     }
 
-    public void printPurchaseRequisition(String requestID, String requester, String requestDate, String requiredDate,
-                                   String status, PDFPrinter.PDFRequest request) throws IOException, JRException {
+    public void print(String requestID, String requester, String requestDate, String requiredDate,
+                      String status, PDFPrinter.PDFRequest request) throws IOException, JRException {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("RequisitionID", requestID);
         parameters.put("RequestBy", requester);

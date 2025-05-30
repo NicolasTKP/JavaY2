@@ -4,9 +4,12 @@
  */
 package com.mycompany.JavaY2.SalesManagerGUI;
 
+import com.mycompany.JavaY2.AdminGUI.admin_pr_view;
 import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.PurchaseRequisition;
-import com.mycompany.javaY2.Class.DataMapping;
+import com.mycompany.JavaY2.Object.SessionManager;
+import com.mycompany.JavaY2.Class.DataMapping;
+import com.mycompany.JavaY2.Class.PDFPrinter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -24,7 +27,8 @@ import javax.swing.table.DefaultTableModel;
 public class SM_pr_mainpage extends javax.swing.JFrame {
     private final String pr_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/purchase_requisitions";
     private final String inventory_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/inventory";
-    
+    private final String user_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/users";
+        
     private final DefaultTableModel prContainer = new DefaultTableModel();
     private final String prTableColumnName[] = {"Request ID", "Item Name", "Raised By", "Quantity", "Request Date", "Required Date", "Status"};
 
@@ -53,9 +57,13 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
     private void populatePrTable(){
         DataMapping mapping = new DataMapping();
         Map<String,String> inventory_map = mapping.IdNameMapping(inventory_file_path);
+        Map<String,String> user_map = mapping.IdNameMapping(user_file_path);
+        
         Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
         column_mappings.put(1, inventory_map); // supplier_id column
-        TextFile.populateTable(prContainer, prTableColumnName, pr_file_path, 50, pr_table, column_mappings);          
+        column_mappings.put(2, user_map); 
+        
+        TextFile.populateTable(prContainer, pr_table, prTableColumnName, pr_file_path, 50,column_mappings);          
     }        
     
 
@@ -70,7 +78,8 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
             
         DataMapping mapping = new DataMapping();
         Map<String,String> inventory_map = mapping.IdNameMapping(inventory_file_path);
-
+        Map<String,String> user_map = mapping.IdNameMapping(user_file_path);
+        
         try (BufferedReader br = new BufferedReader(new FileReader(pr_file_path))) {
             String pr_line;
             Set<String> uniquePrRows = new HashSet<>();
@@ -84,7 +93,7 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
                     PurchaseRequisition pr = new PurchaseRequisition(
                             pr_details[0],
                             inventory_map.get(pr_details[1]),
-                            pr_details[2],
+                            user_map.get(pr_details[2]),
                             Integer.parseInt(pr_details[3]),
                             pr_details[4],
                             pr_details[5],
@@ -94,6 +103,7 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
                     if (pr.anyPrMatch(pr_keyword)) {
                         
                         pr_details[1] = inventory_map.get(pr_details[1]);
+                        pr_details[2] = user_map.get(pr_details[2]);
                         prContainer.addRow(pr_details);
                         uniquePrRows.add(pr_line);
                     }
@@ -123,6 +133,7 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
         pr_table = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         pr_search_bar = new javax.swing.JTextField();
+        view_pr_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -180,6 +191,14 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
             }
         });
 
+        view_pr_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        view_pr_button.setText("View PR");
+        view_pr_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                view_pr_buttonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -190,7 +209,8 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
                     .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(add_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(delete_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edit_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edit_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(view_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -205,25 +225,25 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(7, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(add_item_label1)
+                        .addComponent(jLabel2))
+                    .addComponent(pr_search_bar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(82, Short.MAX_VALUE)
                         .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(77, 77, 77)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(add_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(84, 84, 84)
+                        .addGap(39, 39, 39)
                         .addComponent(edit_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(89, 89, 89)
-                        .addComponent(delete_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(add_item_label1)
-                                .addComponent(jLabel2))
-                            .addComponent(pr_search_bar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)))
+                        .addGap(43, 43, 43)
+                        .addComponent(delete_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(view_pr_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE))
                 .addGap(58, 58, 58))
         );
 
@@ -236,12 +256,25 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
     }//GEN-LAST:event_homepage_button1ActionPerformed
 
     private void add_pr_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_pr_buttonActionPerformed
-        new SM_pr_add().setVisible(true);
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }else{
+            new SM_pr_add().setVisible(true);            
+        }        
+
     }//GEN-LAST:event_add_pr_buttonActionPerformed
 
     private void edit_pr_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_pr_buttonActionPerformed
         int selected_row = pr_table.getSelectedRow();
-
+        
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         if (selected_row != -1) {
             int response = JOptionPane.showConfirmDialog(
                 null,
@@ -273,6 +306,12 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
     private void delete_pr_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_pr_buttonActionPerformed
         int selected_row = pr_table.getSelectedRow();
 
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         String selected_id = pr_table.getValueAt(selected_row, 0).toString();
 
         if (selected_row != -1) {
@@ -285,7 +324,7 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
             );
 
             if (response == JOptionPane.YES_OPTION) {
-                TextFile.deleteTextfileLine(pr_file_path, selected_id);
+                TextFile.deleteLine(pr_file_path, selected_id, 0);
                 JOptionPane.showMessageDialog(null, "You have deleted the PR. PR table is updated");
             } else {
                 // Cancel editing
@@ -304,6 +343,17 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
         String pr_keyword = pr_search_bar.getText();
         prSearchFunction(pr_keyword);
     }//GEN-LAST:event_pr_search_barActionPerformed
+
+    private void view_pr_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_pr_buttonActionPerformed
+        int selected_row = pr_table.getSelectedRow();
+        if (selected_row == -1){
+            JOptionPane.showMessageDialog(null, "Please select a row to view", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        SM_pr_view page = new SM_pr_view(pr_table.getValueAt(selected_row,0).toString());
+        page.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_view_pr_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -351,5 +401,6 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField pr_search_bar;
     private javax.swing.JTable pr_table;
+    private javax.swing.JButton view_pr_button;
     // End of variables declaration//GEN-END:variables
 }

@@ -260,9 +260,9 @@ public class admin_finance_report2 extends javax.swing.JFrame {
         String order_id = jTable1.getValueAt(selected_row,0).toString();
         int result = JOptionPane.showConfirmDialog(null, "Do you want sure mark purchase order: "+order_id+" as paid?", "Confirmation",JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
-            String date = Query.getCurrectDate();
-            Edit.receives(order_id,8, "Paid");
-            Edit.receives(order_id,7,date);
+            String date = Query.getCurrentDate();
+            Edit.editingColumn("receive", order_id,8, "Paid");
+            Edit.editingColumn("receive", order_id,7,date);
             JOptionPane.showMessageDialog(null, "Successfully mark the purchase order as paid", "Successful", JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forPayment(jTable1);
             int row_count = jTable1.getRowCount();

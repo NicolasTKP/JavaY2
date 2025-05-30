@@ -7,6 +7,7 @@ package com.mycompany.JavaY2.AdminGUI;
 import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.Class.ValidateFormat;
 import com.mycompany.JavaY2.Object.SessionManager;
+import com.mycompany.JavaY2.SalesManagerGUI.SM_mainpage;
 
 import javax.swing.*;
 
@@ -153,8 +154,8 @@ public class admin_profile extends javax.swing.JFrame {
 
         int result = JOptionPane.showConfirmDialog(null, "Confirm to update user profile with username: "+username+ "\nand password: "+password+" ?", "Confirmation",JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
-            Edit.users(SessionManager.getInstance().userID, 1, username);
-            Edit.users(SessionManager.getInstance().userID, 2, password);
+            Edit.editingColumn("user",SessionManager.getInstance().userID, 1, username);
+            Edit.editingColumn("user",SessionManager.getInstance().userID, 2, password);
             SessionManager.getInstance().username = username;
             SessionManager.getInstance().password = password;
             JOptionPane.showMessageDialog(null, "Update successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -164,8 +165,34 @@ public class admin_profile extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        admin_mainpage page = new admin_mainpage();
-        page.setVisible(true);
+        if(SessionManager.getInstance().role != null) {
+            switch (SessionManager.getInstance().role) {
+                case "sales manager":
+                    SM_mainpage sm_mainpage = new SM_mainpage();
+                    sm_mainpage.setVisible(true);
+                    break;
+                case "purchase manager":
+                    //PM mainpage;
+                    //PM mainpage.setVisible(true);
+                    break;
+                case "inventory manager":
+                    //IM mainpage;
+                    //IM mainpage.setVisible(true);
+                    break;
+                case "finance manager":
+                    //FM mainpage;
+                    //FM mainpage.setVisible(true);
+                    break;
+                default:
+                    admin_mainpage admin_mainpage = new admin_mainpage();
+                    admin_mainpage.setVisible(true);
+                    break;
+            }
+        }else {
+            admin_mainpage admin_mainpage = new admin_mainpage();
+            admin_mainpage.setVisible(true);
+        }
+
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 

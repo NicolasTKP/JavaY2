@@ -4,9 +4,7 @@
  */
 package com.mycompany.JavaY2.AdminGUI;
 
-import com.mycompany.JavaY2.Class.Edit;
-import com.mycompany.JavaY2.Class.Matrix;
-import com.mycompany.JavaY2.Class.UpdateTable;
+import com.mycompany.JavaY2.Class.*;
 import com.mycompany.JavaY2.Object.ObjectList;
 import com.mycompany.JavaY2.Object.Receives;
 import com.mycompany.JavaY2.Object.SessionManager;
@@ -45,12 +43,14 @@ public class admin_order_tracking extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         ObjectList objectList = new ObjectList();
         List<Receives> receives = objectList.getReceives();
+        receives = receives.reversed();
         String[][] matrix = new String[receives.size()][7];
         Receives receive;
         for (int i = 0;i<receives.size();i++){
@@ -114,13 +114,25 @@ public class admin_order_tracking extends javax.swing.JFrame {
         }
     });
 
+    jButton4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+    jButton4.setText("Update Stock Levels");
+    jButton4.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton4ActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(64, 64, 64)
@@ -151,7 +163,9 @@ public class admin_order_tracking extends javax.swing.JFrame {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
-            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
             .addContainerGap())
     );
 
@@ -165,6 +179,7 @@ public class admin_order_tracking extends javax.swing.JFrame {
         }else{
             ObjectList objectList = new ObjectList();
             List<Receives> receives = objectList.getReceives();
+            receives = receives.reversed();
             String[][] matrix = new String[receives.size()][6];
             Receives receive;
             for (int i = 0; i < receives.size(); i++) {
@@ -220,11 +235,53 @@ public class admin_order_tracking extends javax.swing.JFrame {
         String order_id = jTable1.getValueAt(selected_row,0).toString();
         int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to cancel PO: "+order_id, "Confirmation",JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
-            Edit.receives(order_id,6, "Cancelled");
+            Edit.editingColumn("receive", order_id,6, "Cancelled");
             JOptionPane.showMessageDialog(null, "Purchase Order had been cancelled successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forReceive(jTable1);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String[] receives = Query.getNotReceivedOrders();
+        assert receives != null;
+        if (receives.length == 0){
+            JOptionPane.showMessageDialog(null, "No order had been placed recently", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String receive = (String) JOptionPane.showInputDialog(
+                null,
+                "Choose an item that received:",
+                "Dropdown Selection",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                receives,
+                receives[0]);
+        if (receive == null){
+            return;
+        }
+        int result = JOptionPane.showConfirmDialog(null, "Are you confirm that the order: "+receive+ " is received?", "Confirmation",JOptionPane.YES_NO_OPTION);
+        if(result == JOptionPane.YES_OPTION) {
+            String item_id = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/receives",0,receive,1);
+            String group_id = Search.getGroupIDbyItemName(Search.getItemNamebyItemID(item_id));
+            Edit.editingColumn("receive", receive,6, "Received");
+            String receive_quantity = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/receives",0,receive,3);
+            String inventory_quantity = TextFile.getColumn("src/main/java/com/mycompany/JavaY2/TextFile/inventory",0,group_id,2);
+            assert receive_quantity != null;
+            assert inventory_quantity != null;
+            String quantity = Integer.toString(Integer.parseInt(receive_quantity) + Integer.parseInt(inventory_quantity));
+            Edit.editingColumn("inventory",group_id,2,quantity);
+            String date = Query.getCurrentDate();
+            Edit.editingColumn("receive", receive,5,date);
+            Edit.editingColumn("receive", receive,8, "Unpaid");
+            UpdateTable.forReceive(jTable1);
+            JOptionPane.showMessageDialog(null, "Quantity updated successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -265,6 +322,7 @@ public class admin_order_tracking extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

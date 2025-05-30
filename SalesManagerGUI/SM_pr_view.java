@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.JavaY2.AdminGUI;
+package com.mycompany.JavaY2.SalesManagerGUI;
 
 import com.mycompany.JavaY2.Class.PDFPrinter;
 import com.mycompany.JavaY2.Class.Search;
@@ -14,12 +14,13 @@ import java.io.IOException;
  *
  * @author USER
  */
-public class admin_pr_view extends javax.swing.JFrame {
+public class SM_pr_view extends javax.swing.JFrame {
     public String request_ID;
     /**
      * Creates new form admin_pr_view
+     * @param request_ID
      */
-    public admin_pr_view(String request_ID) {
+    public SM_pr_view(String request_ID) {
         this.request_ID = request_ID;
         initComponents();
     }
@@ -203,7 +204,7 @@ public class admin_pr_view extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        admin_purchase_requisition page = new admin_purchase_requisition();
+        SM_pr_mainpage page = new SM_pr_mainpage();
         page.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -231,20 +232,20 @@ public class admin_pr_view extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(admin_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(admin_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(admin_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(admin_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SM_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new admin_pr_view("").setVisible(true);
+                new SM_pr_view("").setVisible(true);
             }
         });
     }

@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -171,10 +172,12 @@ public class admin_finance_report extends javax.swing.JFrame {
             for (int i=1;i<linesList.size();i++) {
                 String line = linesList.get(i);
                 String[] lines = line.split("\\|");
-                LocalDate inputDate = LocalDate.parse(lines[8], formatter);
-                int currentYear = LocalDate.now().getYear();
-                if (inputDate.getYear() == currentYear) {
-                    res = res + Double.parseDouble(lines[6]);
+                if (!Objects.equals(lines[8], "-")) {
+                    LocalDate inputDate = LocalDate.parse(lines[8], formatter);
+                    int currentYear = LocalDate.now().getYear();
+                    if (inputDate.getYear() == currentYear) {
+                        res = res + Double.parseDouble(lines[6]);
+                    }
                 }
             }
             jTextField4.setText(Double.toString(res));
@@ -196,10 +199,12 @@ public class admin_finance_report extends javax.swing.JFrame {
             for (int i=1;i<linesList.size();i++) {
                 String line = linesList.get(i);
                 String[] lines = line.split("\\|");
-                LocalDate inputDate = LocalDate.parse(lines[8], formatter);
-                LocalDate now = LocalDate.now();
-                if (inputDate.getYear() == now.getYear() && inputDate.getMonth() == now.getMonth()) {
-                    res = res + Double.parseDouble(lines[6]);
+                if (!Objects.equals(lines[8], "-")) {
+                    LocalDate inputDate = LocalDate.parse(lines[8], formatter);
+                    LocalDate now = LocalDate.now();
+                    if (inputDate.getYear() == now.getYear() && inputDate.getMonth() == now.getMonth()) {
+                        res = res + Double.parseDouble(lines[6]);
+                    }
                 }
             }
             jTextField5.setText(Double.toString(res));
@@ -221,10 +226,12 @@ public class admin_finance_report extends javax.swing.JFrame {
             for (int i=1;i<linesList.size();i++) {
                 String line = linesList.get(i);
                 String[] lines = line.split("\\|");
-                LocalDate inputDate = LocalDate.parse(lines[8], formatter);
-                LocalDate now = LocalDate.now();
-                if (inputDate.isEqual(now)) {
-                    res = res + Double.parseDouble(lines[6]);
+                if (!Objects.equals(lines[8], "-")) {
+                    LocalDate inputDate = LocalDate.parse(lines[8], formatter);
+                    LocalDate now = LocalDate.now();
+                    if (inputDate.isEqual(now)) {
+                        res = res + Double.parseDouble(lines[6]);
+                    }
                 }
             }
             jTextField6.setText(Double.toString(res));

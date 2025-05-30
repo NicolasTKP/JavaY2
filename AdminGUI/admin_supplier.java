@@ -215,7 +215,6 @@ public class admin_supplier extends javax.swing.JFrame {
             for (int i = 0; i < suppliers.size(); i++) {
                 supplier = suppliers.get(i);
                 if (supplier.anyMatch(keyword)) {
-                    supplier = suppliers.get(i);
                     matrix[i][0] = supplier.supplier_id;
                     matrix[i][1] = supplier.supplier_name;
                     matrix[i][2] = supplier.address;
@@ -326,6 +325,10 @@ public class admin_supplier extends javax.swing.JFrame {
         int result = JOptionPane.showConfirmDialog(null, "Confirm to delete supplier: "+Search.getSupplierName(supplier_id)+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
             TextFile.deleteLine("src/main/java/com/mycompany/JavaY2/TextFile/suppliers", supplier_id, 0);
+            String[] items = jTable1.getValueAt(selected_row,4).toString().split(",");
+            for (String item:items){
+                TextFile.deleteLine("src/main/java/com/mycompany/JavaY2/TextFile/items", item, 0);
+            }
             JOptionPane.showMessageDialog(null, "Supplier deleted successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forSupplier(jTable1);
         }
@@ -370,7 +373,7 @@ public class admin_supplier extends javax.swing.JFrame {
                 }
                 int result = JOptionPane.showConfirmDialog(null, "Confirm to change supplier name to: "+supplier_name+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                 if(result == JOptionPane.YES_OPTION){
-                    Edit.supplier(supplier_id,1,supplier_name);
+                    Edit.editingColumn("supplier", supplier_id,1,supplier_name);
                     UpdateTable.forSupplier(jTable1);
                     JOptionPane.showMessageDialog(null, "Supplier name updated successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -390,7 +393,7 @@ public class admin_supplier extends javax.swing.JFrame {
                 }
                 int result2 = JOptionPane.showConfirmDialog(null, "Confirm to change supplier address to: "+address+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                 if(result2 == JOptionPane.YES_OPTION){
-                    Edit.supplier(supplier_id,2,address);
+                    Edit.editingColumn("supplier", supplier_id,2,address);
                     UpdateTable.forSupplier(jTable1);
                     JOptionPane.showMessageDialog(null, "Supplier address updated successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -410,7 +413,7 @@ public class admin_supplier extends javax.swing.JFrame {
                 }
                 int result3 = JOptionPane.showConfirmDialog(null, "Confirm to change supplier contact to: "+contact+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                 if(result3 == JOptionPane.YES_OPTION){
-                    Edit.supplier(supplier_id,3,contact);
+                    Edit.editingColumn("supplier", supplier_id,3,contact);
                     UpdateTable.forSupplier(jTable1);
                     JOptionPane.showMessageDialog(null, "Supplier contact updated successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -430,7 +433,7 @@ public class admin_supplier extends javax.swing.JFrame {
                 }
                 int result4 = JOptionPane.showConfirmDialog(null, "Confirm to change supplier payment term to: "+payment_term+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
                 if(result4 == JOptionPane.YES_OPTION){
-                    Edit.supplier(supplier_id,5,payment_term);
+                    Edit.editingColumn("supplier", supplier_id,5,payment_term);
                     UpdateTable.forSupplier(jTable1);
                     JOptionPane.showMessageDialog(null, "Supplier payment term updated successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
                 }

@@ -5,10 +5,11 @@
 package com.mycompany.JavaY2.SalesManagerGUI;
 
 
+import com.mycompany.JavaY2.Class.DataMapping;
 import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.Inventory;
 import com.mycompany.JavaY2.Object.Item;
-import com.mycompany.javaY2.Class.DataMapping;
+import com.mycompany.JavaY2.Object.SessionManager;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -68,11 +69,11 @@ public class SM_item_mainpage extends javax.swing.JFrame {
         Map<String, String> supplier_map = mapping.IdNameMapping(supplier_file_path);
         Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
         column_mappings.put(6, supplier_map); // supplier_id column
-        TextFile.populateTable(itemContainer, itemTableColumnName, item_file_path, 50, item_table, column_mappings);         
+        TextFile.populateTable(itemContainer, item_table, itemTableColumnName, item_file_path, 50,column_mappings);         
     }
  
     private void populateInventoryTable(){
-        TextFile.populateTable(inventoryContainer, inventoryTableColumnName, inventory_file_path, 50, inventory_table);         
+        TextFile.populateTable(inventoryContainer, inventory_table, inventoryTableColumnName, inventory_file_path, 50);         
     }
 
     
@@ -334,7 +335,15 @@ public class SM_item_mainpage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void add_item_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_item_buttonActionPerformed
-       new SM_item_add().setVisible(true);
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }else{
+            new SM_item_add().setVisible(true);           
+        }       
+        
+
     }//GEN-LAST:event_add_item_buttonActionPerformed
 
     private void homepage_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homepage_button1ActionPerformed
@@ -344,6 +353,12 @@ public class SM_item_mainpage extends javax.swing.JFrame {
 
     private void edit_item_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_item_buttonActionPerformed
         int selected_row = item_table.getSelectedRow();
+        
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
         if (selected_row != -1) {
             int response = JOptionPane.showConfirmDialog(
@@ -377,6 +392,12 @@ public class SM_item_mainpage extends javax.swing.JFrame {
     private void delete_item_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_item_buttonActionPerformed
         int selected_row = item_table.getSelectedRow();
         
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         String selected_id = item_table.getValueAt(selected_row, 0).toString();
         
         if (selected_row != -1) {
@@ -389,7 +410,7 @@ public class SM_item_mainpage extends javax.swing.JFrame {
             );
 
             if (response == JOptionPane.YES_OPTION) {
-                TextFile.deleteTextfileLine(item_file_path, selected_id);
+                TextFile.deleteLine(item_file_path, selected_id, 0);
                 JOptionPane.showMessageDialog(null, "You have deleted the item. Item table is updated");
             } else {
                 // Cancel editing

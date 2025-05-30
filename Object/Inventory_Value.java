@@ -7,8 +7,6 @@ import java.util.Set;
 public class Inventory_Value extends Inventory{
     public double average_unit_price;
     public double actual_value;
-
-
     Inventory_Value(){
     }
     Inventory_Value(String group_id, String item_name, int quantity, double retail_price, double average_unit_price, double actual_value){
