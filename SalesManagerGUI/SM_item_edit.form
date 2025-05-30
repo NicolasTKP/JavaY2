@@ -184,6 +184,9 @@
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="item_id_textfieldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="item_name_label2">
       <Properties>

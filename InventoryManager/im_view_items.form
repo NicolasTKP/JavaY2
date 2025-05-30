@@ -31,19 +31,15 @@
               <EmptySpace pref="31" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="jTextField1" min="-2" pref="178" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jButton6" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jScrollPane1" alignment="1" min="-2" pref="781" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
                       <Component id="jButton7" min="-2" pref="114" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="item_search_bar" alignment="1" min="-2" pref="291" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" pref="781" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -56,10 +52,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButton7" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="61" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButton6" min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="jTextField1" min="-2" pref="31" max="-2" attributes="0"/>
-              </Group>
+              <Component id="item_search_bar" min="-2" pref="31" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="353" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -131,35 +124,19 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
+        <Component class="javax.swing.JTable" name="item_table">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="model" type="code"/>
+              <Connection code="itemContainer" type="code"/>
             </Property>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="com.mycompany.JavaY2.InventoryManager.TextFileHandling tfh = new com.mycompany.JavaY2.InventoryManager.TextFileHandling();&#xa;List&lt;Item&gt; itemList = tfh.getItemList();&#xa;&#xa;for (Item item : itemList) {&#xa;    Object[] rowData = {&#xa;        item.item_id,&#xa;        item.item_name,&#xa;        item.stock_price,&#xa;        item.sales_per_day,&#xa;        item.ordering_lead_time,&#xa;        item.safety_level,&#xa;        item.supplier_id,&#xa;        item.group_id&#xa;    };&#xa;    model.addRow(rowData);&#xa;}"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(&#xa;    new Object[][]{},&#xa;    new String[]{&#xa;        &quot;Item ID&quot;, &quot;Item Name&quot;, &quot;Stock Price&quot;, &quot;Sales Per Day&quot;, &quot;Ordering Lead Time&quot;, &quot;Safety Level&quot;, &quot;Supplier ID&quot;, &quot;Group ID&quot;&#xa;    }){&#xa;        @Override&#xa;        public boolean isCellEditable(int row, int column){&#xa;            return false;&#xa;}&#xa;};"/>
-          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JTextField" name="jTextField1">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="&quot;&quot;" type="code"/>
-        </Property>
-      </Properties>
+    <Component class="javax.swing.JTextField" name="item_search_bar">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="item_search_barActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButton6">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="&quot;Search&quot;" type="code"/>
-        </Property>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton7">
       <Properties>

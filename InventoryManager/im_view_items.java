@@ -5,23 +5,105 @@
 
 package com.mycompany.JavaY2.InventoryManager;
 
+import com.mycompany.JavaY2.Class.DataMapping;
+import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.Item;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Kaiqi
  */
 public class im_view_items extends javax.swing.JFrame {
+    private final String item_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/items";
+    private final String supplier_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/suppliers";
+
+    private final DefaultTableModel itemContainer = new DefaultTableModel();
+    private final String itemTableColumnName[] = {"Item ID", "Item Name", "Stock Price", "Sales per day", "Ordering Lead Time (Days)", "Safety Level", "Supplier", "Group ID"};
 
     /** Creates new form im_view_items */
     public im_view_items() {
         initComponents();
+        populateItemTable();
+        
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                itemContainer.setRowCount(0);
+                populateItemTable();     
+            }
+        });
+        
+        item_search_bar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                itemSearchFunction(item_search_bar.getText());
+            }
+        });
     }
+    
+    private void populateItemTable(){
+        DataMapping mapping = new DataMapping();
+        Map<String, String> supplier_map = mapping.IdNameMapping(supplier_file_path);
+        Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
+        column_mappings.put(6, supplier_map); // supplier_id column
+        TextFile.populateTable(itemContainer, item_table, itemTableColumnName, item_file_path, 50,column_mappings);         
+    }
+    
+    private void itemSearchFunction(String item_keyword) {
+        itemContainer.setRowCount(0); // Clear existing rows
+        item_keyword = item_keyword.toLowerCase().trim();
+        
+        if (item_keyword.isEmpty()) {
+            populateItemTable(); // <- call your full data loader
+            return;
+        }
+            
+        DataMapping mapping = new DataMapping();
+        Map<String,String> supplier_map = mapping.IdNameMapping(supplier_file_path);
 
+        try (BufferedReader br = new BufferedReader(new FileReader(item_file_path))) {
+            String item_line;
+            Set<String> uniqueItemRows = new HashSet<>();
+            br.readLine(); // skip header
+
+            while ((item_line = br.readLine()) != null) {
+                if (!item_line.trim().isEmpty() && !uniqueItemRows.contains(item_line)) {
+                    String[] item_details = item_line.split("\\|");
+
+                    // Create an Item object from the line
+                    Item item = new Item(
+                        item_details[0], // item_id
+                        item_details[1], // item_name
+                        Double.parseDouble(item_details[2]), // stock_price
+                        Integer.parseInt(item_details[3]), // sales_per_day
+                        Integer.parseInt(item_details[4]), // ordering_lead_time
+                        Integer.parseInt(item_details[5]), // safety_level
+                        supplier_map.get(item_details[6]), // supplier_id
+                        item_details[7]  // group_id
+                    );
+
+                    if (item.anyMatch(item_keyword)) {
+                        // Replace supplier_id with supplier_name
+                        item_details[6] = supplier_map.get(item_details[6]);
+                        itemContainer.addRow(item_details);
+                        uniqueItemRows.add(item_line);
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading item file during search: " + e.getMessage());
+        }
+    }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -36,9 +118,8 @@ public class im_view_items extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
+        item_table = new javax.swing.JTable();
+        item_search_bar = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -77,91 +158,58 @@ public class im_view_items extends javax.swing.JFrame {
                 .addGap(162, 162, 162))
         );
 
-        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
-            new Object[][]{},
-            new String[]{
-                "Item ID", "Item Name", "Stock Price", "Sales Per Day", "Ordering Lead Time", "Safety Level", "Supplier ID", "Group ID"
-            }){
-                @Override
-                public boolean isCellEditable(int row, int column){
-                    return false;
-                }
-            };
-            jTable1.setModel(model);
-            com.mycompany.JavaY2.InventoryManager.TextFileHandling tfh = new com.mycompany.JavaY2.InventoryManager.TextFileHandling();
-            List<Item> itemList = tfh.getItemList();
+        item_table.setModel(itemContainer);
+        jScrollPane1.setViewportView(item_table);
 
-            for (Item item : itemList) {
-                Object[] rowData = {
-                    item.item_id,
-                    item.item_name,
-                    item.stock_price,
-                    item.sales_per_day,
-                    item.ordering_lead_time,
-                    item.safety_level,
-                    item.supplier_id,
-                    item.group_id
-                };
-                model.addRow(rowData);
+        item_search_bar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_search_barActionPerformed(evt);
             }
-            jScrollPane1.setViewportView(jTable1);
+        });
 
-            jTextField1.setText("");
-            jTextField1.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jTextField1ActionPerformed(evt);
-                }
-            });
+        jButton7.setText("Profile");
 
-            jButton6.setText("Search");
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(item_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 781, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addComponent(item_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
-            jButton7.setText("Profile");
-
-            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-            getContentPane().setLayout(layout);
-            layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jButton6))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 781, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(28, 28, 28))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap())))
-            );
-            layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jButton7)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
-            );
-
-            pack();
-        }// </editor-fold>//GEN-END:initComponents
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void item_search_barActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_search_barActionPerformed
+        String item_keyword = item_search_bar.getText();
+        itemSearchFunction(item_keyword);
+    }//GEN-LAST:event_item_search_barActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,15 +247,14 @@ public class im_view_items extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField item_search_bar;
+    private javax.swing.JTable item_table;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
 }

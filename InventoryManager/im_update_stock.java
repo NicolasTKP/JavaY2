@@ -25,6 +25,8 @@ import javax.swing.JOptionPane;
  * @author Kaiqi
  */
 public class im_update_stock extends javax.swing.JFrame {
+    private final String receives_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/receives";
+    private final String inventory_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/inventory";
 
     /**
      * Creates new form im_update_stock
@@ -32,9 +34,9 @@ public class im_update_stock extends javax.swing.JFrame {
     public im_update_stock() {
         initComponents();
         jComboBox1.removeAllItems();
-        String file_path = "src/main/java/com/mycompany/JavaY2/TextFile/receives";
+        
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file_path))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(receives_file_path))) {
             String line;
             br.readLine();
 
@@ -195,11 +197,11 @@ public class im_update_stock extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        String password = JOptionPane.showInputDialog("Please insert your user password");
-        if (password == null || password == null || !password.equals(SessionManager.getInstance().password)){
-            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+//        String password = JOptionPane.showInputDialog("Please insert your user password");
+//        if (password == null || password == null || !password.equals(SessionManager.getInstance().password)){
+//            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+//            return;
+//        }
         
         String selectedOrderId = (String) jComboBox1.getSelectedItem();
         if (selectedOrderId == null) return;
@@ -207,8 +209,6 @@ public class im_update_stock extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "You can only update the stock while the status is Not Received", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        String receives_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/receives";
-        String inventory_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/inventory";
        
         String currentDate = Query.getCurrentDate();
         
@@ -216,16 +216,16 @@ public class im_update_stock extends javax.swing.JFrame {
         if(result == JOptionPane.YES_OPTION) {
             String item_id = TextFile.getColumn(receives_file_path,0,selectedOrderId,1);
             String group_id = Search.getGroupIDbyItemName(Search.getItemNamebyItemID(item_id));
-            Edit.receives(selectedOrderId,6, "Received");
+            Edit.editingColumn(receives_file_path, selectedOrderId, 6, "Received");
             String receive_quantity = TextFile.getColumn(receives_file_path,0,selectedOrderId,3);
             String inventory_quantity = TextFile.getColumn(inventory_file_path,0,group_id,2);
             assert receive_quantity != null;
             assert inventory_quantity != null;
             String quantity = Integer.toString(Integer.parseInt(receive_quantity) + Integer.parseInt(inventory_quantity));
-            Edit.inventory(group_id,2,quantity);
+            Edit.editingColumn(inventory_file_path, group_id,2,quantity);
             String date = currentDate;
-            Edit.receives(selectedOrderId,5,date);
-            Edit.receives(selectedOrderId,8, "Unpaid");
+            Edit.editingColumn(receives_file_path, selectedOrderId,5,date);
+//            Edit.receives(selectedOrderId,8, "Unpaid");
             JOptionPane.showMessageDialog(null, "Quantity updated successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
         }
         
@@ -248,14 +248,14 @@ public class im_update_stock extends javax.swing.JFrame {
         }
         String status = jTable1.getValueAt(selected_row,5).toString();
         if (status.equals("Received")){
-            JOptionPane.showMessageDialog(null, "Cannot cancel an order that already received", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Cannot cancel order that has been received", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         String order_id = jTable1.getValueAt(selected_row,0).toString();
-        int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to cancel PO: "+order_id, "Confirmation",JOptionPane.YES_NO_OPTION);
+        int result = JOptionPane.showConfirmDialog(null, "Do you confirm to cancel PO: "+order_id, "Confirmation",JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
-            Edit.receives(order_id,6, "Cancelled");
-            JOptionPane.showMessageDialog(null, "Purchase Order had been cancelled successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+            Edit.editingColumn(receives_file_path, order_id,6, "Cancelled");
+            JOptionPane.showMessageDialog(null, "Purchase Order has been cancelled successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forReceive(jTable1);
         }
     }//GEN-LAST:event_jButton3ActionPerformed

@@ -91,7 +91,7 @@ public class TextFileAbstraction {
         List<Item> itemList = getItemList();
         Map<String, Item> itemMap  = new HashMap<>();
         for (Item item : itemList){
-            String key = item.getItemName().toLowerCase() + "|" + item.getGroupId().toLowerCase();
+            String key = item.getItemName().toLowerCase() + "|" + item.getGroupID().toLowerCase();
             itemMap.put(key, item);
         }
         
