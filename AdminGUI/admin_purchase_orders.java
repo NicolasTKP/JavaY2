@@ -292,7 +292,8 @@ public class admin_purchase_orders extends JFrame {
     private void jButton2ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String password = JOptionPane.showInputDialog("Please insert your user password");
         if (password == null || !password.equals(SessionManager.getInstance().password)){
-            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
         int selectedRow = jTable1.getSelectedRow();
