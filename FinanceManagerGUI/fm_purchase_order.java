@@ -371,7 +371,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
             return;
         }
         int selected_row = orderTable.getSelectedRow();
-        if (selected_row == -1){
+        if (selected_row != -1){
             String order_status = String.valueOf(model.getValueAt(selected_row, 10));
             if (!order_status.equals("Rejected")) {
                 int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to approve the purchase order?", "Confirm Approval", JOptionPane.YES_NO_OPTION); 
