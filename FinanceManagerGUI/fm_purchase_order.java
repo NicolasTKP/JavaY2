@@ -12,18 +12,18 @@ import com.mycompany.JavaY2.Object.SessionManager;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
 import javax.swing.DefaultListCellRenderer;
-//import javax.swing.*;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
+/**
+ *
+ * @author Ooi Yi Yang
+ */
+
 public class fm_purchase_order extends javax.swing.JFrame {
-//    private PurchaseOrder order;
     private DefaultTableModel model = new DefaultTableModel();
     private String colName[] = {"Order ID", "Requisition ID", "Item ID", "User ID", "Username", "Quantity", "Unit Price", "Amount", "Supplier ID", "Order Date", "Order Status"}; 
     private DefaultListCellRenderer listRenderer;
@@ -31,8 +31,6 @@ public class fm_purchase_order extends javax.swing.JFrame {
     public fm_purchase_order() {
         initComponents();
         model.setColumnIdentifiers(colName);
-        current_user.setText(SessionManager.getInstance().username.toUpperCase());
-        current_user.setEditable(false);
 
         try (BufferedReader reader = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders"))) {
             String line;
@@ -77,8 +75,6 @@ public class fm_purchase_order extends javax.swing.JFrame {
         btnReport = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnProfile = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        current_user = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         orderTable = new javax.swing.JTable();
         approveBtn = new javax.swing.JButton();
@@ -156,14 +152,6 @@ public class fm_purchase_order extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Current User:");
-
-        current_user.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                current_userActionPerformed(evt);
-            }
-        });
-
         orderTable.setModel(model);
         orderTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -190,7 +178,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
             }
         });
 
-        orderFilter.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        orderFilter.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         orderFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Pending", "Approved", "Rejected"}));
         orderFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,7 +198,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         jLabel3.setText("Search:");
 
-        searchPOField.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        searchPOField.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         searchPOField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 searchPOFieldKeyReleased(evt);
@@ -237,10 +225,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 413, Short.MAX_VALUE)
                         .addComponent(jLabel1)
-                        .addGap(323, 323, 323)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(544, 544, 544))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btn_order_list, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -291,14 +276,8 @@ public class fm_purchase_order extends javax.swing.JFrame {
                 .addGap(0, 1, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(15, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel1))
-                .addGap(0, 9, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(0, 22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(orderFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditPO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -345,13 +324,9 @@ public class fm_purchase_order extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnProfileActionPerformed
 
-    private void current_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_current_userActionPerformed
-
-    }//GEN-LAST:event_current_userActionPerformed
-
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         this.dispose();
-        new fm_main().setVisible(true);
+        new fm_mainpage().setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void approveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveBtnActionPerformed
@@ -524,9 +499,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
     private javax.swing.JButton btn_inventory_list;
     private javax.swing.JButton btn_order_list;
     private javax.swing.JButton btn_req_list;
-    private javax.swing.JTextField current_user;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> orderFilter;

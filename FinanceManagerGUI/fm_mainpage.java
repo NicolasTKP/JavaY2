@@ -5,22 +5,21 @@
 package com.mycompany.JavaY2.FinanceManagerGUI;
 
 import com.mycompany.JavaY2.Object.SessionManager;
+import com.mycompany.JavaY2.login;
 
 /**
  *
- * @author User
+ * @author Ooi Yi Yang
  */
-public class fm_main extends javax.swing.JFrame {
+public class fm_mainpage extends javax.swing.JFrame {
 //    FinanceManager fm = new FinanceManager();
     /**
      * Creates new form fm_main
      * 
      * 
      */
-    public fm_main() {
+    public fm_mainpage() {
         initComponents();
-        current_user.setText(SessionManager.getInstance().username.toUpperCase());
-        current_user.setEditable(false);
     }
 
     /**
@@ -37,9 +36,8 @@ public class fm_main extends javax.swing.JFrame {
         btn_inventory_list = new javax.swing.JButton();
         btnPayment = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         btnProfile = new javax.swing.JButton();
-        current_user = new javax.swing.JTextField();
+        btnLogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1500, 750));
@@ -90,8 +88,6 @@ public class fm_main extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Current User:");
-
         btnProfile.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         btnProfile.setText("Profile");
         btnProfile.addActionListener(new java.awt.event.ActionListener() {
@@ -100,9 +96,11 @@ public class fm_main extends javax.swing.JFrame {
             }
         });
 
-        current_user.addActionListener(new java.awt.event.ActionListener() {
+        btnLogout.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        btnLogout.setText("Log Out");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                current_userActionPerformed(evt);
+                btnLogoutActionPerformed(evt);
             }
         });
 
@@ -111,11 +109,9 @@ public class fm_main extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(191, 191, 191)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,10 +131,8 @@ public class fm_main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(116, 116, 116)
+                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(115, 115, 115)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_inventory_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_req_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -148,7 +142,7 @@ public class fm_main extends javax.swing.JFrame {
                     .addComponent(btnPayment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(194, Short.MAX_VALUE))
+                .addContainerGap(157, Short.MAX_VALUE))
         );
 
         pack();
@@ -184,9 +178,11 @@ public class fm_main extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnProfileActionPerformed
 
-    private void current_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_current_userActionPerformed
-
-    }//GEN-LAST:event_current_userActionPerformed
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        new login().setVisible(true);
+        SessionManager.clearCache();
+        this.dispose();
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,32 +201,32 @@ public class fm_main extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(fm_main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fm_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(fm_main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fm_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(fm_main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fm_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(fm_main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fm_mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new fm_main().setVisible(true);
+                new fm_mainpage().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnPayment;
     private javax.swing.JButton btnProfile;
     private javax.swing.JButton btnReport;
     private javax.swing.JButton btn_inventory_list;
     private javax.swing.JButton btn_order_list;
     private javax.swing.JButton btn_req_list;
-    private javax.swing.JTextField current_user;
-    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }

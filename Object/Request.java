@@ -6,5 +6,6 @@ public abstract class Request {
     public String user_id;
     public int quantity;
 
-    public Request(){}
+    public Request(){
+    }
 }

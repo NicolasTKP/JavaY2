@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author User
+ * @author Ooi Yi Yang
  */
 public class fm_purchase_requisitions extends javax.swing.JFrame {
     private DefaultTableModel model = new DefaultTableModel();
@@ -21,8 +21,6 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
     
     public fm_purchase_requisitions() {
         initComponents();
-        current_user.setText(SessionManager.getInstance().username.toUpperCase());
-        current_user.setEditable(false);
         model.setColumnIdentifiers(colName);
         
         
@@ -56,8 +54,6 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
         btnReport = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnProfile = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        current_user = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         prTable = new javax.swing.JTable();
 
@@ -128,14 +124,6 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Current User:");
-
-        current_user.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                current_userActionPerformed(evt);
-            }
-        });
-
         prTable.setModel(model);
         jScrollPane1.setViewportView(prTable);
 
@@ -148,11 +136,7 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
                 .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(424, 424, 424)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(429, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -173,13 +157,9 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -204,7 +184,7 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         this.dispose();
-        new fm_main().setVisible(true);
+        new fm_mainpage().setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btn_order_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_order_listActionPerformed
@@ -235,10 +215,6 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
         new fm_profile().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnProfileActionPerformed
-
-    private void current_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_current_userActionPerformed
-
-    }//GEN-LAST:event_current_userActionPerformed
 
     /**
      * @param args the command line arguments
@@ -283,9 +259,7 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
     private javax.swing.JButton btn_inventory_list;
     private javax.swing.JButton btn_order_list;
     private javax.swing.JButton btn_req_list;
-    private javax.swing.JTextField current_user;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable prTable;
     // End of variables declaration//GEN-END:variables

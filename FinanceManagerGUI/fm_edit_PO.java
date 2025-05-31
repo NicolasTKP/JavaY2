@@ -7,13 +7,9 @@ package com.mycompany.JavaY2.FinanceManagerGUI;
 import com.mycompany.JavaY2.Class.DataMapping;
 import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.Class.Search;
-import com.mycompany.JavaY2.Class.ValidateFormat;
 import com.mycompany.JavaY2.Object.PurchaseOrder;
 import com.mycompany.JavaY2.Object.SessionManager;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
+import java.awt.event.ActionEvent;
 import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -125,13 +121,11 @@ public class fm_edit_PO extends javax.swing.JFrame {
 
         item_idField.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
 
-
         item_nameField.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
 
         quantityField.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
 
         stock_priceField.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        
 
         supplier_idField.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
 
@@ -271,9 +265,8 @@ public class fm_edit_PO extends javax.swing.JFrame {
             double new_stockPrice = Double.parseDouble(stock_priceField.getText());
             double new_amount = new_quantity * new_stockPrice;  
             String new_supplierID = supplier_idField.getText();
-    //        String new_supplierName = String.valueOf(sname_list.getSelectedItem());
-    
-            if(new_quantity <= 0){
+            
+            if(new_quantity <= 0){ 
                 JOptionPane.showMessageDialog(this, "Quantity must be a positive integer!", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -283,9 +276,8 @@ public class fm_edit_PO extends javax.swing.JFrame {
             Edit.editingColumn("PO", current_orderID, 5, String.valueOf(new_stockPrice));
             Edit.editingColumn("PO", current_orderID, 6, String.valueOf(new_amount));
             Edit.editingColumn("PO", current_orderID, 7, new_supplierID);
-    //        Edit.purchaseOrders(current_orderID, 1, new_supplierName); remain first(if need to use it later) - to update the latest supplier name in the PO
         }catch (NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "Quantity must be a valid integer!", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Quantity must be a valid integer format!", "Warning", JOptionPane.ERROR_MESSAGE);
             return;
         }
         this.dispose();         
@@ -295,8 +287,6 @@ public class fm_edit_PO extends javax.swing.JFrame {
     private void current_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_current_userActionPerformed
 
     }//GEN-LAST:event_current_userActionPerformed
-    
-
 
     /**
      * @param args the command line arguments

@@ -21,7 +21,7 @@ import javax.swing.table.TableRowSorter;
 
 /**
  *
- * @author User
+ * @author Ooi Yi Yang
  */
 public class fm_finance_report extends javax.swing.JFrame {
     private DefaultTableModel model = new DefaultTableModel();
@@ -36,12 +36,8 @@ public class fm_finance_report extends javax.swing.JFrame {
     public fm_finance_report() {
         initComponents();
         model.setColumnIdentifiers(column_name);
-        current_user.setText(SessionManager.getInstance().username.toUpperCase());
-        current_user.setEditable(false);
-
-
-
-        List<Inventory_Value> inventoryValues = objectList.getInventoryValue(); // or wherever you placed the method
+        
+        List<Inventory_Value> inventoryValues = objectList.getInventoryValue(); 
 
         // Populate the table
         for (Inventory_Value item : inventoryValues) {
@@ -74,8 +70,6 @@ public class fm_finance_report extends javax.swing.JFrame {
         btnReport = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnProfile = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        current_user = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         inventory_amount_table = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
@@ -176,14 +170,6 @@ public class fm_finance_report extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Current User:");
-
-        current_user.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                current_userActionPerformed(evt);
-            }
-        });
-
         inventory_amount_table.setModel(model);
         jScrollPane1.setViewportView(inventory_amount_table);
 
@@ -192,7 +178,6 @@ public class fm_finance_report extends javax.swing.JFrame {
 
         yearly_salesField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         double total_yearly_sales = 0.0;
-        int current_year = LocalDate.now().getYear();
 
         try(BufferedReader reader = new BufferedReader(new FileReader(sales_file))) {
             String lines;
@@ -200,6 +185,7 @@ public class fm_finance_report extends javax.swing.JFrame {
             while ((lines = reader.readLine()) != null) {
                 String[] sales_data = lines.split("\\|");
                 LocalDate sales_date = LocalDate.parse(sales_data[1], date_format);
+                int current_year = LocalDate.now().getYear();
                 if (sales_date.getYear() == current_year) {
                     total_yearly_sales = total_yearly_sales + Double.parseDouble(sales_data[2]);
                 }
@@ -209,17 +195,11 @@ public class fm_finance_report extends javax.swing.JFrame {
         }catch (IOException e){
             e.printStackTrace();
         }
-        yearly_salesField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                yearly_salesFieldActionPerformed(evt);
-            }
-        });
 
         jLabel4.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabel4.setText("Total Sales of This Month:");
 
         double total_yearly_purchase = 0.0;
-        int current_years = LocalDate.now().getYear();
 
         try(BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {
             String lines;
@@ -229,403 +209,349 @@ public class fm_finance_report extends javax.swing.JFrame {
                 String received_status = receives_data[6].strip();
                 if(!Objects.equals(receives_data[7], "-")){
                     LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);
-                if (received_status.equals("Received") && payment_date.getYear() == current_years) {
-                    total_yearly_purchase = total_yearly_purchase + Double.parseDouble(receives_data[4]);
-                }
-            }
-        }
-        yearly_purchaseField.setText(Double.toString(total_yearly_purchase));
-    }catch (IOException e){
-        e.printStackTrace();
-    }
-    yearly_purchaseField.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            yearly_purchaseFieldActionPerformed(evt);
-        }
-    });
-
-    jLabel5.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    jLabel5.setText("Total Daily Sales:");
-
-    daily_salesField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    double total_daily_sales = 0.0;
-    try(BufferedReader reader = new BufferedReader(new FileReader(sales_file))) {
-        String lines;
-        reader.readLine();
-        while ((lines = reader.readLine()) != null) {
-            String[] sales_data = lines.split("\\|");
-            LocalDate sales_date = LocalDate.parse(sales_data[1], date_format);
-            if (sales_date.equals(LocalDate.now())) {
-                total_daily_sales = total_daily_sales + Double.parseDouble(sales_data[2]);
-            }
-        }
-        daily_salesField.setFocusable(false);
-        daily_salesField.setText(Double.toString(total_daily_sales));
-    }catch (IOException e){
-        e.printStackTrace();
-    }
-    daily_salesField.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            daily_salesFieldActionPerformed(evt);
-        }
-    });
-
-    jLabel6.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    jLabel6.setText("Total Purchase of This Year:");
-
-    jLabel7.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    jLabel7.setText("Total Purchase of This Month:");
-
-    double total_monthly_purchase = 0.0;
-    int this_year = LocalDate.now().getYear();
-
-    try (BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {
-        String lines;
-        reader.readLine();
-        while ((lines = reader.readLine()) != null) {
-            String[] receives_data = lines.split("\\|");
-            String received_status = receives_data[6].strip();
-            if(!Objects.equals(receives_data[7], "-")){
-                LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);
-                if (received_status.equals("Received")) {
-                    if (payment_date.getYear() == this_year && payment_date.getMonth() == LocalDate.now().getMonth()) {
-                        total_monthly_purchase = total_monthly_purchase + Double.parseDouble(receives_data[4]);
+                    int current_year = LocalDate.now().getYear();
+                    if (received_status.equals("Received") && payment_date.getYear() == current_year) {
+                        total_yearly_purchase = total_yearly_purchase + Double.parseDouble(receives_data[4]);
                     }
                 }
             }
+            yearly_purchaseField.setText(Double.toString(total_yearly_purchase));
+        }catch (IOException e){
+            e.printStackTrace();
         }
-        monthly_purchaseField.setFocusable(false);
-        monthly_purchaseField.setText(Double.toString(total_monthly_purchase));
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    monthly_purchaseField.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            monthly_purchaseFieldActionPerformed(evt);
-        }
-    });
+        yearly_purchaseField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
 
-    monthly_salesField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    double total_monthly_sales = 0.0;
-    try(BufferedReader reader = new BufferedReader(new FileReader(sales_file))) {
-        String lines;
-        reader.readLine();
-        while ((lines = reader.readLine()) != null) {
-            String[] sales_data = lines.split("\\|");
-            LocalDate sales_date = LocalDate.parse(sales_data[1], date_format);
-            if (sales_date.getYear() == LocalDate.now().getYear() && sales_date.getMonth() == LocalDate.now().getMonth()) {
-                total_monthly_sales = total_monthly_sales + Double.parseDouble(sales_data[2]);
-            }
-        }
-        monthly_salesField.setFocusable(false);
-        monthly_salesField.setText(Double.toString(total_monthly_sales));
-    }catch (IOException e){
-        e.printStackTrace();
-    }
-    monthly_salesField.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            monthly_salesFieldActionPerformed(evt);
-        }
-    });
+        jLabel5.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel5.setText("Total Daily Sales:");
 
-    jLabel8.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
-    jLabel8.setText("Total Daily Purchase:");
+        daily_salesField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        double total_daily_sales = 0.0;
 
-    double total_daily_purchase = 0.0;
-
-    try(BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {
-        String lines;
-        reader.readLine();
-        while ((lines = reader.readLine()) != null) {
-            String[] receives_data = lines.split("\\|");
-            String received_status = receives_data[6].strip();
-            if(!Objects.equals(receives_data[7], "-")){
-                LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);
-                if (received_status.equals("Received") && payment_date.equals(LocalDate.now())){
-                    total_daily_purchase = total_daily_purchase + Double.parseDouble(receives_data[4]);
+        try(BufferedReader reader = new BufferedReader(new FileReader(sales_file))) {
+            String lines;
+            reader.readLine();
+            while ((lines = reader.readLine()) != null) {
+                String[] sales_data = lines.split("\\|");
+                LocalDate sales_date = LocalDate.parse(sales_data[1], date_format);
+                if (sales_date.equals(LocalDate.now())) {
+                    total_daily_sales = total_daily_sales + Double.parseDouble(sales_data[2]);
                 }
             }
+            daily_salesField.setFocusable(false);
+            daily_salesField.setText(Double.toString(total_daily_sales));
+        }catch (IOException e){
+            e.printStackTrace();
         }
-        daily_purchaseField.setFocusable(false);
-        daily_purchaseField.setText(Double.toString(total_daily_purchase));
-    }catch (IOException e){
-        e.printStackTrace();
-    }
-    daily_purchaseField.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            daily_purchaseFieldActionPerformed(evt);
+
+        jLabel6.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel6.setText("Total Purchase of This Year:");
+
+        jLabel7.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel7.setText("Total Purchase of This Month:");
+
+        double total_monthly_purchase = 0.0;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {
+            String lines;
+            reader.readLine();
+            while ((lines = reader.readLine()) != null) {
+                String[] receives_data = lines.split("\\|");
+                String received_status = receives_data[6].strip();
+                if(!Objects.equals(receives_data[7], "-")){
+                    LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);
+                    int current_year = LocalDate.now().getYear();
+                    if (received_status.equals("Received")) {
+                        if (payment_date.getYear() == current_year && payment_date.getMonth() == LocalDate.now().getMonth()) {
+                            total_monthly_purchase = total_monthly_purchase + Double.parseDouble(receives_data[4]);
+                        }
+                    }
+                }
+            }
+            monthly_purchaseField.setFocusable(false);
+            monthly_purchaseField.setText(Double.toString(total_monthly_purchase));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    });
+        monthly_purchaseField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
 
-    jLabel9.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    jLabel9.setText("Yearly Revenue:");
+        monthly_salesField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        double total_monthly_sales = 0.0;
 
-    yearly_revenueField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    yearly_revenueField.setFocusable(false);
-    yearly_revenueField.setText(Double.toString(Double.parseDouble(yearly_salesField.getText()) - Double.parseDouble(yearly_purchaseField.getText())));
-    yearly_revenueField.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            yearly_revenueFieldActionPerformed(evt);
+        try(BufferedReader reader = new BufferedReader(new FileReader(sales_file))) {
+            String lines;
+            reader.readLine();
+            while ((lines = reader.readLine()) != null) {
+                String[] sales_data = lines.split("\\|");
+                LocalDate sales_date = LocalDate.parse(sales_data[1], date_format);
+                if (sales_date.getYear() == LocalDate.now().getYear() && sales_date.getMonth() == LocalDate.now().getMonth()) {
+                    total_monthly_sales = total_monthly_sales + Double.parseDouble(sales_data[2]);
+                }
+            }
+            monthly_salesField.setFocusable(false);
+            monthly_salesField.setText(Double.toString(total_monthly_sales));
+        }catch (IOException e){
+            e.printStackTrace();
         }
-    });
 
-    jLabel10.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    jLabel10.setText("Monthly Revenue:");
+        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        jLabel8.setText("Total Daily Purchase:");
 
-    jLabel11.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    jLabel11.setText("Daily Revenue:");
+        double total_daily_purchase = 0.0;
 
-    monthly_revenueField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    monthly_revenueField.setFocusable(false);
-    monthly_revenueField.setText(Double.toString(Double.parseDouble(monthly_salesField.getText()) - Double.parseDouble(monthly_purchaseField.getText())));
-    monthly_revenueField.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            monthly_revenueFieldActionPerformed(evt);
+        try(BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {
+            String lines;
+            reader.readLine();
+            while ((lines = reader.readLine()) != null) {
+                String[] receives_data = lines.split("\\|");
+                String received_status = receives_data[6].strip();
+                if(!Objects.equals(receives_data[7], "-")){
+                    LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);
+                    if (received_status.equals("Received") && payment_date.equals(LocalDate.now())){
+                        total_daily_purchase = total_daily_purchase + Double.parseDouble(receives_data[4]);
+                    }
+                }
+            }
+            daily_purchaseField.setFocusable(false);
+            daily_purchaseField.setText(Double.toString(total_daily_purchase));
+        }catch (IOException e){
+            e.printStackTrace();
         }
-    });
+        daily_purchaseField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
 
-    daily_revenueField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    daily_revenueField.setFocusable(false);
-    daily_revenueField.setText(Double.toString(Double.parseDouble(daily_salesField.getText()) - Double.parseDouble(daily_purchaseField.getText())));
-    daily_revenueField.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            daily_revenueFieldActionPerformed(evt);
+        jLabel9.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel9.setText("Yearly Revenue:");
+
+        yearly_revenueField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        yearly_revenueField.setFocusable(false);
+        yearly_revenueField.setText(Double.toString(Double.parseDouble(yearly_salesField.getText()) - Double.parseDouble(yearly_purchaseField.getText())));
+
+        jLabel10.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel10.setText("Monthly Revenue:");
+
+        jLabel11.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel11.setText("Daily Revenue:");
+
+        monthly_revenueField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        monthly_revenueField.setFocusable(false);
+        monthly_revenueField.setText(Double.toString(Double.parseDouble(monthly_salesField.getText()) - Double.parseDouble(monthly_purchaseField.getText())));
+
+        daily_revenueField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        daily_revenueField.setFocusable(false);
+        daily_revenueField.setText(Double.toString(Double.parseDouble(daily_salesField.getText()) - Double.parseDouble(daily_purchaseField.getText())));
+
+        jLabel12.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel12.setText("Yearly Profit/Loss (%):");
+
+        jLabel13.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel13.setText("Monthly Profit/Loss (%):");
+
+        jLabel14.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel14.setText("Daily Profit/Loss (%):");
+
+        yearly_profitField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        yearly_profitField.setFocusable(false);
+        yearly_profitField.setText(String.format("%.1f%%", (Double.parseDouble(yearly_revenueField.getText()) / Double.parseDouble(yearly_purchaseField.getText())) * 100));
+
+        monthly_profitField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        monthly_profitField.setFocusable(false);
+        monthly_profitField.setText(String.format("%.1f%%", (Double.parseDouble(monthly_revenueField.getText()) / Double.parseDouble(monthly_purchaseField.getText())) * 100));
+
+        daily_profitField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        daily_profitField.setFocusable(false);
+        daily_profitField.setText(String.format("%.1f%%", (Double.parseDouble(daily_revenueField.getText()) / Double.parseDouble(daily_purchaseField.getText())) * 100));
+
+        jLabel15.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        jLabel15.setText("Search:");
+
+        searchPOField.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        searchPOField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchPOFieldKeyReleased(evt);
+            }
+        });
+
+        jLabel16.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel16.setText("Total Amount of Inventory Value:");
+
+        total_inventoryField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        int total_row = inventory_amount_table.getRowCount();
+        double total = 0.0;
+        for(int i = 0; i< total_row; i++){
+            total = total + Double.parseDouble(inventory_amount_table.getValueAt(i,4).toString());
         }
-    });
+        total_inventoryField.setText(Double.toString(total));
+        total_inventoryField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                total_inventoryFieldActionPerformed(evt);
+            }
+        });
 
-    jLabel12.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    jLabel12.setText("Yearly Profit/Loss (%):");
+        jLabel17.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel17.setText("Inventory Value Table");
 
-    jLabel13.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    jLabel13.setText("Monthly Profit/Loss (%):");
-
-    jLabel14.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    jLabel14.setText("Daily Profit/Loss (%):");
-
-    yearly_profitField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    yearly_profitField.setFocusable(false);
-    yearly_profitField.setText(String.format("%.1f%%", (Double.parseDouble(yearly_revenueField.getText()) / Double.parseDouble(yearly_purchaseField.getText())) * 100));
-    yearly_profitField.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            yearly_profitFieldActionPerformed(evt);
-        }
-    });
-
-    monthly_profitField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    monthly_profitField.setFocusable(false);
-    monthly_profitField.setText(String.format("%.1f%%", (Double.parseDouble(monthly_revenueField.getText()) / Double.parseDouble(monthly_purchaseField.getText())) * 100));
-    monthly_profitField.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            monthly_profitFieldActionPerformed(evt);
-        }
-    });
-
-    daily_profitField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    daily_profitField.setFocusable(false);
-    daily_profitField.setText(String.format("%.1f%%", (Double.parseDouble(daily_revenueField.getText()) / Double.parseDouble(daily_purchaseField.getText())) * 100));
-    daily_profitField.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            daily_profitFieldActionPerformed(evt);
-        }
-    });
-
-    jLabel15.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
-    jLabel15.setText("Search:");
-
-    searchPOField.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-    searchPOField.addKeyListener(new java.awt.event.KeyAdapter() {
-        public void keyReleased(java.awt.event.KeyEvent evt) {
-            searchPOFieldKeyReleased(evt);
-        }
-    });
-
-    jLabel16.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    jLabel16.setText("Total Amount of Inventory Value:");
-
-    total_inventoryField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    total_inventoryField.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            total_inventoryFieldActionPerformed(evt);
-        }
-    });
-
-    jLabel17.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    jLabel17.setText("Inventory Value Table");
-
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-    getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addComponent(btn_order_list, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_req_list, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_inventory_list, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnPayment, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnReport, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(btnProfile, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel16)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(total_inventoryField, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(116, 116, 116)
-                            .addComponent(jLabel17)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel15)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(searchPOField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(27, 27, 27)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel10)
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(monthly_revenueField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(yearly_revenueField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(daily_revenueField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel4)
-                                        .addComponent(jLabel3))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(monthly_salesField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(yearly_salesField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(daily_salesField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btn_order_list, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_req_list, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_inventory_list, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPayment, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnReport, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnProfile, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(total_inventoryField, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(116, 116, 116)
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchPOField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel10)
+                                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(monthly_revenueField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(yearly_revenueField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(daily_revenueField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel7)
-                                            .addComponent(jLabel12)
-                                            .addComponent(jLabel13)
-                                            .addComponent(jLabel14))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel3))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(monthly_purchaseField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(yearly_profitField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(monthly_profitField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(daily_profitField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(monthly_salesField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(yearly_salesField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(17, 17, 17)
-                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(daily_salesField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel7)
+                                                .addComponent(jLabel12)
+                                                .addComponent(jLabel13)
+                                                .addComponent(jLabel14))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(monthly_purchaseField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(yearly_profitField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(monthly_profitField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(daily_profitField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(17, 17, 17)
+                                            .addComponent(jLabel6)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(yearly_purchaseField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(yearly_purchaseField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(daily_purchaseField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGap(0, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel1)
-                            .addGap(290, 290, 290)
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(10, 10, 10))
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jScrollPane1)
-                    .addContainerGap())))
-    );
-    layout.setVerticalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(22, 22, 22))
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(btn_order_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, 0)
-                    .addComponent(btn_req_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, 0)
-                    .addComponent(btn_inventory_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, 0)
-                    .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, 0)
-                    .addComponent(btnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, 0)
-                    .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(yearly_salesField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6)
-                        .addComponent(yearly_purchaseField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(10, 10, 10)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(monthly_salesField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel7)
-                        .addComponent(monthly_purchaseField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(daily_purchaseField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel1)
+                                .addGap(511, 511, 511)))
+                        .addGap(10, 10, 10))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_order_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(btn_req_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(btn_inventory_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(btnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel5)
-                            .addComponent(daily_salesField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(daily_purchaseField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel9)
-                        .addComponent(yearly_revenueField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel12)
-                        .addComponent(yearly_profitField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(10, 10, 10)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel10)
-                        .addComponent(monthly_revenueField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel13)
-                        .addComponent(monthly_profitField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(10, 10, 10)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel11)
-                        .addComponent(daily_revenueField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel14)
-                        .addComponent(daily_profitField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(21, 21, 21)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel16)
-                        .addComponent(total_inventoryField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel17)
-                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(searchPOField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGap(88, 88, 88))
-    );
+                            .addComponent(jLabel3)
+                            .addComponent(yearly_salesField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(yearly_purchaseField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(monthly_salesField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addComponent(monthly_purchaseField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel8)
+                                .addComponent(jLabel5)
+                                .addComponent(daily_salesField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(daily_purchaseField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(yearly_revenueField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12)
+                            .addComponent(yearly_profitField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(monthly_revenueField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13)
+                            .addComponent(monthly_profitField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(daily_revenueField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14)
+                            .addComponent(daily_profitField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(total_inventoryField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchPOField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(88, 88, 88))
+        );
 
-    pack();
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         this.dispose();
-        new fm_main().setVisible(true);
+        new fm_mainpage().setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileActionPerformed
@@ -633,34 +559,8 @@ public class fm_finance_report extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnProfileActionPerformed
 
-    private void current_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_current_userActionPerformed
-        
-    }//GEN-LAST:event_current_userActionPerformed
-
-    private void yearly_purchaseFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearly_purchaseFieldActionPerformed
-//        double total_yearly_purchase = 0.0;
-//        int current_year = LocalDate.now().getYear();
-//
-//        try (BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {
-//            String lines;
-//            reader.readLine();
-//            while ((lines = reader.readLine()) != null) {
-//                String[] receives_data = lines.split("\\|");
-//                String received_status = receives_data[6].strip();
-//                LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);
-//                if (received_status.equals("Received") && payment_date.getYear() == current_year) {
-//                    total_yearly_purchase = total_yearly_purchase + Double.parseDouble(receives_data[4]);
-//                }
-//            }
-//            yearly_purchaseField.setText(Double.toString(total_yearly_purchase));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-    }//GEN-LAST:event_yearly_purchaseFieldActionPerformed
-
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
-        new fm_finance_report().setVisible(true);
-        this.dispose();
+        this.setVisible(true);
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaymentActionPerformed
@@ -679,7 +579,8 @@ public class fm_finance_report extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_req_listActionPerformed
 
     private void btn_order_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_order_listActionPerformed
-        this.setVisible(true);
+        new fm_purchase_order().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_order_listActionPerformed
 
     private void searchPOFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchPOFieldKeyReleased
@@ -688,142 +589,8 @@ public class fm_finance_report extends javax.swing.JFrame {
         search.setRowFilter(RowFilter.regexFilter(searchPOField.getText()));
     }//GEN-LAST:event_searchPOFieldKeyReleased
 
-    private void yearly_salesFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearly_salesFieldActionPerformed
-//    double total_yearly_sales = 0.0;
-//        int current_year = LocalDate.now().getYear();
-//
-//        try(BufferedReader reader = new BufferedReader(new FileReader(sales_file))) {
-//                String lines;
-//                reader.readLine();
-//                while ((lines = reader.readLine()) != null) {
-//                    String[] sales_data = lines.split("\\|");
-//                    LocalDate sales_date = LocalDate.parse(sales_data[1], date_format);
-//                    if (sales_date.getYear() == current_year) {
-//                        total_yearly_sales = total_yearly_sales + Double.parseDouble(sales_data[2]);
-//                    }
-//                }
-//                yearly_salesField.setFocusable(false);
-//                yearly_salesField.setText(Double.toString(total_yearly_sales));
-//        }catch (IOException e){
-//            e.printStackTrace();
-//        }
-    }//GEN-LAST:event_yearly_salesFieldActionPerformed
-
-    private void monthly_salesFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthly_salesFieldActionPerformed
-//        double total_monthly_sales = 0.0;
-//        try(BufferedReader reader = new BufferedReader(new FileReader(sales_file))) {
-//                    String lines;
-//                    reader.readLine();
-//                    while ((lines = reader.readLine()) != null) {
-//                        String[] sales_data = lines.split("\\|");
-//                        LocalDate sales_date = LocalDate.parse(sales_data[1], date_format);
-//                        if (sales_date.getYear() == LocalDate.now().getYear() && sales_date.getMonth() == LocalDate.now().getMonth()) {
-//                            total_monthly_sales = total_monthly_sales + Double.parseDouble(sales_data[2]);
-//                        }
-//                    }
-//                    monthly_salesField.setFocusable(false);
-//                    monthly_salesField.setText(Double.toString(total_monthly_sales));
-//        }catch (IOException e){
-//            e.printStackTrace();
-//        }
-    }//GEN-LAST:event_monthly_salesFieldActionPerformed
-
-    private void daily_salesFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daily_salesFieldActionPerformed
-//        double total_daily_sales = 0.0;
-//        try(BufferedReader reader = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/sales"))) {
-//                    String lines;
-//                    reader.readLine();
-//                    while ((lines = reader.readLine()) != null) {
-//                        String[] sales_data = lines.split("\\|");
-//                        LocalDate sales_date = LocalDate.parse(sales_data[1], date_format);
-//                        if (sales_date.equals(LocalDate.now())) {
-//                            total_daily_sales = total_daily_sales + Double.parseDouble(sales_data[2]);
-//                        }
-//                    }
-//                    daily_salesField.setFocusable(false);
-//                    daily_salesField.setText(Double.toString(total_daily_sales));
-//        }catch (IOException e){
-//            e.printStackTrace();
-//        }
-    }//GEN-LAST:event_daily_salesFieldActionPerformed
-
-    private void yearly_revenueFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearly_revenueFieldActionPerformed
-//        yearly_revenueField.setFocusable(false);
-//        yearly_revenueField.setText(Double.toString(Double.parseDouble(yearly_salesField.getText()) - Double.parseDouble(yearly_purchaseField.getText())));
-    }//GEN-LAST:event_yearly_revenueFieldActionPerformed
-
-    private void monthly_purchaseFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthly_purchaseFieldActionPerformed
-//        double total_monthly_purchase = 0.0;
-//        int current_year = LocalDate.now().getYear();
-//
-//        try (BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {
-//            String lines;
-//            reader.readLine();
-//            while ((lines = reader.readLine()) != null) {
-//                String[] receives_data = lines.split("\\|");
-//                String received_status = receives_data[6].strip();
-//                LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);
-//                if (received_status.equals("Received")) {
-//                    if (payment_date.getYear() == current_year && payment_date.getMonth() == LocalDate.now().getMonth()) {
-//                        total_monthly_purchase = total_monthly_purchase + Double.parseDouble(receives_data[4]);
-//                    }
-//                }
-//            }
-//            monthly_purchaseField.setFocusable(false);
-//            monthly_purchaseField.setText(Double.toString(total_monthly_purchase));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-    }//GEN-LAST:event_monthly_purchaseFieldActionPerformed
-
-    private void daily_purchaseFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daily_purchaseFieldActionPerformed
-//        double total_daily_purchase = 0.0;
-//
-//        try (BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {
-//            String lines;
-//            reader.readLine();
-//            while ((lines = reader.readLine()) != null) {
-//                String[] receives_data = lines.split("\\|");
-//                String received_status = receives_data[6].strip();
-//                LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);
-//                if (received_status.equals("Received") && payment_date.equals(LocalDate.now())) {
-//                    total_daily_purchase = total_daily_purchase + Double.parseDouble(receives_data[4]);
-//                }
-//            }
-//            daily_purchaseField.setFocusable(false);
-//            daily_purchaseField.setText(Double.toString(total_daily_purchase));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-    }//GEN-LAST:event_daily_purchaseFieldActionPerformed
-
-    private void monthly_revenueFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthly_revenueFieldActionPerformed
- 
-    }//GEN-LAST:event_monthly_revenueFieldActionPerformed
-
-    private void daily_revenueFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daily_revenueFieldActionPerformed
-
-    }//GEN-LAST:event_daily_revenueFieldActionPerformed
-
-    private void yearly_profitFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearly_profitFieldActionPerformed
-
-    }//GEN-LAST:event_yearly_profitFieldActionPerformed
-
-    private void monthly_profitFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthly_profitFieldActionPerformed
-
-    }//GEN-LAST:event_monthly_profitFieldActionPerformed
-
-    private void daily_profitFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daily_profitFieldActionPerformed
-        
-    }//GEN-LAST:event_daily_profitFieldActionPerformed
-
     private void total_inventoryFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_total_inventoryFieldActionPerformed
-        int total_row = inventory_amount_table.getRowCount();
-        double total = 0.0;
-        for(int i = 0; i< total_row; i++){
-            total = total + Double.parseDouble(inventory_amount_table.getValueAt(i,4).toString());
-        }
-        total_inventoryField.setText(Double.toString(total));
+
     }//GEN-LAST:event_total_inventoryFieldActionPerformed
 
     /**
@@ -869,7 +636,6 @@ public class fm_finance_report extends javax.swing.JFrame {
     private javax.swing.JButton btn_inventory_list;
     private javax.swing.JButton btn_order_list;
     private javax.swing.JButton btn_req_list;
-    private javax.swing.JTextField current_user;
     private javax.swing.JTextField daily_profitField;
     private javax.swing.JTextField daily_purchaseField;
     private javax.swing.JTextField daily_revenueField;
@@ -884,7 +650,6 @@ public class fm_finance_report extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

@@ -119,10 +119,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="290" max="-2" attributes="0"/>
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="current_user" min="-2" pref="135" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="511" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
@@ -138,24 +135,12 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnBack" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="current_user" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnBack" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="btn_order_list" min="-2" max="-2" attributes="0"/>
@@ -336,16 +321,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProfileActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Current User:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="current_user">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="current_userActionPerformed"/>
-      </Events>
-    </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -376,11 +351,8 @@
           <Font name="sansserif" size="24" style="0"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="yearly_salesFieldActionPerformed"/>
-      </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="double total_yearly_sales = 0.0;&#xa;        int current_year = LocalDate.now().getYear();&#xa;&#xa;        try(BufferedReader reader = new BufferedReader(new FileReader(sales_file))) {&#xa;                String lines;&#xa;                reader.readLine();&#xa;                while ((lines = reader.readLine()) != null) {&#xa;                    String[] sales_data = lines.split(&quot;\\|&quot;);&#xa;                    LocalDate sales_date = LocalDate.parse(sales_data[1], date_format);&#xa;                    if (sales_date.getYear() == current_year) {&#xa;                        total_yearly_sales = total_yearly_sales + Double.parseDouble(sales_data[2]);&#xa;                    }&#xa;                }&#xa;                yearly_salesField.setFocusable(false);&#xa;                yearly_salesField.setText(Double.toString(total_yearly_sales));&#xa;        }catch (IOException e){&#xa;            e.printStackTrace();&#xa;        }"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="double total_yearly_sales = 0.0;&#xa;&#xa;try(BufferedReader reader = new BufferedReader(new FileReader(sales_file))) {&#xa;    String lines;&#xa;    reader.readLine();&#xa;    while ((lines = reader.readLine()) != null) {&#xa;        String[] sales_data = lines.split(&quot;\\|&quot;);&#xa;        LocalDate sales_date = LocalDate.parse(sales_data[1], date_format);&#xa;        int current_year = LocalDate.now().getYear();&#xa;        if (sales_date.getYear() == current_year) {&#xa;            total_yearly_sales = total_yearly_sales + Double.parseDouble(sales_data[2]);&#xa;        }&#xa;    }&#xa;    yearly_salesField.setFocusable(false);&#xa;    yearly_salesField.setText(Double.toString(total_yearly_sales));&#xa;}catch (IOException e){&#xa;    e.printStackTrace();&#xa;}"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -392,11 +364,13 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="yearly_purchaseField">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="yearly_purchaseFieldActionPerformed"/>
-      </Events>
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="24" style="0"/>
+        </Property>
+      </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="double total_yearly_purchase = 0.0;&#xa;        int current_year = LocalDate.now().getYear();&#xa;&#xa;        try(BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {&#xa;            String lines;&#xa;            reader.readLine();&#xa;            while ((lines = reader.readLine()) != null) {&#xa;                String[] receives_data = lines.split(&quot;\\|&quot;);&#xa;                String received_status = receives_data[6].strip();&#xa;                if(!Objects.equals(receives_data[7], &quot;-&quot;)){&#xa;                    LocalDate payment_date = LocalDate.parse(receives_data[7]), date_format);&#xa;                    if (received_status.equals(&quot;Received&quot;) &amp;&amp; payment_date.getYear() == current_year) {&#xa;                        total_yearly_purchase = total_yearly_purchase + Double.parseDouble(receives_data[4]);&#xa;                    }&#xa;                }       &#xa;            }&#xa;            yearly_purchaseField.setText(Double.toString(total_yearly_purchase));&#xa;        }catch (IOException e){&#xa;            e.printStackTrace();&#xa;        }"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="double total_yearly_purchase = 0.0;&#xa;&#xa;try(BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {&#xa;    String lines;&#xa;    reader.readLine();&#xa;    while ((lines = reader.readLine()) != null) {&#xa;        String[] receives_data = lines.split(&quot;\\|&quot;);&#xa;        String received_status = receives_data[6].strip();&#xa;        if(!Objects.equals(receives_data[7], &quot;-&quot;)){&#xa;            LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);&#xa;        int current_year = LocalDate.now().getYear();&#xa;                    if (received_status.equals(&quot;Received&quot;) &amp;&amp; payment_date.getYear() == current_year) {&#xa;                        total_yearly_purchase = total_yearly_purchase + Double.parseDouble(receives_data[4]);&#xa;                    }&#xa;                }       &#xa;            }&#xa;            yearly_purchaseField.setText(Double.toString(total_yearly_purchase));&#xa;        }catch (IOException e){&#xa;            e.printStackTrace();&#xa;        }"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
@@ -413,11 +387,8 @@
           <Font name="sansserif" size="24" style="0"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="daily_salesFieldActionPerformed"/>
-      </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="double total_daily_sales = 0.0;&#xa;        try(BufferedReader reader = new BufferedReader(new FileReader(sales_file))) {&#xa;                    String lines;&#xa;                    reader.readLine();&#xa;                    while ((lines = reader.readLine()) != null) {&#xa;                        String[] sales_data = lines.split(&quot;\\|&quot;);&#xa;                        LocalDate sales_date = LocalDate.parse(sales_data[1], date_format);&#xa;                        if (sales_date.equals(LocalDate.now())) {&#xa;                            total_daily_sales = total_daily_sales + Double.parseDouble(sales_data[2]);&#xa;                        }&#xa;                    }&#xa;                    daily_salesField.setFocusable(false);&#xa;                    daily_salesField.setText(Double.toString(total_daily_sales));&#xa;        }catch (IOException e){&#xa;            e.printStackTrace();&#xa;        }"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="double total_daily_sales = 0.0;&#xa;&#xa;try(BufferedReader reader = new BufferedReader(new FileReader(sales_file))) {&#xa;    String lines;&#xa;    reader.readLine();&#xa;    while ((lines = reader.readLine()) != null) {&#xa;        String[] sales_data = lines.split(&quot;\\|&quot;);&#xa;        LocalDate sales_date = LocalDate.parse(sales_data[1], date_format);&#xa;        if (sales_date.equals(LocalDate.now())) {&#xa;            total_daily_sales = total_daily_sales + Double.parseDouble(sales_data[2]);&#xa;        }&#xa;    }&#xa;daily_salesField.setFocusable(false);&#xa;daily_salesField.setText(Double.toString(total_daily_sales));&#xa;}catch (IOException e){&#xa;    e.printStackTrace();&#xa;}"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
@@ -437,11 +408,13 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="monthly_purchaseField">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="monthly_purchaseFieldActionPerformed"/>
-      </Events>
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="24" style="0"/>
+        </Property>
+      </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="double total_monthly_purchase = 0.0;&#xa;        int current_year = LocalDate.now().getYear();&#xa;&#xa;        try (BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {&#xa;            String lines;&#xa;            reader.readLine();&#xa;            while ((lines = reader.readLine()) != null) {&#xa;                String[] receives_data = lines.split(&quot;\\|&quot;);&#xa;                String received_status = receives_data[6].strip();&#xa;                if(!Objects.equals(receives_data[7], &quot;-&quot;)){&#xa;                    LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);&#xa;                    if (received_status.equals(&quot;Received&quot;)) {&#xa;                        if (payment_date.getYear() == current_year &amp;&amp; payment_date.getMonth() == LocalDate.now().getMonth()) {&#xa;                            total_monthly_purchase = total_monthly_purchase + Double.parseDouble(receives_data[4]);&#xa;                        }&#xa;                    }&#xa;                }&#xa;            }&#xa;            monthly_purchaseField.setFocusable(false);&#xa;            monthly_purchaseField.setText(Double.toString(total_monthly_purchase));&#xa;        } catch (IOException e) {&#xa;            e.printStackTrace();&#xa;        }"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="double total_monthly_purchase = 0.0;&#xa;&#xa;&#xa;        try (BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {&#xa;            String lines;&#xa;            reader.readLine();&#xa;            while ((lines = reader.readLine()) != null) {&#xa;                String[] receives_data = lines.split(&quot;\\|&quot;);&#xa;                String received_status = receives_data[6].strip();&#xa;                if(!Objects.equals(receives_data[7], &quot;-&quot;)){&#xa;                    LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);&#xa;                    int current_year = LocalDate.now().getYear();&#xa;                    if (received_status.equals(&quot;Received&quot;)) {&#xa;                        if (payment_date.getYear() == current_year &amp;&amp; payment_date.getMonth() == LocalDate.now().getMonth()) {&#xa;                            total_monthly_purchase = total_monthly_purchase + Double.parseDouble(receives_data[4]);&#xa;                        }&#xa;                    }&#xa;                }&#xa;            }&#xa;            monthly_purchaseField.setFocusable(false);&#xa;            monthly_purchaseField.setText(Double.toString(total_monthly_purchase));&#xa;        } catch (IOException e) {&#xa;            e.printStackTrace();&#xa;        }"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="monthly_salesField">
@@ -450,11 +423,8 @@
           <Font name="sansserif" size="24" style="0"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="monthly_salesFieldActionPerformed"/>
-      </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="double total_monthly_sales = 0.0;&#xa;        try(BufferedReader reader = new BufferedReader(new FileReader(sales_file))) {&#xa;                    String lines;&#xa;                    reader.readLine();&#xa;                    while ((lines = reader.readLine()) != null) {&#xa;                        String[] sales_data = lines.split(&quot;\\|&quot;);&#xa;                        LocalDate sales_date = LocalDate.parse(sales_data[1], date_format);&#xa;                        if (sales_date.getYear() == LocalDate.now().getYear() &amp;&amp; sales_date.getMonth() == LocalDate.now().getMonth()) {&#xa;                            total_monthly_sales = total_monthly_sales + Double.parseDouble(sales_data[2]);&#xa;                        }&#xa;                    }&#xa;                    monthly_salesField.setFocusable(false);&#xa;                    monthly_salesField.setText(Double.toString(total_monthly_sales));&#xa;        }catch (IOException e){&#xa;            e.printStackTrace();&#xa;        }"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="double total_monthly_sales = 0.0;&#xa;&#xa;try(BufferedReader reader = new BufferedReader(new FileReader(sales_file))) {&#xa;    String lines;&#xa;    reader.readLine();&#xa;        while ((lines = reader.readLine()) != null) {&#xa;            String[] sales_data = lines.split(&quot;\\|&quot;);&#xa;            LocalDate sales_date = LocalDate.parse(sales_data[1], date_format);&#xa;            if (sales_date.getYear() == LocalDate.now().getYear() &amp;&amp; sales_date.getMonth() == LocalDate.now().getMonth()) {&#xa;                total_monthly_sales = total_monthly_sales + Double.parseDouble(sales_data[2]);&#xa;            }&#xa;        }&#xa;        monthly_salesField.setFocusable(false);&#xa;        monthly_salesField.setText(Double.toString(total_monthly_sales));&#xa;}catch (IOException e){&#xa;    e.printStackTrace();&#xa;}"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel8">
@@ -466,9 +436,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="daily_purchaseField">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="daily_purchaseFieldActionPerformed"/>
-      </Events>
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="24" style="0"/>
+        </Property>
+      </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="double total_daily_purchase = 0.0;&#xa;&#xa;        try(BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {&#xa;            String lines;&#xa;            reader.readLine();&#xa;            while ((lines = reader.readLine()) != null) {&#xa;                String[] receives_data = lines.split(&quot;\\|&quot;);&#xa;                String received_status = receives_data[6].strip();&#xa;                if(!Objects.equals(receives_data[7], &quot;-&quot;)){&#xa;                    LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);&#xa;                    if (received_status.equals(&quot;Received&quot;) &amp;&amp; payment_date.equals(LocalDate.now())){&#xa;                        total_daily_purchase = total_daily_purchase + Double.parseDouble(receives_data[4]);&#xa;                    }&#xa;                }&#xa;            }&#xa;            daily_purchaseField.setFocusable(false);&#xa;            daily_purchaseField.setText(Double.toString(total_daily_purchase));&#xa;        }catch (IOException e){&#xa;            e.printStackTrace();&#xa;        }"/>
       </AuxValues>
@@ -487,9 +459,6 @@
           <Font name="sansserif" size="24" style="0"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="yearly_revenueFieldActionPerformed"/>
-      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="yearly_revenueField.setFocusable(false);&#xa;yearly_revenueField.setText(Double.toString(Double.parseDouble(yearly_salesField.getText()) - Double.parseDouble(yearly_purchaseField.getText())));"/>
       </AuxValues>
@@ -516,11 +485,8 @@
           <Font name="sansserif" size="24" style="0"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="monthly_revenueFieldActionPerformed"/>
-      </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="monthly_revenueField.setFocusable(false);&#xa;    monthly_revenueField.setText(Double.toString(Double.parseDouble(monthly_salesField.getText()) - Double.parseDouble(monthly_purchaseField.getText())));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="monthly_revenueField.setFocusable(false);&#xa;monthly_revenueField.setText(Double.toString(Double.parseDouble(monthly_salesField.getText()) - Double.parseDouble(monthly_purchaseField.getText())));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="daily_revenueField">
@@ -529,11 +495,8 @@
           <Font name="sansserif" size="24" style="0"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="daily_revenueFieldActionPerformed"/>
-      </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="daily_revenueField.setFocusable(false);&#xa;    daily_revenueField.setText(Double.toString(Double.parseDouble(daily_salesField.getText()) - Double.parseDouble(daily_purchaseField.getText())));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="daily_revenueField.setFocusable(false);&#xa;daily_revenueField.setText(Double.toString(Double.parseDouble(daily_salesField.getText()) - Double.parseDouble(daily_purchaseField.getText())));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel12">
@@ -566,9 +529,6 @@
           <Font name="sansserif" size="24" style="0"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="yearly_profitFieldActionPerformed"/>
-      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="yearly_profitField.setFocusable(false);&#xa;        yearly_profitField.setText(String.format(&quot;%.1f%%&quot;, (Double.parseDouble(yearly_revenueField.getText()) / Double.parseDouble(yearly_purchaseField.getText())) * 100));"/>
       </AuxValues>
@@ -579,9 +539,6 @@
           <Font name="sansserif" size="24" style="0"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="monthly_profitFieldActionPerformed"/>
-      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="monthly_profitField.setFocusable(false);&#xa;        monthly_profitField.setText(String.format(&quot;%.1f%%&quot;, (Double.parseDouble(monthly_revenueField.getText()) / Double.parseDouble(monthly_purchaseField.getText())) * 100));"/>
       </AuxValues>
@@ -592,9 +549,6 @@
           <Font name="sansserif" size="24" style="0"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="daily_profitFieldActionPerformed"/>
-      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="daily_profitField.setFocusable(false);&#xa;    daily_profitField.setText(String.format(&quot;%.1f%%&quot;, (Double.parseDouble(daily_revenueField.getText()) / Double.parseDouble(daily_purchaseField.getText())) * 100));"/>
       </AuxValues>
@@ -634,6 +588,9 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="total_inventoryFieldActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="int total_row = inventory_amount_table.getRowCount();&#xa;double total = 0.0;&#xa;for(int i = 0; i&lt; total_row; i++){&#xa;    total = total + Double.parseDouble(inventory_amount_table.getValueAt(i,4).toString());&#xa;}&#xa;total_inventoryField.setText(Double.toString(total));"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel17">
       <Properties>

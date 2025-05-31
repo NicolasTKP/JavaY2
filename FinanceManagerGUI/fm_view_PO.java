@@ -349,8 +349,13 @@ public class fm_view_PO extends javax.swing.JFrame {
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) throws JRException, IOException {//GEN-FIRST:event_btnExportActionPerformed
         PDFPrinter printer = new PDFPrinter();
-        PDFPrinter.PDFItem items = new PDFPrinter.PDFItem(po_table.getValueAt(0,0).toString(), po_table.getValueAt(0,1).toString(), po_table.getValueAt(0,2).toString(), po_table.getValueAt(0,3).toString(), po_table.getValueAt(0,4).toString());
-        printer.print(order_idField.getText(), order_dateField.getText(), request_byField.getText(), supplierField.getText(), request_idField.getText(), shipping_termField.getText(), payment_termField.getText(), supplier_idLabel.getText(), supplier_nameLabel.getText(), supplier_addressLabel.getText(), supplier_contactLabel.getText(), total_amountField.getText(), po_statusLabel.getText(), items);
+        PDFPrinter.PDFItem items = new PDFPrinter.PDFItem(po_table.getValueAt(0,0).toString(), 
+                po_table.getValueAt(0,1).toString(), po_table.getValueAt(0,2).toString(), 
+                po_table.getValueAt(0,3).toString(), po_table.getValueAt(0,4).toString());
+        printer.print(order_idField.getText(), order_dateField.getText(), request_byField.getText(), 
+                supplierField.getText(), request_idField.getText(), shipping_termField.getText(), payment_termField.getText(), 
+                supplier_idLabel.getText(), supplier_nameLabel.getText(), supplier_addressLabel.getText(), supplier_contactLabel.getText(), 
+                total_amountField.getText(), po_statusLabel.getText(), items);
     }//GEN-LAST:event_btnExportActionPerformed
 
     /**

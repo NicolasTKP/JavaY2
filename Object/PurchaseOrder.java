@@ -34,7 +34,7 @@ public class PurchaseOrder extends Request {
         this.supplier_name = supplier_name;
     }
     
-    //Overloaded for editPO
+    //Overloaded constructor for EditPO page
     public PurchaseOrder(String order_id, String item_id, String item_name, int quantity, double unit_price, String supplier_id) {
         this.order_id = order_id;
         this.item_id = item_id;
