@@ -26,8 +26,6 @@ public class fm_edit_PO extends javax.swing.JFrame {
     
     public fm_edit_PO(PurchaseOrder po){
         initComponents();
-        current_user.setText(SessionManager.getInstance().username.toUpperCase());
-        current_user.setEditable(false);
         
         order_idField.setEditable(false);
         item_idField.setEditable(false);
@@ -79,8 +77,6 @@ public class fm_edit_PO extends javax.swing.JFrame {
         supplier_idField = new javax.swing.JTextField();
         sname_list = new javax.swing.JComboBox<>();
         btnBack = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        current_user = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -145,14 +141,6 @@ public class fm_edit_PO extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setText("Current User:");
-
-        current_user.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                current_userActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -184,15 +172,11 @@ public class fm_edit_PO extends javax.swing.JFrame {
                                     .addComponent(sname_list, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(258, 258, 258)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel1))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(368, 368, 368)
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(21, 21, 21))
+                .addContainerGap(337, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,11 +184,7 @@ public class fm_edit_PO extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel9)
-                                .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1))
+                        .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -267,7 +247,7 @@ public class fm_edit_PO extends javax.swing.JFrame {
             String new_supplierID = supplier_idField.getText();
             
             if(new_quantity <= 0){ 
-                JOptionPane.showMessageDialog(this, "Quantity must be a positive integer!", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Quantity must be a positive integer and couldn't be 0!", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
@@ -277,16 +257,12 @@ public class fm_edit_PO extends javax.swing.JFrame {
             Edit.editingColumn("PO", current_orderID, 6, String.valueOf(new_amount));
             Edit.editingColumn("PO", current_orderID, 7, new_supplierID);
         }catch (NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "Quantity must be a valid integer format!", "Warning", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Quantity must be a valid integer!", "Warning", JOptionPane.ERROR_MESSAGE);
             return;
         }
         this.dispose();         
         new fm_purchase_order().setVisible(true);  
     }//GEN-LAST:event_btnSaveActionPerformed
-
-    private void current_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_current_userActionPerformed
-
-    }//GEN-LAST:event_current_userActionPerformed
 
     /**
      * @param args the command line arguments
@@ -304,7 +280,6 @@ public class fm_edit_PO extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnSave;
-    private javax.swing.JTextField current_user;
     private javax.swing.JTextField item_idField;
     private javax.swing.JTextField item_nameField;
     private javax.swing.JLabel jLabel1;
@@ -315,7 +290,6 @@ public class fm_edit_PO extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField order_idField;
     private javax.swing.JTextField quantityField;
     private javax.swing.JComboBox<String> sname_list;

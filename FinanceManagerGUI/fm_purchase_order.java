@@ -331,7 +331,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
     private void approveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveBtnActionPerformed
         String password = JOptionPane.showInputDialog("Please enter your credential before approving the Purchase Order");
         if (password == null || !password.equals(SessionManager.getInstance().password)){
-            JOptionPane.showMessageDialog(null, "Wrong password entered, you are not allowed to approve or reject", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Wrong password entered, you are not allowed to APPROVE the Purchase Order", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         int selected_row = orderTable.getSelectedRow();
@@ -367,7 +367,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
     private void rejectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectBtnActionPerformed
         String password = JOptionPane.showInputDialog("Please enter your credential before rejecting the Purchase Order");
         if (password == null || !password.equals(SessionManager.getInstance().password)){
-            JOptionPane.showMessageDialog(null, "Wrong password entered, you are not allowed to approve or reject", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Wrong password entered, you are not allowed to REJECT the Purchase Order", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         int selected_row = orderTable.getSelectedRow();
@@ -403,15 +403,15 @@ public class fm_purchase_order extends javax.swing.JFrame {
     }//GEN-LAST:event_orderFilterActionPerformed
 
     private void btnEditPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPOActionPerformed
-        String password = JOptionPane.showInputDialog("Please enter your credential before rejecting the Purchase Order");
+        String password = JOptionPane.showInputDialog("Please enter your credential before editing the Purchase Order");
         if (password == null || !password.equals(SessionManager.getInstance().password)){
-            JOptionPane.showMessageDialog(null, "Wrong password entered, you are not allowed to edit the Purchase Order", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Wrong password entered, you are not allowed to EDIT the Purchase Order", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         int selectedRow = orderTable.getSelectedRow();
-        String orderStatus = String.valueOf(model.getValueAt(selectedRow, 10));
         
         if(selectedRow != -1){
+            String orderStatus = String.valueOf(model.getValueAt(selectedRow, 10));
             if(orderStatus.equals("Pending")){
                 String orderID = String.valueOf(model.getValueAt(selectedRow, 0));
                 String itemID = String.valueOf(model.getValueAt(selectedRow, 2));
@@ -424,12 +424,14 @@ public class fm_purchase_order extends javax.swing.JFrame {
             
                 new fm_edit_PO(po).setVisible(true);
             }else {
-                JOptionPane.showMessageDialog(this, "You can only modified the Quantity and Supplier Name when the order status in Purchase Order is not yet been Approved or Rejected", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "You can only modified the Quantity and Supplier Name when the order status in Purchase Order is Pending", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
             }
         }else{
-            JOptionPane.showMessageDialog(this, "Please select the purchase order before you modify the quantity", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select the Purchase Order before you modify the Quantity or the Supplier", "Information", JOptionPane.INFORMATION_MESSAGE);
+            return;
         }
-//        this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnEditPOActionPerformed
 
     private void orderTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTableMouseReleased
