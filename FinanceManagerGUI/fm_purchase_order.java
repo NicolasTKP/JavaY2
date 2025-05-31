@@ -405,7 +405,9 @@ public class fm_purchase_order extends javax.swing.JFrame {
     private void btnEditPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPOActionPerformed
         String password = JOptionPane.showInputDialog("Please enter your credential before editing the Purchase Order");
         if (password == null || !password.equals(SessionManager.getInstance().password)){
-            JOptionPane.showMessageDialog(this, "Wrong password entered, you are not allowed to EDIT the Purchase Order", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                    "Wrong password entered, you are not allowed to EDIT the Purchase Order", 
+                    "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         int selectedRow = orderTable.getSelectedRow();
@@ -424,11 +426,15 @@ public class fm_purchase_order extends javax.swing.JFrame {
             
                 new fm_edit_PO(po).setVisible(true);
             }else {
-                JOptionPane.showMessageDialog(this, "You can only modified the Quantity and Supplier Name when the order status in Purchase Order is Pending", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, 
+                        "You can only modified the Quantity and Supplier Name when the order status in Purchase Order is Pending",
+                        "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }
         }else{
-            JOptionPane.showMessageDialog(this, "Please select the Purchase Order before you modify the Quantity or the Supplier", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                    "Please select the Purchase Order before you modify the Quantity or the Supplier", 
+                    "Information", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         this.dispose();
