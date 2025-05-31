@@ -397,9 +397,9 @@ public class fm_purchase_order extends javax.swing.JFrame {
         orderTable.setRowSorter(orderStatus);
         String selected_status = orderFilter.getSelectedItem().toString();
         switch (selected_status){
-            case "Pending" -> orderStatus.setRowFilter(RowFilter.regexFilter("(?i)^" + selected_status + "$", 9));
-            case "Approved" -> orderStatus.setRowFilter(RowFilter.regexFilter("(?i)^" + selected_status + "$", 9));
-            case "Rejected" -> orderStatus.setRowFilter(RowFilter.regexFilter("(?i)^" + selected_status + "$", 9));
+            case "Pending" -> orderStatus.setRowFilter(RowFilter.regexFilter("(?i)^" + selected_status + "$", 10));
+            case "Approved" -> orderStatus.setRowFilter(RowFilter.regexFilter("(?i)^" + selected_status + "$", 10));
+            case "Rejected" -> orderStatus.setRowFilter(RowFilter.regexFilter("(?i)^" + selected_status + "$", 10));
             case "All" -> orderStatus.setRowFilter(null);
             default -> {}
         }
