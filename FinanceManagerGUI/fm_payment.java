@@ -4,6 +4,7 @@
  */
 package com.mycompany.JavaY2.FinanceManagerGUI;
 
+import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.Object.SessionManager;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -24,7 +25,7 @@ import javax.swing.table.TableRowSorter;
  */
 public class fm_payment extends javax.swing.JFrame {
     private DefaultTableModel model = new DefaultTableModel();
-    private String column_name[] = {"Order ID", "Group ID", "Item Name", "Quantity", "Total Amount", "Date Received", "Delivery Status", "Payment Date", "Payment Status"}; 
+    private String column_name[] = {"Order ID", "Item ID", "Item Name", "Quantity", "Total Amount", "Date Received", "Delivery Status", "Payment Date", "Payment Status"}; 
 
     /**
      * Creates new form fm_payment
@@ -55,9 +56,8 @@ public class fm_payment extends javax.swing.JFrame {
         int row_total = order_receivedTable.getRowCount();
         double total_unpaid_amount = 0.0;
         for(int i = 0; i< row_total;i++){
-            if (order_receivedTable.getValueAt(i, 8).toString().equals("Unpaid")){
-//          total_unpaid_amount = total_unpaid_amount + Double.parseDouble(order_receivedTable.getValueAt(i,).toString());
-            total_unpaid_amount = Double.parseDouble(order_receivedTable.getValueAt(i,4).toString());
+            if (order_receivedTable.getValueAt(i, 6).toString().equals("Received") && order_receivedTable.getValueAt(i, 8).toString().equals("Unpaid")){
+                total_unpaid_amount = total_unpaid_amount + Double.parseDouble(order_receivedTable.getValueAt(i,4).toString());
             }
         }
         unpaid_amountField.setText(Double.toString(total_unpaid_amount));
@@ -92,7 +92,7 @@ public class fm_payment extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btn_order_list.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btn_order_list.setText("<html><div style='text-align:center;'>Purchase Order List</div></html>");
+        btn_order_list.setText("<html><p style='text-align:center;'>Purchase Order List</p></html>");
         btn_order_list.setPreferredSize(new java.awt.Dimension(200, 105));
         btn_order_list.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,7 +101,7 @@ public class fm_payment extends javax.swing.JFrame {
         });
 
         btn_req_list.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
-        btn_req_list.setText("<html><div style='text-align:center;'>Purchase Requisition List</div></html>");
+        btn_req_list.setText("<html><p style='text-align:center;'>Purchase Requisition List</p></html>");
         btn_req_list.setPreferredSize(new java.awt.Dimension(200, 105));
         btn_req_list.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +128,7 @@ public class fm_payment extends javax.swing.JFrame {
         });
 
         btnReport.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btnReport.setText("<html><div style='text-align:center;'>Financial <br> Report</div></html>");
+        btnReport.setText("<html><p style='text-align:center;'>Financial Report</p></html>");
         btnReport.setPreferredSize(new java.awt.Dimension(200, 105));
         btnReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -293,7 +293,8 @@ public class fm_payment extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPaymentActionPerformed
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
-        // TODO add your handling code here:
+        new fm_finance_report().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -337,9 +338,15 @@ public class fm_payment extends javax.swing.JFrame {
                 if(!current_date.isBefore(item_received_date)){
                     order_receivedTable.setValueAt(payment_date, row_selected, 7);
                     order_receivedTable.setValueAt("Paid", row_selected, 8);
-                    FinanceManagerFunction.payment(orderID, 7, payment_date);
-                    FinanceManagerFunction.payment(orderID, 8, "Paid");
+                    Edit.editingColumn("receive", orderID, 7, payment_date);
+                    Edit.editingColumn("receive", orderID, 8, "Paid");
                     JOptionPane.showMessageDialog(this, "Your transaction is done sucessfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    double paid_amount = Double.parseDouble(order_receivedTable.getValueAt(row_selected, 4).toString());
+                    double current_total_unpaid_amount = Double.parseDouble(unpaid_amountField.getText());
+                    double new_total_unpaid_amount = current_total_unpaid_amount - paid_amount;
+                    
+                    unpaid_amountField.setText(Double.toString(new_total_unpaid_amount));  
                 }else{
                     JOptionPane.showMessageDialog(this, "Payment cannot be made before the received date of an item ", "Warning", JOptionPane.WARNING_MESSAGE);
                 }

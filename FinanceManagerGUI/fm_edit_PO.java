@@ -4,6 +4,7 @@
  */
 package com.mycompany.JavaY2.FinanceManagerGUI;
 
+import com.mycompany.JavaY2.Class.DataMapping;
 import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.Class.Search;
 import com.mycompany.JavaY2.Class.ValidateFormat;
@@ -45,7 +46,7 @@ public class fm_edit_PO extends javax.swing.JFrame {
         stock_priceField.setText(String.valueOf(po.unit_price));
         supplier_idField.setText(po.supplier_id);
         
-        supplierDetails = getSupplierDetails(po.item_name);
+        supplierDetails = DataMapping.getSupplierDetails(po.item_name);
         sname_list.setModel(new DefaultComboBoxModel<>(supplierDetails.keySet().toArray(new String[0])));
         
         for (Map.Entry<String, String[]> entry : supplierDetails.entrySet()){
@@ -56,41 +57,6 @@ public class fm_edit_PO extends javax.swing.JFrame {
         } 
     }
     
-    private static String getSupplierNameByID(String supplierID){
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] columns = line.split("\\|");
-                if (columns[0].equals(supplierID)) { 
-                    return columns[1]; // Return supplier name
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-    }
-        return null; // Return null if no match is found
-    }
-    
-    private static Map<String, String[]> getSupplierDetails(String itemName) {
-    Map<String, String[]> supplierDetails = new HashMap<>(); // supplierName -> {itemID, supplierID, unitPrice}
-    
-    try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/items"))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] column = line.split("\\|");
-            if (column[1].equals(itemName)) { // Match item name
-                String supplierID = column[6];
-                String supplierName = getSupplierNameByID(supplierID);
-                if (supplierName != null) {
-                    supplierDetails.put(supplierName, new String[]{column[0], supplierID, column[2]}); // {itemID, supplierID, unitPrice}
-                }
-            }
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    return supplierDetails;
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -312,11 +278,11 @@ public class fm_edit_PO extends javax.swing.JFrame {
                 return;
             }
             
-            Edit.purchaseOrders(current_orderID, 2, new_item_id);
-            Edit.purchaseOrders(current_orderID, 4, String.valueOf(new_quantity));
-            Edit.purchaseOrders(current_orderID, 5, String.valueOf(new_stockPrice));
-            Edit.purchaseOrders(current_orderID, 6, String.valueOf(new_amount));
-            Edit.purchaseOrders(current_orderID, 7, new_supplierID);
+            Edit.editingColumn("PO", current_orderID, 2, new_item_id);
+            Edit.editingColumn("PO", current_orderID, 4, String.valueOf(new_quantity));
+            Edit.editingColumn("PO", current_orderID, 5, String.valueOf(new_stockPrice));
+            Edit.editingColumn("PO", current_orderID, 6, String.valueOf(new_amount));
+            Edit.editingColumn("PO", current_orderID, 7, new_supplierID);
     //        Edit.purchaseOrders(current_orderID, 1, new_supplierName); remain first(if need to use it later) - to update the latest supplier name in the PO
         }catch (NumberFormatException e){
             JOptionPane.showMessageDialog(this, "Quantity must be a valid integer!", "Invalid Input", JOptionPane.ERROR_MESSAGE);

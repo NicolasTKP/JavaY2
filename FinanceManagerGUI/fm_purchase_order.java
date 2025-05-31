@@ -23,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 public class fm_purchase_order extends javax.swing.JFrame {
-    private PurchaseOrder order;
+//    private PurchaseOrder order;
     private DefaultTableModel model = new DefaultTableModel();
     private String colName[] = {"Order ID", "Requisition ID", "Item ID", "User ID", "Username", "Quantity", "Unit Price", "Amount", "Supplier ID", "Order Date", "Order Status"}; 
     private DefaultListCellRenderer listRenderer;
@@ -40,10 +40,14 @@ public class fm_purchase_order extends javax.swing.JFrame {
             while ((line = reader.readLine()) != null) {
                 String[] orderDetails = line.split("\\|");
                 String username_by_id = Search.getUsername(orderDetails[3]);
-                String[] po_username = new String[orderDetails.length + 1];
-//                System.arraycopy(orderDetails, 0, fullRow, 0, 4);
-//                fullRow[4] = username;
-                model.addRow(orderDetails);
+                String[] full_orderDetails = new String[orderDetails.length + 1];
+                System.arraycopy(orderDetails, 0, full_orderDetails, 0, 4);
+                // Set username at index 4
+                full_orderDetails[4] = username_by_id;
+                // Copy remaining fields from index 4 onwards (shifted by +1)
+                System.arraycopy(orderDetails, 4, full_orderDetails, 5, orderDetails.length - 4);
+                
+                model.addRow(full_orderDetails);
             }
             reader.close();
         }catch (IOException e) {
@@ -83,6 +87,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
         btnEditPO = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         searchPOField = new javax.swing.JTextField();
+        btnView = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,7 +101,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
         });
 
         btn_order_list.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btn_order_list.setText("<html><div style='text-align:center;'>Purchase Order List</div></html>");
+        btn_order_list.setText("<html><p style='text-align:center;'>Purchase Order List</p></html>");
         btn_order_list.setPreferredSize(new java.awt.Dimension(200, 105));
         btn_order_list.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,7 +110,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
         });
 
         btn_req_list.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
-        btn_req_list.setText("<html><div style='text-align:center;'>Purchase Requisition List</div></html>");
+        btn_req_list.setText("<html><p style='text-align:center;'>Purchase Requisition List</p></html>");
         btn_req_list.setPreferredSize(new java.awt.Dimension(200, 105));
         btn_req_list.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,7 +137,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
         });
 
         btnReport.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btnReport.setText("<html><div style='text-align:center;'>Financial <br> Report</div></html>");
+        btnReport.setText("<html><p style='text-align:center;'>Financial Report</p></html>");
         btnReport.setPreferredSize(new java.awt.Dimension(200, 105));
         btnReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,7 +148,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("sansserif", 0, 48)); // NOI18N
         jLabel1.setText("Purchase Order List");
 
-        btnProfile.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        btnProfile.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         btnProfile.setText("Profile");
         btnProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -212,6 +217,15 @@ public class fm_purchase_order extends javax.swing.JFrame {
             }
         });
 
+        btnView.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
+        btnView.setText("View");
+        btnView.setPreferredSize(new java.awt.Dimension(86, 33));
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -224,25 +238,25 @@ public class fm_purchase_order extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 413, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(323, 323, 323)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_order_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_req_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_inventory_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_order_list, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_req_list, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_inventory_list, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPayment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(50, 50, 50)
-                                .addComponent(rejectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addComponent(rejectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,15 +284,16 @@ public class fm_purchase_order extends javax.swing.JFrame {
                 .addComponent(btn_inventory_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(115, 115, 115)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 1, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
+                        .addGap(53, 53, 53)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(current_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -294,7 +309,8 @@ public class fm_purchase_order extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rejectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
@@ -320,7 +336,8 @@ public class fm_purchase_order extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPaymentActionPerformed
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
-        // TODO add your handling code here:
+        new fm_finance_report().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileActionPerformed
@@ -344,27 +361,32 @@ public class fm_purchase_order extends javax.swing.JFrame {
             return;
         }
         int selected_row = orderTable.getSelectedRow();
-        if (selected_row == -1){
-            JOptionPane.showMessageDialog(this, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
-        }else{
-            int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to approve the purchase order?", "Confirm Approval", JOptionPane.YES_NO_OPTION); 
-            if(choice == JOptionPane.YES_OPTION) {
-                String[] ls = new String[9];
-                String order_id = orderTable.getValueAt(selected_row,0).toString();
-                Edit.purchaseOrders(order_id,9,"Approved"); //Pending - Approved in text file
-                model.setValueAt("Approved",selected_row,9); //Pending - Approved on table
-                ls[0] = order_id;
-                ls[1] = orderTable.getValueAt(selected_row,2).toString();
-                ls[2] = Search.getItemNamebyItemID(ls[1]);
-                ls[3] = Search.getFromPO(ls[0],4);
-                ls[4] = Search.getFromPO(ls[0],6);
-                ls[5] = "-";
-                ls[6] = "Not Received";
-                ls[7] = "-";
-                ls[8] = "-";
-                TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/receives",String.join("|",ls));
-                JOptionPane.showMessageDialog(this, "You Have Approved The Purchase Order Sucessfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+        if (selected_row != -1) {
+            String order_status = String.valueOf(model.getValueAt(selected_row, 10));
+            if (!order_status.equals("Approved")) {
+                int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to approve the purchase order?", "Confirm Approval", JOptionPane.YES_NO_OPTION); 
+                if (choice == JOptionPane.YES_OPTION) {
+                    String[] ls = new String[9];
+                    String order_id = orderTable.getValueAt(selected_row, 0).toString();
+                    Edit.editingColumn("PO", order_id, 9, "Approved"); // Update in file
+                    model.setValueAt("Approved", selected_row, 10);     // Update in table
+                    ls[0] = order_id;
+                    ls[1] = orderTable.getValueAt(selected_row, 2).toString();
+                    ls[2] = Search.getItemNamebyItemID(ls[1]);
+                    ls[3] = Search.getFromPO(ls[0], 4); // quantity
+                    ls[4] = Search.getFromPO(ls[0], 6); // unit price
+                    ls[5] = "-";
+                    ls[6] = "Not Received";
+                    ls[7] = "-";
+                    ls[8] = "-";
+                    TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/receives", String.join("|", ls));
+                    JOptionPane.showMessageDialog(this, "You have approved the Purchase Order successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "This Purchase Order has already been approved", "Warning", JOptionPane.WARNING_MESSAGE);
             }
+        }else{
+            JOptionPane.showMessageDialog(this, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_approveBtnActionPerformed
 
@@ -376,15 +398,20 @@ public class fm_purchase_order extends javax.swing.JFrame {
         }
         int selected_row = orderTable.getSelectedRow();
         if (selected_row == -1){
-            JOptionPane.showMessageDialog(this, "Please select a row to reject", "Warning", JOptionPane.WARNING_MESSAGE);
-        }else{
-            int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to approve the purchase order?", "Confirm Approval", JOptionPane.YES_NO_OPTION); 
-            if(choice == JOptionPane.YES_OPTION){
-                String order_id = orderTable.getValueAt(selected_row,0).toString();
-                Edit.purchaseOrders(order_id,9,"Rejected"); //Pending - Rejected in text file
-                model.setValueAt("Rejected",selected_row,9); //Pending - Rejected on table
-                JOptionPane.showMessageDialog(this, "You Have Rejected The Purchase Order Sucessfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+            String order_status = String.valueOf(model.getValueAt(selected_row, 10));
+            if (!order_status.equals("Rejected")) {
+                int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to approve the purchase order?", "Confirm Approval", JOptionPane.YES_NO_OPTION); 
+                if(choice == JOptionPane.YES_OPTION){
+                    String order_id = orderTable.getValueAt(selected_row, 0).toString();
+                    Edit.editingColumn("PO", order_id, 9, "Rejected"); //Pending - Rejected in text file
+                    model.setValueAt("Rejected",selected_row, 10); //Pending - Rejected on table
+                    JOptionPane.showMessageDialog(this, "You Have Rejected The Purchase Order Sucessfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "This Purchase Order has already been rejected", "Warning", JOptionPane.WARNING_MESSAGE);
             }
+        }else{
+            JOptionPane.showMessageDialog(this, "Please select a row to reject", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_rejectBtnActionPerformed
 
@@ -404,22 +431,22 @@ public class fm_purchase_order extends javax.swing.JFrame {
     private void btnEditPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPOActionPerformed
         String password = JOptionPane.showInputDialog("Please enter your credential before rejecting the Purchase Order");
         if (password == null || !password.equals(SessionManager.getInstance().password)){
-            JOptionPane.showMessageDialog(null, "Wrong password entered, you are not allowed to approve or reject", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Wrong password entered, you are not allowed to edit the Purchase Order", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         int selectedRow = orderTable.getSelectedRow();
-        String orderStatus = String.valueOf(model.getValueAt(selectedRow, 9));
+        String orderStatus = String.valueOf(model.getValueAt(selectedRow, 10));
         
         if(selectedRow != -1){
             if(orderStatus.equals("Pending")){
                 String orderID = String.valueOf(model.getValueAt(selectedRow, 0));
                 String itemID = String.valueOf(model.getValueAt(selectedRow, 2));
                 String itemName = Search.getItemNamebyItemID(itemID); //items.txt
-                int quantity = Integer.parseInt(String.valueOf(model.getValueAt(selectedRow, 4))); 
-                double unit_price = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 5))); 
-                String supplierID = String.valueOf(model.getValueAt(selectedRow, 7));
+                int quantity = Integer.parseInt(String.valueOf(model.getValueAt(selectedRow, 5))); 
+                double unit_price = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 6))); 
+                String supplierID = String.valueOf(model.getValueAt(selectedRow, 8));
                 
-                 PurchaseOrder po = new PurchaseOrder(orderID, itemID, itemName, quantity, unit_price, supplierID);
+                PurchaseOrder po = new PurchaseOrder(orderID, itemID, itemName, quantity, unit_price, supplierID);
             
                 new fm_edit_PO(po).setVisible(true);
             }else {
@@ -440,6 +467,16 @@ public class fm_purchase_order extends javax.swing.JFrame {
         orderTable.setRowSorter(search);
         search.setRowFilter(RowFilter.regexFilter(searchPOField.getText()));
     }//GEN-LAST:event_searchPOFieldKeyReleased
+
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        int selected_row = orderTable.getSelectedRow();
+        if (selected_row == -1){
+            JOptionPane.showMessageDialog(null, "Please select a Purchase Order to view", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        new fm_view_PO(orderTable.getValueAt(selected_row,0).toString()).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnViewActionPerformed
 
     /**
      * @param args the command line arguments
@@ -483,6 +520,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
     private javax.swing.JButton btnPayment;
     private javax.swing.JButton btnProfile;
     private javax.swing.JButton btnReport;
+    private javax.swing.JButton btnView;
     private javax.swing.JButton btn_inventory_list;
     private javax.swing.JButton btn_order_list;
     private javax.swing.JButton btn_req_list;

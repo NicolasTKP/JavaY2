@@ -96,7 +96,7 @@ public class fm_inventory extends javax.swing.JFrame {
         });
 
         btn_order_list.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btn_order_list.setText("<html><div style='text-align:center;'>Purchase Order List</div></html>");
+        btn_order_list.setText("<html><p style='text-align:center;'>Purchase Order List</p></html>");
         btn_order_list.setPreferredSize(new java.awt.Dimension(200, 105));
         btn_order_list.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,7 +105,7 @@ public class fm_inventory extends javax.swing.JFrame {
         });
 
         btn_req_list.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
-        btn_req_list.setText("<html><div style='text-align:center;'>Purchase Requisition List</div></html>");
+        btn_req_list.setText("<html><p style='text-align:center;'>Purchase Requisition List</p></html>");
         btn_req_list.setPreferredSize(new java.awt.Dimension(200, 105));
         btn_req_list.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,7 +132,7 @@ public class fm_inventory extends javax.swing.JFrame {
         });
 
         btnReport.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btnReport.setText("<html><div style='text-align:center;'>Financial <br> Report</div></html>");
+        btnReport.setText("<html><p style='text-align:center;'>Financial Report</p></html>");
         btnReport.setPreferredSize(new java.awt.Dimension(200, 105));
         btnReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,7 +240,8 @@ public class fm_inventory extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPaymentActionPerformed
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
-        // TODO add your handling code here:
+        new fm_finance_report().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnReportActionPerformed
 
     /**
