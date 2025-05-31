@@ -82,10 +82,10 @@ public class UpdateTable {
         User user;
         for (int i = 0;i<users.size();i++){
             user = users.get(i);
-            matrix[i][0] = user.user_id;
-            matrix[i][1] = user.username;
-            matrix[i][2] = user.password;
-            matrix[i][3] = user.role;
+            matrix[i][0] = user.getUserID();
+            matrix[i][1] = user.getUsername();
+            matrix[i][2] = user.getPassword();
+            matrix[i][3] = user.getRole();
         }
         jTable.setModel(new DefaultTableModel(
                                 matrix,

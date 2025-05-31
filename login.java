@@ -66,14 +66,12 @@ public class login extends javax.swing.JFrame {
         jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTextField2.setText("");
         jTextField2.addKeyListener(new KeyAdapter() {
-
-
             @Override
             public void keyTyped(KeyEvent e) {
                 e.consume(); // Prevent actual character from appearing
                 if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE && hiddenText.length() > 0) {
                     hiddenText.deleteCharAt(hiddenText.length() - 1);
-                } else if (Character.isLetterOrDigit(e.getKeyChar())) {
+                } else if (!Character.isISOControl(e.getKeyChar())) {
                     hiddenText.append(e.getKeyChar());
                 }
                 jTextField2.setText("*".repeat(hiddenText.length()));
@@ -153,6 +151,7 @@ public class login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String username = jTextField1.getText();
         String password = hiddenText.toString();
+        System.out.println(password);
         try {
             BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/users"));
             String line;
@@ -166,13 +165,14 @@ public class login extends javax.swing.JFrame {
                 role = line.split("\\|")[3];
                 if (username.equals(user) && password.equals(pass)){
                     Edit.updateSalesTxt();
-                    JOptionPane.showMessageDialog(null, "Login Successfully, you will be redirect to the main page", "Successfully", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Login Successfully, you will be redirect to the main page",
+                            "Successfully", JOptionPane.INFORMATION_MESSAGE);
                     if (role.equals("admin") || role.equals("root")){
                         SessionManager.getInstance().userID = line.split("\\|")[0];
                         SessionManager.getInstance().username = user;
                         SessionManager.getInstance().password = pass;
                         SessionManager.getInstance().role = role;
-                        admin_mainpage frame = new admin_mainpage();
+                        admin_mainpage frame = new admin_mainpage(true);
                         frame.setVisible(true);
                         this.dispose();
                     }else if(role.equals("sales manager")){
@@ -199,7 +199,8 @@ public class login extends javax.swing.JFrame {
             if(tries>0) {
                 jLabel3.setText("Incorrect username or password, please try again, you have " + tries + " more chances");
             }else{
-                JOptionPane.showMessageDialog(null, "You have run out of all chances, the program will terminate now", "Failed", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "You have run out of all chances, the program will terminate now",
+                        "Failed", JOptionPane.WARNING_MESSAGE);
                 System.exit(0);
             }
 

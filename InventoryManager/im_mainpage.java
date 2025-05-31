@@ -191,6 +191,8 @@ private final String receivesFile = "src/main/java/com/mycompany/JavaY2/TextFile
         String PdfFile = "StockReport.pdf";
         GenerateStockReportPdf.writePdf(PdfFile, itemNameDateMap);
         JOptionPane.showMessageDialog(null, "Stock report is generated successfully");
+
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
