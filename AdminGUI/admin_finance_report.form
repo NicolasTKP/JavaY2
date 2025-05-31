@@ -429,6 +429,9 @@
         </Property>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField9ActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextField9.setText(Double.toString(Double.parseDouble(jTextField3.getText()) - Double.parseDouble(jTextField6.getText())));"/>
       </AuxValues>

@@ -14,7 +14,7 @@ public class PurchaseRequisition extends Request {
     public String request_date;
     public String required_date;
     public String status;
-
+    
     public PurchaseRequisition(){
     }
     
