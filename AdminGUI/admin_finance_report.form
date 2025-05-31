@@ -451,7 +451,7 @@
             <Property name="rowHeight" type="int" value="25"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);&#xa;ObjectList objectList = new ObjectList();&#xa;    List&lt;Inventory_Value&gt; inventories = objectList.getInventoryValue();&#xa;    String[][] matrix = new String[inventories.size()][5];&#xa;    Inventory_Value inventory;&#xa;    for (int i = 0;i&lt;inventories.size();i++){&#xa;        inventory = inventories.get(i);&#xa;        matrix[i][0] = inventory.group_id;&#xa;        matrix[i][1] = inventory.item_name;&#xa;        matrix[i][2] = Integer.toString(inventory.quantity);&#xa;        matrix[i][3] = Double.toString(inventory.average_unit_price);&#xa;        matrix[i][4] = Double.toString(inventory.actual_value);&#xa;    }"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);&#xa;ObjectList objectList = new ObjectList();&#xa;List&lt;Inventory_Value&gt; inventories = objectList.getInventoryValue();&#xa;String[][] matrix = new String[inventories.size()][5];&#xa;Inventory_Value inventory;&#xa;for (int i = 0;i&lt;inventories.size();i++){&#xa;    inventory = inventories.get(i);&#xa;    matrix[i][0] = inventory.group_id;&#xa;    matrix[i][1] = inventory.item_name;&#xa;    matrix[i][2] = Integer.toString(inventory.quantity);&#xa;    matrix[i][3] = Double.toString(inventory.average_unit_price);&#xa;    matrix[i][4] = Double.toString(inventory.actual_value);&#xa;}"/>
           </AuxValues>
         </Component>
       </SubComponents>
