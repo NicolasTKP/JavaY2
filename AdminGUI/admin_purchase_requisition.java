@@ -393,13 +393,16 @@ public class admin_purchase_requisition extends javax.swing.JFrame {
                     }else if(ValidateFormat.quantityUnit(quantity)){
                         break;
                     }else {
-                        JOptionPane.showMessageDialog(null, "Invalid format for quantity, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Invalid format for quantity, please try again", "Warning",
+                                JOptionPane.WARNING_MESSAGE);
                     }
                 }
-                int result2 = JOptionPane.showConfirmDialog(null, "Confirm to update item quantity to: "+quantity+ "?", "Confirmation",JOptionPane.YES_NO_OPTION);
+                int result2 = JOptionPane.showConfirmDialog(null, "Confirm to update item quantity to: "+quantity+ "?",
+                        "Confirmation",JOptionPane.YES_NO_OPTION);
                 if(result2 == JOptionPane.YES_OPTION){
                     Edit.editingColumn("PR",request_id,3, quantity);
-                    JOptionPane.showMessageDialog(null, "The item quantity updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "The item quantity updated successfully", "Success",
+                            JOptionPane.INFORMATION_MESSAGE);
                     UpdateTable.forPR(jTable1);
                 }
                 break;

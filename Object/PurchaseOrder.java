@@ -55,11 +55,12 @@ public class PurchaseOrder extends Request {
                 Double.toString(this.unit_price),
                 Double.toString(this.amount),
                 this.supplier_id.toLowerCase(),
-                this.order_date.toString().toLowerCase(),
                 this.order_status.toLowerCase(),
                 this.item_name.toLowerCase(),
                 this.supplier_name.toLowerCase()
         ));
+        if (this.order_date != null)
+            valuesToCheck.add(this.order_date.toString().toLowerCase());
         return valuesToCheck.contains(keyword);
     }
 }

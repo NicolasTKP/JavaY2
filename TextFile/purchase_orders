@@ -1,3 +1,8 @@
-order_id|request_id|item_id|user_id|quantity|unit_price|amount|supplier_id|order_date|order_status (pending,approved,rejected)
-O001|R001|I004|U001|15|1.0|15.0|SU004|01052025|Approved
-O002|R002|I001|U001|20|0.6|12.0|SU001|06042025|Pending
+order_id|request_id|item_id|user_id|quantity|unit_price|amount|supplier_id|order_date|order_status (Pending,Approved,Rejected)
+O002|R001|I002|U001|10|0.6|6.0|SU001|28052025|Approved
+O003|R003|I002|U001|60|0.8|48.0|SU001|28052025|Approved
+O004|R002|I001|U001|80|1|80.0|SU001|28052025|Approved
+O005|R004|I003|U001|40|1|40.0|SU002|28052025|Approved
+O008|R008|I005|U001|10|7|70.0|SU001|-|Rejected
+O009|R009|I003|U001|10|2|20.0|SU002|30052025|Approved
+O010|R011|I001|U001|10|8.0|80.0|SU001|-|Pending

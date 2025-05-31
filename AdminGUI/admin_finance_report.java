@@ -166,17 +166,17 @@ public class admin_finance_report extends javax.swing.JFrame {
         jTextField4.setText("");
         jTextField4.setFocusable(false);
         try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders"));
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/receives"));
             Double res = 0.0;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
             for (int i=1;i<linesList.size();i++) {
                 String line = linesList.get(i);
                 String[] lines = line.split("\\|");
-                if (!Objects.equals(lines[8], "-")) {
-                    LocalDate inputDate = LocalDate.parse(lines[8], formatter);
+                if (!Objects.equals(lines[7], "-")) {
+                    LocalDate inputDate = LocalDate.parse(lines[7], formatter);
                     int currentYear = LocalDate.now().getYear();
                     if (inputDate.getYear() == currentYear) {
-                        res = res + Double.parseDouble(lines[6]);
+                        res = res + Double.parseDouble(lines[4]);
                     }
                 }
             }
@@ -184,6 +184,11 @@ public class admin_finance_report extends javax.swing.JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel5.setText("Total Purchase of This Month:");
@@ -193,17 +198,17 @@ public class admin_finance_report extends javax.swing.JFrame {
         jTextField5.setText("");
         jTextField5.setFocusable(false);
         try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders"));
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/receives"));
             Double res = 0.0;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
             for (int i=1;i<linesList.size();i++) {
                 String line = linesList.get(i);
                 String[] lines = line.split("\\|");
-                if (!Objects.equals(lines[8], "-")) {
-                    LocalDate inputDate = LocalDate.parse(lines[8], formatter);
+                if (!Objects.equals(lines[7], "-")) {
+                    LocalDate inputDate = LocalDate.parse(lines[7], formatter);
                     LocalDate now = LocalDate.now();
                     if (inputDate.getYear() == now.getYear() && inputDate.getMonth() == now.getMonth()) {
-                        res = res + Double.parseDouble(lines[6]);
+                        res = res + Double.parseDouble(lines[4]);
                     }
                 }
             }
@@ -220,17 +225,17 @@ public class admin_finance_report extends javax.swing.JFrame {
         jTextField6.setText("");
         jTextField6.setFocusable(false);
         try {
-            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders"));
+            List<String> linesList = Files.readAllLines(Paths.get("src/main/java/com/mycompany/JavaY2/TextFile/receives"));
             Double res = 0.0;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
             for (int i=1;i<linesList.size();i++) {
                 String line = linesList.get(i);
                 String[] lines = line.split("\\|");
-                if (!Objects.equals(lines[8], "-")) {
-                    LocalDate inputDate = LocalDate.parse(lines[8], formatter);
+                if (!Objects.equals(lines[7], "-")) {
+                    LocalDate inputDate = LocalDate.parse(lines[7], formatter);
                     LocalDate now = LocalDate.now();
                     if (inputDate.isEqual(now)) {
-                        res = res + Double.parseDouble(lines[6]);
+                        res = res + Double.parseDouble(lines[4]);
                     }
                 }
             }
@@ -265,11 +270,6 @@ public class admin_finance_report extends javax.swing.JFrame {
         jTextField9.setText("");
         jTextField9.setFocusable(false);
         jTextField9.setText(Double.toString(Double.parseDouble(jTextField3.getText()) - Double.parseDouble(jTextField6.getText())));
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
-            }
-        });
 
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         ObjectList objectList = new ObjectList();
@@ -593,9 +593,9 @@ public class admin_finance_report extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTextField12ActionPerformed
 
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -101,16 +101,7 @@ public class Supplier {
     public void setContactNumber(String contact){
         this.contact = contact;
     }
-    
-    public static boolean validateContact(String contact){
-        String contact_regex = "^01[0-9]-\\d{3}-\\d{4}$";
-        if(!contact.matches(contact_regex)){  
-            return false;
-        }else{
-            return true;            
-        }
-    }
-    
+
     public String getContactNumber(){
         return contact;
     }
