@@ -9,7 +9,7 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
@@ -23,6 +23,7 @@ public class GenerateStockReportPdf extends GeneratedDate{
             PdfWriter writer = new PdfWriter(fileName);
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
+            document.setMargins(30, 30, 30, 30);
 
             Paragraph title = new Paragraph("Stock Report")
                     .setTextAlignment(TextAlignment.CENTER)
