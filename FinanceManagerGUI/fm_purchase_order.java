@@ -34,7 +34,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
 
         try (BufferedReader reader = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/purchase_orders"))) {
             String line;
-            reader.readLine(); //skip the header line
+            reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] orderDetails = line.split("\\|");
                 String username_by_id = Search.getUsername(orderDetails[3]);
@@ -342,13 +342,13 @@ public class fm_purchase_order extends javax.swing.JFrame {
                 if (choice == JOptionPane.YES_OPTION) {
                     String[] ls = new String[9];
                     String order_id = orderTable.getValueAt(selected_row, 0).toString();
-                    Edit.editingColumn("PO", order_id, 9, "Approved"); // Update in file
-                    model.setValueAt("Approved", selected_row, 10);     // Update in table
+                    Edit.editingColumn("PO", order_id, 9, "Approved");
+                    model.setValueAt("Approved", selected_row, 10);
                     ls[0] = order_id;
                     ls[1] = orderTable.getValueAt(selected_row, 2).toString();
                     ls[2] = Search.getItemNamebyItemID(ls[1]);
-                    ls[3] = Search.getFromPO(ls[0], 4); // quantity
-                    ls[4] = Search.getFromPO(ls[0], 6); // unit price
+                    ls[3] = Search.getFromPO(ls[0], 4); 
+                    ls[4] = Search.getFromPO(ls[0], 6); 
                     ls[5] = "-";
                     ls[6] = "Not Received";
                     ls[7] = "-";
@@ -377,8 +377,8 @@ public class fm_purchase_order extends javax.swing.JFrame {
                 int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to approve the purchase order?", "Confirm Approval", JOptionPane.YES_NO_OPTION); 
                 if(choice == JOptionPane.YES_OPTION){
                     String order_id = orderTable.getValueAt(selected_row, 0).toString();
-                    Edit.editingColumn("PO", order_id, 9, "Rejected"); //Pending - Rejected in text file
-                    model.setValueAt("Rejected",selected_row, 10); //Pending - Rejected on table
+                    Edit.editingColumn("PO", order_id, 9, "Rejected"); 
+                    model.setValueAt("Rejected",selected_row, 10); 
                     JOptionPane.showMessageDialog(this, "You Have Rejected The Purchase Order Sucessfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
                 }
             }else{
