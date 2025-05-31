@@ -188,7 +188,7 @@ public class login extends javax.swing.JFrame {
                         SessionManager.getInstance().username = user;
                         SessionManager.getInstance().password = pass;
                         SessionManager.getInstance().role = role;
-                        im_mainpage frame = new im_mainpage();
+                        im_mainpage frame = new im_mainpage(true);
                         frame.setVisible(true);
                         this.dispose();
                     }

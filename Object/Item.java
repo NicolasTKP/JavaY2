@@ -43,7 +43,7 @@ public class Item {
                 this.supplier_id.toLowerCase(),
                 this.group_id.toLowerCase(),
                 Objects.requireNonNull(Search.getSupplierName(this.supplier_id)).toLowerCase()
-        ));
+                ));
         return valuesToCheck.contains(keyword);
     }
     

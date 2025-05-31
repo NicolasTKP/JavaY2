@@ -25,6 +25,7 @@ public class GenerateStockReportPdf extends GeneratedDate{
             PdfWriter writer = new PdfWriter(fileName);
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
+            document.setMargins(30, 30, 30, 30);
 
             Paragraph title = new Paragraph("Stock Report")
                     .setTextAlignment(TextAlignment.CENTER)
