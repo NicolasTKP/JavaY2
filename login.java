@@ -6,6 +6,7 @@ package com.mycompany.JavaY2;
 
 import com.mycompany.JavaY2.AdminGUI.admin_mainpage;
 import com.mycompany.JavaY2.Class.Edit;
+import com.mycompany.JavaY2.InventoryManager.im_mainpage;
 import com.mycompany.JavaY2.Object.SessionManager;
 import com.mycompany.JavaY2.SalesManagerGUI.SM_mainpage;
 
@@ -165,7 +166,8 @@ public class login extends javax.swing.JFrame {
                 role = line.split("\\|")[3];
                 if (username.equals(user) && password.equals(pass)){
                     Edit.updateSalesTxt();
-                    JOptionPane.showMessageDialog(null, "Login Successfully, you will be redirect to the main page", "Successfully", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Login Successfully, you will be redirect to the main page",
+                            "Successfully", JOptionPane.INFORMATION_MESSAGE);
                     if (role.equals("admin") || role.equals("root")){
                         SessionManager.getInstance().userID = line.split("\\|")[0];
                         SessionManager.getInstance().username = user;
@@ -182,6 +184,14 @@ public class login extends javax.swing.JFrame {
                         SM_mainpage frame = new SM_mainpage();
                         frame.setVisible(true);
                         this.dispose();
+                    }else if(role.equals("inventory manager")){
+                        SessionManager.getInstance().userID = line.split("\\|")[0];
+                        SessionManager.getInstance().username = user;
+                        SessionManager.getInstance().password = pass;
+                        SessionManager.getInstance().role = role;
+                        im_mainpage frame = new im_mainpage();
+                        frame.setVisible(true);
+                        this.dispose();
                     }
                 }
             }
@@ -190,7 +200,8 @@ public class login extends javax.swing.JFrame {
             if(tries>0) {
                 jLabel3.setText("Incorrect username or password, please try again, you have " + tries + " more chances");
             }else{
-                JOptionPane.showMessageDialog(null, "You have run out of all chances, the program will terminate now", "Failed", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "You have run out of all chances, the program will terminate now",
+                        "Failed", JOptionPane.WARNING_MESSAGE);
                 System.exit(0);
             }
 

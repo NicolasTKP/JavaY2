@@ -109,10 +109,10 @@ public class ObjectList {
             while ((line = br.readLine()) != null) {
                 User user = new User();
                 lines = line.split("\\|");
-                user.user_id = lines[0];
-                user.username = lines[1];
-                user.password = lines[2];
-                user.role = lines[3];
+                user.setUserID(lines[0]);
+                user.setUsername(lines[1]);
+                user.setPassword(lines[2]);
+                user.setRole(lines[3]);
                 ls.add(user);
             }
             br.close();
@@ -191,12 +191,12 @@ public class ObjectList {
                 inventory_value.item_name = lines[1];
                 inventory_value.quantity = Integer.parseInt(lines[2]);
                 inventory_value.retail_price = Double.parseDouble(lines[3]);
-                String[] purcahse_orders = Query.getAllPurchaseOrder(inventory_value.group_id);
-                assert purcahse_orders != null;
+                String[] purchase_orders = Query.getAllPurchaseOrder(inventory_value.group_id);
+                assert purchase_orders != null;
                 int quantity = inventory_value.quantity;
                 double unit_prices = 0.0;
                 double total_value = 0.0;
-                for (String order:purcahse_orders){
+                for (String order:purchase_orders){
                     String[] orders = order.split("\\|");
                     if (Integer.parseInt(orders[0]) < quantity){
                         total_value = total_value + Double.parseDouble(orders[2]);
