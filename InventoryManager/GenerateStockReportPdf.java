@@ -1,7 +1,8 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
+
 package com.mycompany.JavaY2.InventoryManager;
 
 import com.itextpdf.layout.Document;
@@ -13,10 +14,11 @@ import com.itextpdf.layout.property.TextAlignment;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
-/**
+*
  *
  * @author Kaiqi
- */
+
+
 public class GenerateStockReportPdf extends GeneratedDate{
     public static void writePdf(String fileName, Map<String, StockReportContent> itemNameDateMap){
         try{
@@ -31,7 +33,7 @@ public class GenerateStockReportPdf extends GeneratedDate{
 
             document.add(title);
             document.add(new Paragraph("\n"));
-            
+
             float columnWidth[] = {200f, 200f, 200f, 200f};
             Table table = new Table(columnWidth);
             table.addHeaderCell("Group ID");
@@ -55,13 +57,14 @@ public class GenerateStockReportPdf extends GeneratedDate{
             document.add(dateParagraph);
             document.close();
             System.out.println("PDF created successfully");
-        
-        
 
-        
-    
+
+
+
+
 }catch (FileNotFoundException e){
     System.out.println(e.getMessage());
 }
     }
 }
+*/

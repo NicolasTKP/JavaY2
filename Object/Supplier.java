@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import javax.swing.JOptionPane;
 
 public class Supplier {
     public String supplier_id;
