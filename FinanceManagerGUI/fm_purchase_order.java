@@ -331,7 +331,9 @@ public class fm_purchase_order extends javax.swing.JFrame {
     private void approveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveBtnActionPerformed
         String password = JOptionPane.showInputDialog("Please enter your credential before approving the Purchase Order");
         if (password == null || !password.equals(SessionManager.getInstance().password)){
-            JOptionPane.showMessageDialog(this, "Wrong password entered, you are not allowed to APPROVE the Purchase Order", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                    "Wrong password entered, you are not allowed to APPROVE the Purchase Order", 
+                    "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         int selected_row = orderTable.getSelectedRow();
@@ -346,9 +348,9 @@ public class fm_purchase_order extends javax.swing.JFrame {
                     model.setValueAt("Approved", selected_row, 10);
                     ls[0] = order_id;
                     ls[1] = orderTable.getValueAt(selected_row, 2).toString();
-                    ls[2] = Search.getItemNamebyItemID(ls[1]);
-                    ls[3] = Search.getFromPO(ls[0], 4); 
-                    ls[4] = Search.getFromPO(ls[0], 6); 
+                    ls[2] = Search.getItemNamebyItemID(ls[1]); //item name
+                    ls[3] = Search.getFromPO(ls[0], 4); //quantity
+                    ls[4] = Search.getFromPO(ls[0], 6); //total amount
                     ls[5] = "-";
                     ls[6] = "Not Received";
                     ls[7] = "-";
@@ -360,14 +362,16 @@ public class fm_purchase_order extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "This Purchase Order has already been approved or rejected", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(this, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a purchase order to approve", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_approveBtnActionPerformed
 
     private void rejectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectBtnActionPerformed
         String password = JOptionPane.showInputDialog("Please enter your credential before rejecting the Purchase Order");
         if (password == null || !password.equals(SessionManager.getInstance().password)){
-            JOptionPane.showMessageDialog(this, "Wrong password entered, you are not allowed to REJECT the Purchase Order", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                    "Wrong password entered, you are not allowed to REJECT the Purchase Order", 
+                    "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         int selected_row = orderTable.getSelectedRow();
@@ -385,7 +389,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "This Purchase Order has already been approved or rejected", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(this, "Please select a row to reject", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a purchase order to reject", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_rejectBtnActionPerformed
 
