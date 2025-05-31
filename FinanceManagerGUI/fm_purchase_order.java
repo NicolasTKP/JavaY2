@@ -38,11 +38,13 @@ public class fm_purchase_order extends javax.swing.JFrame {
             while ((line = reader.readLine()) != null) {
                 String[] orderDetails = line.split("\\|");
                 String username_by_id = Search.getUsername(orderDetails[3]);
+                
                 String[] full_orderDetails = new String[orderDetails.length + 1];
+                // Copy first 3 fields and store in an full_orderDetails array
                 System.arraycopy(orderDetails, 0, full_orderDetails, 0, 4);
                 // Set username at index 4
                 full_orderDetails[4] = username_by_id;
-                // Copy remaining fields from index 4 onwards (shifted by +1)
+                // Copy remaining fields 
                 System.arraycopy(orderDetails, 4, full_orderDetails, 5, orderDetails.length - 4);
                 
                 model.addRow(full_orderDetails);

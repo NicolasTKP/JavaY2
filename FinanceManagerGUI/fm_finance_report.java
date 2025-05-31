@@ -45,7 +45,6 @@ public class fm_finance_report extends javax.swing.JFrame {
                 item.group_id,
                 item.item_name,
                 item.quantity,
-                item.retail_price,
                 item.average_unit_price,
                 item.actual_value
             };
