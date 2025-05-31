@@ -337,8 +337,8 @@ public class fm_purchase_order extends javax.swing.JFrame {
         int selected_row = orderTable.getSelectedRow();
         if (selected_row != -1) {
             String order_status = String.valueOf(model.getValueAt(selected_row, 10));
-            if (!order_status.equals("Approved")) {
-                int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to approve the purchase order?", "Confirm Approval", JOptionPane.YES_NO_OPTION); 
+            if (order_status.equals("Pending")) {
+                int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to approve the purchase order?", "Confirmation Alert", JOptionPane.YES_NO_OPTION); 
                 if (choice == JOptionPane.YES_OPTION) {
                     String[] ls = new String[9];
                     String order_id = orderTable.getValueAt(selected_row, 0).toString();
@@ -357,7 +357,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "You have approved the Purchase Order successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
                 }
             }else{
-                JOptionPane.showMessageDialog(this, "This Purchase Order has already been approved", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "This Purchase Order has already been approved or rejected", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         }else{
             JOptionPane.showMessageDialog(this, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -373,8 +373,8 @@ public class fm_purchase_order extends javax.swing.JFrame {
         int selected_row = orderTable.getSelectedRow();
         if (selected_row != -1){
             String order_status = String.valueOf(model.getValueAt(selected_row, 10));
-            if (!order_status.equals("Rejected")) {
-                int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to approve the purchase order?", "Confirm Approval", JOptionPane.YES_NO_OPTION); 
+            if (!order_status.equals("Pending")) {
+                int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to reject the purchase order?", "Confirmation Alert", JOptionPane.YES_NO_OPTION); 
                 if(choice == JOptionPane.YES_OPTION){
                     String order_id = orderTable.getValueAt(selected_row, 0).toString();
                     Edit.editingColumn("PO", order_id, 9, "Rejected"); 
@@ -382,7 +382,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "You Have Rejected The Purchase Order Sucessfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
                 }
             }else{
-                JOptionPane.showMessageDialog(this, "This Purchase Order has already been rejected", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "This Purchase Order has already been approved or rejected", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         }else{
             JOptionPane.showMessageDialog(this, "Please select a row to reject", "Warning", JOptionPane.WARNING_MESSAGE);
