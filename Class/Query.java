@@ -252,7 +252,7 @@ public class Query {
                     }
                 }
             }
-            Map<LocalDate, String> sortedMap = new TreeMap<>((a, b) -> b.compareTo(a));
+            Map<LocalDate, String> sortedMap = new TreeMap<>(Comparator.reverseOrder());
             sortedMap.putAll(map);
             return sortedMap.values().toArray(new String[0]);
 
