@@ -11,6 +11,7 @@ import com.mycompany.JavaY2.Object.SessionManager;
 import java.util.List;
 import javax.swing.JOptionPane;
 import java.util.Map;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -19,11 +20,62 @@ import java.util.Map;
 public class im_mainpage extends javax.swing.JFrame {
 private final String inventoryFile = "src/main/java/com/mycompany/JavaY2/TextFile/inventory";
 private final String receivesFile = "src/main/java/com/mycompany/JavaY2/TextFile/receives";
+
     /**
      * Creates new form im_mainpage
      */
     public im_mainpage() {
         initComponents();
+    }
+    public im_mainpage(boolean alertShown) {
+        initComponents();
+       
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                lowStockAlert();
+            }
+        });
+    }
+    
+    private void lowStockAlert(){
+        TextFileHandling tfh = new TextFileHandling();
+        List<Inventory> lowStockAlerts = tfh.getLowStockItems();
+        
+        if(!lowStockAlerts.isEmpty()){
+            StringBuilder message = new StringBuilder("Low Stock Warning\n");
+            boolean showone = false;
+            
+            for (Inventory item : lowStockAlerts){
+                if(showone){
+                    message.append("& ");
+                } else {
+                    showone = true;
+                }
+                message.append(item.item_name).append(" is running low with ").append(item.quantity).append(" units ");
+            }
+            
+            String[] options = {"Update stock", "Ignore"};
+            int choice = JOptionPane.showOptionDialog(
+                    this,
+                    message.toString(),
+                    "Low Stock Alert",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE,
+                    null,
+                    options,
+                    options[0]
+            );
+            
+            
+            if(choice == JOptionPane.YES_OPTION){
+                SwingUtilities.invokeLater(() -> {
+                    new im_update_stock().setVisible(true);
+                });
+                this.dispose();
+            } else{
+            }
+        } 
     }
 
     /**
@@ -38,7 +90,6 @@ private final String receivesFile = "src/main/java/com/mycompany/JavaY2/TextFile
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -67,13 +118,6 @@ private final String receivesFile = "src/main/java/com/mycompany/JavaY2/TextFile
             }
         });
 
-        jButton3.setText("Track Low Stock Items");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         jButton4.setText("Profile");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,7 +132,7 @@ private final String receivesFile = "src/main/java/com/mycompany/JavaY2/TextFile
             }
         });
 
-        jButton7.setText("Edit Inventory");
+        jButton7.setText("Inventory");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
@@ -101,44 +145,37 @@ private final String receivesFile = "src/main/java/com/mycompany/JavaY2/TextFile
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(323, 323, 323)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(111, 111, 111)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(109, 109, 109)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(358, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4)
-                    .addComponent(jButton6))
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(64, 64, 64))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(48, 48, 48)
-                .addComponent(jButton4)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(137, 137, 137))
+                .addGap(273, 273, 273))
         );
 
         pack();
@@ -153,17 +190,15 @@ private final String receivesFile = "src/main/java/com/mycompany/JavaY2/TextFile
         Map<String, StockReportContent> itemNameDateMap = DataMapping.NameLatestDateMapping(inventoryFile, receivesFile);
         String PdfFile = "StockReport.pdf";
         GenerateStockReportPdf.writePdf(PdfFile, itemNameDateMap);
+        JOptionPane.showMessageDialog(null, "Stock report is generated successfully");
+
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         new im_update_stock().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        new im_track_lowstock().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         admin_profile page = new admin_profile();
@@ -179,50 +214,15 @@ private final String receivesFile = "src/main/java/com/mycompany/JavaY2/TextFile
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-//        new im_edit_inventory().setVisible(true);
-//        this.dispose();
+        new im_inventory().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        TextFileHandling tfh = new TextFileHandling();
-        List<Inventory> lowStockAlerts = tfh.getLowStockItems();
         
-        if(!lowStockAlerts.isEmpty()){
-            StringBuilder message = new StringBuilder("Low Stock Warning\n");
-            boolean showone = false;
-            for (Inventory item : lowStockAlerts){
-                if(showone){
-                    message.append("& ");
-                } else {
-                    showone = true;
-                }
-                message.append(item.item_name).append(" is running low with ").append(item.quantity).append(" units ");
-            }
-            
-            String[] options = {"Update stock", "Ignore"};
-            int choice = JOptionPane.showOptionDialog(
-                    null,
-                    message.toString(),
-                    "Low Stock Alert",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE,
-                    null,
-                    options,
-                    options[0]
-            );
-            
-            if(choice == JOptionPane.YES_OPTION){
-                im_update_stock updatePage = new im_update_stock();
-                updatePage.setVisible(true);
-            }else {
-            new im_mainpage().setVisible(true); //only show if user click ignore button
-            }         
-        }else {
-                new im_mainpage().setVisible(true);
-                } //show mainpage as well if there's no warning
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -256,7 +256,6 @@ private final String receivesFile = "src/main/java/com/mycompany/JavaY2/TextFile
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
