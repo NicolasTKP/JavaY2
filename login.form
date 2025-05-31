@@ -116,7 +116,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField2ActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextField2.addKeyListener(new KeyAdapter() {&#xd;&#xa;    private StringBuilder hiddenText = new StringBuilder();&#xd;&#xa;&#xd;&#xa;    @Override&#xd;&#xa;    public void keyTyped(KeyEvent e) {&#xd;&#xa;        e.consume(); // Prevent actual character from appearing&#xd;&#xa;        if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE &amp;&amp; hiddenText.length() &gt; 0) {&#xd;&#xa;            hiddenText.deleteCharAt(hiddenText.length() - 1);&#xd;&#xa;        } else if (Character.isLetterOrDigit(e.getKeyChar())) {&#xd;&#xa;            hiddenText.append(e.getKeyChar());&#xd;&#xa;        }&#xd;&#xa;        jTextField2.setText(&quot;*&quot;.repeat(hiddenText.length()));&#xd;&#xa;    }&#xd;&#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextField2.addKeyListener(new KeyAdapter() {&#xa;    @Override&#xa;    public void keyTyped(KeyEvent e) {&#xa;        e.consume(); // Prevent actual character from appearing&#xa;        if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE &amp;&amp; hiddenText.length() &gt; 0) {&#xa;            hiddenText.deleteCharAt(hiddenText.length() - 1);&#xa;        } else if (!Character.isISOControl(e.getKeyChar())) {&#xa;            hiddenText.append(e.getKeyChar());&#xa;        }&#xa;        jTextField2.setText(&quot;*&quot;.repeat(hiddenText.length()));&#xa;    }&#xa;});"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">

@@ -15,14 +15,18 @@ import java.awt.*;
  * @author acer
  */
 public class admin_mainpage extends javax.swing.JFrame {
-
+    boolean alert = false;
     /**
      * Creates new form admin_main page
      */
     public admin_mainpage() {
         initComponents();
     }
-
+    public admin_mainpage(boolean first_login) {
+        if (first_login)
+            this.alert = true;
+        initComponents();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -268,11 +272,13 @@ public class admin_mainpage extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void notification(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_notification
-        String line = Query.getLowStockItems();
-        assert line != null;
-        if (!line.isEmpty() || !line.isBlank()){
-            JOptionPane.showMessageDialog(null, "Items: "+line+"\nis having low stock, you might want to restock it",
-                    "Alert", JOptionPane.WARNING_MESSAGE);
+        if (alert) {
+            String line = Query.getLowStockItems();
+            assert line != null;
+            if (!line.isEmpty() || !line.isBlank()) {
+                JOptionPane.showMessageDialog(null, "Items: " + line + "\nis having low stock, you might want to restock it",
+                        "Alert", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }//GEN-LAST:event_notification
 
