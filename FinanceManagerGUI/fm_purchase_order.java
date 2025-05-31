@@ -51,7 +51,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
             }
             reader.close();
         }catch (IOException e) {
-            JOptionPane.showMessageDialog(null,"Purchase Order is currently unavailable"); // Handle file reading exception
+            JOptionPane.showMessageDialog(null,"Purchase Order is currently unavailable"); // Handle file not exist exception
         }
         
         listRenderer = new DefaultListCellRenderer();
