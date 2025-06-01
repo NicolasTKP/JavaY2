@@ -307,6 +307,14 @@ public class fm_payment extends javax.swing.JFrame {
     }//GEN-LAST:event_order_paymentFilterActionPerformed
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
+        String password = JOptionPane.showInputDialog("Please enter your credential before editing the Purchase Order");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(this, 
+                    "Wrong password entered, you are not allowed to EDIT the Purchase Order", 
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+       
         int row_selected = order_receivedTable.getSelectedRow();
         if (row_selected == -1) {
             JOptionPane.showMessageDialog(this,
