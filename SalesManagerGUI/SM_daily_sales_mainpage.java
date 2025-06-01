@@ -7,6 +7,7 @@ import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.DailySale;
 import com.mycompany.JavaY2.Class.DataMapping;
 import com.mycompany.JavaY2.Object.SessionManager;
+import java.awt.event.ActionEvent;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -44,7 +45,24 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 dailySalesSearchFunction(daily_sales_search_bar.getText());
             }
-        });        
+        });
+        
+        all_daily_sales_button.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                salesContainer.setRowCount(0);
+                populateSalesTable();
+            }
+        });
+
+        today_daily_sales_button.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                salesContainer.setRowCount(0);
+                populateSalesTableForToday();
+            }
+        });
+        
     }
     
     private void populateSalesTable(){
@@ -53,6 +71,14 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
         Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
         column_mappings.put(2, inventory_map); // supplier_id column
         TextFile.populateTable(salesContainer, sales_table, salesTableColumnName, daily_sales_file_path, 50,column_mappings);          
+    }
+    
+    private void populateSalesTableForToday(){
+        DataMapping mapping = new DataMapping();
+        Map<String, String> inventory_map = mapping.IdNameMapping(inventory_file_path);
+        Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
+        column_mappings.put(2, inventory_map); // supplier_id column
+        DailySale.populateDailySalesTable(salesContainer, sales_table, salesTableColumnName, daily_sales_file_path, 50);
     }
     
     private void dailySalesSearchFunction(String daily_sales_keyword) {
@@ -118,6 +144,8 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         daily_sales_search_bar = new javax.swing.JTextField();
+        all_daily_sales_button = new javax.swing.JButton();
+        today_daily_sales_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -170,6 +198,12 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
             }
         });
 
+        all_daily_sales_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        all_daily_sales_button.setText("All");
+
+        today_daily_sales_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        today_daily_sales_button.setText("Today");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -181,16 +215,23 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
                     .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(add_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edit_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(daily_sales_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(42, Short.MAX_VALUE))
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(daily_sales_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(all_daily_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(today_daily_sales_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,17 +243,22 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addComponent(jLabel1))
                 .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(77, 77, 77)
                         .addComponent(add_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(84, 84, 84)
+                        .addGap(95, 95, 95)
                         .addComponent(edit_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                        .addGap(89, 89, 89)
                         .addComponent(delete_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
-                .addGap(56, 56, 56))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(all_daily_sales_button)
+                            .addComponent(today_daily_sales_button))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         pack();
@@ -352,6 +398,7 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_sales_button;
+    private javax.swing.JButton all_daily_sales_button;
     private javax.swing.JTextField daily_sales_search_bar;
     private javax.swing.JButton delete_sales_button;
     private javax.swing.JButton edit_sales_button;
@@ -360,5 +407,6 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable sales_table;
+    private javax.swing.JButton today_daily_sales_button;
     // End of variables declaration//GEN-END:variables
 }

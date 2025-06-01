@@ -5,11 +5,16 @@ import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.JOptionPane;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class DailySale {
     public String daily_sales_id;
@@ -162,5 +167,33 @@ public class DailySale {
         }
 
         return false;  // Default to false if something failed
+    }
+    
+    public static void populateDailySalesTable(DefaultTableModel model, JTable table, String[] columns, String filePath, int rowHeight){
+        model.setRowCount(0);
+        model.setColumnIdentifiers(columns);
+        table.setRowHeight(rowHeight);
+        
+        Date current_date = new Date();
+        SimpleDateFormat date_format = new SimpleDateFormat("ddMMyyyy");
+        String formatted_date = date_format.format(current_date);
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            Set<String> uniqueRows = new HashSet<>();
+
+            br.readLine(); // Skip header
+            while ((line = br.readLine()) != null) {
+                if (line.trim().isEmpty() || !uniqueRows.add(line)) {
+                    continue;
+                }
+                String[] rowData = line.split("\\|");
+                if(rowData.length>2 && rowData[4].equals(formatted_date)){
+                    model.addRow(rowData);                   
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file to populate JTable: " + filePath);
+        }
     }
 }
