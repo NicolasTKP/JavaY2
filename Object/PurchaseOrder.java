@@ -35,12 +35,13 @@ public class PurchaseOrder extends Request {
     }
     
     //Overloaded constructor for EditPO page
-    public PurchaseOrder(String order_id, String item_id, String item_name, int quantity, double unit_price, String supplier_id) {
+    public PurchaseOrder(String order_id, String item_id, String item_name, int quantity, double unit_price, double total_amount, String supplier_id) {
         this.order_id = order_id;
         this.item_id = item_id;
         this.item_name = item_name;
         this.quantity = quantity;
         this.unit_price = unit_price;
+        this.amount = total_amount;
         this.supplier_id = supplier_id;
     }
 

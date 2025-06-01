@@ -423,10 +423,11 @@ public class fm_purchase_order extends javax.swing.JFrame {
                 String itemID = String.valueOf(model.getValueAt(selectedRow, 2));
                 String itemName = Search.getItemNamebyItemID(itemID); //items.txt
                 int quantity = Integer.parseInt(String.valueOf(model.getValueAt(selectedRow, 5))); 
-                double unit_price = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 6))); 
+                double unit_price = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 6)));
+                double total_amount = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 7)));
                 String supplierID = String.valueOf(model.getValueAt(selectedRow, 8));
                 
-                PurchaseOrder po = new PurchaseOrder(orderID, itemID, itemName, quantity, unit_price, supplierID);
+                PurchaseOrder po = new PurchaseOrder(orderID, itemID, itemName, quantity, unit_price, total_amount, supplierID);
             
                 new fm_edit_PO(po).setVisible(true);
             }else {
