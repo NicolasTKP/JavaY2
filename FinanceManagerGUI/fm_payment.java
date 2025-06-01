@@ -91,6 +91,8 @@ public class fm_payment extends javax.swing.JFrame {
         btnPay = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         unpaid_amountField = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        searchPaymentField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -183,6 +185,16 @@ public class fm_payment extends javax.swing.JFrame {
 
         unpaid_amountField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
 
+        jLabel15.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        jLabel15.setText("Search:");
+
+        searchPaymentField.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        searchPaymentField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchPaymentFieldKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -212,9 +224,13 @@ public class fm_payment extends javax.swing.JFrame {
                                 .addGap(29, 29, 29)
                                 .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchPaymentField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(57, 57, 57)
                                 .addComponent(order_paymentFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1282, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,13 +246,22 @@ public class fm_payment extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(order_paymentFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(10, 10, 10)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(order_paymentFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(10, 10, 10))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(searchPaymentField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,7 +279,8 @@ public class fm_payment extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         pack();
@@ -307,10 +333,10 @@ public class fm_payment extends javax.swing.JFrame {
     }//GEN-LAST:event_order_paymentFilterActionPerformed
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
-        String password = JOptionPane.showInputDialog("Please enter your credential before editing the Purchase Order");
+        String password = JOptionPane.showInputDialog("Please enter your credential before make payment for the Purchase Order");
         if (password == null || !password.equals(SessionManager.getInstance().password)){
             JOptionPane.showMessageDialog(this, 
-                    "Wrong password entered, you are not allowed to EDIT the Purchase Order", 
+                    "Wrong password entered, you are not allowed to PAY for the Purchase Order", 
                     "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -356,9 +382,15 @@ public class fm_payment extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Payment cannot be made before the received date of the item ", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Please ensure that the item in the Purchase Order is received", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please ensure that the item in the Purchase Order is RECEIVED", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnPayActionPerformed
+
+    private void searchPaymentFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchPaymentFieldKeyReleased
+        TableRowSorter<DefaultTableModel> search = new TableRowSorter<>(model);
+        order_receivedTable.setRowSorter(search);
+        search.setRowFilter(RowFilter.regexFilter(searchPaymentField.getText()));
+    }//GEN-LAST:event_searchPaymentFieldKeyReleased
 
     /**
      * @param args the command line arguments
@@ -405,10 +437,12 @@ public class fm_payment extends javax.swing.JFrame {
     private javax.swing.JButton btn_order_list;
     private javax.swing.JButton btn_req_list;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> order_paymentFilter;
     private javax.swing.JTable order_receivedTable;
+    private javax.swing.JTextField searchPaymentField;
     private javax.swing.JTextField unpaid_amountField;
     // End of variables declaration//GEN-END:variables
 }
