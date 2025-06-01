@@ -4,8 +4,9 @@
  */
 package com.mycompany.JavaY2.SalesManagerGUI;
 
-import com.mycompany.JavaY2.Class.TextFile;
+import com.mycompany.JavaY2.Class.ValidateFormat;
 import com.mycompany.JavaY2.Class.DataMapping;
+import com.mycompany.JavaY2.Class.TextFile;
 import java.util.Map;
 import javax.swing.JOptionPane;
 
@@ -30,22 +31,6 @@ public class SM_pr_edit extends javax.swing.JFrame {
         pr_status_textfield.setText(status);
     }
     
-    private String getPrDetails(String request_id) {
-        String item_name = item_name_textfield.getText();
-        String sm_id = user_id_textfield.getText();
-        int quantity = (int) quantity_spinner.getValue();
-        String request_date = request_date_textfield.getText();
-        String required_date = required_date_textfield.getText();
-        String pr_status = pr_status_textfield.getText();
-        
-        DataMapping mapping = new DataMapping();
-        Map<String,String> inventory_map = mapping.NameIdMapping(inventory_file_path);
-        
-        String item_group_id = inventory_map.get(item_name);
-        
-        String updated_pr_details = request_id + "|" + item_group_id + "|" + sm_id + "|" + quantity + "|" + request_date + "|" + required_date + "|" + pr_status;
-        return updated_pr_details;
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -227,13 +212,37 @@ public class SM_pr_edit extends javax.swing.JFrame {
 
     private void edit_pr_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_pr_buttonActionPerformed
         String request_id = request_id_textfield.getText();
-        String updated_pr_details = getPrDetails(request_id);
-        boolean edit_pr_success = TextFile.editTextfileRow(this, pr_file_path, request_id, 0, updated_pr_details,7 );
-
-        if(edit_pr_success){
-            JOptionPane.showMessageDialog(this,"PR has been edited successfully, back to PR mainpage now");
-            this.dispose();
+        String item_name = item_name_textfield.getText();
+        String sm_id = user_id_textfield.getText();
+        int quantity = (int) quantity_spinner.getValue();
+        String request_date = request_date_textfield.getText();
+        String required_date = required_date_textfield.getText();
+        String pr_status = pr_status_textfield.getText();
+        
+        DataMapping mapping = new DataMapping();
+        Map<String,String> inventory_map = mapping.NameIdMapping(inventory_file_path);
+        
+        String item_group_id = inventory_map.get(item_name);
+        if(quantity <= 0){
+            JOptionPane.showMessageDialog(this,"Please fill in the quantity wiht not less than or equal to 0.");            
+        }else if(required_date.isEmpty()){
+            JOptionPane.showMessageDialog(this,"Please fill in the required date");
+        }else if(!ValidateFormat.date(required_date)){
+            JOptionPane.showMessageDialog(this,"Invalid format for required date");
+        }else{
+            String updated_pr_details = request_id + "|" + item_group_id + "|" + sm_id + "|" + quantity + "|" + request_date + "|" + required_date + "|" + pr_status;  
+            
+            boolean edit_pr_success = TextFile.editTextfileRow(this, pr_file_path, request_id, 0, updated_pr_details,7 );
+            
+            if(edit_pr_success){
+                JOptionPane.showMessageDialog(this,"PR has been edited successfully, back to PR mainpage now");
+                this.dispose();
+            }            
         }
+        
+
+
+
 
     }//GEN-LAST:event_edit_pr_buttonActionPerformed
 
