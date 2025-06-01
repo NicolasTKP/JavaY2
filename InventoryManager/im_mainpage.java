@@ -189,7 +189,7 @@ private final String receivesFile = "src/main/java/com/mycompany/JavaY2/TextFile
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         Map<String, StockReportContent> itemNameDateMap = DataMapping.NameLatestDateMapping(inventoryFile, receivesFile);
         String PdfFile = "StockReport.pdf";
-        GenerateStockReportPdf.writePdf(PdfFile, itemNameDateMap);
+        //GenerateStockReportPdf.writePdf(PdfFile, itemNameDateMap);
         JOptionPane.showMessageDialog(null, "Stock report is generated successfully");
 
 

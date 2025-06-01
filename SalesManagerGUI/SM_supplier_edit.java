@@ -8,6 +8,8 @@ import com.mycompany.JavaY2.Class.TextFile;
 import javax.swing.JOptionPane;
 import com.mycompany.JavaY2.Class.DataMapping;
 import com.mycompany.JavaY2.Class.ValidateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.util.Map;
 /**
@@ -205,7 +207,6 @@ public class SM_supplier_edit extends javax.swing.JFrame {
     }//GEN-LAST:event_cancel_add_supplier_buttonActionPerformed
 
     private void add_supplier_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_supplier_buttonActionPerformed
-
         String supplier_id = supplier_id_textfield.getText().trim();
         String supplier_name = supplier_name_textfield.getText().trim();
         String address = address_textfield.getText().trim();
@@ -216,14 +217,29 @@ public class SM_supplier_edit extends javax.swing.JFrame {
         DataMapping mapping = new DataMapping();
         Map<String, String> item_map = mapping.NameIdMapping(item_file_path);
         
-        String supply_item_id = item_map.get(supply_item_name);
+        // Split the input by commas and trim each item name
+        String[] supply_item_names = supply_item_name.split(",");
+        List<String> item_ids = new ArrayList<>();
+        
+        for (String item_name : supply_item_names) {
+            String trim_item_name = item_name.trim().toLowerCase();
+            String item_id = item_map.get(trim_item_name);
+            if (item_id != null) {
+                item_ids.add(item_id);
+            } else {
+                JOptionPane.showMessageDialog(this, "Item not found: " + trim_item_name);
+                return; // Stop further execution if any item is not found
+            }
+        }
+        
+        String multiple_item_id = String.join(", ", item_ids);// Join the item IDs with commas
         
         if(address.isEmpty() || contact_number.isEmpty() || supply_item_name.isEmpty() || payment_term.isEmpty()){
                 JOptionPane.showMessageDialog(this, "Please fill in all the required fields.");
         }else if(!ValidateFormat.contact(contact_number)){
              JOptionPane.showMessageDialog(this, "Invalid contact number format.");                
         }else{
-            String updated_supplier_details = supplier_id + "|" + supplier_name + "|" + address + "|" + contact_number + "|" + supply_item_id + "|" + payment_term;        
+            String updated_supplier_details = supplier_id + "|" + supplier_name + "|" + address + "|" + contact_number + "|" + multiple_item_id + "|" + payment_term;        
             boolean edit_supplier_success = TextFile.editTextfileRow(this, supplier_file_path, supplier_id, 0, updated_supplier_details, 6 );
             
             if(edit_supplier_success){
