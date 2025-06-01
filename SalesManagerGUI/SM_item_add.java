@@ -236,25 +236,23 @@ public class SM_item_add extends javax.swing.JFrame {
         
         String item_details = item_id + "|" + item_name + "|" + stock_price + "|" + sales_per_day + "|" + ordering_lead_time + "|" + safety_level + "|" + supplier_id + "|" + group_id;
         
-        if (item_name.isEmpty() || supplier_name.isEmpty()){
+        if (item_name.isEmpty()){
             JOptionPane.showMessageDialog(this,"Please fill in all the fields");
             
+        }else if(!Item.checkIsDuplicatedItemSupplier(item_name, supplier_id)){
+            JOptionPane.showMessageDialog(this,"The entered item already supplied by the supplier.");   
+
         }else if(Item.checkIsNewGroupID(group_id)){
             TextFile.addLine(item_file_path, item_details);
             JOptionPane.showMessageDialog(this,"New item has been added successfully. Please enter the details of the new item group.");
             this.dispose();
-            new SM_inventory_add(group_id, item_name).setVisible(true);
-            
+            new SM_inventory_add(group_id, item_name).setVisible(true);           
+
         }else{
             TextFile.addLine(item_file_path, item_details);
             JOptionPane.showMessageDialog(this,"New item been added successfully");
             this.dispose();            
-        }
-        
-
-        
-        
-        
+        }        
     }//GEN-LAST:event_add_item_buttonActionPerformed
 
     private void cancel_add_item_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_add_item_buttonActionPerformed

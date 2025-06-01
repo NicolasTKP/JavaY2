@@ -191,17 +191,16 @@ public class SM_supplier_add extends javax.swing.JFrame {
         
         DataMapping mapping = new DataMapping();
         Map<String,String> item_map = mapping.NameIdMapping(item_file_path);
-        String supply_item_id = item_map.get(supply_item_name);
 
         // Split the input by commas and trim each item name
         String[] supply_item_names = supply_item_name.split(",");
-        List<String> item_group_ids = new ArrayList<>();
+        List<String> item_ids = new ArrayList<>();
         
         for (String item_name : supply_item_names) {
             String trim_item_name = item_name.trim().toLowerCase();
-            String group_id = item_map.get(trim_item_name);
-            if (group_id != null) {
-                item_group_ids.add(group_id);
+            String item_id = item_map.get(trim_item_name);
+            if (item_id != null) {
+                item_ids.add(item_id);
             } else {
                 JOptionPane.showMessageDialog(this, "Item not found: " + trim_item_name);
                 return; // Stop further execution if any item is not found
@@ -209,14 +208,14 @@ public class SM_supplier_add extends javax.swing.JFrame {
         }
         
         // Join the item IDs with commas
-        String multiple_grouo_id = String.join(", ", item_group_ids);
+        String multiple_item_id = String.join(", ", item_ids);
 
-        String supplier_details = supplier_id + "|" + supplier_name + "|" + address + "|" + contact_number + "|" + multiple_grouo_id + "|" + payment_term;
+        String supplier_details = supplier_id + "|" + supplier_name + "|" + address + "|" + contact_number + "|" + multiple_item_id + "|" + payment_term;
         
         if (supplier_name.isEmpty() || contact_number.isEmpty() || address.isEmpty() || payment_term.isEmpty() ){
             JOptionPane.showMessageDialog(this, "Please enter all the required fields.");
             
-        }else if(ValidateFormat.contact(contact_number)){
+        }else if(!ValidateFormat.contact(contact_number)){
             JOptionPane.showMessageDialog(this, "Invalid contact number format.");    
             
         }else{        

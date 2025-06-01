@@ -123,6 +123,11 @@ public class admin_finance_report2 extends javax.swing.JFrame {
         }
     }
     jTextField2.setText(Double.toString(total));
+    jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jTextField2ActionPerformed(evt);
+        }
+    });
 
     jButton3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
     jButton3.setText("<");
@@ -276,6 +281,10 @@ public class admin_finance_report2 extends javax.swing.JFrame {
         page.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -2,122 +2,93 @@ package com.mycompany.JavaY2;
 
 import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.Class.Query;
-import com.mycompany.JavaY2.Class.Search;
 import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.ObjectList;
 import com.mycompany.JavaY2.Object.SessionManager;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.JRException;
-
+import java.util.Set;
 
 public class test {
-    public static class Item {
-        String itemID;
-        String itemName;
-        int quantity;
-        double unitPrice;
-        double amount;
-        public Item(String itemID, String itemName, int quantity, double unitPrice, double amount){
-            this.itemID = itemID;
-            this.itemName = itemName;
-            this.quantity = quantity;
-            this.unitPrice = unitPrice;
-            this.amount = amount;
-        }
-
-        public String getItemID() {
-            return itemID;
-        }
-
-        public String getItemName() {
-            return itemName;
-        }
-
-        public int getQuantity() {
-            return quantity;
-        }
-
-        public double getUnitPrice() {
-            return unitPrice;
-        }
-
-        public double getAmount() {
-            return amount;
-        }
-    }
-    public void test() throws IOException, JRException {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("OrderID", "O001");
-        parameters.put("OrderDate", "01052025");
-        parameters.put("RequestBy", "ntkp");
-        parameters.put("Supplier", "Hello supplier");
-        parameters.put("RequisitionID", "R001");
-        parameters.put("ShippingTerm", "12 Days");
-        parameters.put("PaymentTerm", "pay after ship");
-        parameters.put("VendorCode", "SU001");
-        parameters.put("VendorName", "Hello supplier");
-        parameters.put("VendorAddress", "Kuala Lumpur");
-        parameters.put("VendorPhone", "011-111-1111");
-        parameters.put("TotalAmount", "35.0");
-        parameters.put("Status", "Approved");
-
-        List<Item> itemList = Arrays.asList(
-                new Item("I001", "orange", 10, 3.5, 35.0)
-        );
+    public static void main(String[] args) {
+//      SessionManager.getInstance().username = "hello";
+//      System.out.println(SessionManager.getInstance().username);
         
-        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(itemList);
-        JasperReport report = JasperCompileManager.compileReport("src//main//java//com//mycompany//JavaY2//PDF//PurchaseOrder.jrxml");
-        JasperPrint print = JasperFillManager.fillReport(report, parameters, dataSource);
-
-        try {
-            JasperExportManager.exportReportToPdfFile(
-                    print,
-                    "src//main//java//com//mycompany//JavaY2//PDF//purchase_order.pdf"
-            );
-        } catch (net.sf.jasperreports.engine.JRRuntimeException e) {
-            Throwable cause = e.getCause();
-            if (cause instanceof java.io.FileNotFoundException) {
-                JOptionPane.showMessageDialog(null,
-                        "The PDF file is currently open in another program.\nPlease close it and try again.",
-                        "File Access Error",
-                        JOptionPane.ERROR_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null,
-                        "Failed to export PDF: " + e.getMessage(),
-                        "Export Error",
-                        JOptionPane.ERROR_MESSAGE);
+    
+        JLabel role = new JLabel("Role");
+        JTextField roleField = new JTextField(SessionManager.getInstance().role = "FinanceManager");
+        JLabel username = new JLabel("Username");
+        JTextField usernameField = new JTextField(SessionManager.getInstance().username = "bryan");
+        JLabel password = new JLabel("Enter your password");
+        JPasswordField passwordField = new JPasswordField();
+        
+        
+        Object[] ob = null;
+        int result = JOptionPane.showConfirmDialog(null, ob, "Please enter your credentials", JOptionPane.OK_CANCEL_OPTION);
+        
+        if(result == JOptionPane.OK_OPTION){
+            try(BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/users"))){
+                br.readLine();
+                String line;
+                while((line = br.readLine()) != null){
+                    String[] columns = line.split("\\|");
+                    if(columns[3].equals(roleField) && columns[1].equals(usernameField) && columns[2].equals(passwordField)){
+                        JOptionPane.showMessageDialog(null, "Successful Credentials", "You enter the correct credentials", JOptionPane.PLAIN_MESSAGE);
+                    }
+                }
+            }catch (IOException e){
+                e.printStackTrace();
             }
-            e.printStackTrace();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,
-                    "An unexpected error occurred: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
         }
-
-        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-        try {
-            desktop.open(new java.io.File("src//main//java//com//mycompany//JavaY2//PDF//purchase_order.pdf"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Failed to open PDF: " + e.getMessage());
-        }
+    
     }
+        
+//    public static List<String> getSuppliersForItem(String itemName) {
+//        Map<String, String> itemToSupplierMap = new HashMap<>(); // itemID -> supplierID
+//        Map<String, String> supplierNameMap = new HashMap<>(); // supplierID -> supplierName
+//        
+//        // Read items file to get itemID -> supplierID mapping
+//        try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/items"))) {
+//            String line;
+//            while ((line = br.readLine()) != null) {
+//                String[] columns = line.split("\\|");
+//                if (columns[1].equalsIgnoreCase(itemName)) { // Match item name
+//                    itemToSupplierMap.put(columns[0], columns[6]); // itemID -> supplierID
+//                }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        
+//        // Read suppliers file to get supplierID -> supplierName mapping
+//        try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/suppliers"))) {
+//            String line;
+//            while ((line = br.readLine()) != null) {
+//                String[] columns = line.split("\\|");
+//                supplierNameMap.put(columns[0], columns[1]); // supplierID -> supplierName
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        
+//        // Get unique supplier names for the given item
+//        Set<String> supplierNames = new HashSet<>();
+//        for (String supplierID : itemToSupplierMap.values()) {
+//            if (supplierNameMap.containsKey(supplierID)) {
+//                supplierNames.add(supplierNameMap.get(supplierID));
+//            }
+//        }
+//        
+//        return new ArrayList<>(supplierNames);
+//    }
+
 }

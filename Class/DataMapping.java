@@ -126,4 +126,25 @@ public class DataMapping {
         }
         return mapping;
     }
+    
+    public static Map<String, String[]> getSupplierDetails(String itemName) {
+        Map<String, String[]> supplierDetails = new HashMap<>(); // supplierName -> {itemID, supplierID, unitPrice}
+
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/mycompany/JavaY2/TextFile/items"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] column = line.split("\\|");
+                if (column[1].equals(itemName)) { // Match item name
+                    String supplierID = column[6];
+                    String supplierName = Search.getSupplierName(supplierID);
+                    if (supplierName != null) {
+                        supplierDetails.put(supplierName, new String[]{column[0], supplierID, column[2]}); // {itemID, supplierID, unitPrice}
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return supplierDetails;
+    }
 }

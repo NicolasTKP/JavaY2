@@ -61,7 +61,7 @@ public class TextFileHandling {
             br.readLine();
             while((line = br.readLine())!= null){
                 String[] data = line.split("\\|");
-                
+
                 if(data[6].equals("Not Received")){
                     Receive receive = new Receive(
                         data[0],
@@ -78,7 +78,7 @@ public class TextFileHandling {
                 }
             }
             br.close();
-            
+    
         }catch(IOException e){
             e.printStackTrace();
         }

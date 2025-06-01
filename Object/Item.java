@@ -43,7 +43,7 @@ public class Item {
                 this.supplier_id.toLowerCase(),
                 this.group_id.toLowerCase(),
                 Objects.requireNonNull(Search.getSupplierName(this.supplier_id)).toLowerCase()
-        ));
+                ));
         return valuesToCheck.contains(keyword);
     }
     
@@ -246,5 +246,23 @@ public class Item {
             System.out.println("Error reading supplier text file");
         }
         return true;
+    }
+    
+    public static boolean checkIsDuplicatedItemSupplier(String item_name, String supplier_id){
+        String item_file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\items";
+        try (BufferedReader br = new BufferedReader(new FileReader(item_file_path))) {
+            br.readLine();
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] columns = line.split("\\|"); 
+            if (columns.length >= 7 && item_name.equalsIgnoreCase(columns[1].trim()) && supplier_id.equalsIgnoreCase(columns[6].trim())){ 
+                    return false;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading supplier text file");
+        }
+        return true;        
     }
 }

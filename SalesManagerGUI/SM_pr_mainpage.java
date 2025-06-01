@@ -69,7 +69,7 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
 
     private void prSearchFunction(String pr_keyword) {
         prContainer.setRowCount(0); // Clear existing rows
-        pr_keyword = pr_keyword.toLowerCase().trim();
+        pr_keyword = pr_keyword.trim();
         
         if (pr_keyword.isEmpty()) {
             populatePrTable(); // <- call your full data loader
