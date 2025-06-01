@@ -96,8 +96,6 @@ public class SM_daily_sales_edit extends javax.swing.JFrame {
         add_item_label7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1000, 750));
-        setPreferredSize(new java.awt.Dimension(1000, 750));
 
         add_item_label.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         add_item_label.setText("Edit the sales record.");
@@ -156,7 +154,7 @@ public class SM_daily_sales_edit extends javax.swing.JFrame {
         });
 
         edit_sales_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        edit_sales_button.setText("Edit Item");
+        edit_sales_button.setText("Edit Sales");
         edit_sales_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edit_sales_buttonActionPerformed(evt);

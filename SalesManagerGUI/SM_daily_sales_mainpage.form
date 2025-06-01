@@ -161,7 +161,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="36" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Daily Sales Table"/>
+        <Property name="text" type="java.lang.String" value="Sales Record Table"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
@@ -169,7 +169,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="36" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Daily Sales Search Bar"/>
+        <Property name="text" type="java.lang.String" value="Sales Record Search Bar"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="daily_sales_search_bar">

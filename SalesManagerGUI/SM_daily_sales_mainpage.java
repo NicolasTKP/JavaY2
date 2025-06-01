@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.Set;
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
@@ -69,15 +71,11 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
         DataMapping mapping = new DataMapping();
         Map<String, String> inventory_map = mapping.IdNameMapping(inventory_file_path);
         Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
-        column_mappings.put(2, inventory_map); // supplier_id column
+        column_mappings.put(2, inventory_map);
         TextFile.populateTable(salesContainer, sales_table, salesTableColumnName, daily_sales_file_path, 50,column_mappings);          
     }
     
     private void populateSalesTableForToday(){
-        DataMapping mapping = new DataMapping();
-        Map<String, String> inventory_map = mapping.IdNameMapping(inventory_file_path);
-        Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
-        column_mappings.put(2, inventory_map); // supplier_id column
         DailySale.populateDailySalesTable(salesContainer, sales_table, salesTableColumnName, daily_sales_file_path, 50);
     }
     
@@ -186,10 +184,10 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
         jScrollPane1.setViewportView(sales_table);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setText("Daily Sales Table");
+        jLabel1.setText("Sales Record Table");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel2.setText("Daily Sales Search Bar");
+        jLabel2.setText("Sales Record Search Bar");
 
         daily_sales_search_bar.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
         daily_sales_search_bar.addActionListener(new java.awt.event.ActionListener() {
@@ -283,12 +281,17 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
 
     private void edit_sales_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_sales_buttonActionPerformed
         int selected_row = sales_table.getSelectedRow();
+        String sales_id = sales_table.getValueAt(selected_row , 0).toString();
+        String quantity = sales_table.getValueAt(selected_row , 1).toString();
+        String group_id = sales_table.getValueAt(selected_row , 2).toString();
+        String retail_price = sales_table.getValueAt(selected_row , 3).toString();
+        String date = sales_table.getValueAt(selected_row , 4).toString();   
         
-//        String password = JOptionPane.showInputDialog("Please insert your user password");
-//        if (password == null || !password.equals(SessionManager.getInstance().password)){
-//            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
-//            return;
-//        }
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
         if (selected_row != -1) {
             int response = JOptionPane.showConfirmDialog(
@@ -300,13 +303,16 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
             );
 
             if (response == JOptionPane.YES_OPTION) {
-                String sales_id = sales_table.getValueAt(selected_row , 0).toString();
-                String quantity = sales_table.getValueAt(selected_row , 1).toString();
-                String group_id = sales_table.getValueAt(selected_row , 2).toString();
-                String retail_price = sales_table.getValueAt(selected_row , 3).toString();
-                String date = sales_table.getValueAt(selected_row , 4).toString();
-
-                new SM_daily_sales_edit(sales_id, quantity, group_id, retail_price, date).setVisible(true);
+                Date current_date = new Date();
+                SimpleDateFormat date_format = new SimpleDateFormat("ddMMyyyy");
+                String today = date_format.format(current_date);  
+                
+                if(!date.equals(today)){
+                    JOptionPane.showMessageDialog(null, "You are not allow to edit the past sales records");                        
+                }else{
+                    new SM_daily_sales_edit(sales_id, quantity, group_id, retail_price, date).setVisible(true);                 
+                }
+                
             } else {
                 // Cancel editing
             JOptionPane.showMessageDialog(null, "You have decided to not edit the sales record. Back to sales record mainpage now");
@@ -319,15 +325,16 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
     private void delete_sales_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_sales_buttonActionPerformed
         int selected_row = sales_table.getSelectedRow();
         
-//        String password = JOptionPane.showInputDialog("Please insert your user password");
-//        if (password == null || !password.equals(SessionManager.getInstance().password)){
-//            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
-//            return;
-//        }
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
         String selected_id = sales_table.getValueAt(selected_row, 0).toString();
         int quantity_difference = Integer.parseInt(sales_table.getValueAt(selected_row, 1).toString());  // quantity
         String item_name = sales_table.getValueAt(selected_row, 2).toString();  // group_id    
+        String sales_record_date = sales_table.getValueAt(selected_row,4).toString();        
         
         DataMapping mapping = new DataMapping();
         Map<String, String> inventory_map = mapping.NameIdMapping(inventory_file_path);
@@ -342,10 +349,20 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE
             );
 
-            if (response == JOptionPane.YES_OPTION) { 
-                TextFile.deleteLine(daily_sales_file_path, selected_id, 0);
-                TextFile.adjustInventoryQuantity(this, inventory_file_path, group_id, quantity_difference); 
-                JOptionPane.showMessageDialog(null, "You have deleted the daily sales record. Daily sales table is updated, inventory is restored");;
+            if (response == JOptionPane.YES_OPTION) {
+                
+                Date current_date = new Date();
+                SimpleDateFormat date_format = new SimpleDateFormat("ddMMyyyy");
+                String today = date_format.format(current_date);  
+                
+                if(!sales_record_date.equals(today)){
+                    JOptionPane.showMessageDialog(null, "You are not allow to delete the past sales records");                        
+                }else{
+                    TextFile.deleteLine(daily_sales_file_path, selected_id, 0);
+                    TextFile.adjustInventoryQuantity(this, inventory_file_path, group_id, quantity_difference); 
+                    JOptionPane.showMessageDialog(null, "You have deleted the daily sales record. Daily sales table is updated, inventory is restored");                    
+                }
+
             } else {
                 // Cancel editing
                 JOptionPane.showMessageDialog(null, "You have decided to not delete the daily sales record. Back to daily sales mainpage now");
