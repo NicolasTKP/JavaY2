@@ -4,7 +4,9 @@ import com.mycompany.JavaY2.Class.DataMapping;
 import com.mycompany.JavaY2.Class.TextFile;
 import java.awt.Component;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -260,6 +262,49 @@ public class DailySale {
             }
         } catch (IOException e) {
             System.out.println("Error reading file: " + filePath); // handle IOException
+        }
+    } 
+    
+    public static boolean adjustInventoryQuantity(Component parent_component, String file_path, String group_id, int quantity_difference) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file_path));
+            StringBuilder updated_file = new StringBuilder();
+            String line;
+            boolean found = false;
+
+            while ((line = br.readLine()) != null) {
+                String[] columns = line.split("\\|");
+
+                if (columns.length >= 3 && columns[0].trim().equals(group_id.trim())) {
+                    int current_quantity = Integer.parseInt(columns[2].trim());
+                    int new_quantity = current_quantity + quantity_difference;
+
+                    // Update the quantity in the correct column
+                    columns[2] = String.valueOf(new_quantity);
+
+                    // Reconstruct the line and mark as found
+                    String updated_line = String.join("|", columns);
+                    updated_file.append(updated_line).append("\n");
+                    found = true;
+                } else {
+                    updated_file.append(line).append("\n");
+                }
+            }
+            br.close();
+
+            if (!found) {
+                JOptionPane.showMessageDialog(parent_component, "Group ID not found in inventory.");
+                return false;
+            }
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file_path, false));
+            bw.write(updated_file.toString());
+            bw.close();
+
+            return true;
+        } catch (IOException | NumberFormatException e) {
+            JOptionPane.showMessageDialog(parent_component, "Error updating inventory: " + e.getMessage());
+            return false;
         }
     }    
 }
