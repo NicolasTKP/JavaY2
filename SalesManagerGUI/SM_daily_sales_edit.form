@@ -3,6 +3,9 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[1000, 750]"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -49,19 +52,22 @@
                           <Component id="add_item_label" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="add_item_label1" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="add_item_label6" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="add_item_label2" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="sales_id_textfield" max="32767" attributes="0"/>
-                                  <Component id="item_textfield" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Component id="sold_quantity_textfield" pref="219" max="32767" attributes="0"/>
                                       <EmptySpace min="-2" pref="169" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="add_item_label1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
+                              <Component id="item_textfield" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -86,12 +92,12 @@
                   <Component id="sales_id_textfield" alignment="0" max="32767" attributes="0"/>
                   <Component id="add_item_label6" alignment="0" min="-2" pref="54" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="item_textfield" max="32767" attributes="0"/>
                   <Component id="add_item_label1" min="-2" pref="54" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="27" max="32767" attributes="0"/>
+              <EmptySpace pref="21" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="sold_quantity_textfield" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="add_item_label2" alignment="3" min="-2" max="-2" attributes="0"/>
