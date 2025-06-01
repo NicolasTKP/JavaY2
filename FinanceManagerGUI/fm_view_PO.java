@@ -91,7 +91,13 @@ public class fm_view_PO extends javax.swing.JFrame {
         btnExport.setText("Export As PDF");
         btnExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExportActionPerformed(evt);
+                try {
+                    btnExportActionPerformed(evt);
+                } catch (JRException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 

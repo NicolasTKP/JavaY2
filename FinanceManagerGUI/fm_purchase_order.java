@@ -26,7 +26,6 @@ import javax.swing.table.TableRowSorter;
 public class fm_purchase_order extends javax.swing.JFrame {
     private DefaultTableModel model = new DefaultTableModel();
     private String colName[] = {"Order ID", "Requisition ID", "Item ID", "User ID", "Username", "Quantity", "Unit Price", "Amount", "Supplier ID", "Order Date", "Order Status"}; 
-    private DefaultListCellRenderer listRenderer;
     
     public fm_purchase_order() {
         initComponents();
@@ -51,7 +50,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Purchase Order is currently unavailable"); 
         }
         
-        listRenderer = new DefaultListCellRenderer();
+        DefaultListCellRenderer listRenderer = new DefaultListCellRenderer();
         listRenderer.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
         orderFilter.setRenderer(listRenderer);
     }

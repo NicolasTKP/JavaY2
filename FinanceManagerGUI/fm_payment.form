@@ -30,18 +30,17 @@
                       <Component id="btnBack" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="548" pref="548" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="521" max="-2" attributes="0"/>
-                      <Component id="btnProfile" min="-2" pref="135" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btn_order_list" min="-2" max="-2" attributes="0"/>
-                          <Component id="btn_req_list" min="-2" max="-2" attributes="0"/>
-                          <Component id="btn_inventory_list" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnPayment" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnReport" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btn_order_list" max="32767" attributes="0"/>
+                          <Component id="btn_req_list" max="32767" attributes="0"/>
+                          <Component id="btn_inventory_list" max="32767" attributes="0"/>
+                          <Component id="btnPayment" max="32767" attributes="0"/>
+                          <Component id="btnReport" max="32767" attributes="0"/>
+                          <Component id="btnProfile" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
@@ -57,24 +56,22 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="11" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                       <Component id="btnBack" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="btnProfile" min="-2" pref="42" max="-2" attributes="0"/>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
@@ -106,7 +103,9 @@
                               <Component id="btn_inventory_list" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
                               <Component id="btnPayment" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnProfile" min="-2" pref="103" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnReport" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -212,7 +211,7 @@
     <Component class="javax.swing.JButton" name="btnProfile">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="sansserif" size="18" style="0"/>
+          <Font name="sansserif" size="24" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Profile"/>
       </Properties>
@@ -238,6 +237,9 @@
     </Container>
     <Component class="javax.swing.JComboBox" name="order_paymentFilter">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="24" style="0"/>
+        </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;All&quot;, &quot;Paid&quot;, &quot;Unpaid&quot; })" type="code"/>
         </Property>
@@ -269,6 +271,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="unpaid_amountField">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="24" style="0"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

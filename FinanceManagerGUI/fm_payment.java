@@ -13,7 +13,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -26,7 +28,7 @@ import javax.swing.table.TableRowSorter;
 public class fm_payment extends javax.swing.JFrame {
     private DefaultTableModel model = new DefaultTableModel();
     private String column_name[] = {"Order ID", "Item ID", "Item Name", "Quantity", "Total Amount", "Date Received", "Delivery Status", "Payment Date", "Payment Status"}; 
-
+    
     /**
      * Creates new form fm_payment
      */
@@ -39,10 +41,11 @@ public class fm_payment extends javax.swing.JFrame {
             reader.readLine(); //skip the header line
             while ((line = reader.readLine()) != null) {
                 String[] order_received_details = line.split("\\|");
-                if(order_received_details[5].equals("Received")){
-                    order_received_details[6] = "Unpaid";
-                }else if(order_received_details[5].equals("Not Received") || order_received_details[5].equals("Cancelled")){
-                    order_received_details[6] = " - ";
+                if(order_received_details[6].equals("Received") && order_received_details[7].equals("-")){
+                    order_received_details[8] = "Unpaid";
+                }else if(order_received_details[6].equals("Not Received") || order_received_details[6].equals("Cancelled")){
+                    order_received_details[7] = " - ";
+                    order_received_details[8] = " - ";
                 }
                 model.addRow(order_received_details);
             }
@@ -59,6 +62,10 @@ public class fm_payment extends javax.swing.JFrame {
             }
         }
         unpaid_amountField.setText(Double.toString(total_unpaid_amount));
+        
+        DefaultListCellRenderer listRenderer = new DefaultListCellRenderer();
+        listRenderer.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+        order_paymentFilter.setRenderer(listRenderer);
     }
 
     /**
@@ -144,7 +151,7 @@ public class fm_payment extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("sansserif", 0, 48)); // NOI18N
         jLabel1.setText("Payment");
 
-        btnProfile.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        btnProfile.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         btnProfile.setText("Profile");
         btnProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,6 +162,7 @@ public class fm_payment extends javax.swing.JFrame {
         order_receivedTable.setModel(model);
         jScrollPane1.setViewportView(order_receivedTable);
 
+        order_paymentFilter.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         order_paymentFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Paid", "Unpaid" }));
         order_paymentFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,6 +181,8 @@ public class fm_payment extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         jLabel3.setText("Total Unpaid Amount:");
 
+        unpaid_amountField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -183,16 +193,15 @@ public class fm_payment extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(548, 548, 548)
-                        .addComponent(jLabel1)
-                        .addGap(521, 521, 521)
-                        .addComponent(btnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_order_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_req_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_inventory_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_order_list, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_req_list, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_inventory_list, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPayment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -205,20 +214,18 @@ public class fm_payment extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(order_paymentFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1282, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
+                        .addGap(7, 7, 7)
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel1))
-                    .addComponent(btnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel1)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,7 +251,9 @@ public class fm_payment extends javax.swing.JFrame {
                                 .addComponent(btn_inventory_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(5, 5, 5)
                                 .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(115, 115, 115)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
         );
 
@@ -299,36 +308,47 @@ public class fm_payment extends javax.swing.JFrame {
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
         int row_selected = order_receivedTable.getSelectedRow();
+        if (row_selected == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Please select a purchase order to proceed with the payment process.",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         String orderID = order_receivedTable.getValueAt(row_selected, 0).toString();
         String date_received = order_receivedTable.getValueAt(row_selected, 5).toString();
-        Object delivery_status = order_receivedTable.getValueAt(row_selected, 6);
+        String delivery_status = String.valueOf(order_receivedTable.getValueAt(row_selected, 6));
+        String payment_status = String.valueOf(order_receivedTable.getValueAt(row_selected, 8));
+        
+        if(payment_status.equals("Paid")){
+            JOptionPane.showMessageDialog(this,
+                "This purchase order has already paid by other Finance Manager.",
+                "Information", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         LocalDate current_date = LocalDate.now();
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("ddMMyyyy");
-        LocalDate item_received_date = LocalDate.parse(date_received, dateFormat);
         String payment_date = current_date.format(dateFormat);
 
-        if (row_selected != -1){
-            if(delivery_status.toString().equals("Received") ){
-                if(!current_date.isBefore(item_received_date)){
-                    order_receivedTable.setValueAt(payment_date, row_selected, 7);
-                    order_receivedTable.setValueAt("Paid", row_selected, 8);
-                    Edit.editingColumn("receive", orderID, 7, payment_date);
-                    Edit.editingColumn("receive", orderID, 8, "Paid");
-                    JOptionPane.showMessageDialog(this, "Your transaction is done sucessfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
-                    
-                    double paid_amount = Double.parseDouble(order_receivedTable.getValueAt(row_selected, 4).toString());
-                    double current_total_unpaid_amount = Double.parseDouble(unpaid_amountField.getText());
-                    double new_total_unpaid_amount = current_total_unpaid_amount - paid_amount;
-                    
-                    unpaid_amountField.setText(Double.toString(new_total_unpaid_amount));  
-                }else{
-                    JOptionPane.showMessageDialog(this, "Payment cannot be made before the received date of an item ", "Warning", JOptionPane.WARNING_MESSAGE);
-                }
-            }else{
-                JOptionPane.showMessageDialog(this, "Please ensure that the item in the Purchase Order is received", "Warning", JOptionPane.WARNING_MESSAGE);
+        if (delivery_status.equals("Received")) {
+            if (!current_date.isBefore(LocalDate.parse(date_received, dateFormat))) {
+                order_receivedTable.setValueAt(payment_date, row_selected, 7);
+                order_receivedTable.setValueAt("Paid", row_selected, 8);
+                Edit.editingColumn("receive", orderID, 7, payment_date);
+                Edit.editingColumn("receive", orderID, 8, "Paid");
+                JOptionPane.showMessageDialog(this, "Your transaction is done sucessfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+
+                double paid_amount = Double.parseDouble(order_receivedTable.getValueAt(row_selected, 4).toString());
+                double current_total_unpaid_amount = Double.parseDouble(unpaid_amountField.getText());
+                double new_total_unpaid_amount = current_total_unpaid_amount - paid_amount;
+
+                unpaid_amountField.setText(Double.toString(new_total_unpaid_amount));
+            } else {
+                JOptionPane.showMessageDialog(this, "Payment cannot be made before the received date of the item ", "Warning", JOptionPane.WARNING_MESSAGE);
             }
-        }else{
-            JOptionPane.showMessageDialog(this, "Please select a purchase order when item is received", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Please ensure that the item in the Purchase Order is received", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnPayActionPerformed
 
