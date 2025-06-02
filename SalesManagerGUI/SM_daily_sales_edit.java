@@ -284,7 +284,7 @@ public class SM_daily_sales_edit extends javax.swing.JFrame {
 
         String sales_id = sales_id_textfield.getText();
         String updated_sales_details = getSalesDetails(sales_id);
-        boolean edit_sales_success = TextFile.editTextfileRow(this, daily_sales_file_path, sales_id, 0, updated_sales_details,5 );
+        boolean edit_sales_success = TextFile.editTextfileRow(this, daily_sales_file_path, sales_id, 0, updated_sales_details);
 
         if(edit_sales_success){
             JOptionPane.showMessageDialog(this,"Sales record has been edited successfully, quantity of item in inventory is updated as well. Back to daily sales mainpage now");

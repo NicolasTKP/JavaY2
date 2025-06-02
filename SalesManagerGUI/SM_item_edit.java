@@ -5,7 +5,7 @@
 package com.mycompany.JavaY2.SalesManagerGUI;
 
 import com.mycompany.JavaY2.Class.TextFile;
-import com.mycompany.JavaY2.Object.Item;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -297,7 +297,7 @@ public class SM_item_edit extends javax.swing.JFrame {
 
         String item_id = item_id_textfield.getText();
         String updated_item_details = getItemDetails(item_id);
-        boolean edit_item_success = TextFile.editTextfileRow(this, item_file_path, item_id, 0, updated_item_details,8 );
+        boolean edit_item_success = TextFile.editTextfileRow(this, item_file_path, item_id, 0, updated_item_details);
 
         if(edit_item_success){
             JOptionPane.showMessageDialog(this,"Item has been edited successfully, back to item mainpage now");

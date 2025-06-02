@@ -14,9 +14,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.JOptionPane;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -151,7 +149,7 @@ public class DailySale {
                         String updated_line = group_id + "|" + item_name + "|" + new_quantity + "|" + retail_price;
 
                         // ✅ Update inventory file
-                        TextFile.editTextfileRow(parent_component, inventory_file_path, group_id, 0, updated_line, 4);
+                        TextFile.editTextfileRow(parent_component, inventory_file_path, group_id, 0, updated_line);
 
                         br.close();
                         return true;  // ✅ Success

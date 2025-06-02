@@ -67,7 +67,7 @@ public class TextFile {
         }
     }
 
-    public static boolean editTextfileRow(Component parent_component, String file_path, String primary_key, int column_index, String updated_line, int file_column_number){
+    public static boolean editTextfileRow(Component parent_component, String file_path, String primary_key, int column_index, String updated_line){
         try{
             BufferedReader br = new BufferedReader(new FileReader(file_path));
             StringBuilder updated_file = new StringBuilder();
