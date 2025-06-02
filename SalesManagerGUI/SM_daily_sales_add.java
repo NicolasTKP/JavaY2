@@ -280,7 +280,7 @@ public class SM_daily_sales_add extends javax.swing.JFrame {
         if (quantity <=0){
             JOptionPane.showMessageDialog(this, "Please enter a valid item quantity.");
         }else{
-            boolean update_inventory = DailySale.updateInventoryQuantity(this, group_id, quantity);
+            boolean update_inventory = DailySale.updateInventoryQuantityAfterSales(this, group_id, quantity);
             if (update_inventory){
                 TextFile.addLine(daily_sales_file_path, sales_details);
                 JOptionPane.showMessageDialog(this, "New sales record has been added.");
