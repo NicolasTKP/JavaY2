@@ -318,6 +318,11 @@ public class fm_purchase_order extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)) {
+            JOptionPane.showMessageDialog(this, "Wrong password, you're not allowed to access the Profile page", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         new fm_profile().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnProfileActionPerformed
@@ -457,7 +462,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         int selected_row = orderTable.getSelectedRow();
         if (selected_row == -1){
-            JOptionPane.showMessageDialog(null, "Please select a Purchase Order to view", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a Purchase Order to view", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         new fm_view_PO(orderTable.getValueAt(selected_row,0).toString()).setVisible(true);
