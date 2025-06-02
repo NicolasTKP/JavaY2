@@ -1,5 +1,6 @@
 package com.mycompany.JavaY2.Class;
 
+import com.mycompany.JavaY2.Object.User;
 import com.mycompany.JavaY2.Object.*;
 
 import javax.swing.*;

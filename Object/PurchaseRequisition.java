@@ -153,8 +153,10 @@ public class PurchaseRequisition extends Request {
 
             while ((line = br.readLine()) != null) {
                 String[] columns = line.split("\\|"); 
-                if(columns.length >=1 && status.equalsIgnoreCase("Approved")){
-                    return false;
+                if(columns.length >=1 ){
+                    if (status.equalsIgnoreCase("Approved") || status.equalsIgnoreCase("Rejected")){
+                        return false;                        
+                    }
                 }
             }
         } catch (IOException e) {

@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.JOptionPane;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -90,7 +89,7 @@ public class DailySale {
         this.date = date;
     }
     
-        public static String getNextSalesID() {
+    public static String getNextSalesID() {
         String last_sales_id = null;
         String sales_file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\daily_sales_items";
 
@@ -124,7 +123,7 @@ public class DailySale {
         return null;
     }
         
-    public static boolean updateInventoryQuantity(Component parent_component, String group_id, int sold_quantity) {
+    public static boolean updateInventoryQuantityAfterSales(Component parent_component, String group_id, int sold_quantity) {
         String inventory_file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\inventory";
 
         try {
@@ -205,65 +204,6 @@ public class DailySale {
             System.out.println("Error reading file to populate JTable: " + filePath);
         }
     }
-    
-    public static void populateTable(DefaultTableModel model, JTable table, String[] columns, String filePath, int rowHeight, Map<Integer, Map<String, String>> columnMappings) {
-        model.setRowCount(0); // clear row
-        model.setColumnIdentifiers(columns); //set column name
-        table.setRowHeight(rowHeight); // set column height
-        
-        Date current_date = new Date();
-        SimpleDateFormat date_format = new SimpleDateFormat("ddMMyyyy");
-        String formatted_date = date_format.format(current_date);
-        
-        // read file using br
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            Set<String> uniqueRows = new HashSet<>();
-            br.readLine(); // Skip header
-            
-            while ((line = br.readLine()) != null) {
-                if (line.trim().isEmpty() || !uniqueRows.add(line)) continue;
-                
-                String[] rowData = line.split("\\|"); // split the line into different column
-
-                // Apply mappings to specific columns
-            if (columnMappings != null) {
-                for (Map.Entry<Integer, Map<String, String>> entry : columnMappings.entrySet()) {
-                    int index = entry.getKey(); // retrieve column index
-                    Map<String, String> map = entry.getValue(); // get the mapping dictionary for the column
-
-                    if (index < rowData.length) {
-                        String originalValue = rowData[index]; // get the current value from the specific column (such as item IDs, Supplier IDs)
-                        
-                        // in contain multiple value, split them by "," and do mapping
-                        if (originalValue.contains(",")) {
-                            String[] parts = originalValue.split(",");
-                            List<String> mappedValues = new ArrayList<>();
-                            
-                            // iterate all objects inside the column, then add the mapped value
-                            for (String part : parts) {
-                                String trimmed = part.trim();
-                                String mapped = map.getOrDefault(trimmed, trimmed);
-                                mappedValues.add(mapped);
-                            }
-                            // join the mapped values back together 
-                            rowData[index] = String.join(", ", mappedValues);
-                            
-                            // if contain only one value, map it directly
-                        } else {
-                            String trimmed = originalValue.trim();
-                            String mapped = map.getOrDefault(trimmed, trimmed);
-                            rowData[index] = mapped;
-                        }
-                    }
-                }
-            }
-                model.addRow(rowData); // add the row of data into table
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading file: " + filePath); // handle IOException
-        }
-    } 
     
     public static boolean adjustInventoryQuantity(Component parent_component, String file_path, String group_id, int quantity_difference) {
         try {
