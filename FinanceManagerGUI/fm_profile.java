@@ -263,7 +263,7 @@ public class fm_profile extends javax.swing.JFrame {
         }else{
             if(!ValidateFormat.password(fmPassword)){
                 JOptionPane.showMessageDialog(null, 
-                        "Invalid format for password, Please change a password with at least 6 characters including one upper case, one lower case, one number, and one special character", 
+                        "Invalid format for password, Please change a password with at least 7 characters including one upper case, one lower case, one number, and one special character", 
                         "WARNING", JOptionPane.WARNING_MESSAGE);
                 return;
             }

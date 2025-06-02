@@ -30,16 +30,16 @@
                       <Component id="btnBack" min="-2" pref="100" max="-2" attributes="0"/>
                       <EmptySpace pref="448" max="32767" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="521" max="-2" attributes="0"/>
-                      <Component id="btnProfile" min="-2" pref="135" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="656" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnReport" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="btn_order_list" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="btn_req_list" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="btn_inventory_list" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnPayment" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnReport" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btn_order_list" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btn_req_list" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btn_inventory_list" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnPayment" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnProfile" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" max="32767" attributes="0"/>
@@ -53,15 +53,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                      <Component id="btnBack" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="btnProfile" min="-2" pref="42" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                  </Group>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnBack" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -73,7 +67,9 @@
                       <Component id="btn_inventory_list" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       <Component id="btnPayment" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="116" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnProfile" pref="104" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnReport" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
@@ -111,7 +107,7 @@
     <Component class="javax.swing.JButton" name="btnProfile">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="sansserif" size="18" style="0"/>
+          <Font name="sansserif" size="24" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Profile"/>
       </Properties>

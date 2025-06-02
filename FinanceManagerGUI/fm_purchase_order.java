@@ -26,7 +26,6 @@ import javax.swing.table.TableRowSorter;
 public class fm_purchase_order extends javax.swing.JFrame {
     private DefaultTableModel model = new DefaultTableModel();
     private String colName[] = {"Order ID", "Requisition ID", "Item ID", "User ID", "Username", "Quantity", "Unit Price", "Amount", "Supplier ID", "Order Date", "Order Status"}; 
-    private DefaultListCellRenderer listRenderer;
     
     public fm_purchase_order() {
         initComponents();
@@ -51,7 +50,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Purchase Order is currently unavailable"); 
         }
         
-        listRenderer = new DefaultListCellRenderer();
+        DefaultListCellRenderer listRenderer = new DefaultListCellRenderer();
         listRenderer.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
         orderFilter.setRenderer(listRenderer);
     }
@@ -319,6 +318,11 @@ public class fm_purchase_order extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)) {
+            JOptionPane.showMessageDialog(this, "Wrong password, you're not allowed to access the Profile page", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         new fm_profile().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnProfileActionPerformed
@@ -331,7 +335,9 @@ public class fm_purchase_order extends javax.swing.JFrame {
     private void approveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveBtnActionPerformed
         String password = JOptionPane.showInputDialog("Please enter your credential before approving the Purchase Order");
         if (password == null || !password.equals(SessionManager.getInstance().password)){
-            JOptionPane.showMessageDialog(this, "Wrong password entered, you are not allowed to APPROVE the Purchase Order", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                    "Wrong password entered, you are not allowed to APPROVE the Purchase Order", 
+                    "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         int selected_row = orderTable.getSelectedRow();
@@ -346,9 +352,9 @@ public class fm_purchase_order extends javax.swing.JFrame {
                     model.setValueAt("Approved", selected_row, 10);
                     ls[0] = order_id;
                     ls[1] = orderTable.getValueAt(selected_row, 2).toString();
-                    ls[2] = Search.getItemNamebyItemID(ls[1]);
-                    ls[3] = Search.getFromPO(ls[0], 4); 
-                    ls[4] = Search.getFromPO(ls[0], 6); 
+                    ls[2] = Search.getItemNamebyItemID(ls[1]); //item name
+                    ls[3] = Search.getFromPO(ls[0], 4); //quantity
+                    ls[4] = Search.getFromPO(ls[0], 6); //total amount
                     ls[5] = "-";
                     ls[6] = "Not Received";
                     ls[7] = "-";
@@ -360,14 +366,16 @@ public class fm_purchase_order extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "This Purchase Order has already been approved or rejected", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(this, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a purchase order to approve", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_approveBtnActionPerformed
 
     private void rejectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectBtnActionPerformed
         String password = JOptionPane.showInputDialog("Please enter your credential before rejecting the Purchase Order");
         if (password == null || !password.equals(SessionManager.getInstance().password)){
-            JOptionPane.showMessageDialog(this, "Wrong password entered, you are not allowed to REJECT the Purchase Order", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                    "Wrong password entered, you are not allowed to REJECT the Purchase Order", 
+                    "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         int selected_row = orderTable.getSelectedRow();
@@ -385,7 +393,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "This Purchase Order has already been approved or rejected", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(this, "Please select a row to reject", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a purchase order to reject", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_rejectBtnActionPerformed
 
@@ -419,10 +427,11 @@ public class fm_purchase_order extends javax.swing.JFrame {
                 String itemID = String.valueOf(model.getValueAt(selectedRow, 2));
                 String itemName = Search.getItemNamebyItemID(itemID); //items.txt
                 int quantity = Integer.parseInt(String.valueOf(model.getValueAt(selectedRow, 5))); 
-                double unit_price = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 6))); 
+                double unit_price = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 6)));
+                double total_amount = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 7)));
                 String supplierID = String.valueOf(model.getValueAt(selectedRow, 8));
                 
-                PurchaseOrder po = new PurchaseOrder(orderID, itemID, itemName, quantity, unit_price, supplierID);
+                PurchaseOrder po = new PurchaseOrder(orderID, itemID, itemName, quantity, unit_price, total_amount, supplierID);
             
                 new fm_edit_PO(po).setVisible(true);
             }else {
@@ -453,7 +462,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         int selected_row = orderTable.getSelectedRow();
         if (selected_row == -1){
-            JOptionPane.showMessageDialog(null, "Please select a Purchase Order to view", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a Purchase Order to view", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         new fm_view_PO(orderTable.getValueAt(selected_row,0).toString()).setVisible(true);
