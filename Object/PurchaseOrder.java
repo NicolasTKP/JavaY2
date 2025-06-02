@@ -18,7 +18,7 @@ public class PurchaseOrder extends Request {
 
     public PurchaseOrder(){
     }
-    PurchaseOrder(String order_id, String request_id, String item_id, String user_id, String username, int quantity, double unit_price, double amount, String supplier_id, LocalDate order_date, String order_status, String item_name, String supplier_name){
+    public PurchaseOrder(String order_id, String request_id, String item_id, String user_id, String username, int quantity, double unit_price, double amount, String supplier_id, LocalDate order_date, String order_status, String item_name, String supplier_name){
         this.order_id = order_id;
         this.request_id = request_id;
         this.item_id = item_id;

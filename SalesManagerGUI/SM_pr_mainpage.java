@@ -4,12 +4,10 @@
  */
 package com.mycompany.JavaY2.SalesManagerGUI;
 
-import com.mycompany.JavaY2.AdminGUI.admin_pr_view;
 import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.PurchaseRequisition;
 import com.mycompany.JavaY2.Object.SessionManager;
 import com.mycompany.JavaY2.Class.DataMapping;
-import com.mycompany.JavaY2.Class.PDFPrinter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -100,7 +98,7 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
                             pr_details[6]
                     );
 
-                    if (pr.anyPrMatch(pr_keyword)) {
+                    if (pr.anyMatch(pr_keyword)) {
                         
                         pr_details[1] = inventory_map.get(pr_details[1]);
                         pr_details[2] = user_map.get(pr_details[2]);

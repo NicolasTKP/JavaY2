@@ -54,19 +54,6 @@ public class PurchaseRequisition extends Request {
         return valuesToCheck.contains(keyword);
     }
 
-    public boolean anyPrMatch(String keyword){
-        Set<String> valuesToCheck = new HashSet<>(Arrays.asList(
-                this.request_id.toLowerCase(),
-                this.group_id.toLowerCase(),
-                this.user_id.toLowerCase(),
-                Integer.toString(this.quantity),
-                this.request_date,
-                this.required_date,
-                this.status
-        ));
-        return valuesToCheck.contains(keyword);
-    }
-
     public static String getNextRequestID() {
         String last_pr_id = null;
         String pr_file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\purchase_requisitions";
