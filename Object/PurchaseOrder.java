@@ -33,6 +33,16 @@ public class PurchaseOrder extends Request {
         this.item_name = item_name;
         this.supplier_name = supplier_name;
     }
+    
+    //Overloaded constructor for EditPO page
+    public PurchaseOrder(String order_id, String item_id, String item_name, int quantity, double unit_price, String supplier_id) {
+        this.order_id = order_id;
+        this.item_id = item_id;
+        this.item_name = item_name;
+        this.quantity = quantity;
+        this.unit_price = unit_price;
+        this.supplier_id = supplier_id;
+    }
 
     public boolean anyMatch(String keyword){
         Set<String> valuesToCheck = new HashSet<>(Arrays.asList(
@@ -45,11 +55,12 @@ public class PurchaseOrder extends Request {
                 Double.toString(this.unit_price),
                 Double.toString(this.amount),
                 this.supplier_id.toLowerCase(),
-                this.order_date.toString().toLowerCase(),
                 this.order_status.toLowerCase(),
                 this.item_name.toLowerCase(),
                 this.supplier_name.toLowerCase()
         ));
+        if (this.order_date != null)
+            valuesToCheck.add(this.order_date.toString().toLowerCase());
         return valuesToCheck.contains(keyword);
     }
 }

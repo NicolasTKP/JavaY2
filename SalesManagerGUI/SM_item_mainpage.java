@@ -76,24 +76,25 @@ public class SM_item_mainpage extends javax.swing.JFrame {
         TextFile.populateTable(inventoryContainer, inventory_table, inventoryTableColumnName, inventory_file_path, 50);         
     }
 
-    
     private void itemSearchFunction(String item_keyword) {
         itemContainer.setRowCount(0); // Clear existing rows
-        item_keyword = item_keyword.toLowerCase().trim();
+        item_keyword = item_keyword.toLowerCase().trim(); // trim and turn the item keyword to lower case to match the data inside textfile
+        
+        DataMapping mapping = new DataMapping();
+        Map<String, String> supplier_map = mapping.IdNameMapping(supplier_file_path); // Create instance of DataMapping to map supplier ID to supplier Name       
         
         if (item_keyword.isEmpty()) {
-            populateItemTable(); // <- call your full data loader
+            populateItemTable(); //when the search bar is empty, refresh the table.
             return;
         }
-            
-        DataMapping mapping = new DataMapping();
-        Map<String,String> supplier_map = mapping.IdNameMapping(supplier_file_path);
-
+          
+        // Read text file using BR
         try (BufferedReader br = new BufferedReader(new FileReader(item_file_path))) {
             String item_line;
             Set<String> uniqueItemRows = new HashSet<>();
             br.readLine(); // skip header
 
+            // Loop through all the lines
             while ((item_line = br.readLine()) != null) {
                 if (!item_line.trim().isEmpty() && !uniqueItemRows.contains(item_line)) {
                     String[] item_details = item_line.split("\\|");
@@ -106,24 +107,22 @@ public class SM_item_mainpage extends javax.swing.JFrame {
                         Integer.parseInt(item_details[3]), // sales_per_day
                         Integer.parseInt(item_details[4]), // ordering_lead_time
                         Integer.parseInt(item_details[5]), // safety_level
-                        supplier_map.get(item_details[6]), // supplier_id
+                        item_details[6], // supplier_id
                         item_details[7]  // group_id
                     );
-
+                    // use the anymatch method from Item class
                     if (item.anyMatch(item_keyword)) {
-                        // Replace supplier_id with supplier_name
-                        item_details[6] = supplier_map.get(item_details[6]);
-                        itemContainer.addRow(item_details);
-                        uniqueItemRows.add(item_line);
+                        item_details[6] = supplier_map.get(item_details[6]); // Replace supplier_id with supplier_name
+                        itemContainer.addRow(item_details); // add the matching result to the table
+                        uniqueItemRows.add(item_line); // prevent duplicated lines being display inside the table
                     }
                 }
             }
-
         } catch (IOException e) {
             System.out.println("Error reading item file during search: " + e.getMessage());
         }
     }
-
+        
     private void inventorySearchFunction(String inventory_keyword) {
         inventoryContainer.setRowCount(0); // Clear existing rows
         inventory_keyword = inventory_keyword.toLowerCase().trim();
@@ -144,10 +143,10 @@ public class SM_item_mainpage extends javax.swing.JFrame {
 
                     // Create an Item object from the line
                     Inventory inventory = new Inventory(
-                            inventory_details[0],
-                            inventory_details[1],
-                            Integer.parseInt(inventory_details[2]),
-                            Double.parseDouble(inventory_details[3])
+                            inventory_details[0], //Group ID
+                            inventory_details[1], // Item Name
+                            Integer.parseInt(inventory_details[2]), // Integer
+                            Double.parseDouble(inventory_details[3]) // Retail Price
                     );
 
                     if (inventory.anyMatch(inventory_keyword)) {
@@ -342,8 +341,6 @@ public class SM_item_mainpage extends javax.swing.JFrame {
         }else{
             new SM_item_add().setVisible(true);           
         }       
-        
-
     }//GEN-LAST:event_add_item_buttonActionPerformed
 
     private void homepage_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homepage_button1ActionPerformed

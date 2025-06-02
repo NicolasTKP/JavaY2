@@ -6,8 +6,10 @@ package com.mycompany.JavaY2.AdminGUI;
 
 import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.Class.ValidateFormat;
+import com.mycompany.JavaY2.FinanceManagerGUI.fm_mainpage;
 import com.mycompany.JavaY2.InventoryManager.im_mainpage;
 import com.mycompany.JavaY2.Object.SessionManager;
+import com.mycompany.JavaY2.PurchaseManagerGUI.pm_mainpage;
 import com.mycompany.JavaY2.SalesManagerGUI.SM_mainpage;
 
 import javax.swing.*;
@@ -143,17 +145,22 @@ public class admin_profile extends javax.swing.JFrame {
         }
         else if (!username.equals(SessionManager.getInstance().username)){
             if (!ValidateFormat.username(username)){
-                JOptionPane.showMessageDialog(null, "Invalid format for username or username redundant, please try again (Length > 3)", "WARNING", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Invalid format for username or username redundant, please try again (Length > 3)", "WARNING",
+                        JOptionPane.WARNING_MESSAGE);
                 return;
             }
         } else{
             if (!ValidateFormat.password(password)){
-                JOptionPane.showMessageDialog(null, "Invalid format for password, please try again (Length > 6 and including at least one upper case, one lower case, one number, and one special character)", "WARNING", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Invalid format for password, please try again (Length > 6 and including at least one upper case, one lower case, one number, and one special character)",
+                        "WARNING", JOptionPane.WARNING_MESSAGE);
                 return;
             }
         }
 
-        int result = JOptionPane.showConfirmDialog(null, "Confirm to update user profile with username: "+username+ "\nand password: "+password+" ?", "Confirmation",JOptionPane.YES_NO_OPTION);
+        int result = JOptionPane.showConfirmDialog(null, "Confirm to update user profile with username: "+username+ "\nand password: "+password+" ?", "Confirmation",
+                JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
             Edit.editingColumn("user",SessionManager.getInstance().userID, 1, username);
             Edit.editingColumn("user",SessionManager.getInstance().userID, 2, password);
@@ -173,16 +180,16 @@ public class admin_profile extends javax.swing.JFrame {
                     sm_mainpage.setVisible(true);
                     break;
                 case "purchase manager":
-                    //PM mainpage;
-                    //PM mainpage.setVisible(true);
+                    pm_mainpage frame = new pm_mainpage();
+                    frame.setVisible(true);
                     break;
                 case "inventory manager":
                     im_mainpage im_mainpage = new im_mainpage();
                     im_mainpage.setVisible(true);
                     break;
                 case "finance manager":
-                    //FM mainpage;
-                    //FM mainpage.setVisible(true);
+                    fm_mainpage fm_mainpage = new fm_mainpage();
+                    fm_mainpage.setVisible(true);
                     break;
                 default:
                     admin_mainpage admin_mainpage = new admin_mainpage();

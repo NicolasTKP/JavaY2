@@ -14,7 +14,7 @@ public class PurchaseRequisition extends Request {
     public String request_date;
     public String required_date;
     public String status;
-
+    
     public PurchaseRequisition(){
     }
     
@@ -157,6 +157,25 @@ public class PurchaseRequisition extends Request {
     public String getStatus(){
         return status;
     } 
+    
+    public static boolean checkStatus(String status){
+        String pr_file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\purchase_requisitions";
+        try (BufferedReader br = new BufferedReader(new FileReader(pr_file_path))) {
+            br.readLine();
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] columns = line.split("\\|"); 
+                if(columns.length >=1 && status.equalsIgnoreCase("Approved")){
+                    return false;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading PR text file");
+        }
+        return true;
+    }
+    
 }
 
 

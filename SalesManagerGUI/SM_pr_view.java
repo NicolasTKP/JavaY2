@@ -94,6 +94,11 @@ public class SM_pr_view extends javax.swing.JFrame {
         jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTextField3.setText(Search.getUsername(Search.getFromPR(this.request_ID, 2)));
         jTextField3.setFocusable(false);
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -211,9 +216,22 @@ public class SM_pr_view extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) throws JRException, IOException {//GEN-FIRST:event_jButton2ActionPerformed
         PDFPrinter printer = new PDFPrinter();
-        PDFPrinter.PDFRequest request = new PDFPrinter.PDFRequest(jTable1.getValueAt(0,0).toString(), jTable1.getValueAt(0,1).toString(), jTable1.getValueAt(0,2).toString(), jTable1.getValueAt(0,3).toString(), jTable1.getValueAt(0,4).toString());
-        printer.print(jTextField1.getText(), jTextField3.getText(), jTextField2.getText(), jTextField4.getText(), jLabel5.getText(), request);
+        PDFPrinter.PDFRequest request = new PDFPrinter.PDFRequest(
+                jTable1.getValueAt(0,0).toString(), 
+                jTable1.getValueAt(0,1).toString(), 
+                jTable1.getValueAt(0,2).toString(), 
+                jTable1.getValueAt(0,3).toString(), 
+                jTable1.getValueAt(0,4).toString());
+        printer.print(jTextField1.getText(), 
+                jTextField3.getText(), 
+                jTextField2.getText(), 
+                jTextField4.getText(), 
+                jLabel5.getText(), request);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
 
     /**
      * @param args the command line arguments

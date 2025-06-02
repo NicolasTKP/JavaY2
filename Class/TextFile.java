@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.swing.table.DefaultTableModel;
 
+
 public class TextFile {
 
     public static void addLine(String path, String line){
@@ -100,50 +101,6 @@ public class TextFile {
             return false;
         }
     }
-    
-    public static boolean adjustInventoryQuantity(Component parent_component, String file_path, String group_id, int quantity_difference) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file_path));
-            StringBuilder updated_file = new StringBuilder();
-            String line;
-            boolean found = false;
-
-            while ((line = br.readLine()) != null) {
-                String[] columns = line.split("\\|");
-
-                if (columns.length >= 3 && columns[0].trim().equals(group_id.trim())) {
-                    int current_quantity = Integer.parseInt(columns[2].trim());
-                    int new_quantity = current_quantity + quantity_difference;
-
-                    // Update the quantity in the correct column
-                    columns[2] = String.valueOf(new_quantity);
-
-                    // Reconstruct the line and mark as found
-                    String updated_line = String.join("|", columns);
-                    updated_file.append(updated_line).append("\n");
-                    found = true;
-                } else {
-                    updated_file.append(line).append("\n");
-                }
-            }
-            br.close();
-
-            if (!found) {
-                JOptionPane.showMessageDialog(parent_component, "Group ID not found in inventory.");
-                return false;
-            }
-
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file_path, false));
-            bw.write(updated_file.toString());
-            bw.close();
-
-            return true;
-        } catch (IOException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(parent_component, "Error updating inventory: " + e.getMessage());
-            return false;
-        }
-    }
-
 
     public static void populateTable(DefaultTableModel model, JTable table, String[] columns, String filePath, int rowHeight){
         model.setRowCount(0);
@@ -169,40 +126,45 @@ public class TextFile {
 
     // Overloaded with mapping
     public static void populateTable(DefaultTableModel model, JTable table, String[] columns, String filePath, int rowHeight, Map<Integer, Map<String, String>> columnMappings) {
-        model.setRowCount(0);
-        model.setColumnIdentifiers(columns);
-        table.setRowHeight(rowHeight);
-
+        model.setRowCount(0); // clear row
+        model.setColumnIdentifiers(columns); //set column name
+        table.setRowHeight(rowHeight); // set column height
+        
+        // read file using br
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             Set<String> uniqueRows = new HashSet<>();
             br.readLine(); // Skip header
-
+            
             while ((line = br.readLine()) != null) {
                 if (line.trim().isEmpty() || !uniqueRows.add(line)) continue;
-
-                String[] rowData = line.split("\\|");
+                
+                String[] rowData = line.split("\\|"); // split the line into different column
 
                 // Apply mappings to specific columns
             if (columnMappings != null) {
                 for (Map.Entry<Integer, Map<String, String>> entry : columnMappings.entrySet()) {
-                    int index = entry.getKey();
-                    Map<String, String> map = entry.getValue();
+                    int index = entry.getKey(); // retrieve column index
+                    Map<String, String> map = entry.getValue(); // get the mapping dictionary for the column
 
                     if (index < rowData.length) {
-                        String originalValue = rowData[index];
-
+                        String originalValue = rowData[index]; // get the current value from the specific column (such as item IDs, Supplier IDs)
+                        
+                        // in contain multiple value, split them by "," and do mapping
                         if (originalValue.contains(",")) {
                             String[] parts = originalValue.split(",");
                             List<String> mappedValues = new ArrayList<>();
-
+                            
+                            // iterate all objects inside the column, then add the mapped value
                             for (String part : parts) {
                                 String trimmed = part.trim();
                                 String mapped = map.getOrDefault(trimmed, trimmed);
                                 mappedValues.add(mapped);
                             }
-
+                            // join the mapped values back together 
                             rowData[index] = String.join(", ", mappedValues);
+                            
+                            // if contain only one value, map it directly
                         } else {
                             String trimmed = originalValue.trim();
                             String mapped = map.getOrDefault(trimmed, trimmed);
@@ -211,10 +173,10 @@ public class TextFile {
                     }
                 }
             }
-                model.addRow(rowData);
+                model.addRow(rowData); // add the row of data into table
             }
         } catch (IOException e) {
-            System.out.println("Error reading file: " + filePath);
+            System.out.println("Error reading file: " + filePath); // handle IOException
         }
     }
 }

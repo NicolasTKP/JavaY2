@@ -210,8 +210,11 @@ public class admin_pr_view extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) throws JRException, IOException {//GEN-FIRST:event_jButton2ActionPerformed
         PDFPrinter printer = new PDFPrinter();
-        PDFPrinter.PDFRequest request = new PDFPrinter.PDFRequest(jTable1.getValueAt(0,0).toString(), jTable1.getValueAt(0,1).toString(), jTable1.getValueAt(0,2).toString(), jTable1.getValueAt(0,3).toString(), jTable1.getValueAt(0,4).toString());
-        printer.print(jTextField1.getText(), jTextField3.getText(), jTextField2.getText(), jTextField4.getText(), jLabel5.getText(), request);
+        PDFPrinter.PDFRequest request = new PDFPrinter.PDFRequest(jTable1.getValueAt(0,0).toString(),
+                jTable1.getValueAt(0,1).toString(), jTable1.getValueAt(0,2).toString(),
+                jTable1.getValueAt(0,3).toString(), jTable1.getValueAt(0,4).toString());
+        printer.print(jTextField1.getText(), jTextField3.getText(), jTextField2.getText(), jTextField4.getText(),
+                jLabel5.getText(), request);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

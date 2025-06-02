@@ -54,10 +54,10 @@ public class admin_user_management extends javax.swing.JFrame {
         User user;
         for (int i = 0;i<users.size();i++){
             user = users.get(i);
-            matrix[i][0] = user.user_id;
-            matrix[i][1] = user.username;
-            matrix[i][2] = user.password;
-            matrix[i][3] = user.role;
+            matrix[i][0] = user.getUserID();
+            matrix[i][1] = user.getUsername();
+            matrix[i][2] = user.getPassword();
+            matrix[i][3] = user.getRole();
         }
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -188,10 +188,10 @@ public class admin_user_management extends javax.swing.JFrame {
                 user = users.get(i);
                 if (user.anyMatch(keyword)) {
                     user = users.get(i);
-                    matrix[i][0] = user.user_id;
-                    matrix[i][1] = user.username;
-                    matrix[i][2] = user.password;
-                    matrix[i][3] = user.role;
+                    matrix[i][0] = user.getUserID();
+                    matrix[i][1] = user.getUsername();
+                    matrix[i][2] = user.getPassword();
+                    matrix[i][3] = user.getRole();
                 }
             }
             matrix = Matrix.removeEmptyRows(matrix);
@@ -234,7 +234,9 @@ public class admin_user_management extends javax.swing.JFrame {
             else if(ValidateFormat.username(username)){
                 break;
             }else {
-                JOptionPane.showMessageDialog(null, "Invalid username format, length of username must be at least 4 characters, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Invalid username format, length of username must be at least 4 characters, and cannot be redundant, please try again",
+                        "Warning", JOptionPane.WARNING_MESSAGE);
             }
         }
 
@@ -247,7 +249,9 @@ public class admin_user_management extends javax.swing.JFrame {
             else if(ValidateFormat.password(password)){
                 break;
             }else {
-                JOptionPane.showMessageDialog(null, "Invalid password format, length of password must be at least 7 characters and including at least one upper case, one lower case, one number, and one special character, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Invalid password format, length of password must be at least 7 characters and including at least one upper case, " +
+                                "one lower case, one number, and one special character, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         }
 
@@ -268,11 +272,13 @@ public class admin_user_management extends javax.swing.JFrame {
                 options[0]);
 
         String line = user_id + "|" + username + "|" + password + "|" + choice.toLowerCase();
-        int result = JOptionPane.showConfirmDialog(null, "Do you confirm to add a new user?", "Confirmation", JOptionPane.YES_NO_OPTION);
+        int result = JOptionPane.showConfirmDialog(null, "Do you confirm to add a new user?", "Confirmation",
+                JOptionPane.YES_NO_OPTION);
 
         if(result == JOptionPane.YES_OPTION){
             TextFile.addLine("src/main/java/com/mycompany/JavaY2/TextFile/users",line);
-            JOptionPane.showMessageDialog(null, "User added successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "User added successfully", "Successful",
+                    JOptionPane.INFORMATION_MESSAGE);
             UpdateTable.forUser(jTable1);
         }
 
@@ -284,18 +290,22 @@ public class admin_user_management extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String password = JOptionPane.showInputDialog("Please insert your user password");
         if (password == null || !password.equals(SessionManager.getInstance().password)){
-            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow == -1){
-            JOptionPane.showMessageDialog(null, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please select a row to delete", "Warning",
+                    JOptionPane.WARNING_MESSAGE);
         }else{
             String username = jTable1.getValueAt(selectedRow, 1).toString();
-            int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to delete user: "+username, "Confirmation",JOptionPane.YES_NO_OPTION);
+            int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want to delete user: "+username,
+                    "Confirmation",JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.YES_OPTION){
                 TextFile.deleteLine("src/main/java/com/mycompany/JavaY2/TextFile/users", username, 1);
-                JOptionPane.showMessageDialog(null, "The user had successfully being deleted", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "The user had successfully being deleted", "Successful",
+                        JOptionPane.INFORMATION_MESSAGE);
                 UpdateTable.forUser(jTable1);
             }
         }
@@ -309,7 +319,8 @@ public class admin_user_management extends javax.swing.JFrame {
         }
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow == -1){
-            JOptionPane.showMessageDialog(null, "Please select a row to approve", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please select a row to modify",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
         }else{
             String user_id = jTable1.getValueAt(selectedRow,0).toString();
             String[] options = {"Username", "Password", "Role"};
@@ -335,13 +346,17 @@ public class admin_user_management extends javax.swing.JFrame {
                         else if(ValidateFormat.username(username)){
                             break;
                         }else {
-                            JOptionPane.showMessageDialog(null, "Invalid username format, length of username must be at least 4 characters, please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(null,
+                                    "Invalid username format, length of username must be at least 4 characters, please try again",
+                                    "Warning", JOptionPane.WARNING_MESSAGE);
                         }
                     }
-                    int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want change username to: "+username, "Confirmation",JOptionPane.YES_NO_OPTION);
+                    int result = JOptionPane.showConfirmDialog(null, "Do you want sure you want change username to: "+
+                            username, "Confirmation",JOptionPane.YES_NO_OPTION);
                     if(result == JOptionPane.YES_OPTION){
                         Edit.editingColumn("user",user_id, 1, username);
-                        JOptionPane.showMessageDialog(null, "The username had successfully being updated", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "The username had successfully being updated",
+                                "Successful", JOptionPane.INFORMATION_MESSAGE);
                         UpdateTable.forUser(jTable1);
                     }
                     break;
