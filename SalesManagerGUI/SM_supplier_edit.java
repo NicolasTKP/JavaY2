@@ -240,7 +240,7 @@ public class SM_supplier_edit extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(this, "Invalid contact number format.");                
         }else{
             String updated_supplier_details = supplier_id + "|" + supplier_name + "|" + address + "|" + contact_number + "|" + multiple_item_id + "|" + payment_term;        
-            boolean edit_supplier_success = TextFile.editTextfileRow(this, supplier_file_path, supplier_id, 0, updated_supplier_details, 6 );
+            boolean edit_supplier_success = TextFile.editTextfileRow(this, supplier_file_path, supplier_id, 0, updated_supplier_details);
             
             if(edit_supplier_success){
                 JOptionPane.showMessageDialog(this, "Supplier has been edited successfully, back to supplier mainpage now");

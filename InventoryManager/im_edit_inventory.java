@@ -188,7 +188,7 @@ public class im_edit_inventory extends javax.swing.JFrame {
         String quantity = quantity_textfield.getText();
         double retailPrice = (double) retailPrice_spinner.getValue();
         String updated_inventory_details = groupId + "|" + itemName + "|" + quantity + "|" + retailPrice;
-        boolean edit_inventory_success = TextFile.editTextfileRow(this, inventory_file_path, groupId, 0, updated_inventory_details,4 );
+        boolean edit_inventory_success = TextFile.editTextfileRow(this, inventory_file_path, groupId, 0, updated_inventory_details);
 
         if(edit_inventory_success){
             JOptionPane.showMessageDialog(this,"Inventory has been edited successfully, returning to inventory page...");

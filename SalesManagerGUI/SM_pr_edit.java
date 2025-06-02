@@ -232,7 +232,7 @@ public class SM_pr_edit extends javax.swing.JFrame {
         }else{
             String updated_pr_details = request_id + "|" + item_group_id + "|" + sm_id + "|" + quantity + "|" + request_date + "|" + required_date + "|" + pr_status;  
             
-            boolean edit_pr_success = TextFile.editTextfileRow(this, pr_file_path, request_id, 0, updated_pr_details,7 );
+            boolean edit_pr_success = TextFile.editTextfileRow(this, pr_file_path, request_id, 0, updated_pr_details);
             
             if(edit_pr_success){
                 JOptionPane.showMessageDialog(this,"PR has been edited successfully, back to PR mainpage now");
