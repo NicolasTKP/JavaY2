@@ -292,7 +292,7 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
                 String status = pr_table.getValueAt(selected_row , 6).toString();
                 
                 if(!PurchaseRequisition.checkStatus(status)){
-                    JOptionPane.showMessageDialog(this, "This PR cannot be modified as it has been approved.");
+                    JOptionPane.showMessageDialog(this, "This PR cannot be modified as it has been processed.");
                 }else{
                     new SM_pr_edit(request_id, item_name, sm_id, quantity, request_date, required_date, status).setVisible(true);                    
                 }
