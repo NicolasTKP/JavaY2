@@ -54,19 +54,6 @@ public class PurchaseRequisition extends Request {
         return valuesToCheck.contains(keyword);
     }
 
-    public boolean anyPrMatch(String keyword){
-        Set<String> valuesToCheck = new HashSet<>(Arrays.asList(
-                this.request_id.toLowerCase(),
-                this.group_id.toLowerCase(),
-                this.user_id.toLowerCase(),
-                Integer.toString(this.quantity),
-                this.request_date,
-                this.required_date,
-                this.status
-        ));
-        return valuesToCheck.contains(keyword);
-    }
-
     public static String getNextRequestID() {
         String last_pr_id = null;
         String pr_file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\purchase_requisitions";
@@ -157,6 +144,25 @@ public class PurchaseRequisition extends Request {
     public String getStatus(){
         return status;
     } 
+    
+    public static boolean checkStatus(String status){
+        String pr_file_path = "src\\main\\java\\com\\mycompany\\JavaY2\\TextFile\\purchase_requisitions";
+        try (BufferedReader br = new BufferedReader(new FileReader(pr_file_path))) {
+            br.readLine();
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] columns = line.split("\\|"); 
+                if(columns.length >=1 && status.equalsIgnoreCase("Approved")){
+                    return false;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading PR text file");
+        }
+        return true;
+    }
+    
 }
 
 

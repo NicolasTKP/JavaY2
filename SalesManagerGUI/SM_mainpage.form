@@ -26,46 +26,57 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="item_management_button" min="-2" pref="300" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="164" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="daily_sales_button" min="-2" pref="300" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="log_out_button" min="-2" pref="300" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="item_management_button" min="-2" pref="300" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="164" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="purchase_requisition_button" min="-2" pref="300" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="supplier_management_button" min="-2" pref="300" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="164" max="-2" attributes="0"/>
+                              <Component id="daily_sales_button" min="-2" pref="300" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="purchase_order_button" min="-2" pref="300" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="164" max="-2" attributes="0"/>
+                              <Component id="profile_button" min="-2" pref="300" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="supplier_management_button" pref="300" max="32767" attributes="0"/>
-                  <Component id="profile_button" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="163" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="purchase_requisition_button" pref="300" max="32767" attributes="0"/>
-                  <Component id="log_out_button" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="231" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="item_management_button" alignment="3" min="-2" pref="120" max="-2" attributes="0"/>
                   <Component id="supplier_management_button" alignment="3" min="-2" pref="120" max="-2" attributes="0"/>
+                  <Component id="daily_sales_button" alignment="3" min="-2" pref="120" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="profile_button" alignment="3" min="-2" pref="114" max="-2" attributes="0"/>
                   <Component id="purchase_requisition_button" alignment="3" min="-2" pref="120" max="-2" attributes="0"/>
+                  <Component id="purchase_order_button" alignment="3" min="-2" pref="120" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="115" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="log_out_button" min="-2" pref="120" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="daily_sales_button" alignment="3" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="profile_button" alignment="3" min="-2" pref="114" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace pref="164" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
+              <Component id="log_out_button" min="-2" pref="120" max="-2" attributes="0"/>
+              <EmptySpace pref="41" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -141,6 +152,17 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="log_out_buttonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="purchase_order_button">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="24" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Purchase Order"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="purchase_order_buttonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -4,12 +4,10 @@
  */
 package com.mycompany.JavaY2.SalesManagerGUI;
 
-import com.mycompany.JavaY2.AdminGUI.admin_pr_view;
 import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.PurchaseRequisition;
 import com.mycompany.JavaY2.Object.SessionManager;
 import com.mycompany.JavaY2.Class.DataMapping;
-import com.mycompany.JavaY2.Class.PDFPrinter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -100,7 +98,7 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
                             pr_details[6]
                     );
 
-                    if (pr.anyPrMatch(pr_keyword)) {
+                    if (pr.anyMatch(pr_keyword)) {
                         
                         pr_details[1] = inventory_map.get(pr_details[1]);
                         pr_details[2] = user_map.get(pr_details[2]);
@@ -292,8 +290,12 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
                 String request_date = pr_table.getValueAt(selected_row , 4).toString();
                 String required_date = pr_table.getValueAt(selected_row , 5).toString();
                 String status = pr_table.getValueAt(selected_row , 6).toString();
-
-                new SM_pr_edit(request_id, item_name, sm_id, quantity, request_date, required_date, status).setVisible(true);
+                
+                if(!PurchaseRequisition.checkStatus(status)){
+                    JOptionPane.showMessageDialog(this, "This PR cannot be modified as it has been approved.");
+                }else{
+                    new SM_pr_edit(request_id, item_name, sm_id, quantity, request_date, required_date, status).setVisible(true);                    
+                }
             } else {
                 // Cancel editing
                 JOptionPane.showMessageDialog(null, "You have decided to not edit PR details. Back to PR mainpage now");
@@ -305,15 +307,15 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
 
     private void delete_pr_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_pr_buttonActionPerformed
         int selected_row = pr_table.getSelectedRow();
-
+        String selected_id = pr_table.getValueAt(selected_row, 0).toString();
+        String status = pr_table.getValueAt(selected_row , 6).toString();
+        
         String password = JOptionPane.showInputDialog("Please insert your user password");
         if (password == null || !password.equals(SessionManager.getInstance().password)){
             JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
-        String selected_id = pr_table.getValueAt(selected_row, 0).toString();
-
         if (selected_row != -1) {
             int response = JOptionPane.showConfirmDialog(
                 null,
@@ -324,8 +326,12 @@ public class SM_pr_mainpage extends javax.swing.JFrame {
             );
 
             if (response == JOptionPane.YES_OPTION) {
-                TextFile.deleteLine(pr_file_path, selected_id, 0);
-                JOptionPane.showMessageDialog(null, "You have deleted the PR. PR table is updated");
+                if(!PurchaseRequisition.checkStatus(status)){
+                    JOptionPane.showMessageDialog(this, "This PR cannot be deleted as it has been approved.");
+                }else{
+                    TextFile.deleteLine(pr_file_path, selected_id, 0);
+                    JOptionPane.showMessageDialog(null, "You have deleted the PR. PR table is updated");                   
+                }
             } else {
                 // Cancel editing
                 JOptionPane.showMessageDialog(null, "You have decided to not delete the PR. Back to PR mainpage now");

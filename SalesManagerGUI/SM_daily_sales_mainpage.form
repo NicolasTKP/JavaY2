@@ -31,15 +31,25 @@
                   <Component id="add_sales_button" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
                   <Component id="edit_sales_button" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jScrollPane1" min="-2" pref="1100" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="daily_sales_search_bar" min="-2" pref="292" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jScrollPane1" min="-2" pref="1100" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="daily_sales_search_bar" min="-2" pref="292" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                      <Component id="all_daily_sales_button" min="-2" pref="520" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="today_daily_sales_button" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="36" max="32767" attributes="0"/>
@@ -58,19 +68,26 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="homepage_button1" min="-2" pref="90" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
                       <Component id="add_sales_button" min="-2" pref="90" max="-2" attributes="0"/>
-                      <EmptySpace min="84" pref="84" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
                       <Component id="edit_sales_button" min="-2" pref="90" max="-2" attributes="0"/>
-                      <EmptySpace pref="66" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
                       <Component id="delete_sales_button" min="-2" pref="90" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="all_daily_sales_button" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="today_daily_sales_button" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="554" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="22" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -144,7 +161,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="36" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Daily Sales Table"/>
+        <Property name="text" type="java.lang.String" value="Sales Record Table"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
@@ -152,7 +169,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="36" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Daily Sales Search Bar"/>
+        <Property name="text" type="java.lang.String" value="Sales Record Search Bar"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="daily_sales_search_bar">
@@ -164,6 +181,22 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="daily_sales_search_barActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="all_daily_sales_button">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="36" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="All"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="today_daily_sales_button">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="36" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Today"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

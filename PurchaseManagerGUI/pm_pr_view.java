@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.JavaY2.SalesManagerGUI;
+package com.mycompany.JavaY2.PurchaseManagerGUI;
 
 import com.mycompany.JavaY2.Class.PDFPrinter;
 import com.mycompany.JavaY2.Class.Search;
@@ -14,13 +14,12 @@ import java.io.IOException;
  *
  * @author USER
  */
-public class SM_pr_view extends javax.swing.JFrame {
+public class pm_pr_view extends javax.swing.JFrame {
     public String request_ID;
     /**
      * Creates new form admin_pr_view
-     * @param request_ID
      */
-    public SM_pr_view(String request_ID) {
+    public pm_pr_view(String request_ID) {
         this.request_ID = request_ID;
         initComponents();
     }
@@ -94,11 +93,6 @@ public class SM_pr_view extends javax.swing.JFrame {
         jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTextField3.setText(Search.getUsername(Search.getFromPR(this.request_ID, 2)));
         jTextField3.setFocusable(false);
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -209,29 +203,19 @@ public class SM_pr_view extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        SM_pr_mainpage page = new SM_pr_mainpage();
+        pm_purchase_requisition page = new pm_purchase_requisition();
         page.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) throws JRException, IOException {//GEN-FIRST:event_jButton2ActionPerformed
         PDFPrinter printer = new PDFPrinter();
-        PDFPrinter.PDFRequest request = new PDFPrinter.PDFRequest(
-                jTable1.getValueAt(0,0).toString(), 
-                jTable1.getValueAt(0,1).toString(), 
-                jTable1.getValueAt(0,2).toString(), 
-                jTable1.getValueAt(0,3).toString(), 
-                jTable1.getValueAt(0,4).toString());
-        printer.print(jTextField1.getText(), 
-                jTextField3.getText(), 
-                jTextField2.getText(), 
-                jTextField4.getText(), 
+        PDFPrinter.PDFRequest request = new PDFPrinter.PDFRequest(jTable1.getValueAt(0,0).toString(),
+                jTable1.getValueAt(0,1).toString(), jTable1.getValueAt(0,2).toString(),
+                jTable1.getValueAt(0,3).toString(), jTable1.getValueAt(0,4).toString());
+        printer.print(jTextField1.getText(), jTextField3.getText(), jTextField2.getText(), jTextField4.getText(),
                 jLabel5.getText(), request);
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -250,20 +234,20 @@ public class SM_pr_view extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SM_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pm_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SM_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pm_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SM_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pm_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SM_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pm_pr_view.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SM_pr_view("").setVisible(true);
+                new pm_pr_view("").setVisible(true);
             }
         });
     }

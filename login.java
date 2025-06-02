@@ -9,6 +9,7 @@ import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.FinanceManagerGUI.fm_mainpage;
 import com.mycompany.JavaY2.InventoryManager.im_mainpage;
 import com.mycompany.JavaY2.Object.SessionManager;
+import com.mycompany.JavaY2.PurchaseManagerGUI.pm_mainpage;
 import com.mycompany.JavaY2.SalesManagerGUI.SM_mainpage;
 
 import javax.swing.*;
@@ -198,6 +199,14 @@ public class login extends javax.swing.JFrame {
                         SessionManager.getInstance().password = pass;
                         SessionManager.getInstance().role = role;
                         im_mainpage frame = new im_mainpage(true);
+                        frame.setVisible(true);
+                        this.dispose();
+                    }else if(role.equals("purchase manager")){
+                        SessionManager.getInstance().userID = line.split("\\|")[0];
+                        SessionManager.getInstance().username = user;
+                        SessionManager.getInstance().password = pass;
+                        SessionManager.getInstance().role = role;
+                        pm_mainpage frame = new pm_mainpage();
                         frame.setVisible(true);
                         this.dispose();
                     }

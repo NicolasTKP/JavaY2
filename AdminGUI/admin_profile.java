@@ -9,6 +9,7 @@ import com.mycompany.JavaY2.Class.ValidateFormat;
 import com.mycompany.JavaY2.FinanceManagerGUI.fm_mainpage;
 import com.mycompany.JavaY2.InventoryManager.im_mainpage;
 import com.mycompany.JavaY2.Object.SessionManager;
+import com.mycompany.JavaY2.PurchaseManagerGUI.pm_mainpage;
 import com.mycompany.JavaY2.SalesManagerGUI.SM_mainpage;
 
 import javax.swing.*;
@@ -179,8 +180,8 @@ public class admin_profile extends javax.swing.JFrame {
                     sm_mainpage.setVisible(true);
                     break;
                 case "purchase manager":
-                    //PM mainpage;
-                    //PM mainpage.setVisible(true);
+                    pm_mainpage frame = new pm_mainpage();
+                    frame.setVisible(true);
                     break;
                 case "inventory manager":
                     im_mainpage im_mainpage = new im_mainpage();
