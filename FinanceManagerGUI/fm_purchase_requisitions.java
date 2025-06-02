@@ -4,6 +4,7 @@
  */
 package com.mycompany.JavaY2.FinanceManagerGUI;
 
+import com.mycompany.JavaY2.AdminGUI.admin_profile;
 import com.mycompany.JavaY2.Object.SessionManager;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -105,7 +106,7 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
         });
 
         btnReport.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btnReport.setText("<html><p style='text-align:center;'>Financial Reportt</p></html>");
+        btnReport.setText("<html><p style='text-align:center;'>Financial Report</p></html>");
         btnReport.setPreferredSize(new java.awt.Dimension(200, 105));
         btnReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -212,7 +213,12 @@ public class fm_purchase_requisitions extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileActionPerformed
-        new fm_profile().setVisible(true);
+         String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)) {
+            JOptionPane.showMessageDialog(this, "Wrong password, you're not allowed to access the Profile page", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        new admin_profile().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnProfileActionPerformed
 

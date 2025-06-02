@@ -7,6 +7,7 @@ package com.mycompany.JavaY2.SalesManagerGUI;
 import com.mycompany.JavaY2.AdminGUI.admin_profile;
 import com.mycompany.JavaY2.Object.SessionManager;
 import com.mycompany.JavaY2.login;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -149,6 +150,11 @@ public class SM_mainpage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void profile_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profile_buttonActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)) {
+            JOptionPane.showMessageDialog(this, "Wrong password, you're not allowed to access the Profile page", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         new admin_profile().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_profile_buttonActionPerformed
