@@ -275,8 +275,6 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
         }else{
             new SM_daily_sales_add().setVisible(true);            
         }        
-        
-
     }//GEN-LAST:event_add_sales_buttonActionPerformed
 
     private void edit_sales_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_sales_buttonActionPerformed
@@ -303,16 +301,7 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
             );
 
             if (response == JOptionPane.YES_OPTION) {
-                Date current_date = new Date();
-                SimpleDateFormat date_format = new SimpleDateFormat("ddMMyyyy");
-                String today = date_format.format(current_date);  
-                
-                if(!date.equals(today)){
-                    JOptionPane.showMessageDialog(null, "You are not allow to edit the past sales records");                        
-                }else{
                     new SM_daily_sales_edit(sales_id, quantity, group_id, retail_price, date).setVisible(true);                 
-                }
-                
             } else {
                 // Cancel editing
             JOptionPane.showMessageDialog(null, "You have decided to not edit the sales record. Back to sales record mainpage now");

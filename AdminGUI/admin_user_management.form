@@ -94,7 +94,7 @@
             <Property name="rowHeight" type="int" value="25"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);&#xa;ObjectList objectList = new ObjectList();&#xa;List&lt;User&gt; users = objectList.getUsers();&#xa;String[][] matrix = new String[users.size()][4];&#xa;User user;&#xa;for (int i = 0;i&lt;users.size();i++){&#xa;    user = users.get(i);&#xa;    matrix[i][0] = user.getUserID();&#xa;    matrix[i][1] = user.getUsername();&#xa;    matrix[i][2] = user.getPassword();&#xa;    matrix[i][3] = user.getRole();&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);&#xa;ObjectList objectList = new ObjectList();&#xa;List&lt;com.mycompany.JavaY2.Object.User&gt; users = objectList.getUsers();&#xa;String[][] matrix = new String[users.size()][4];&#xa;com.mycompany.JavaY2.Object.User user;&#xa;for (int i = 0;i&lt;users.size();i++){&#xa;    user = users.get(i);&#xa;    matrix[i][0] = user.getUserID();&#xa;    matrix[i][1] = user.getUsername();&#xa;    matrix[i][2] = user.getPassword();&#xa;    matrix[i][3] = user.getRole();&#xa;}"/>
           </AuxValues>
         </Component>
       </SubComponents>
