@@ -4,6 +4,7 @@
  */
 package com.mycompany.JavaY2.FinanceManagerGUI;
 
+import com.mycompany.JavaY2.AdminGUI.admin_profile;
 import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.Object.SessionManager;
 import java.io.BufferedReader;
@@ -321,7 +322,7 @@ public class fm_payment extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Wrong password, you're not allowed to access the Profile page", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        new fm_profile().setVisible(true);
+        new admin_profile().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnProfileActionPerformed
 
