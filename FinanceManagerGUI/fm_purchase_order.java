@@ -429,7 +429,7 @@ public class fm_purchase_order extends javax.swing.JFrame {
                 String itemName = Search.getItemNamebyItemID(itemID); //items.txt
                 int quantity = Integer.parseInt(String.valueOf(model.getValueAt(selectedRow, 5))); 
                 double unit_price = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 6)));
-                double total_amount = Double.parseDouble(String.valueOf(model.getValueAt(selectedRow, 7)));
+                double total_amount = quantity * unit_price;
                 String supplierID = String.valueOf(model.getValueAt(selectedRow, 8));
                 
                 PurchaseOrder po = new PurchaseOrder(orderID, itemID, itemName, quantity, unit_price, total_amount, supplierID);

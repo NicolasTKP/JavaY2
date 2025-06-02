@@ -247,6 +247,10 @@ public class fm_edit_PO extends javax.swing.JFrame {
             item_idField.setText(details[0]); // Update item ID
             supplier_idField.setText(details[1]); // Update supplier ID
             stock_priceField.setText(details[2]); // Update unit price
+            int quantity = Integer.parseInt(quantityField.getText());
+            double unitPrice = Double.parseDouble(details[2]);
+            double totalAmount = quantity * unitPrice;
+            total_amountField.setText(Double.toString(totalAmount));
         }     
     }//GEN-LAST:event_sname_listActionPerformed
 
@@ -256,7 +260,7 @@ public class fm_edit_PO extends javax.swing.JFrame {
             String new_item_id = item_idField.getText();
             int new_quantity = Integer.parseInt(quantityField.getText());
             double new_stockPrice = Double.parseDouble(stock_priceField.getText());
-            double new_amount = new_quantity * new_stockPrice;  
+            double new_amount = new_quantity * new_stockPrice;
             String new_supplierID = supplier_idField.getText();
             
             if(new_quantity <= 0){ 
@@ -269,6 +273,7 @@ public class fm_edit_PO extends javax.swing.JFrame {
             Edit.editingColumn("PO", current_orderID, 5, String.valueOf(new_stockPrice));
             Edit.editingColumn("PO", current_orderID, 6, String.valueOf(new_amount));
             Edit.editingColumn("PO", current_orderID, 7, new_supplierID);
+            JOptionPane.showMessageDialog(this, "Purchase Order is Edited successfully", "Sucessfull", JOptionPane.INFORMATION_MESSAGE);
         }catch (NumberFormatException e){
             JOptionPane.showMessageDialog(this, "Quantity must be a valid integer!", "Warning", JOptionPane.ERROR_MESSAGE);
             return;
