@@ -4,6 +4,7 @@
  */
 package com.mycompany.JavaY2.FinanceManagerGUI;
 
+import com.mycompany.JavaY2.AdminGUI.admin_profile;
 import com.mycompany.JavaY2.Object.SessionManager;
 import com.mycompany.JavaY2.login;
 import javax.swing.JOptionPane;
@@ -181,7 +182,7 @@ public class fm_mainpage extends javax.swing.JFrame {
                 "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        new fm_profile().setVisible(true);
+        new admin_profile().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnProfileActionPerformed
 
