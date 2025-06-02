@@ -156,12 +156,14 @@ public class im_update_stock extends javax.swing.JFrame {
         
         int result = JOptionPane.showConfirmDialog(null, "Do you confirm that the order: "+selectedOrderId+ " is received?", 
                      "Confirmation",JOptionPane.YES_NO_OPTION);
+        
         if(result == JOptionPane.YES_OPTION) {
             String item_id = TextFile.getColumn(receives_file_path,0,selectedOrderId,1);
             String group_id = Search.getGroupIDbyItemName(Search.getItemNamebyItemID(item_id));
             Edit.editingColumn("receive", selectedOrderId, 6, "Received");
             String receive_quantity = TextFile.getColumn(receives_file_path,0,selectedOrderId,3);
             String inventory_quantity = TextFile.getColumn(inventory_file_path,0,group_id,2);
+            
             assert receive_quantity != null;
             assert inventory_quantity != null;
             String quantity = Integer.toString(Integer.parseInt(receive_quantity) + Integer.parseInt(inventory_quantity));
