@@ -177,6 +177,7 @@ public class login extends javax.swing.JFrame {
                         admin_mainpage frame = new admin_mainpage(true);
                         frame.setVisible(true);
                         this.dispose();
+                        return;
                     }else if(role.equals("finance manager")){
                         SessionManager.getInstance().userID = line.split("\\|")[0];
                         SessionManager.getInstance().username = user;
@@ -185,6 +186,7 @@ public class login extends javax.swing.JFrame {
                         fm_mainpage frame = new fm_mainpage();
                         frame.setVisible(true);
                         this.dispose();
+                        return;
                     }else if(role.equals("sales manager")){
                         SessionManager.getInstance().userID = line.split("\\|")[0];
                         SessionManager.getInstance().username = user;
@@ -193,6 +195,7 @@ public class login extends javax.swing.JFrame {
                         SM_mainpage frame = new SM_mainpage();
                         frame.setVisible(true);
                         this.dispose();
+                        return;
                     }else if(role.equals("inventory manager")){
                         SessionManager.getInstance().userID = line.split("\\|")[0];
                         SessionManager.getInstance().username = user;
@@ -201,6 +204,7 @@ public class login extends javax.swing.JFrame {
                         im_mainpage frame = new im_mainpage(true);
                         frame.setVisible(true);
                         this.dispose();
+                        return;
                     }else if(role.equals("purchase manager")){
                         SessionManager.getInstance().userID = line.split("\\|")[0];
                         SessionManager.getInstance().username = user;
@@ -209,6 +213,7 @@ public class login extends javax.swing.JFrame {
                         pm_mainpage frame = new pm_mainpage();
                         frame.setVisible(true);
                         this.dispose();
+                        return;
                     }
                 }
             }

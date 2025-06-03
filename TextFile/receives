@@ -1,7 +1,6 @@
-order_id|item_id|item_name|quantity|amount|date_received|status (cancelled, received, not received)|payment_date|payment_status (-,unpaid,paid)
-O003|I002|orange|60|48.0|28052025|Received|01062025|Paid
+order_id|item_id|item_name|quantity|amount|date_received|status (Cancelled, Received, Not Received)|payment_date|payment_status (-,Unpaid,Paid)
+O003|I002|orange|60|48.0|28052025|Received|-|Unpaid
 O004|I001|apple|80|80.0|28052025|Received|28052025|Paid
 O005|I003|apple|40|40.0|-|Cancelled|-|-
 O002|I002|orange|10|6.0|28052025|Received|28052025|Paid
-O009|I003|apple|10|20.0|31052025|Received|-|Unpaid
-O010|I001|apple|10|80.0|-|not received|-|Unpaid
+O009|I003|apple|10|20.0|31052025|Received|03062025|Paid
