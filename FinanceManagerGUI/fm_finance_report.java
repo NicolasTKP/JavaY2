@@ -173,7 +173,6 @@ public class fm_finance_report extends javax.swing.JFrame {
 
         btnProfile.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         btnProfile.setText("Profile");
-        btnProfile.setPreferredSize(new java.awt.Dimension(98, 39));
         btnProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProfileActionPerformed(evt);
@@ -359,15 +358,15 @@ public class fm_finance_report extends javax.swing.JFrame {
 
         yearly_profitField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         yearly_profitField.setFocusable(false);
-        yearly_profitField.setText(String.format("%.1f%%", (Double.parseDouble(yearly_revenueField.getText()) / Double.parseDouble(yearly_purchaseField.getText())) * 100));
+        yearly_profitField.setText(String.format("%.1f%%", ((Double.parseDouble(yearly_revenueField.getText())-Double.parseDouble(yearly_purchaseField.getText())) / Double.parseDouble(yearly_purchaseField.getText())) * 100));
 
         monthly_profitField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         monthly_profitField.setFocusable(false);
-        monthly_profitField.setText(String.format("%.1f%%", (Double.parseDouble(monthly_revenueField.getText()) / Double.parseDouble(monthly_purchaseField.getText())) * 100));
+        monthly_profitField.setText(String.format("%.1f%%", ((Double.parseDouble(monthly_revenueField.getText())-Double.parseDouble(monthly_purchaseField.getText())) / Double.parseDouble(monthly_purchaseField.getText())) * 100));
 
         daily_profitField.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         daily_profitField.setFocusable(false);
-        daily_profitField.setText(String.format("%.1f%%", (Double.parseDouble(daily_revenueField.getText()) / Double.parseDouble(daily_purchaseField.getText())) * 100));
+        daily_profitField.setText(String.format("%.1f%%", ((Double.parseDouble(daily_revenueField.getText())-Double.parseDouble(daily_purchaseField.getText())) / Double.parseDouble(daily_purchaseField.getText())) * 100));
 
         jLabel15.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         jLabel15.setText("Search:");

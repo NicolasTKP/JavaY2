@@ -429,9 +429,6 @@
         </Property>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField9ActionPerformed"/>
-      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextField9.setText(Double.toString(Double.parseDouble(jTextField3.getText()) - Double.parseDouble(jTextField6.getText())));"/>
       </AuxValues>
@@ -571,7 +568,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField12ActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextField12.setText(String.format(&quot;%.1f%%&quot;, (Double.parseDouble(jTextField7.getText()) / Double.parseDouble(jTextField4.getText())) * 100));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextField12.setText(String.format(&quot;%.1f%%&quot;, ((Double.parseDouble(jTextField7.getText())-Double.parseDouble(jTextField4.getText())) / Double.parseDouble(jTextField4.getText())) * 100));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel14">
@@ -594,7 +591,7 @@
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextField13.setText(String.format(&quot;%.1f%%&quot;, (Double.parseDouble(jTextField8.getText()) / Double.parseDouble(jTextField5.getText())) * 100));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextField13.setText(String.format(&quot;%.1f%%&quot;, ((Double.parseDouble(jTextField8.getText())-Double.parseDouble(jTextField5.getText())) / Double.parseDouble(jTextField5.getText())) * 100));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel15">
@@ -617,7 +614,7 @@
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextField14.setText(String.format(&quot;%.1f%%&quot;, (Double.parseDouble(jTextField9.getText()) / Double.parseDouble(jTextField6.getText())) * 100));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextField14.setText(String.format(&quot;%.1f%%&quot;, ((Double.parseDouble(jTextField9.getText())-Double.parseDouble(jTextField6.getText())) / Double.parseDouble(jTextField6.getText())) * 100));"/>
       </AuxValues>
     </Component>
   </SubComponents>

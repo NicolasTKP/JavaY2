@@ -532,7 +532,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="yearly_profitField.setFocusable(false);&#xa;        yearly_profitField.setText(String.format(&quot;%.1f%%&quot;, (Double.parseDouble(yearly_revenueField.getText()) / Double.parseDouble(yearly_purchaseField.getText())) * 100));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="yearly_profitField.setFocusable(false);&#xa;        yearly_profitField.setText(String.format(&quot;%.1f%%&quot;, ((Double.parseDouble(yearly_revenueField.getText())-Double.parseDouble(yearly_purchaseField.getText())) / Double.parseDouble(yearly_purchaseField.getText())) * 100));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="monthly_profitField">
@@ -542,7 +542,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="monthly_profitField.setFocusable(false);&#xa;monthly_profitField.setText(String.format(&quot;%.1f%%&quot;, (Double.parseDouble(monthly_revenueField.getText()) / Double.parseDouble(monthly_purchaseField.getText())) * 100));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="monthly_profitField.setFocusable(false);&#xa;monthly_profitField.setText(String.format(&quot;%.1f%%&quot;, ((Double.parseDouble(monthly_revenueField.getText())-Double.parseDouble(monthly_purchaseField.getText())) / Double.parseDouble(monthly_purchaseField.getText())) * 100));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="daily_profitField">
@@ -552,7 +552,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="daily_profitField.setFocusable(false);&#xa;    daily_profitField.setText(String.format(&quot;%.1f%%&quot;, (Double.parseDouble(daily_revenueField.getText()) / Double.parseDouble(daily_purchaseField.getText())) * 100));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="daily_profitField.setFocusable(false);&#xa;    daily_profitField.setText(String.format(&quot;%.1f%%&quot;, ((Double.parseDouble(daily_revenueField.getText())-Double.parseDouble(daily_purchaseField.getText())) / Double.parseDouble(daily_purchaseField.getText())) * 100));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel15">

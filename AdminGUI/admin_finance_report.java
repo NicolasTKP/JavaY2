@@ -354,7 +354,7 @@ public class admin_finance_report extends javax.swing.JFrame {
     jTextField12.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
     jTextField12.setText("");
     jTextField12.setFocusable(false);
-    jTextField12.setText(String.format("%.1f%%", (Double.parseDouble(jTextField7.getText()) / Double.parseDouble(jTextField4.getText())) * 100));
+    jTextField12.setText(String.format("%.1f%%", ((Double.parseDouble(jTextField7.getText())-Double.parseDouble(jTextField4.getText())) / Double.parseDouble(jTextField4.getText())) * 100));
     jTextField12.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jTextField12ActionPerformed(evt);
@@ -368,7 +368,7 @@ public class admin_finance_report extends javax.swing.JFrame {
     jTextField13.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
     jTextField13.setText("");
     jTextField13.setFocusable(false);
-    jTextField13.setText(String.format("%.1f%%", (Double.parseDouble(jTextField8.getText()) / Double.parseDouble(jTextField5.getText())) * 100));
+    jTextField13.setText(String.format("%.1f%%", ((Double.parseDouble(jTextField8.getText())-Double.parseDouble(jTextField5.getText())) / Double.parseDouble(jTextField5.getText())) * 100));
 
     jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
     jLabel15.setText("Daily Profit/Loss (%):");
@@ -377,7 +377,7 @@ public class admin_finance_report extends javax.swing.JFrame {
     jTextField14.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
     jTextField14.setText("");
     jTextField14.setFocusable(false);
-    jTextField14.setText(String.format("%.1f%%", (Double.parseDouble(jTextField9.getText()) / Double.parseDouble(jTextField6.getText())) * 100));
+    jTextField14.setText(String.format("%.1f%%", ((Double.parseDouble(jTextField9.getText())-Double.parseDouble(jTextField6.getText())) / Double.parseDouble(jTextField6.getText())) * 100));
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
