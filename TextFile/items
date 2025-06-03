@@ -2,3 +2,4 @@ item_id|item_name|stock_price|sales_per_day|ordering_lead_time|safety_level|supp
 I001|apple|8.0|6|12|72|SU001|G002
 I002|orange|0.8|5|6|30|SU001|G001
 I003|carrot|5|10|7|70|SU001|G003
+I004|banana|0.4|5|5|25|SU003|G004
