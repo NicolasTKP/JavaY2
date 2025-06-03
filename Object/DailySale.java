@@ -142,17 +142,17 @@ public class DailySale {
                     if (sold_quantity > current_quantity) {
                         JOptionPane.showMessageDialog(parent_component, "Insufficient quantity of item: " + item_name);
                         br.close();
-                        return false;  // ❗️ Fail - stop further process
+                        return false;
                     } else {
                         int new_quantity = current_quantity - sold_quantity;
 
                         String updated_line = group_id + "|" + item_name + "|" + new_quantity + "|" + retail_price;
 
-                        // ✅ Update inventory file
+
                         TextFile.editTextfileRow(parent_component, inventory_file_path, group_id, 0, updated_line);
 
                         br.close();
-                        return true;  // ✅ Success
+                        return true;
                     }
                 }
             }

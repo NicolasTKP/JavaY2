@@ -245,7 +245,8 @@ public class SM_item_add extends javax.swing.JFrame {
 
         }else if(Item.checkIsNewGroupID(group_id) && new_supplier_checkbox.isSelected()){
             supplier_id = supplier.setSupplierID();
-            String new_item_details = item_id + "|" + item_name + "|" + stock_price + "|" + sales_per_day + "|" + ordering_lead_time + "|" + safety_level + "|" + supplier_id + "|" + group_id;            
+            String new_item_details = item_id + "|" + item_name + "|" + stock_price + "|" + sales_per_day + "|" + ordering_lead_time + "|" 
+                    + safety_level + "|" + supplier_id + "|" + group_id;            
             
             TextFile.addLine(item_file_path, new_item_details);
             JOptionPane.showMessageDialog(this,"New item has been added successfully. Please enter the details of the new item group and new supplier.");
@@ -264,11 +265,14 @@ public class SM_item_add extends javax.swing.JFrame {
         else{
             if(new_supplier_checkbox.isSelected()){
                 supplier_id = supplier.setSupplierID();
-                String new_item_details = item_id + "|" + item_name + "|" + stock_price + "|" + sales_per_day + "|" + ordering_lead_time + "|" + safety_level + "|" + supplier_id + "|" + group_id;            
+                String new_item_details = item_id + "|" + item_name + "|" + stock_price + "|" + sales_per_day + "|" + 
+                        ordering_lead_time + "|" + safety_level + "|" + supplier_id + "|" + group_id;            
+                
                 TextFile.addLine(item_file_path, new_item_details);
                 JOptionPane.showMessageDialog(this,"New item been added successfully. Please enter the details of new supplier.");
                 this.dispose();
                 new SM_supplier_add(item_name).setVisible(true);
+                
             }else{
                 TextFile.addLine(item_file_path, item_details);
                 JOptionPane.showMessageDialog(this,"New item been added successfully");

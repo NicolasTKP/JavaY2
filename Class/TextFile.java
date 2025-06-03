@@ -125,7 +125,8 @@ public class TextFile {
     }
 
     // Overloaded with mapping
-    public static void populateTable(DefaultTableModel model, JTable table, String[] columns, String filePath, int rowHeight, Map<Integer, Map<String, String>> columnMappings) {
+    public static void populateTable(DefaultTableModel model, JTable table, String[] columns, String filePath,
+                                     int rowHeight, Map<Integer, Map<String, String>> columnMappings) {
         model.setRowCount(0); // clear row
         model.setColumnIdentifiers(columns); //set column name
         table.setRowHeight(rowHeight); // set column height
