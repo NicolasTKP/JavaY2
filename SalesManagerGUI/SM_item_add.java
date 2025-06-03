@@ -6,6 +6,7 @@ package com.mycompany.JavaY2.SalesManagerGUI;
 import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.Item;
 import com.mycompany.JavaY2.Class.DataMapping;
+import com.mycompany.JavaY2.Object.Supplier;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import java.io.*;
@@ -65,7 +66,7 @@ public class SM_item_add extends javax.swing.JFrame {
         add_item_button = new javax.swing.JButton();
         cancel_add_item_button = new javax.swing.JButton();
         supplier_combo_box = new javax.swing.JComboBox<>();
-        add_new_supplier_button = new javax.swing.JButton();
+        new_supplier_checkbox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1000, 750));
@@ -123,11 +124,11 @@ public class SM_item_add extends javax.swing.JFrame {
             }
         });
 
-        add_new_supplier_button.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        add_new_supplier_button.setText("New Supplier? Add Now");
-        add_new_supplier_button.addActionListener(new java.awt.event.ActionListener() {
+        new_supplier_checkbox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        new_supplier_checkbox.setText("Is this provided by new supplier?");
+        new_supplier_checkbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                add_new_supplier_buttonActionPerformed(evt);
+                new_supplier_checkboxActionPerformed(evt);
             }
         });
 
@@ -151,13 +152,12 @@ public class SM_item_add extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(item_name_label)
+                        .addGap(129, 129, 129)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(add_new_supplier_button))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(129, 129, 129)
-                                .addComponent(supplier_combo_box, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(new_supplier_checkbox)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(supplier_combo_box, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,7 +191,7 @@ public class SM_item_add extends javax.swing.JFrame {
                         .addComponent(item_name_label))
                     .addComponent(supplier_combo_box, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(add_new_supplier_button)
+                .addComponent(new_supplier_checkbox)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(stock_price_spinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,7 +208,7 @@ public class SM_item_add extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(add_item_button)
                     .addComponent(cancel_add_item_button))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         stock_price_spinner.setEditor(new javax.swing.JSpinner.NumberEditor(stock_price_spinner, "0.00"));
@@ -219,6 +219,7 @@ public class SM_item_add extends javax.swing.JFrame {
     private void add_item_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_item_buttonActionPerformed
 
         Item item = new Item();
+        Supplier supplier = new Supplier();
         
         String item_id = item.setItemID();
         String item_name = item_name_textfield.getText().toLowerCase();
@@ -235,23 +236,45 @@ public class SM_item_add extends javax.swing.JFrame {
         String supplier_id = supplier_map.get(supplier_name);
         
         String item_details = item_id + "|" + item_name + "|" + stock_price + "|" + sales_per_day + "|" + ordering_lead_time + "|" + safety_level + "|" + supplier_id + "|" + group_id;
-        
+
         if (item_name.isEmpty()){
             JOptionPane.showMessageDialog(this,"Please fill in all the fields");
             
         }else if(!Item.checkIsDuplicatedItemSupplier(item_name, supplier_id)){
             JOptionPane.showMessageDialog(this,"The entered item already supplied by the supplier.");   
 
+        }else if(Item.checkIsNewGroupID(group_id) && new_supplier_checkbox.isSelected()){
+            supplier_id = supplier.setSupplierID();
+            String new_item_details = item_id + "|" + item_name + "|" + stock_price + "|" + sales_per_day + "|" + ordering_lead_time + "|" + safety_level + "|" + supplier_id + "|" + group_id;            
+            
+            TextFile.addLine(item_file_path, new_item_details);
+            JOptionPane.showMessageDialog(this,"New item has been added successfully. Please enter the details of the new item group and new supplier.");
+            
+            this.dispose();
+            new SM_inventory_add(group_id, item_name).setVisible(true);
+            new SM_supplier_add(item_name).setVisible(true);
+
         }else if(Item.checkIsNewGroupID(group_id)){
             TextFile.addLine(item_file_path, item_details);
             JOptionPane.showMessageDialog(this,"New item has been added successfully. Please enter the details of the new item group.");
             this.dispose();
             new SM_inventory_add(group_id, item_name).setVisible(true);           
-
-        }else{
-            TextFile.addLine(item_file_path, item_details);
-            JOptionPane.showMessageDialog(this,"New item been added successfully");
-            this.dispose();            
+        }
+        
+        else{
+            if(new_supplier_checkbox.isSelected()){
+                supplier_id = supplier.setSupplierID();
+                String new_item_details = item_id + "|" + item_name + "|" + stock_price + "|" + sales_per_day + "|" + ordering_lead_time + "|" + safety_level + "|" + supplier_id + "|" + group_id;            
+                TextFile.addLine(item_file_path, new_item_details);
+                JOptionPane.showMessageDialog(this,"New item been added successfully. Please enter the details of new supplier.");
+                this.dispose();
+                new SM_supplier_add(item_name).setVisible(true);
+            }else{
+                TextFile.addLine(item_file_path, item_details);
+                JOptionPane.showMessageDialog(this,"New item been added successfully");
+                this.dispose();                       
+            }
+     
         }        
     }//GEN-LAST:event_add_item_buttonActionPerformed
 
@@ -264,9 +287,9 @@ public class SM_item_add extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_supplier_combo_boxActionPerformed
 
-    private void add_new_supplier_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_new_supplier_buttonActionPerformed
-        new SM_supplier_add().setVisible(true);
-    }//GEN-LAST:event_add_new_supplier_buttonActionPerformed
+    private void new_supplier_checkboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_new_supplier_checkboxActionPerformed
+
+    }//GEN-LAST:event_new_supplier_checkboxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -313,7 +336,6 @@ public class SM_item_add extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_item_button;
     private javax.swing.JLabel add_item_label;
-    private javax.swing.JButton add_new_supplier_button;
     private javax.swing.JButton cancel_add_item_button;
     private javax.swing.JLabel item_name_label;
     private javax.swing.JLabel item_name_label1;
@@ -321,6 +343,7 @@ public class SM_item_add extends javax.swing.JFrame {
     private javax.swing.JLabel item_name_label3;
     private javax.swing.JLabel item_name_label4;
     private javax.swing.JTextField item_name_textfield;
+    private javax.swing.JCheckBox new_supplier_checkbox;
     private javax.swing.JSpinner ordering_lead_time_spinner;
     private javax.swing.JSpinner sales_per_day_spinner;
     private javax.swing.JSpinner stock_price_spinner;
