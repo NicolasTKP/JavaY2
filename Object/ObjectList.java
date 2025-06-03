@@ -76,7 +76,11 @@ public class ObjectList {
                     receive.unit_price = Double.parseDouble(lines[5]);
                     receive.amount = Double.parseDouble(lines[6]);
                     receive.supplier_id = lines[7];
-                    receive.order_date = LocalDate.parse(lines[8], formatter);
+                    try{
+                        receive.order_date = LocalDate.parse(lines[8], formatter);
+                    }catch (DateTimeParseException e){
+                        receive.order_date = null;
+                    }
                     receive.order_status = lines[9];
                     receive.item_name = Search.getItemNamebyItemID(lines[2]);
                     receive.supplier_name = Search.getSupplierName(lines[7]);
