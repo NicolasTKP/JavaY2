@@ -46,15 +46,13 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="item_name_label" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="add_new_supplier_button" min="-2" max="-2" attributes="0"/>
+                              <Component id="new_supplier_checkbox" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
-                              <Component id="supplier_combo_box" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="supplier_combo_box" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" alignment="1" groupAlignment="0" attributes="0">
@@ -101,7 +99,7 @@
                   <Component id="supplier_combo_box" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="add_new_supplier_button" min="-2" max="-2" attributes="0"/>
+              <Component id="new_supplier_checkbox" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="stock_price_spinner" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -122,7 +120,7 @@
                   <Component id="add_item_button" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cancel_add_item_button" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="66" max="32767" attributes="0"/>
+              <EmptySpace pref="69" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -257,15 +255,15 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="add_new_supplier_button">
+    <Component class="javax.swing.JCheckBox" name="new_supplier_checkbox">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="New Supplier? Add Now"/>
+        <Property name="text" type="java.lang.String" value="Is this provided by new supplier?"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="add_new_supplier_buttonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="new_supplier_checkboxActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

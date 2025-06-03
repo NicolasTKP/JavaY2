@@ -12,8 +12,11 @@ package com.mycompany.JavaY2.Object;
 public class StockReport extends Inventory{
     private String group_id, item_name, date_received;
     private double retail_price;
-    private int quantity, pending_order_quantity;
+    private int quantity;
     
+    public StockReport(){
+        
+    }
     public StockReport(String group_id, String item_name, String date_received, double retail_price, int quantity){
         this.group_id = group_id;
         this.item_name = item_name;

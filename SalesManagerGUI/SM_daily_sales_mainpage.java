@@ -7,11 +7,14 @@ import com.mycompany.JavaY2.Class.TextFile;
 import com.mycompany.JavaY2.Object.DailySale;
 import com.mycompany.JavaY2.Class.DataMapping;
 import com.mycompany.JavaY2.Object.SessionManager;
+import java.awt.event.ActionEvent;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
@@ -44,15 +47,36 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 dailySalesSearchFunction(daily_sales_search_bar.getText());
             }
-        });        
+        });
+        
+        all_daily_sales_button.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                salesContainer.setRowCount(0);
+                populateSalesTable();
+            }
+        });
+
+        today_daily_sales_button.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                salesContainer.setRowCount(0);
+                populateSalesTableForToday();
+            }
+        });
+        
     }
     
     private void populateSalesTable(){
         DataMapping mapping = new DataMapping();
         Map<String, String> inventory_map = mapping.IdNameMapping(inventory_file_path);
         Map<Integer, Map<String, String>> column_mappings = new HashMap<>();
-        column_mappings.put(2, inventory_map); // supplier_id column
+        column_mappings.put(2, inventory_map);
         TextFile.populateTable(salesContainer, sales_table, salesTableColumnName, daily_sales_file_path, 50,column_mappings);          
+    }
+    
+    private void populateSalesTableForToday(){
+        DailySale.populateDailySalesTable(salesContainer, sales_table, salesTableColumnName, daily_sales_file_path, 50);
     }
     
     private void dailySalesSearchFunction(String daily_sales_keyword) {
@@ -118,6 +142,8 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         daily_sales_search_bar = new javax.swing.JTextField();
+        all_daily_sales_button = new javax.swing.JButton();
+        today_daily_sales_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -158,10 +184,10 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
         jScrollPane1.setViewportView(sales_table);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setText("Daily Sales Table");
+        jLabel1.setText("Sales Record Table");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel2.setText("Daily Sales Search Bar");
+        jLabel2.setText("Sales Record Search Bar");
 
         daily_sales_search_bar.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
         daily_sales_search_bar.addActionListener(new java.awt.event.ActionListener() {
@@ -169,6 +195,12 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
                 daily_sales_search_barActionPerformed(evt);
             }
         });
+
+        all_daily_sales_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        all_daily_sales_button.setText("All");
+
+        today_daily_sales_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        today_daily_sales_button.setText("Today");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -181,16 +213,23 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
                     .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(add_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edit_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(daily_sales_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(42, Short.MAX_VALUE))
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(daily_sales_search_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(all_daily_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(today_daily_sales_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,17 +241,22 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addComponent(jLabel1))
                 .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(homepage_button1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(77, 77, 77)
                         .addComponent(add_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(84, 84, 84)
+                        .addGap(95, 95, 95)
                         .addComponent(edit_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                        .addGap(89, 89, 89)
                         .addComponent(delete_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
-                .addGap(56, 56, 56))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(all_daily_sales_button)
+                            .addComponent(today_daily_sales_button))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         pack();
@@ -231,18 +275,21 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
         }else{
             new SM_daily_sales_add().setVisible(true);            
         }        
-        
-
     }//GEN-LAST:event_add_sales_buttonActionPerformed
 
     private void edit_sales_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_sales_buttonActionPerformed
         int selected_row = sales_table.getSelectedRow();
+        String sales_id = sales_table.getValueAt(selected_row , 0).toString();
+        String quantity = sales_table.getValueAt(selected_row , 1).toString();
+        String group_id = sales_table.getValueAt(selected_row , 2).toString();
+        String retail_price = sales_table.getValueAt(selected_row , 3).toString();
+        String date = sales_table.getValueAt(selected_row , 4).toString();   
         
-//        String password = JOptionPane.showInputDialog("Please insert your user password");
-//        if (password == null || !password.equals(SessionManager.getInstance().password)){
-//            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
-//            return;
-//        }
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
         if (selected_row != -1) {
             int response = JOptionPane.showConfirmDialog(
@@ -254,13 +301,7 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
             );
 
             if (response == JOptionPane.YES_OPTION) {
-                String sales_id = sales_table.getValueAt(selected_row , 0).toString();
-                String quantity = sales_table.getValueAt(selected_row , 1).toString();
-                String group_id = sales_table.getValueAt(selected_row , 2).toString();
-                String retail_price = sales_table.getValueAt(selected_row , 3).toString();
-                String date = sales_table.getValueAt(selected_row , 4).toString();
-
-                new SM_daily_sales_edit(sales_id, quantity, group_id, retail_price, date).setVisible(true);
+                    new SM_daily_sales_edit(sales_id, quantity, group_id, retail_price, date).setVisible(true);                 
             } else {
                 // Cancel editing
             JOptionPane.showMessageDialog(null, "You have decided to not edit the sales record. Back to sales record mainpage now");
@@ -273,15 +314,16 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
     private void delete_sales_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_sales_buttonActionPerformed
         int selected_row = sales_table.getSelectedRow();
         
-//        String password = JOptionPane.showInputDialog("Please insert your user password");
-//        if (password == null || !password.equals(SessionManager.getInstance().password)){
-//            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
-//            return;
-//        }
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
         String selected_id = sales_table.getValueAt(selected_row, 0).toString();
         int quantity_difference = Integer.parseInt(sales_table.getValueAt(selected_row, 1).toString());  // quantity
         String item_name = sales_table.getValueAt(selected_row, 2).toString();  // group_id    
+        String sales_record_date = sales_table.getValueAt(selected_row,4).toString();        
         
         DataMapping mapping = new DataMapping();
         Map<String, String> inventory_map = mapping.NameIdMapping(inventory_file_path);
@@ -296,10 +338,20 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE
             );
 
-            if (response == JOptionPane.YES_OPTION) { 
-                TextFile.deleteLine(daily_sales_file_path, selected_id, 0);
-                TextFile.adjustInventoryQuantity(this, inventory_file_path, group_id, quantity_difference); 
-                JOptionPane.showMessageDialog(null, "You have deleted the daily sales record. Daily sales table is updated, inventory is restored");;
+            if (response == JOptionPane.YES_OPTION) {
+                
+                Date current_date = new Date();
+                SimpleDateFormat date_format = new SimpleDateFormat("ddMMyyyy");
+                String today = date_format.format(current_date);  
+                
+                if(!sales_record_date.equals(today)){
+                    JOptionPane.showMessageDialog(null, "You are not allow to delete the past sales records");                        
+                }else{
+                    TextFile.deleteLine(daily_sales_file_path, selected_id, 0);
+                    DailySale.adjustInventoryQuantity(this, inventory_file_path, group_id, quantity_difference); 
+                    JOptionPane.showMessageDialog(null, "You have deleted the daily sales record. Daily sales table is updated, inventory is restored");                    
+                }
+
             } else {
                 // Cancel editing
                 JOptionPane.showMessageDialog(null, "You have decided to not delete the daily sales record. Back to daily sales mainpage now");
@@ -352,6 +404,7 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_sales_button;
+    private javax.swing.JButton all_daily_sales_button;
     private javax.swing.JTextField daily_sales_search_bar;
     private javax.swing.JButton delete_sales_button;
     private javax.swing.JButton edit_sales_button;
@@ -360,5 +413,6 @@ public class SM_daily_sales_mainpage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable sales_table;
+    private javax.swing.JButton today_daily_sales_button;
     // End of variables declaration//GEN-END:variables
 }

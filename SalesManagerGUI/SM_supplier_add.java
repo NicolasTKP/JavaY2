@@ -29,6 +29,10 @@ public class SM_supplier_add extends javax.swing.JFrame {
         initComponents();
     }
     
+    public SM_supplier_add(String item_name) {
+        initComponents();
+        supply_item_textfield.setText(item_name);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,7 +58,6 @@ public class SM_supplier_add extends javax.swing.JFrame {
         payment_term_textfield = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1000, 750));
 
         add_item_label.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         add_item_label.setText("Supplier Name:");
@@ -97,6 +100,11 @@ public class SM_supplier_add extends javax.swing.JFrame {
         contact_number_textfield.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
 
         supply_item_textfield.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        supply_item_textfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supply_item_textfieldActionPerformed(evt);
+            }
+        });
 
         payment_term_textfield.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
 
@@ -202,8 +210,11 @@ public class SM_supplier_add extends javax.swing.JFrame {
             if (item_id != null) {
                 item_ids.add(item_id);
             } else {
-                JOptionPane.showMessageDialog(this, "Item not found: " + trim_item_name);
+                JOptionPane.showMessageDialog(this, "Item not found: " + trim_item_name + ". Please enter new item data now.");
+                new SM_item_add().setVisible(true);
+                this.dispose();
                 return; // Stop further execution if any item is not found
+
             }
         }
         
@@ -224,6 +235,10 @@ public class SM_supplier_add extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_add_supplier_buttonActionPerformed
+
+    private void supply_item_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supply_item_textfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_supply_item_textfieldActionPerformed
 
     /**
      * @param args the command line arguments

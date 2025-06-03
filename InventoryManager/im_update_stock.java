@@ -7,9 +7,9 @@ package com.mycompany.JavaY2.InventoryManager;
 import com.mycompany.JavaY2.Class.Edit;
 import com.mycompany.JavaY2.Class.UpdateTable;
 import com.mycompany.JavaY2.Class.Query;
+import com.mycompany.JavaY2.Object.Receive;
 import com.mycompany.JavaY2.Class.Search;
 import com.mycompany.JavaY2.Class.TextFile;
-import com.mycompany.JavaY2.Object.Receive;
 import com.mycompany.JavaY2.Object.SessionManager;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -87,7 +87,7 @@ public class im_update_stock extends javax.swing.JFrame {
                 }
             });
 
-            jButton3.setText("Cancel");
+            jButton3.setText("Cancel Stock");
             jButton3.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     jButton3ActionPerformed(evt);
@@ -146,7 +146,7 @@ public class im_update_stock extends javax.swing.JFrame {
         
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(null, "Please select a row to cancel", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please select a row to update", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
@@ -154,13 +154,16 @@ public class im_update_stock extends javax.swing.JFrame {
        
         String currentDate = Query.getCurrentDate();
         
-        int result = JOptionPane.showConfirmDialog(null, "Are you confirm that the order: "+selectedOrderId+ " is received?", "Confirmation",JOptionPane.YES_NO_OPTION);
+        int result = JOptionPane.showConfirmDialog(null, "Do you confirm that the order: "+selectedOrderId+ " is received?", 
+                     "Confirmation",JOptionPane.YES_NO_OPTION);
+        
         if(result == JOptionPane.YES_OPTION) {
             String item_id = TextFile.getColumn(receives_file_path,0,selectedOrderId,1);
             String group_id = Search.getGroupIDbyItemName(Search.getItemNamebyItemID(item_id));
             Edit.editingColumn("receive", selectedOrderId, 6, "Received");
             String receive_quantity = TextFile.getColumn(receives_file_path,0,selectedOrderId,3);
             String inventory_quantity = TextFile.getColumn(inventory_file_path,0,group_id,2);
+            
             assert receive_quantity != null;
             assert inventory_quantity != null;
             String quantity = Integer.toString(Integer.parseInt(receive_quantity) + Integer.parseInt(inventory_quantity));

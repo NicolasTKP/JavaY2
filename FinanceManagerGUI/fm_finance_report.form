@@ -40,17 +40,6 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="total_inventoryField" min="-2" pref="87" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
-                              <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="searchPOField" min="-2" pref="150" max="-2" attributes="0"/>
-                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
@@ -128,6 +117,18 @@
                       <Component id="jScrollPane1" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="total_inventoryField" min="-2" pref="87" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
+                      <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="searchPOField" min="-2" pref="150" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
       </Group>
@@ -135,26 +136,13 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="2" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnBack" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="btn_order_list" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="btn_req_list" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="btn_inventory_list" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="btnPayment" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="btnProfile" min="-2" pref="100" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="btnReport" min="-2" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -199,7 +187,7 @@
                           <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="daily_profitField" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="total_inventoryField" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
@@ -207,11 +195,25 @@
                           <Component id="jLabel15" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                           <Component id="searchPOField" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="302" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="btn_order_list" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btn_req_list" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btn_inventory_list" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnPayment" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnProfile" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnReport" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -313,7 +315,7 @@
     <Component class="javax.swing.JButton" name="btnProfile">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="sansserif" size="18" style="0"/>
+          <Font name="sansserif" size="24" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Profile"/>
       </Properties>
@@ -370,7 +372,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="double total_yearly_purchase = 0.0;&#xa;&#xa;try(BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {&#xa;    String lines;&#xa;    reader.readLine();&#xa;    while ((lines = reader.readLine()) != null) {&#xa;        String[] receives_data = lines.split(&quot;\\|&quot;);&#xa;        String received_status = receives_data[6].strip();&#xa;        if(!Objects.equals(receives_data[7], &quot;-&quot;)){&#xa;            LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);&#xa;        int current_year = LocalDate.now().getYear();&#xa;                    if (received_status.equals(&quot;Received&quot;) &amp;&amp; payment_date.getYear() == current_year) {&#xa;                        total_yearly_purchase = total_yearly_purchase + Double.parseDouble(receives_data[4]);&#xa;                    }&#xa;                }       &#xa;            }&#xa;            yearly_purchaseField.setText(Double.toString(total_yearly_purchase));&#xa;        }catch (IOException e){&#xa;            e.printStackTrace();&#xa;        }"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="double total_yearly_purchase = 0.0;&#xa;&#xa;try(BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {&#xa;    String lines;&#xa;    reader.readLine();&#xa;    while ((lines = reader.readLine()) != null) {&#xa;        String[] receives_data = lines.split(&quot;\\|&quot;);&#xa;        String received_status = receives_data[6].strip();&#xa;        if(!Objects.equals(receives_data[7], &quot;-&quot;)){&#xa;            LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);&#xa;        int current_year = LocalDate.now().getYear();&#xa;                    if (received_status.equals(&quot;Received&quot;) &amp;&amp; payment_date.getYear() == current_year) {&#xa;                        total_yearly_purchase = total_yearly_purchase + Double.parseDouble(receives_data[4]);&#xa;                    }&#xa;                }       &#xa;            }&#xa;            yearly_purchaseField.setFocusable(false);&#xa;            yearly_purchaseField.setText(Double.toString(total_yearly_purchase));&#xa;        }catch (IOException e){&#xa;            e.printStackTrace();&#xa;        }"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
@@ -414,7 +416,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="double total_monthly_purchase = 0.0;&#xa;&#xa;&#xa;        try (BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {&#xa;            String lines;&#xa;            reader.readLine();&#xa;            while ((lines = reader.readLine()) != null) {&#xa;                String[] receives_data = lines.split(&quot;\\|&quot;);&#xa;                String received_status = receives_data[6].strip();&#xa;                if(!Objects.equals(receives_data[7], &quot;-&quot;)){&#xa;                    LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);&#xa;                    int current_year = LocalDate.now().getYear();&#xa;                    if (received_status.equals(&quot;Received&quot;)) {&#xa;                        if (payment_date.getYear() == current_year &amp;&amp; payment_date.getMonth() == LocalDate.now().getMonth()) {&#xa;                            total_monthly_purchase = total_monthly_purchase + Double.parseDouble(receives_data[4]);&#xa;                        }&#xa;                    }&#xa;                }&#xa;            }&#xa;            monthly_purchaseField.setFocusable(false);&#xa;            monthly_purchaseField.setText(Double.toString(total_monthly_purchase));&#xa;        } catch (IOException e) {&#xa;            e.printStackTrace();&#xa;        }"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="double total_monthly_purchase = 0.0;&#xa;try (BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {&#xa;    String lines;&#xa;    reader.readLine();&#xa;    while ((lines = reader.readLine()) != null) {&#xa;        String[] receives_data = lines.split(&quot;\\|&quot;);&#xa;        String received_status = receives_data[6].strip();&#xa;        if(!Objects.equals(receives_data[7], &quot;-&quot;)){&#xa;            LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);&#xa;        int current_year = LocalDate.now().getYear();&#xa;        if (received_status.equals(&quot;Received&quot;)) {&#xa;            if (payment_date.getYear() == current_year &amp;&amp; payment_date.getMonth() == LocalDate.now().getMonth()) {&#xa;                total_monthly_purchase = total_monthly_purchase + Double.parseDouble(receives_data[4]);&#xa;            }&#xa;        }&#xa;    }&#xa;}&#xa;monthly_purchaseField.setFocusable(false);&#xa;monthly_purchaseField.setText(Double.toString(total_monthly_purchase));&#xa;} catch (IOException e) {&#xa;    e.printStackTrace();&#xa;}"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="monthly_salesField">
@@ -442,7 +444,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="double total_daily_purchase = 0.0;&#xa;&#xa;        try(BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {&#xa;            String lines;&#xa;            reader.readLine();&#xa;            while ((lines = reader.readLine()) != null) {&#xa;                String[] receives_data = lines.split(&quot;\\|&quot;);&#xa;                String received_status = receives_data[6].strip();&#xa;                if(!Objects.equals(receives_data[7], &quot;-&quot;)){&#xa;                    LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);&#xa;                    if (received_status.equals(&quot;Received&quot;) &amp;&amp; payment_date.equals(LocalDate.now())){&#xa;                        total_daily_purchase = total_daily_purchase + Double.parseDouble(receives_data[4]);&#xa;                    }&#xa;                }&#xa;            }&#xa;            daily_purchaseField.setFocusable(false);&#xa;            daily_purchaseField.setText(Double.toString(total_daily_purchase));&#xa;        }catch (IOException e){&#xa;            e.printStackTrace();&#xa;        }"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="double total_daily_purchase = 0.0;&#xa;try(BufferedReader reader = new BufferedReader(new FileReader(receives_file))) {&#xa;    String lines;&#xa;    reader.readLine();&#xa;    while ((lines = reader.readLine()) != null) {&#xa;        String[] receives_data = lines.split(&quot;\\|&quot;);&#xa;        String received_status = receives_data[6].strip();&#xa;        if(!Objects.equals(receives_data[7], &quot;-&quot;)){&#xa;            LocalDate payment_date = LocalDate.parse(receives_data[7], date_format);&#xa;            if (received_status.equals(&quot;Received&quot;) &amp;&amp; payment_date.equals(LocalDate.now())){&#xa;                total_daily_purchase = total_daily_purchase + Double.parseDouble(receives_data[4]);&#xa;            }&#xa;        }&#xa;    }&#xa;daily_purchaseField.setFocusable(false);&#xa;daily_purchaseField.setText(Double.toString(total_daily_purchase));&#xa;}catch (IOException e){&#xa;    e.printStackTrace();&#xa;}"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
@@ -540,7 +542,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="monthly_profitField.setFocusable(false);&#xa;        monthly_profitField.setText(String.format(&quot;%.1f%%&quot;, (Double.parseDouble(monthly_revenueField.getText()) / Double.parseDouble(monthly_purchaseField.getText())) * 100));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="monthly_profitField.setFocusable(false);&#xa;monthly_profitField.setText(String.format(&quot;%.1f%%&quot;, (Double.parseDouble(monthly_revenueField.getText()) / Double.parseDouble(monthly_purchaseField.getText())) * 100));"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="daily_profitField">
@@ -588,9 +590,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="total_inventoryFieldActionPerformed"/>
       </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="int total_row = inventory_amount_table.getRowCount();&#xa;double total = 0.0;&#xa;for(int i = 0; i&lt; total_row; i++){&#xa;    total = total + Double.parseDouble(inventory_amount_table.getValueAt(i,4).toString());&#xa;}&#xa;total_inventoryField.setText(Double.toString(total));"/>
-      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel17">
       <Properties>

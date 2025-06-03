@@ -5,6 +5,7 @@
 package com.mycompany.JavaY2.SalesManagerGUI;
 
 import com.mycompany.JavaY2.Class.TextFile;
+import com.mycompany.JavaY2.Object.DailySale;
 import com.mycompany.JavaY2.Class.DataMapping;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -60,7 +61,7 @@ public class SM_daily_sales_edit extends javax.swing.JFrame {
 
         int original_sold_quantity = Integer.parseInt(sold_quantity_textfield.getText());
         int quantity_difference = original_sold_quantity - new_quantity;  
-        TextFile.adjustInventoryQuantity(this, inventory_file_path, group_id, quantity_difference); 
+        DailySale.adjustInventoryQuantity(this, inventory_file_path, group_id, quantity_difference); 
         
         String updated_sales_details = sales_id + "|" + new_quantity + "|" + group_id + "|" + retail_price + "|" + date;
         return updated_sales_details;
@@ -96,7 +97,6 @@ public class SM_daily_sales_edit extends javax.swing.JFrame {
         add_item_label7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1000, 750));
         setPreferredSize(new java.awt.Dimension(1000, 750));
 
         add_item_label.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -156,7 +156,7 @@ public class SM_daily_sales_edit extends javax.swing.JFrame {
         });
 
         edit_sales_button.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        edit_sales_button.setText("Edit Item");
+        edit_sales_button.setText("Edit Sales");
         edit_sales_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edit_sales_buttonActionPerformed(evt);
@@ -201,16 +201,18 @@ public class SM_daily_sales_edit extends javax.swing.JFrame {
                             .addComponent(add_item_label)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(add_item_label1)
                                     .addComponent(add_item_label6)
                                     .addComponent(add_item_label2))
-                                .addGap(120, 120, 120)
+                                .addGap(122, 122, 122)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(sales_id_textfield)
-                                    .addComponent(item_textfield)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(sold_quantity_textfield, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                                        .addGap(169, 169, 169))))))
+                                        .addGap(169, 169, 169))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(add_item_label1)
+                                .addGap(120, 120, 120)
+                                .addComponent(item_textfield))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(251, 251, 251)
                         .addComponent(cancel_edit_sales_button, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -227,11 +229,11 @@ public class SM_daily_sales_edit extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(sales_id_textfield)
                     .addComponent(add_item_label6, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(item_textfield)
                     .addComponent(add_item_label1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sold_quantity_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(add_item_label2))
@@ -282,7 +284,7 @@ public class SM_daily_sales_edit extends javax.swing.JFrame {
 
         String sales_id = sales_id_textfield.getText();
         String updated_sales_details = getSalesDetails(sales_id);
-        boolean edit_sales_success = TextFile.editTextfileRow(this, daily_sales_file_path, sales_id, 0, updated_sales_details,5 );
+        boolean edit_sales_success = TextFile.editTextfileRow(this, daily_sales_file_path, sales_id, 0, updated_sales_details);
 
         if(edit_sales_success){
             JOptionPane.showMessageDialog(this,"Sales record has been edited successfully, quantity of item in inventory is updated as well. Back to daily sales mainpage now");

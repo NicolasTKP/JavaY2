@@ -11,7 +11,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 public class ObjectList {
@@ -107,7 +106,7 @@ public class ObjectList {
             String[] lines;
             br.readLine();
             while ((line = br.readLine()) != null) {
-                User user = new User();
+                User user = new User() {};
                 lines = line.split("\\|");
                 user.setUserID(lines[0]);
                 user.setUsername(lines[1]);
