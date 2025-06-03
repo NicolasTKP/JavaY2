@@ -189,10 +189,8 @@ private final String receivesFile = "src/main/java/com/mycompany/JavaY2/TextFile
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         Map<String, StockReportContent> itemNameDateMap = DataMapping.NameLatestDateMapping(inventoryFile, receivesFile);
         String PdfFile = "StockReport.pdf";
-
+        GenerateStockReportPdf.writePdf(PdfFile, itemNameDateMap);
         JOptionPane.showMessageDialog(null, "Stock report is generated successfully");
-
-
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -201,6 +199,12 @@ private final String receivesFile = "src/main/java/com/mycompany/JavaY2/TextFile
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String password = JOptionPane.showInputDialog("Please insert your user password");
+        if (password == null || password == null || !password.equals(SessionManager.getInstance().password)){
+            JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         admin_profile page = new admin_profile();
         page.setVisible(true);
         this.dispose();

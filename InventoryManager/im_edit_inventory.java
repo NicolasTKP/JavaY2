@@ -178,7 +178,6 @@ public class im_edit_inventory extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancel_edit_item_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_edit_item_buttonActionPerformed
-
         this.dispose();
     }//GEN-LAST:event_cancel_edit_item_buttonActionPerformed
 
