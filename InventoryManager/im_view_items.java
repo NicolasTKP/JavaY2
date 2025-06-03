@@ -27,7 +27,8 @@ public class im_view_items extends javax.swing.JFrame {
     private final String supplier_file_path = "src/main/java/com/mycompany/JavaY2/TextFile/suppliers";
 
     private final DefaultTableModel itemContainer = new DefaultTableModel();
-    private final String itemTableColumnName[] = {"Item ID", "Item Name", "Stock Price", "Sales per day", "Ordering Lead Time (Days)", "Safety Level", "Supplier", "Group ID"};
+    private final String itemTableColumnName[] = {"Item ID", "Item Name", "Stock Price", "Sales per day", 
+                                                  "Ordering Lead Time (Days)", "Safety Level", "Supplier", "Group ID"};
 
     /** Creates new form im_view_items */
     public im_view_items() {

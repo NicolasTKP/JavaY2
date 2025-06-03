@@ -143,10 +143,14 @@ public class im_update_stock extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Wrong password, action denied", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(null, "Please select a row to update", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String status = jTable1.getValueAt(selectedRow,5).toString();
+        if (status.equals("Received")){
+            JOptionPane.showMessageDialog(null, "Cannot receive order again that has been received", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
